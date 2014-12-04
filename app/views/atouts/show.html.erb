@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nom:</b>
+  <%= @atout.nom %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @atout.description %>
+</p>
+
+<p>
+  <b>Cout:</b>
+  <%= @atout.cout %>
+</p>
+
+
+<%= link_to 'Edit', edit_atout_path(@atout) %> |
+<%= link_to 'Back', atouts_path %>

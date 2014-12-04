@@ -1,0 +1,110 @@
+<%= simple_form_for(@relation) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :description %>
+    <%= f.input :date, as: :string, input_html: {value: local_date(@relation.date), class: 'datepicker'} %>
+    <%= f.input :to_personnage_id %>
+    <%= f.input :from_personnage_id %>
+  </div>
+
+  <label for="search_personnage1"> Rechercher Personnage :</label>
+  <input id="search_personnage1" type="text" onkeypress="filter(this, '.personnage1 .checkbox .checktest')" onkeyup="epurationCheckBox(this, '.personnage1 .checkbox .checktest')" />
+  <div class="personnage1">
+  <%#= p.association :capacites, as: :check_boxes, :collection => Capacite.all.map {|c| [c.nom, c.id]}.uniq %>
+    <% if @personnages != nil %>
+      <% @personnages.each do |p| %>
+        <div class="checkbox">
+          <%#= check_box_tag p.id, p.nom %>
+          <%= "<input id='1p#{p.id}' name='#{p.id}' value='#{p.nom}' type='checkbox' />".html_safe %>
+          <%= label_tag p.id, p.nom, class: 'checktest' %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <label for="search_personnage2"> Rechercher Personnage :</label>
+  <input id="search_personnage2" type="text" onkeypress="filter(this, '.personnage2 .checkbox2 .checktest')" onkeyup="epurationCheckBox(this, '.personnage2 .checkbox2 .checktest')" />
+  <div class="personnage2">
+    <% if @personnages != nil %>
+      <% @personnages.each do |p| %>
+        <div class="checkbox2">
+          <%#= check_box_tag p.id, p.nom %>
+          <%= "<input id='2p#{p.id}' name='#{p.id}' value='#{p.nom}' type='checkbox' />".html_safe %>
+          <%= label_tag p.id, p.nom, class: 'checktest' %>
+        </div>
+      <% end %>
+    <% end %>
+    <span id="#test"></span>
+  </div>
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+    manageCheckBox("#search_personnage1", ".personnage1 .checkbox .checktest");
+    manageCheckBox("#search_personnage2", ".personnage2 .checkbox2 .checktest");
+    $(".personnage1 .checkbox").click(function(){
+      var id = $(this).children().attr("id");
+      var nom = $(this).children().attr("name");
+      console.log(id);
+      $("#relation_to_personnage_id").val(nom);
+      console.log("coucou 1");
+      // $("#test").append("coucou"+nom);
+    });
+    $(".personnage2 .checkbox2").click(function(){
+      var name = $(this).children().attr("name");
+      console.log(name);
+      console.log("coucou 2");
+      $("#relation_from_personnage_id").val(name);
+    });
+  });
+  function manageCheckBox(searchBox, filteringList) {
+      hideAllCheckBoxWhenNoneChecked(filteringList);
+      $(filteringList).click(function() {
+        $(searchBox).val('');
+        showAllCheckBox(filteringList);
+        hideAllCheckBoxWhenNoneChecked(filteringList);
+      });
+  }
+
+  function epurationCheckBox(element, filteringList) {
+    if ($(element).val() == '') {
+      showAllCheckBox(filteringList);
+      hideAllCheckBoxWhenNoneChecked(filteringList);
+    }
+  }
+
+  function filter(element, filteringList) {
+    var value = $(element).val().toUpperCase();
+    showAllCheckBox(filteringList);
+    $(filteringList).each(function() {
+        if ($(this).text().toUpperCase().search(value) > -1) {
+            $(this).parent().show();
+        }
+        else {
+            $(this).parent().hide();
+        }
+    });
+  }
+
+  function showAllCheckBox(filteringList) {
+    $(filteringList).each(function() {
+      $(this).parent().show();
+    });
+  }
+
+  function hideAllCheckBoxWhenNoneChecked(filteringList) {
+    $(filteringList).each(function() {
+      if (!$(this).attr("checked")) {
+        $(this).parent().hide();
+      }
+    });
+  }
+</script>

@@ -1,0 +1,33 @@
+<h1>Listing objets</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Niveau</th>
+    <th>Type</th>
+    <th>Resonnance</th>
+    <th>Personnage</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @objets.each do |objet| %>
+  <tr>
+    <td><%= objet.name %></td>
+    <td><%= objet.description %></td>
+    <td><%= objet.niveau %></td>
+    <td><%= objet.type %></td>
+    <td><%= objet.resonnance %></td>
+    <td><%= objet.personnage_id %></td>
+    <td><%= link_to 'Show', objet %></td>
+    <td><%= link_to 'Edit', edit_objet_path(objet) %></td>
+    <td><%= link_to 'Destroy', objet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Objet', new_objet_path %>

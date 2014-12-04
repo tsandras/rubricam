@@ -1,0 +1,30 @@
+// Place all the styles related to the Personnages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+td {
+  width: 225px;
+}
+
+input {
+  width: 195px;
+}
+
+.integer input {
+  width: 45px;
+}
+
+.spec {
+  display: inline-block;
+  /*width: 50%;*/
+  /*vertical-align: top;*/
+}
+
+.container {
+  width: 95%;
+  max-width: 1400px;
+}
+
+.hidden {
+    visibility: hidden;
+}

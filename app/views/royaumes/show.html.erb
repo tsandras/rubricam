@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nom:</b>
+  <%= @royaume.nom %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @royaume.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_royaume_path(@royaume) %> |
+<%= link_to 'Back', royaumes_path %>

@@ -1,0 +1,21 @@
+<h1>Listing personnages</h1>
+
+<table>
+  <tr>
+    <th>Personnage</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @personnages.each do |personnage| %>
+  <tr>
+    <td><%= link_to "#{personnage.prenom} #{personnage.nom}", personnage %></td>
+    <td><%= link_to 'Edit', edit_personnage_path(personnage) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Personnage', new_personnage_path, class: 'btn btn-success' %>

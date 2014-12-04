@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cap nom:</b>
+  <%= @capacite.nom %>
+</p>
+
+<p>
+  <b>Cap description:</b>
+  <%= @capacite.description %>
+</p>
+
+<p>
+  <b>Cap primaire:</b>
+  <%= @capacite.primaire %>
+</p>
+
+
+<%= link_to 'Edit', edit_capacite_path(@capacite), class: 'btn btn-warning' %>
+<%= link_to 'Back', capacites_path, class: 'btn btn-primary' %>

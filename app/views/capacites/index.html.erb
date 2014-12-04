@@ -1,0 +1,26 @@
+<h1>Listing capacites</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Primaire</th>
+    <th>Type</th>
+    <th></th>
+  </tr>
+
+<% @capacites.each do |capacite| %>
+  <tr>
+    <td><%= link_to capacite.nom, capacite %></td>
+    <td><%= capacite.description %></td>
+    <td><%= capacite.primaire %></td>
+    <td><%= capacite.type_cap %></td>
+    <td><%= link_to 'Edit', edit_capacite_path(capacite) %></td>
+    <!-- <td><%#= link_to 'Destroy', capacite, confirm: 'Are you sure?', method: :delete %></td> -->
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Capacite', new_capacite_path, class: 'btn btn-success' %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @routine.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @routine.description %>
+</p>
+
+<p>
+  <b>Foci:</b>
+  <%= @routine.foci %>
+</p>
+
+<p>
+  <b>Combinaison:</b>
+  <%= @routine.combinaison %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @routine.type %>
+</p>
+
+
+<%= link_to 'Edit', edit_routine_path(@routine) %> |
+<%= link_to 'Back', routines_path %>

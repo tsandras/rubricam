@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @sphere.name %>
+</p>
+
+<p>
+  <b>Specialite:</b>
+  <%= @sphere.specialite %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @sphere.description %>
+</p>
+
+<p>
+  <b>Niveau:</b>
+  <%= @sphere.niveau %>
+</p>
+
+<p>
+  <b>Personnage:</b>
+  <%= @sphere.personnage_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_sphere_path(@sphere) %> |
+<%= link_to 'Back', spheres_path %>

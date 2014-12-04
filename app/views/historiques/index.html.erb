@@ -1,0 +1,25 @@
+<h1>Listing historiques</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @historiques.each do |historique| %>
+  <tr>
+    <td><%= historique.nom %></td>
+    <td><%= historique.description %></td>
+    <td><%= link_to 'Show', historique %></td>
+    <td><%= link_to 'Edit', edit_historique_path(historique) %></td>
+    <td><%= link_to 'Destroy', historique, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Historique', new_historique_path %>

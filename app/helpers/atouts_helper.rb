@@ -1,0 +1,2 @@
+module AtoutsHelper
+end

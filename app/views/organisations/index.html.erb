@@ -1,0 +1,29 @@
+<h1>Listing organisations</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @organisations.each do |organisation| %>
+  <tr>
+    <td><%= organisation.nom %></td>
+    <td><%= organisation.description %></td>
+    <td><%= organisation.type %></td>
+    <td><%= organisation.date %></td>
+    <td><%= link_to 'Show', organisation %></td>
+    <td><%= link_to 'Edit', edit_organisation_path(organisation) %></td>
+    <td><%= link_to 'Destroy', organisation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Organisation', new_organisation_path %>

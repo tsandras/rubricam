@@ -1,0 +1,31 @@
+<h1>Listing spheres</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Specialite</th>
+    <th>Description</th>
+    <th>Niveau</th>
+    <th>Personnage</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @spheres.each do |sphere| %>
+  <tr>
+    <td><%= sphere.name %></td>
+    <td><%= sphere.specialite %></td>
+    <td><%= sphere.description %></td>
+    <td><%= sphere.niveau %></td>
+    <td><%= sphere.personnage_id %></td>
+    <td><%= link_to 'Show', sphere %></td>
+    <td><%= link_to 'Edit', edit_sphere_path(sphere) %></td>
+    <td><%= link_to 'Destroy', sphere, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Sphere', new_sphere_path %>

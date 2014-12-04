@@ -1,0 +1,27 @@
+<h1>Listing lieus</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @lieus.each do |lieu| %>
+  <tr>
+    <td><%= lieu.nom %></td>
+    <td><%= lieu.description %></td>
+    <td><%= lieu.type %></td>
+    <td><%= link_to 'Show', lieu %></td>
+    <td><%= link_to 'Edit', edit_lieu_path(lieu) %></td>
+    <td><%= link_to 'Destroy', lieu, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Lieu', new_lieu_path %>

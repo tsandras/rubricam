@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  per_nom: MyString
+  per_prenom: MyString
+  per_date_naissance: 2014-11-11 18:08:17
+  per_description: MyText
+  per_volonte: 1
+  per_background: MyText
+  per_force: 1
+  per_dexterite: 1
+  per_vigueur: 1
+  per_charisme: 1
+  per_manipulation: 1
+  per_apparence: 1
+  per_perception: 1
+  per_intelligence: 1
+  per_astuce: 1
+  per_paradygme: 1
+  per_xps: 1
+  per_bonus: 1
+  per_date_mort: 1
+  per_points_conscience: 1
+  per_points_maitrise: 1
+  per_points_courage: 1
+  per_points_dynamique: 1
+  per_points_statique: 1
+  per_points_entropique: 1
+
+two:
+  per_nom: MyString
+  per_prenom: MyString
+  per_date_naissance: 2014-11-11 18:08:17
+  per_description: MyText
+  per_volonte: 1
+  per_background: MyText
+  per_force: 1
+  per_dexterite: 1
+  per_vigueur: 1
+  per_charisme: 1
+  per_manipulation: 1
+  per_apparence: 1
+  per_perception: 1
+  per_intelligence: 1
+  per_astuce: 1
+  per_paradygme: 1
+  per_xps: 1
+  per_bonus: 1
+  per_date_mort: 1
+  per_points_conscience: 1
+  per_points_maitrise: 1
+  per_points_courage: 1
+  per_points_dynamique: 1
+  per_points_statique: 1
+  per_points_entropique: 1

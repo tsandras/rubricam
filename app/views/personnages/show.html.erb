@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
+<p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
+Attitude : <%= @personnage.attitude %><br />
+Nature : <%= @personnage.nature %>
+<div class="row">
+  <div class="col-xs-6">
+    <b>Attributs</b>
+    <table>
+      <tr>
+        <td>Force <%= spec(@personnage.spec_force) %> : <%= @personnage.force %></td>
+        <td>Charisme <%= spec(@personnage.spec_charisme) %> : <%= @personnage.charisme %></td>
+        <td>Perception <%= spec(@personnage.spec_perception) %> : <%= @personnage.perception %></td>
+      </tr>
+      <tr>
+        <td>Dextérité <%= spec(@personnage.spec_dexterite) %> : <%= @personnage.dexterite %></td>
+        <td>Manipulation <%= spec(@personnage.spec_manipulation) %> : <%= @personnage.manipulation %></td>
+        <td>Intelligence <%= spec(@personnage.spec_intelligence) %> : <%= @personnage.intelligence %></td>
+      </tr>
+      <tr>
+        <td>Vigueur <%= spec(@personnage.spec_vigueur) %> : <%= @personnage.vigueur %></td>
+        <td>Apparence <%= spec(@personnage.spec_apparence) %> : <%= @personnage.apparence %></td>
+        <td>Astuce <%= spec(@personnage.spec_astuce) %> : <%= @personnage.astuce %></td>
+      </tr>
+    </table>
+    <br />
+    <%= show_capacite(@capacites) %>
+    <%= show_historique(@historiques) %>
+    <%= show_atout(@atouts) %>
+    <%= show_vertue(@personnage) %>
+    <%= show_resonnance(@personnage) %>
+    <div>
+      Volonté : <%= @personnage.volonte %><br />
+      <%= show_voie(@personnage) %>
+      <%= show_points_sang(@personnage) %>
+      <%= show_entelechie(@personnage) %>
+      <%= show_spheres(@personnage) %>
+      <%= show_kinain(@personnage) %>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="background">
+      <p><b>Description:</b> <%= @personnage.description %></p>
+      <p><b>Background:</b> <%= @personnage.background %></p>
+      <p><b>Paradigme:</b> <%= @personnage.paradygme %></p>
+      <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
+      <p><b>Date mort:</b> <%= @personnage.date_mort %></p>
+    </div>
+    <div class="relations">
+      <b>Relations</b><br />
+      <%= show_relations(@from_relations) %>
+      <%= show_relations(@to_relations) %>
+    </div>
+    <%= show_xps(@personnage) %>
+  </div>
+</div>
+<%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning' %>
+<%= link_to 'Retour', personnages_path, class: 'btn btn-primary' %>
+<%= link_to 'Supprimer', @personnage, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger' %>

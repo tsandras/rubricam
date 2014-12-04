@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @relation.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @relation.description %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @relation.date %>
+</p>
+
+<p>
+  <b>To:</b>
+  <%= @relation.to_personnage_id %>
+</p>
+
+<p>
+  <b>From:</b>
+  <%= @relation.from_personnage_id %>
+</p>
+
+<%= link_to 'Edit', edit_relation_path(@relation), class: 'btn btn-warning' %>
+<%= link_to 'Back', relations_path, class: 'btn btn-primary' %>

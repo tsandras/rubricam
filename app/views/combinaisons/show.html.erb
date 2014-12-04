@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nom:</b>
+  <%= @combinaison.nom %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @combinaison.description %>
+</p>
+
+<p>
+  <b>Niveau:</b>
+  <%= @combinaison.niveau %>
+</p>
+
+
+<%= link_to 'Edit', edit_combinaison_path(@combinaison) %> |
+<%= link_to 'Back', combinaisons_path %>
