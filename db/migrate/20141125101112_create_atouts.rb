@@ -1,6 +1,6 @@
-class CreatePersonnages < ActiveRecord::Migration
+class CreateAtouts < ActiveRecord::Migration
   def change
-    create_table :atouts_personnages do |t|
+    create_table :atouts do |t|
       t.integer :personnage_id
       t.integer :atout_id
     end
