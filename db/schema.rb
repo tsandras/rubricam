@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(:version => 20150209123741) do
     t.string   "nom"
     t.text     "description"
     t.integer  "cout"
-    t.boolean  "type"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.boolean  "has_detail"

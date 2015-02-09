@@ -20,6 +20,7 @@ class PersonnagesController < ApplicationController
     return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
     @capacites = CapacitesPersonnages.where(personnage_id: params[:id])
     @historiques = HistoriquesPersonnages.where(personnage_id: params[:id])
+    # raise @historiques.inspect
     @atouts = AtoutsPersonnages.where(personnage_id: params[:id])
     @to_relations = Relation.where(to_personnage_id: params[:id])
     @from_relations = Relation.where(from_personnage_id: params[:id])
@@ -41,6 +42,7 @@ class PersonnagesController < ApplicationController
 
   def edit
     @personnage = Personnage.find(params[:id])
+    # raise session["warden.user.user.key"][0].inspect
     return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
     gon.bonus = @personnage.has_bonus
     gon.base = @personnage.has_base
@@ -75,23 +77,27 @@ class PersonnagesController < ApplicationController
   end
 
   def update
+    puts "on entre dans le update"
     params[:personnage].delete("capacite_ids")
     params[:personnage].delete("historique_ids")
     params[:personnage].delete("discipline_ids")
     @personnage = Personnage.find(params[:id])
-    return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
+    # return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
     # update_atouts(params[:atouts_personnages])
     ok = false
     unless @personnage.has_base
+        puts "Le personnage n'a pas de base"
         if @personnage.ok_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
           params[:personnage][:has_base] = true
           params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
           ok = true
         else
+          puts "Le personnage n'est pas ok pour sa base"
           params[:personnage][:has_base] = false
         end
     else
       unless @personnage.has_bonus
+        puts "Le personnage n'a pas de bonus mais une base"
         if @personnage.ok_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
           params[:personnage][:has_bonus] = true
           params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
@@ -100,9 +106,11 @@ class PersonnagesController < ApplicationController
           params[:personnage][:has_bonus] = false
         end
       else
+        puts "Le personnage a une base et un bonus"
         ok = true
       end
     end
+    puts "On est a la fin ok = #{ok} et valid ? = #{@personnage.valid?}"
     respond_to do |format|
       if ok && @personnage.valid?
         @personnage.update_attributes(params[:personnage])
@@ -217,11 +225,13 @@ class PersonnagesController < ApplicationController
   def update_historiques(historiques_personnages)
     if historiques_personnages != nil
       historiques_personnages.each do |i, cp|
+        ii = i
+        ii = Historique.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
         if is_hp(i)
           cap = HistoriquesPersonnages.find(i)
           cap.update_attributes(cp)
         else
-          HistoriquesPersonnages.create(personnage_id: @personnage.id, historique_id: i.to_i, niveau: cp[:niveau])
+          HistoriquesPersonnages.create(personnage_id: @personnage.id, historique_id: ii.to_i, niveau: cp[:niveau])
         end
       end
     end

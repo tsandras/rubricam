@@ -368,7 +368,9 @@ function manageHistoriques(listToListening, NameClassOfInput) {
     var tmp = $(this).parent().text();
     if(this.checked) {
       if (! $("#f_"+tmp).length) {
-        $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value));
+        console.log($(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]);
+        var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]
+        $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value, id_jointure));
         listenerHistorique("#t_"+tmp.trim());
       }
     } else {
@@ -398,12 +400,13 @@ function manageDisciplines(listToListening, NameClassOfInput) {
       if (! $("#f_"+tmp).length) {
         var nbs = $(".dis").length;
         // En fonction du nombre de discipline que possède le personnage, faire poper la discipline sur la bonne colone
+        var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1];
         if (nbs == 0 || nbs == 3 || nbs == 6 || nbs == 9 || nbs == 12 || nbs == 15) {
-          $(".col-dis-0").append(getHTMLInputDiscipline($(this).parent().text(), this.value));
+          $(".col-dis-0").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure));
         } else if (nbs == 1 || nbs == 4 || nbs == 7 || nbs == 10 || nbs == 13 || nbs == 16) {
-          $(".col-dis-1").append(getHTMLInputDiscipline($(this).parent().text(), this.value));
+          $(".col-dis-1").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure));
         } else {
-          $(".col-dis-2").append(getHTMLInputDiscipline($(this).parent().text(), this.value));
+          $(".col-dis-2").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure));
         }
         listenerDiscipline("#t_"+tmp);
       }
@@ -432,7 +435,9 @@ function getHTMLInputCapacite(name, id) {
   return out;
 }
 
-function getHTMLInputHistorique(name, id) {
+function getHTMLInputHistorique(name, id, id_jointure) {
+  // var id_j = parseInt(id_jointure) + 1;
+  var id_lol = "t_" + id;
   out = "<div class=\"row his\" id=\"t_"+name+"\">";
   out += "<div class=\"col-md-4\">";
   out += "<b>"+name+"</b>"
@@ -442,8 +447,9 @@ function getHTMLInputHistorique(name, id) {
   out += "<div class=\"control-group integer optional historiques_personnages_niveau col-md-2\">";
   out += "<label class=\"integer optional control-label\" for=\"historiques_personnages_niveau\"></label>";
   out += "<div class=\"controls\">";
-  out += "<input class=\"numeric integer optional inpt_number\" id=\"historiques_personnages_niveau\" name=\"historiques_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\" /></div>";
+  out += "<input class=\"numeric integer optional inpt_number\" id=\"historiques_personnages_niveau\" name=\"historiques_personnages["+id_lol+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\" /></div>";
   out += "<span class=\"hidden\" id=\""+id+"\">"+id+"</span>";
+  // put id="id_generate_al"
   out += "</div>"
   out += "<div class=\"col-md-6\"></div>"
   return out;
@@ -463,7 +469,8 @@ function getHTMLInputAtout(name, id, cout) {
   return out;
 }
 
-function getHTMLInputDiscipline(name, id) {
+function getHTMLInputDiscipline(name, id, id_jointure) {
+  // var id_j = parseInt(id_jointure) + 1;
   out = "<div class=\"dis\" id=\"t_"+name+"\">";
   out += "<div class=\"col-md-6\">";
   out += "<b>"+name+"</b>"

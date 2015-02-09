@@ -1,8 +1,12 @@
 class CreateAtouts < ActiveRecord::Migration
   def change
     create_table :atouts do |t|
-      t.integer :personnage_id
-      t.integer :atout_id
+      t.column :nom, :string
+      t.column :description, :text
+      t.column :cout, :integer
+      t.column :description, :text
+
+      t.timestamps
     end
   end
 end

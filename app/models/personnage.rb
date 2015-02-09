@@ -126,7 +126,7 @@ class Personnage < ActiveRecord::Base
     historique = 0
     if capacites != nil
       capacites.each do |key, c|
-        raise key.inspect if key == nil
+        # raise key.inspect if key == nil
         if is_cp(key)
           capper = CapacitesPersonnages.find(key)
           cap = capper.capacite
@@ -151,6 +151,9 @@ class Personnage < ActiveRecord::Base
       end
     end
     # raise ok_base_surnaturel(personnage, spheres, disciplines).inspect
+    # puts "physique : #{physique}, social : #{social}, mental : #{mental}"
+    # puts "talent : #{talent}, competence : #{competence}, connaissance : #{connaissance}"
+    # puts "historique : #{historique}, surnaturel : #{ok_base_surnaturel(personnage, spheres, disciplines)}"
     return false unless ok_base_surnaturel(personnage, spheres, disciplines)
     return false unless physique != 10 || physique != 8 || physique != 6
     return false unless social != 10 || social != 8 || social != 6
@@ -218,6 +221,7 @@ class Personnage < ActiveRecord::Base
       points_capacites = points_capacites + (capacites[capper.id.to_s][:niveau].to_i - pb.to_i) * 2
     end
     perso_base["Historiques"].each do |key, pb|
+      key = key.split("_")[1].to_i if key.split("_")[0] == "t"
       hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
       points_capacites = points_capacites + (historiques[hisper.id.to_s][:niveau].to_i - pb.to_i)
     end
@@ -346,11 +350,17 @@ class Personnage < ActiveRecord::Base
     cap["Connaissance"] = connaissance
     his = {}
     historiques.each do |key, c|
-      if is_hp(key)
-        hisper = HistoriquesPersonnages.find(key)
-        hiss = hisper.historique
+      if key.split("_")[0] == "t"
+        # raise key.split("_")[1].to_i.inspect
+        hiss = Historique.find(key.split("_")[1].to_i)
+        # raise hiss.inspect
       else
-        hiss = Historique.find(key)
+        if is_hp(key)
+          hisper = HistoriquesPersonnages.find(key)
+          hiss = hisper.historique
+        else
+          hiss = Historique.find(key)
+        end
       end
       his[hiss.id] = c[:niveau].to_i
     end
