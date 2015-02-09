@@ -1,0 +1,166 @@
+<%= simple_form_for(@personnage) do |f| %>
+  <% @f = f %>
+  <% if @personnage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@personnage.errors.count, "error") %> prohibited this personnage from being saved:</h2>
+      <ul>
+      <% @personnage.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id="personnage">
+    <div id="name" class="row">
+      <%= @f.input :nom, label: 'Nom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
+      <%= @f.input :prenom, label: 'Prénom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
+      <%= @f.input :type_perso, collection: Personnage::TYPE, selected: 0, wrapper_html: { class: 'hidden'} %>
+    </div>
+    <br />
+    <div id="choose-type">
+      <div id="carrousel">
+        <div class="ss-type row" id="Mortel">
+          <div class="col-xs-4">
+            <%= Personnage::TYPE_DESCRIPTION["Mortel"] %>
+          </div>
+          <div class="col-xs-4">
+            <%= image_tag("mortal.jpg", class: "img-ss-type") %>
+          </div>
+        </div>
+        <div class="ss-type row" id="Mage">
+          <div class="col-xs-4">
+            <%= Personnage::TYPE_DESCRIPTION["Mage"] %>
+          </div>
+          <div class="col-xs-4">
+            <%= image_tag("mage.jpg", class: "img-ss-type") %>
+          </div>
+          <div class="col-xs-4">
+            <%= input_tradition(@f) %>
+            <div id="info-tradition"></div>
+          </div>
+        </div>
+        <div class="ss-type row" id="Vampire">
+          <div class="col-xs-4">
+            <%= Personnage::TYPE_DESCRIPTION["Vampire"] %>
+          </div>
+          <div class="col-xs-4">
+            <%= image_tag("vampire2.jpg", class: "img-ss-type") %>
+          </div>
+          <div class="col-xs-4">
+            <%= input_clan(@f) %>
+            <div id="info-clan"></div>
+          </div>
+        </div>
+      </div>
+      <div id="button-select">
+        <%= button_tag('', type: 'button', class: 'prev precedent') %>
+        <%= button_tag('', type: 'button', class: 'next suivant') %>
+      </div>
+    </div>
+    <%= @f.input :bonus, as: :radio_buttons, label: "Points bonus de départ", label_method: ->(name) { "<span class=\"ic_radio\"><i class=\"fa fa-check\"></i></span> <span>#{name[0]} (#{name[1]}pbs) </span>&nbsp;".html_safe }, collection: [["Faible", 10], ["Normal", 15], ["Puissant", 21]], input_html: { class: 'customRadio' }, item_wrapper_class: 'custom-radio' %>
+
+    <%= @f.input :xps, label: "<label class=\"custom_checkbox\">Ajouter de l'Xps ?<input type=\"checkbox\" name=\"\" id=\"add-xps\"><span class=\"ic-checkbox-design\" for=\"add-xps\"><i class=\"ic-checkbox-circle\"></i></span>".html_safe, wrapper_html: {class: 'inline'}, input_html: {class: 'hidden inpt_number_big'} %>
+    <br />
+    <p class="text-center"><%= @f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %></p>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // manageTestAjax("#personnage_type_perso");
+    // manageTypePerso("#personnage_type_perso");
+    manageClanPerso("#personnage_clan", "#info-clan");
+    manageTraditionPerso("#personnage_tradition", "#info-tradition");
+    ShowXps();
+    var $carrousel = $('#carrousel'),
+    $img = $('#carrousel .ss-type'),
+    indexImg = $img.length - 1,
+    i = 0,
+    $currentImg = $img.eq(i);
+    console.log(indexImg);
+    $img.css('display', 'none');
+    $currentImg.css('display', 'block');
+
+
+    $('.next').click(function(){
+
+        i++;
+
+        if ( i > indexImg ) {
+          i = 0;
+        }
+        // console.log($("#"+$img.eq(i).attr("id") +" .name"));
+        $("#personnage_type_perso").val($img.eq(i).attr("id"));
+        // manageTypePerso("#personnage_type_perso");
+        $img.css('display', 'none'); // on cache les images
+        $currentImg = $img.eq(i); // on définit la nouvelle image
+        $currentImg.css('display', 'block'); // puis on l'affiche
+    });
+
+    $('.prev').click(function(){ // image précédente
+
+        i--;
+
+        if ( i < 0 ) {
+          i = indexImg;
+        }
+        $("#personnage_type_perso").val($img.eq(i).attr("id"));
+        // manageTypePerso("#personnage_type_perso");
+        $img.css('display', 'none');
+        $currentImg = $img.eq(i);
+        $currentImg.css('display', 'block');
+    });
+
+    $('.custom-radio').children('input').on('change', function() {
+      $this = $(this);
+      // console.log("coucou", $('.customRadio[name="'+$(this).attr("name")+'"]'));
+      $('.customRadio[name="'+$(this).attr("name")+'"]').parent().removeClass('active');
+      $(this).parent().addClass('active');
+    });
+
+    $('.custom_checkbox').on('mouseup', function() {
+      $(this).children('.ic-checkbox-design').toggleClass('active');
+    });
+
+  });
+
+  // function manageTypePerso(idTypePerso) {
+  //   // $(idTypePerso).change(function() {
+  //     $(".ss-type-reel").remove();
+  //     if ($(this).val() == "Mage") {
+  //       var test = "<%=j input_tradition(@f) %>"
+  //       console.log(test);
+  //       $("#test").append(test);
+  //     } else if ($(this).val() == "Vampire") {
+  //       $("#test").append("<%=j input_clan(@f) %>");
+  //     }
+  //   // });
+  // }
+
+  function manageClanPerso(idSelectClan, idDivInfo) {
+    $(idSelectClan).change(function() {
+      $(idDivInfo).html("");
+      var name = $(this).val();
+      // console.log(name, gon.clans[""+name+""]);
+      $(idDivInfo).append(gon.clans[""+name+""]);
+    });
+  }
+
+  function manageTraditionPerso(idSelectTradition, idDivInfo) {
+    $(idSelectTradition).change(function() {
+      $(idDivInfo).html("");
+      var name = $(this).val();
+      $(idDivInfo).append(gon.traditions[""+name+""]);
+    });
+  }
+
+  // Here is the way to do Ajax request
+  function manageTestAjax(idTypePerso) {
+    $(idTypePerso).change(function() {
+      $.ajax({url: "/personnages/get_infos", success: function(data, textStatus) {
+        console.log(data.foo);
+      }});
+    });
+  }
+</script>

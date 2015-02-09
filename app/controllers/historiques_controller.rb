@@ -24,6 +24,7 @@ class HistoriquesController < ApplicationController
   # GET /historiques/new
   # GET /historiques/new.json
   def new
+    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
     @historique = Historique.new
 
     respond_to do |format|
@@ -34,12 +35,14 @@ class HistoriquesController < ApplicationController
 
   # GET /historiques/1/edit
   def edit
+    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
     @historique = Historique.find(params[:id])
   end
 
   # POST /historiques
   # POST /historiques.json
   def create
+    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
     @historique = Historique.new(params[:historique])
 
     respond_to do |format|
@@ -56,6 +59,7 @@ class HistoriquesController < ApplicationController
   # PUT /historiques/1
   # PUT /historiques/1.json
   def update
+    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
     @historique = Historique.find(params[:id])
 
     respond_to do |format|
@@ -72,6 +76,7 @@ class HistoriquesController < ApplicationController
   # DELETE /historiques/1
   # DELETE /historiques/1.json
   def destroy
+    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
     @historique = Historique.find(params[:id])
     @historique.destroy
 

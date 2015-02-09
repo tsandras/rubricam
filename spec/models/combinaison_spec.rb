@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: combinaisons
+#
+#  id          :integer          not null, primary key
+#  nom         :string(255)
+#  description :text
+#  niveau      :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Combinaison, :type => :model do

@@ -1,3 +1,78 @@
 // Place all the styles related to the accueil controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.classic-wod {
+  width: 16%;
+  float: left;
+}
+
+.x20 {
+  width: 50px;
+  height: 50px;
+}
+
+#block-20 {
+  margin: auto;
+  width: 300px;
+  font-size:28px;
+  color:#4c4c4c;
+  font-style: oblique;
+  font-family: cursive;
+}
+
+.encour {
+  width: 27%;
+  float: left;
+  position: relative;
+  left: 17.5%;
+}
+
+#prime {
+
+}
+
+#page-accueil {
+  width: 100%;
+}
+
+.menu-accueil {
+  width: 100%;
+  background:#fefefe;
+  border: 1px solid #C3D4DB;
+  border-top:1px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  -moz-box-shadow:rgba(0,0,0,0.15) 0 0 1px;
+  -webkit-box-shadow:rgba(0,0,0,0.15) 0 0 1px;
+  box-shadow:rgba(0,0,0,0.15) 0 0 1px;
+  color:#444;
+  font:normal 12px/14px Arial, Helvetica, Sans-serif;
+  overflow:hidden;
+  margin: 5px;
+}
+
+.menu-accueil-head {
+  padding:10px 20px;
+}
+
+.menu-accueil-body {
+  background:#fefefe;
+  border-top:1px solid #dde0e8;
+  border-bottom:1px solid #dde0e8;
+  padding:10px 20px;
+  // overflow:scroll;
+  td {
+    padding: 2px;
+  }
+}
+
+.menu-accueil-action {
+  background:#eff4f6;
+  border-top:1px solid #fff;
+  padding:10px 20px;
+  overflow:hidden;
+}
+
+

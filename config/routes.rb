@@ -1,30 +1,26 @@
 Rubricam::Application.routes.draw do
 
-  resources :arts
+  devise_for :users
 
+  resources :users
+
+  root :to => 'accueil#index'
+
+  resources :arts
 
   resources :royaumes
 
-
   resources :combinaisons
-
 
   resources :disciplines
 
-
   resources :objets
-
 
   resources :routines
 
-
   resources :spheres
 
-
   resources :lieus
-
-
-  root :to => 'accueil#index'
 
   resources :organisations
 
@@ -36,6 +32,8 @@ Rubricam::Application.routes.draw do
 
   resources :capacites
 
-  resources :personnages
+  resources :personnages do
+    get :get_infos, on: :collection  #For Ajax test
+  end
 
 end

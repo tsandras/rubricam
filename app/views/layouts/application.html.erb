@@ -2,13 +2,20 @@
 <html>
 <head>
   <title>Rubricam</title>
+  <%= include_gon %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= favicon_link_tag 'ankh2.ico' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <header>
+  </header>
   <div class="container">
     <%= yield %>
   </div>
+  <footer>
+      www.rubricam.fr
+  </footer>
 </body>
 </html>

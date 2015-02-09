@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://localhost:3000/personnages/52/edit -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Rubricam</title>
+
+  <link href="./Rubricam_files/application.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/bootstrap-datepicker.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/accueil.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/arts.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/atouts.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/capacites.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/combinaisons.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/disciplines.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/historiques.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/lieus.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/objets.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/organisations.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/personnages.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/relations.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/routines.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/royaumes.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/scaffolds.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/spheres.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/transactions.css" media="all" rel="stylesheet" type="text/css">
+<link href="./Rubricam_files/users.css" media="all" rel="stylesheet" type="text/css">
+  <script src="./Rubricam_files/jquery.js" type="text/javascript"></script>
+<script src="./Rubricam_files/jquery.placeholder.min.js" type="text/javascript"></script>
+<script src="./Rubricam_files/jquery_ujs.js" type="text/javascript"></script>
+<script src="./Rubricam_files/jquery-ui-1.10.custom.min.js" type="text/javascript"></script>
+<script src="./Rubricam_files/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
+<script src="./Rubricam_files/jquery-cbtoggle.js" type="text/javascript"></script>
+<script src="./Rubricam_files/core.js" type="text/javascript"></script>
+<script src="./Rubricam_files/personnage.js" type="text/javascript"></script>
+<script src="./Rubricam_files/accueil.js" type="text/javascript"></script>
+<script src="./Rubricam_files/arts.js" type="text/javascript"></script>
+<script src="./Rubricam_files/atouts.js" type="text/javascript"></script>
+<script src="./Rubricam_files/capacites.js" type="text/javascript"></script>
+<script src="./Rubricam_files/combinaisons.js" type="text/javascript"></script>
+<script src="./Rubricam_files/disciplines.js" type="text/javascript"></script>
+<script src="./Rubricam_files/historiques.js" type="text/javascript"></script>
+<script src="./Rubricam_files/jquery-datepicker-fr.js" type="text/javascript"></script>
+<script src="./Rubricam_files/lieus.js" type="text/javascript"></script>
+<script src="./Rubricam_files/objets.js" type="text/javascript"></script>
+<script src="./Rubricam_files/organisations.js" type="text/javascript"></script>
+<script src="./Rubricam_files/personnages.js" type="text/javascript"></script>
+<script src="./Rubricam_files/relations.js" type="text/javascript"></script>
+<script src="./Rubricam_files/routines.js" type="text/javascript"></script>
+<script src="./Rubricam_files/royaumes.js" type="text/javascript"></script>
+<script src="./Rubricam_files/spheres.js" type="text/javascript"></script>
+<script src="./Rubricam_files/transactions.js" type="text/javascript"></script>
+<script src="./Rubricam_files/users.js" type="text/javascript"></script>
+<script src="./Rubricam_files/application.js" type="text/javascript"></script>
+  <link href="http://localhost:3000/assets/ankh2.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="79ZIpmquWDVEnCEdwo6tFzgmLdymdwB/GHPkFNqwXzs=" name="csrf-token">
+</head>
+<body>
+  <div class="container">
+    <form accept-charset="UTF-8" action="http://localhost:3000/personnages/52" class="simple_form edit_personnage" id="edit_personnage_52" method="post" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="put"><input name="authenticity_token" type="hidden" value="79ZIpmquWDVEnCEdwo6tFzgmLdymdwB/GHPkFNqwXzs="></div>
+  <div id="menu">
+    <a href="javascript:;" class="close" style="display: none;"></a>
+    <div class="capacite"><label for="search_capacite"> Rechercher Capacite :</label> <input id="search_capacite" type="text" onkeypress="filter(this, &#39;.capacite .checkbox .check_boxes&#39;)" onkeyup=" epurationCheckBox(this, &#39;.capacite .checkbox .check_boxes&#39;)"><div class="control-group check_boxes optional personnage_capacites col-md-12"><label class="check_boxes optional control-label">Capacites</label><div class="controls"><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_1" name="personnage[capacite_ids][]" type="checkbox" value="1">Equitation - <i>Compétence</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_3" name="personnage[capacite_ids][]" type="checkbox" value="3">Melee - <i>Compétence</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_4" name="personnage[capacite_ids][]" type="checkbox" value="4">Vigilance - <i>Talent</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_5" name="personnage[capacite_ids][]" type="checkbox" value="5">Intimidation - <i>Talent</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_6" name="personnage[capacite_ids][]" type="checkbox" value="6">Erudition - <i>Connaissance</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_7" name="personnage[capacite_ids][]" type="checkbox" value="7">Médecine - <i>Connaissance</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_8" name="personnage[capacite_ids][]" type="checkbox" value="8">Athlétisme - <i>Talent</i></label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_capacite_ids_9" name="personnage[capacite_ids][]" type="checkbox" value="9">Bagarre - <i>Talent</i></label><input name="personnage[capacite_ids][]" type="hidden" value=""></div></div></div>
+    <div class="historique"><label for="search_historique"> Rechercher Historique :</label><input id="search_historique" type="text" onkeypress="filter(this, &#39;.historique .checkbox .check_boxes&#39;)" onkeyup=" epurationCheckBox(this, &#39;.historique .checkbox .check_boxes&#39;)"><div class="control-group check_boxes optional personnage_historiques col-md-12"><label class="check_boxes optional control-label">Historiques</label><div class="controls"><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_historique_ids_1" name="personnage[historique_ids][]" type="checkbox" value="1">Arcane</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_historique_ids_2" name="personnage[historique_ids][]" type="checkbox" value="2">Génération</label><input name="personnage[historique_ids][]" type="hidden" value=""></div></div></div>
+    <div class="atout"><label for="search_atout"> Rechercher Atout :</label><input id="search_atout" type="text" onkeypress="filter(this, &#39;.atout .checkbox .check_boxes&#39;)" onkeyup=" epurationCheckBox(this, &#39;.atout .checkbox .check_boxes&#39;)"><div class="control-group check_boxes optional personnage_atouts col-md-12"><label class="check_boxes optional control-label">Atouts</label><div class="controls"><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_atout_ids_1" name="personnage[atout_ids][]" type="checkbox" value="1">Chanceux (3)</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_atout_ids_2" name="personnage[atout_ids][]" type="checkbox" value="2">Touche-à-tout (5)</label><input name="personnage[atout_ids][]" type="hidden" value=""></div></div></div>
+    <div class="discipline"><label for="search_discipline"> Rechercher Discipline :</label><input id="search_discipline" type="text" onkeypress="filter(this, &#39;.discipline .checkbox .check_boxes&#39;)" onkeyup=" epurationCheckBox(this, &#39;.discipline .checkbox .check_boxes&#39;)"><div class="control-group check_boxes optional personnage_disciplines col-md-12"><label class="check_boxes optional control-label">Disciplines</label><div class="controls"><label class="checkbox"><input checked="checked" class="check_boxes optional" id="personnage_discipline_ids_2" name="personnage[discipline_ids][]" type="checkbox" value="2">Aliénation</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_3" name="personnage[discipline_ids][]" type="checkbox" value="3">Animalisme</label><label class="checkbox"><input checked="checked" class="check_boxes optional" id="personnage_discipline_ids_4" name="personnage[discipline_ids][]" type="checkbox" value="4">Auspex</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_5" name="personnage[discipline_ids][]" type="checkbox" value="5">Célérité</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_6" name="personnage[discipline_ids][]" type="checkbox" value="6">Chimérie</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_7" name="personnage[discipline_ids][]" type="checkbox" value="7">Domination</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_8" name="personnage[discipline_ids][]" type="checkbox" value="8">Force d'âme</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_9" name="personnage[discipline_ids][]" type="checkbox" value="9">Obténébration</label><label class="checkbox"><input checked="checked" class="check_boxes optional" id="personnage_discipline_ids_10" name="personnage[discipline_ids][]" type="checkbox" value="10">Occultation</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_11" name="personnage[discipline_ids][]" type="checkbox" value="11">Nécromancie</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_12" name="personnage[discipline_ids][]" type="checkbox" value="12">Présence</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_13" name="personnage[discipline_ids][]" type="checkbox" value="13">Protéisme</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_14" name="personnage[discipline_ids][]" type="checkbox" value="14">Puissance</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_15" name="personnage[discipline_ids][]" type="checkbox" value="15">Quietus</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_16" name="personnage[discipline_ids][]" type="checkbox" value="16">Serpentis</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_17" name="personnage[discipline_ids][]" type="checkbox" value="17">Thaumaturgie</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_18" name="personnage[discipline_ids][]" type="checkbox" value="18">Vicissitude</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_19" name="personnage[discipline_ids][]" type="checkbox" value="19">Daimonon</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_20" name="personnage[discipline_ids][]" type="checkbox" value="20">Mytherceria</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_21" name="personnage[discipline_ids][]" type="checkbox" value="21">Obéah</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_22" name="personnage[discipline_ids][]" type="checkbox" value="22">Ogham</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_23" name="personnage[discipline_ids][]" type="checkbox" value="23">Temporis</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_24" name="personnage[discipline_ids][]" type="checkbox" value="24">Thanatosis</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_25" name="personnage[discipline_ids][]" type="checkbox" value="25">Vol</label><label class="checkbox" style="display: none;"><input class="check_boxes optional" id="personnage_discipline_ids_26" name="personnage[discipline_ids][]" type="checkbox" value="26">Visceratika</label><input name="personnage[discipline_ids][]" type="hidden" value=""></div></div></div>
+  </div>
+  <div id="page">
+  <button class="menu_btn" id="show_menu" name="button" type="button"></button>
+  <div class="row">
+    <div class="col-xs-4">
+      <div><b>Coeur Petit</b></div>
+      <br>
+      <div class="control-group string optional personnage_date_naissance inline"><label class="string optional control-label" for="personnage_date_naissance">Date de naissance :</label><div class="controls"><input class="string optional datepicker inpt_string" id="personnage_date_naissance" name="personnage[date_naissance]" placeholder="dd/mm/yyyy" size="50" type="text"></div></div>
+    </div>
+    <div class="col-xs-4">
+      <div class="control-group select optional personnage_nature inline"><label class="select optional control-label" for="personnage_nature">Nature :</label><div class="controls"><select class="select optional" id="personnage_nature" name="personnage[nature]"><option value=""></option>
+<option value="Abandonné">Abandonné</option>
+<option value="Ange Gardien">Ange Gardien</option>
+<option value="Architecte">Architecte</option>
+<option value="Autiste">Autiste</option>
+<option value="Autocrate">Autocrate</option>
+<option value="Avant Gardiste">Avant Gardiste</option>
+<option value="Barbare">Barbare</option>
+<option value="Battant">Battant</option>
+<option value="Bon Vivant">Bon Vivant</option>
+<option value="Bouffon">Bouffon</option>
+<option value="Brute">Brute</option>
+<option value="Chevalier">Chevalier</option>
+<option value="Confident">Confident</option>
+<option value="Conformiste">Conformiste</option>
+<option value="Déviant">Déviant</option>
+<option value="Dirigeant">Dirigeant</option>
+<option value="Enfant">Enfant</option>
+<option value="Fanatique">Fanatique</option>
+<option value="Gardien">Gardien</option>
+<option value="Gourou">Gourou</option>
+<option value="Grincheux">Grincheux</option>
+<option value="Idéaliste">Idéaliste</option>
+<option value="Individualiste">Individualiste</option>
+<option value="Innovateur">Innovateur</option>
+<option value="Opportuniste">Opportuniste</option>
+<option value="Optimiste">Optimiste</option>
+<option value="Passionné">Passionné</option>
+<option value="Pédagogue">Pédagogue</option>
+<option value="Pénitent">Pénitent</option>
+<option value="Perfectionniste">Perfectionniste</option>
+<option value="Poltron">Poltron</option>
+<option value="Provocateur">Provocateur</option>
+<option value="Rebelle">Rebelle</option>
+<option value="Risque Tout">Risque Tout</option>
+<option value="Satique">Satique</option>
+<option value="Sage">Sage</option>
+<option value="Scientifique">Scientifique</option>
+<option value="Séducteur">Séducteur</option>
+<option value="Sensuel">Sensuel</option>
+<option value="Sociopathe">Sociopathe</option>
+<option value="Soldat">Soldat</option>
+<option value="Solitaire">Solitaire</option>
+<option value="Survivant">Survivant</option>
+<option value="Tyran">Tyran</option>
+<option value="Visionnaire">Visionnaire</option></select></div></div>
+      <br>
+      <div class="control-group select optional personnage_attitude inline"><label class="select optional control-label" for="personnage_attitude">Attitude :</label><div class="controls"><select class="select optional" id="personnage_attitude" name="personnage[attitude]"><option value=""></option>
+<option value="Abandonné">Abandonné</option>
+<option value="Ange Gardien">Ange Gardien</option>
+<option value="Architecte">Architecte</option>
+<option value="Autiste">Autiste</option>
+<option value="Autocrate">Autocrate</option>
+<option value="Avant Gardiste">Avant Gardiste</option>
+<option value="Barbare">Barbare</option>
+<option value="Battant">Battant</option>
+<option value="Bon Vivant">Bon Vivant</option>
+<option value="Bouffon">Bouffon</option>
+<option value="Brute">Brute</option>
+<option value="Chevalier">Chevalier</option>
+<option value="Confident">Confident</option>
+<option value="Conformiste">Conformiste</option>
+<option value="Déviant">Déviant</option>
+<option value="Dirigeant">Dirigeant</option>
+<option value="Enfant">Enfant</option>
+<option value="Fanatique">Fanatique</option>
+<option value="Gardien">Gardien</option>
+<option value="Gourou">Gourou</option>
+<option value="Grincheux">Grincheux</option>
+<option value="Idéaliste">Idéaliste</option>
+<option value="Individualiste">Individualiste</option>
+<option value="Innovateur">Innovateur</option>
+<option value="Opportuniste">Opportuniste</option>
+<option value="Optimiste">Optimiste</option>
+<option value="Passionné">Passionné</option>
+<option value="Pédagogue">Pédagogue</option>
+<option value="Pénitent">Pénitent</option>
+<option value="Perfectionniste">Perfectionniste</option>
+<option value="Poltron">Poltron</option>
+<option value="Provocateur">Provocateur</option>
+<option value="Rebelle">Rebelle</option>
+<option value="Risque Tout">Risque Tout</option>
+<option value="Satique">Satique</option>
+<option value="Sage">Sage</option>
+<option value="Scientifique">Scientifique</option>
+<option value="Séducteur">Séducteur</option>
+<option value="Sensuel">Sensuel</option>
+<option value="Sociopathe">Sociopathe</option>
+<option value="Soldat">Soldat</option>
+<option value="Solitaire">Solitaire</option>
+<option value="Survivant">Survivant</option>
+<option value="Tyran">Tyran</option>
+<option value="Visionnaire">Visionnaire</option></select></div></div>
+    </div>
+    <div class="col-xs-4">
+      <b>Vampire</b>
+    </div>
+  </div>
+  <br>
+  <div class="row attributs">
+    <p class="text-center"><b>Attributs</b></p>
+    <div class="col-xs-4">
+      <p class="text-center"><b>Physique</b></p>
+      <div class="row attribut"><div class="control-group integer optional personnage_force col-md-4"><label class="integer optional control-label" for="personnage_force">Force</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_force" name="personnage[force]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-force" name="button" type="button"></button><button class="plus" id="plus-force" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-force"> Les points que vous assignez à la Force de votre personnage représente sa force brute. Cela détermine le poids qu'il peut soulever, porter ou pousser. </div><div class="control-group string optional personnage_spec_force hidden" id="specialite-force"><label class="string optional control-label" for="personnage_spec_force">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_force" name="personnage[spec_force]" size="50" type="text"></div></div></div></div>
+      <div class="row attribut"><div class="control-group integer optional personnage_dexterite col-md-4"><label class="integer optional control-label" for="personnage_dexterite">Dextérité</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_dexterite" name="personnage[dexterite]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-dexterite" name="button" type="button"></button><button class="plus" id="plus-dexterite" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-dexterite"> La dextérité mesure les capacités athlétiques d'un personnage. Elle exprime ses prouesses physiques, comme la grâce, la vitesse, les réflexes physiques, la coordination des mouvements et l'agilité. </div><div class="control-group string optional personnage_spec_dexterite hidden" id="specialite-dexterite"><label class="string optional control-label" for="personnage_spec_dexterite">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_dexterite" name="personnage[spec_dexterite]" size="50" type="text"></div></div></div></div>
+      <div class="row attribut"><div class="control-group integer optional personnage_vigueur col-md-4"><label class="integer optional control-label" for="personnage_vigueur">Vigueur</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_vigueur" name="personnage[vigueur]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-vigueur" name="button" type="button"></button><button class="plus" id="plus-vigueur" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-vigueur"> La vigueur représente la capacité d'un personnage à supporter l'effort physique. C'est une mesure de la résistance corporelle et de l'adaptation. </div><div class="control-group string optional personnage_spec_vigueur hidden" id="specialite-vigueur"><label class="string optional control-label" for="personnage_spec_vigueur">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_vigueur" name="personnage[spec_vigueur]" size="50" type="text"></div></div></div></div>
+    </div>
+    <div class="col-xs-4">
+      <p class="text-center"><b>Social</b></p>
+      <div class="row attribut"><div class="control-group integer optional personnage_charisme col-md-4"><label class="integer optional control-label" for="personnage_charisme">Charisme</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_charisme" name="personnage[charisme]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-charisme" name="button" type="button"></button><button class="plus" id="plus-charisme" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-charisme"> Le charisme d'un personnage évalue son charme et son caractère agréable. Il représente sa capacité à séduire, plaire, complimenter et impressionner les autres. </div><div class="control-group string optional personnage_spec_charisme hidden" id="specialite-charisme"><label class="string optional control-label" for="personnage_spec_charisme">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_charisme" name="personnage[spec_charisme]" size="50" type="text"></div></div></div></div>
+      <div class="row attribut"><div class="control-group integer optional personnage_manipulation col-md-4"><label class="integer optional control-label" for="personnage_manipulation">Manipulation</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_manipulation" name="personnage[manipulation]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-manipulation" name="button" type="button"></button><button class="plus" id="plus-manipulation" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-manipulation"> Ce trait couvre la capacité d'un personnage à faire plier les autres devant ses caprices, à remarquer lorsque quelqu'un essaie de le manipuler ou de cacher ses réelles motivations. </div><div class="control-group string optional personnage_spec_manipulation hidden" id="specialite-manipulation"><label class="string optional control-label" for="personnage_spec_manipulation">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_manipulation" name="personnage[spec_manipulation]" size="50" type="text"></div></div></div></div>
+      <div class="row attribut"><div class="control-group integer optional personnage_apparence col-md-4"><label class="integer optional control-label" for="personnage_apparence">Apparence</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_apparence" name="personnage[apparence]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-apparence" name="button" type="button"></button><button class="plus" id="plus-apparence" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-apparence"> L'apparence représente la beauté générale de votre personnage. Cela inclut sa beauté physique, sa grâce et les qualités indéfinissables qui rendent une personne attirante. </div><div class="control-group string optional personnage_spec_apparence hidden" id="specialite-apparence"><label class="string optional control-label" for="personnage_spec_apparence">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_apparence" name="personnage[spec_apparence]" size="50" type="text"></div></div></div></div>
+    </div>
+    <div class="col-xs-4">
+      <p class="text-center"><b>Mental</b></p>
+      <div class="row attribut"><div class="control-group integer optional personnage_perception col-md-4"><label class="integer optional control-label" for="personnage_perception">Perception</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_perception" name="personnage[perception]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-perception" name="button" type="button"></button><button class="plus" id="plus-perception" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-perception"> Ce trait exprime la capacité d'un personnage à remarquer les détails de son environnement. </div><div class="control-group string optional personnage_spec_perception hidden" id="specialite-perception"><label class="string optional control-label" for="personnage_spec_perception">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_perception" name="personnage[spec_perception]" size="50" type="text"></div></div></div></div>
+      <div class="row attribut"><div class="control-group integer optional personnage_intelligence col-md-4"><label class="integer optional control-label" for="personnage_intelligence">Intelligence</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_intelligence" name="personnage[intelligence]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-intelligence" name="button" type="button"></button><button class="plus" id="plus-intelligence" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-intelligence"> L'Intelligence définit ce que les gens appellent l'habilé. Cela represente la capacité a résoudre des problèmes, à se rappeler de certains faits, à évaluer des situations, à raisonner et faire preuve de logique. </div><div class="control-group string optional personnage_spec_intelligence hidden" id="specialite-intelligence"><label class="string optional control-label" for="personnage_spec_intelligence">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_intelligence" name="personnage[spec_intelligence]" size="50" type="text"></div></div></div></div>
+      <div class="row attribut"><div class="control-group integer optional personnage_astuce col-md-4"><label class="integer optional control-label" for="personnage_astuce">Astuce</label><div class="controls"><input class="numeric integer optional inpt_number" id="personnage_astuce" name="personnage[astuce]" readonly="readonly" step="1" type="number" value="1"></div></div><button class="moins" id="minus-astuce" name="button" type="button"></button><button class="plus" id="plus-astuce" name="button" type="button"></button><div class="col-md-8"><div class="description-attribut" id="description-astuce"> l'Astuce de votre personnage représente sa capacité à penser rapidement, à réagir avec bon sens aux situations critiques et à trouver des solutions créatives aux problemes immédiats. </div><div class="control-group string optional personnage_spec_astuce hidden" id="specialite-astuce"><label class="string optional control-label" for="personnage_spec_astuce">Spécialité</label><div class="controls"><input class="string optional inpt_string" id="personnage_spec_astuce" name="personnage[spec_astuce]" size="50" type="text"></div></div></div></div>
+    </div>
+  </div>
+  <div class="row capacites">
+    <p class="text-center"><b>Capacités</b></p>
+    <div class="col-xs-4 Talent"><p class="text-center"><b>Talents</b></p><div class="cap"></div></div><div class="col-xs-4 Compétence"><p class="text-center"><b>Compétences</b></p><div class="cap"></div></div><div class="col-xs-4 Connaissance"><p class="text-center"><b>Connaissances</b></p><div class="cap"></div></div>
+  </div>
+  <div class="row spheres">
+    <p class="text-center"><b>Sphères</b></p>
+    <div class="col-xs-4"><div class="row sph" id="Correspondance"><button class="moins_cap" id="minus-Correspondance" name="button" type="button"></button><button class="plus_cap" id="plus-Correspondance" name="button" type="button"></button><div class="col-md-4"><b>Correspondance</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1616][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Correspondance"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1616][specialite]" size="50" type="text"></div></div></div><div class="row sph" id="Entropie"><button class="moins_cap" id="minus-Entropie" name="button" type="button"></button><button class="plus_cap" id="plus-Entropie" name="button" type="button"></button><div class="col-md-4"><b>Entropie</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1617][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Entropie"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1617][specialite]" size="50" type="text"></div></div></div><div class="row sph" id="Esprit"><button class="moins_cap" id="minus-Esprit" name="button" type="button"></button><button class="plus_cap" id="plus-Esprit" name="button" type="button"></button><div class="col-md-4"><b>Esprit</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1618][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Esprit"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1618][specialite]" size="50" type="text"></div></div></div></div><div class="col-xs-4"><div class="row sph" id="Forces"><button class="moins_cap" id="minus-Forces" name="button" type="button"></button><button class="plus_cap" id="plus-Forces" name="button" type="button"></button><div class="col-md-4"><b>Forces</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1619][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Forces"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1619][specialite]" size="50" type="text"></div></div></div><div class="row sph" id="Matiere"><button class="moins_cap" id="minus-Matiere" name="button" type="button"></button><button class="plus_cap" id="plus-Matiere" name="button" type="button"></button><div class="col-md-4"><b>Matiere</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1620][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Matiere"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1620][specialite]" size="50" type="text"></div></div></div><div class="row sph" id="Prime"><button class="moins_cap" id="minus-Prime" name="button" type="button"></button><button class="plus_cap" id="plus-Prime" name="button" type="button"></button><div class="col-md-4"><b>Prime</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1621][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Prime"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1621][specialite]" size="50" type="text"></div></div></div></div><div class="col-xs-4"><div class="row sph" id="Psyche"><button class="moins_cap" id="minus-Psyche" name="button" type="button"></button><button class="plus_cap" id="plus-Psyche" name="button" type="button"></button><div class="col-md-4"><b>Psyche</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1622][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Psyche"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1622][specialite]" size="50" type="text"></div></div></div><div class="row sph" id="Temps"><button class="moins_cap" id="minus-Temps" name="button" type="button"></button><button class="plus_cap" id="plus-Temps" name="button" type="button"></button><div class="col-md-4"><b>Temps</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1623][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Temps"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1623][specialite]" size="50" type="text"></div></div></div><div class="row sph" id="Vie"><button class="moins_cap" id="minus-Vie" name="button" type="button"></button><button class="plus_cap" id="plus-Vie" name="button" type="button"></button><div class="col-md-4"><b>Vie</b></div><div class="control-group integer optional sphere_niveau col-md-2"><label class="integer optional control-label" for="spheres_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="spheres_personnages_niveau" name="spheres_personnages[1624][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="control-group string optional sphere_specialite col-md-6 hidden" id="specialite-Vie"><label class="string optional control-label" for="spheres_personnages_specialite">Specialite</label><div class="controls"><input class="string optional" id="spheres_personnages_specialite" name="spheres_personnages[1624][specialite]" size="50" type="text"></div></div></div></div></div>
+  </div>
+  <div class="row disciplines">
+    <p class="text-center"><b>Disciplines</b></p>
+    <div class="col-md-4 col-dis-0"><div class="row dis" id="f_Auspex"><button class="moins_cap" id="minus-Auspex" name="button" type="button"></button><button class="plus_cap" id="plus-Auspex" name="button" type="button"></button><div class="col-md-6"><b> Auspex </b></div><div class="control-group integer optional disciplines_personnages_niveau col-md-2"><label class="integer optional control-label" for="disciplines_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="disciplines_personnages_niveau" name="disciplines_personnages[19][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="col-md-4"></div><span class="hidden" id="cc.id">4</span></div></div><div class="col-md-4 col-dis-1"><div class="row dis" id="f_Aliénation"><button class="moins_cap" id="minus-Aliénation" name="button" type="button"></button><button class="plus_cap" id="plus-Aliénation" name="button" type="button"></button><div class="col-md-6"><b> Aliénation </b></div><div class="control-group integer optional disciplines_personnages_niveau col-md-2"><label class="integer optional control-label" for="disciplines_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="disciplines_personnages_niveau" name="disciplines_personnages[20][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="col-md-4"></div><span class="hidden" id="cc.id">2</span></div></div><div class="col-md-4 col-dis-2"><div class="row dis" id="f_Occultation"><button class="moins_cap" id="minus-Occultation" name="button" type="button"></button><button class="plus_cap" id="plus-Occultation" name="button" type="button"></button><div class="col-md-6"><b> Occultation </b></div><div class="control-group integer optional disciplines_personnages_niveau col-md-2"><label class="integer optional control-label" for="disciplines_personnages_niveau">&nbsp;</label><div class="controls"><input class="numeric integer optional inpt_number" id="disciplines_personnages_niveau" name="disciplines_personnages[21][niveau]" readonly="readonly" step="1" type="number" value="0"></div></div><div class="col-md-4"></div><span class="hidden" id="cc.id">10</span></div></div>
+  </div>
+  <!-- LIMIT OLD/NEW VERSION -->
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="control-group integer optional personnage_volonte"><label class="integer optional control-label" for="personnage_volonte">Volonte</label><div class="controls"><input class="numeric integer optional" id="personnage_volonte" name="personnage[volonte]" step="1" type="number"></div></div>
+      <div class="row">
+        <div class="control-group select optional personnage_voie col-md-10"><label class="select optional control-label" for="personnage_voie">Voie</label><div class="controls"><select class="select optional" id="personnage_voie" name="personnage[voie]"><option value=""></option>
+<option value="La Voie de l&#39;Humanité">La Voie de l'Humanité</option>
+<option value="La Voie de la Bête">La Voie de la Bête</option>
+<option value="La Voie de la Chevalerie">La Voie de la Chevalerie</option>
+<option value="La Voie des Coeurs Ecorchés">La Voie des Coeurs Ecorchés</option>
+<option value="La Voie de la concentration Intérieure">La Voie de la concentration Intérieure</option>
+<option value="La Voie du Diable">La Voie du Diable</option>
+<option value="La Voie de Lilith">La Voie de Lilith</option>
+<option value="La Voie des Métamorphoses">La Voie des Métamorphoses</option>
+<option value="La Voie de la Nuit">La Voie de la Nuit</option>
+<option value="La Voie des Ossements">La Voie des Ossements</option>
+<option value="La Voie du Paradis">La Voie du Paradis</option>
+<option value="La Voie du Paradoxe">La Voie du Paradoxe</option>
+<option value="La Voie du Sang">La Voie du Sang</option>
+<option value="La Voie du Typhon">La Voie du Typhon</option></select></div></div><div class="control-group integer optional personnage_niveau_voie col-md-2"><label class="integer optional control-label" for="personnage_niveau_voie">Niveau</label><div class="controls"><input class="numeric integer optional" id="personnage_niveau_voie" name="personnage[niveau_voie]" step="1" type="number"></div></div>
+      </div>
+      <div class="control-group integer optional personnage_points_sang"><label class="integer optional control-label" for="personnage_points_sang">Points sang</label><div class="controls"><input class="numeric integer optional" id="personnage_points_sang" name="personnage[points_sang]" step="1" type="number"></div></div>
+
+
+      <div class="row">
+        <div class="col-md-12"><b>Vertue</b></div><div class="control-group integer optional personnage_points_conscience col-md-4"><label class="integer optional control-label" for="personnage_points_conscience">Conscience</label><div class="controls"><input class="numeric integer optional" id="personnage_points_conscience" name="personnage[points_conscience]" step="1" type="number"></div></div><div class="control-group integer optional personnage_points_maitrise col-md-4"><label class="integer optional control-label" for="personnage_points_maitrise">Maîtrise de soi</label><div class="controls"><input class="numeric integer optional" id="personnage_points_maitrise" name="personnage[points_maitrise]" step="1" type="number"></div></div><div class="control-group integer optional personnage_points_courage col-md-4"><label class="integer optional control-label" for="personnage_points_courage">Courage</label><div class="controls"><input class="numeric integer optional" id="personnage_points_courage" name="personnage[points_courage]" step="1" type="number"></div></div>
+
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="row">
+      <div class="his">
+        <!-- Here, pop of histories -->
+      </div>
+
+      </div>
+      <br>
+      <br>
+    </div>
+    <div class="col-xs-4">
+      <div class="control-group text optional personnage_background"><label class="text optional control-label" for="personnage_background">Background</label><div class="controls"><textarea class="text optional" cols="40" id="personnage_background" name="personnage[background]" rows="20"></textarea></div></div>
+      <div class="control-group text optional personnage_paradygme"><label class="text optional control-label" for="personnage_paradygme">Paradygme</label><div class="controls"><textarea class="text optional" cols="40" id="personnage_paradygme" name="personnage[paradygme]" rows="20"></textarea></div></div>
+      <div class="control-group text optional personnage_description"><label class="text optional control-label" for="personnage_description">Description</label><div class="controls"><textarea class="text optional" cols="40" id="personnage_description" name="personnage[description]" rows="20"></textarea></div></div>
+      <div class="control-group string optional personnage_date_mort"><label class="string optional control-label" for="personnage_date_mort">Date mort</label><div class="controls"><input class="string optional datepicker" id="personnage_date_mort" name="personnage[date_mort]" placeholder="dd/mm/yyyy" size="50" type="text"></div></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+      <div class="control-group integer required personnage_bonus"><label class="integer required control-label" for="personnage_bonus">Bonus</label><div class="controls"><input class="numeric integer required" id="personnage_bonus" name="personnage[bonus]" step="1" type="number" value="21"></div></div>
+    </div>
+    <div class="col-md-1">
+      <div class="control-group integer optional personnage_xps"><label class="integer optional control-label" for="personnage_xps">Xps</label><div class="controls"><input class="numeric integer optional" id="personnage_xps" name="personnage[xps]" step="1" type="number" value="56"></div></div>
+    </div>
+    <div class="col-md-1">
+      <div class="control-group integer optional personnage_reste_xps"><label class="integer optional control-label" for="personnage_reste_xps">Reste xps</label><div class="controls"><input class="numeric integer optional" id="personnage_reste_xps" name="personnage[reste_xps]" step="1" type="number"></div></div>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-primary" id="calculer" name="button" type="button">Calculer</button>
+    </div>
+  </div>
+
+  <div class="control-group hidden personnage_caracteristique_base"><div class="controls"><input class="hidden" id="personnage_caracteristique_base" name="personnage[caracteristique_base]" type="hidden"></div></div>
+  <div class="control-group hidden personnage_caracteristique_bonus"><div class="controls"><input class="hidden" id="personnage_caracteristique_bonus" name="personnage[caracteristique_bonus]" type="hidden"></div></div>
+  <input class="btn btn btn-primary btn-sm" name="commit" type="submit" value="Sauvegarder base">
+  </form></div>
+<br>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+    manageCheckBox("#search_capacite", ".capacite .checkbox .check_boxes");
+    manageCheckBox("#search_historique", ".historique .checkbox .check_boxes");
+    manageCheckBox("#search_atout", ".atout .checkbox .check_boxes");
+    manageCheckBox("#search_discipline", ".discipline .checkbox .check_boxes");
+    manageCapacites(".capacite .checkbox .check_boxes", ".cap");
+    manageHistoriques(".historique .checkbox .check_boxes", ".his");
+    manageDisciplines(".discipline .checkbox .check_boxes", ".dis")
+    whenclickCalculeXpsDep($("#personnage_type_perso").val(), "#calculer");
+    listenerAllAttributs();
+    listenerAllCapacites();
+    listenerAllSpheres();
+    manageMenu(".menu_btn");
+    manageMenu(".menu_btn2");
+  });
+
+  function manageMenu(classMenu) {
+    $(".close").css("display", "none");
+    var isMenuOpen = false;
+
+    $(classMenu).click(function()
+    {
+      if (isMenuOpen == false)
+      {
+      //alert('je suis dans le bon cas')
+        $("#menu").clearQueue().animate({
+          right : '0'
+        })
+        $("#page").clearQueue().animate({
+          "margin-left" : '-290px'
+        })
+
+        $(this).fadeOut(200);
+        $(".close").fadeIn(300);
+
+        isMenuOpen = true;
+      }
+    });
+
+    $('.close').click(function()
+    {
+      if (isMenuOpen == true)
+      {
+        $("#menu").clearQueue().animate({
+          right : '-240px'
+        })
+        $("#page").clearQueue().animate({
+          "margin-left" : '0px'
+        })
+
+        $(this).fadeOut(200);
+        $(classMenu).fadeIn(300);
+
+        isMenuOpen = false;
+      }
+    });
+  }
+
+  function whenclickCalculeXpsDep(type_perso, idButton) {
+    $(idButton).click(function() {
+      manageCalculeXps(type_perso);
+    });
+  }
+
+  function manageCalculeXps(type_perso) {
+    var xps_dep = 0;
+    var personnage_base = $("#personnage_caracteristique_base").val();
+    var personnage_bonus = $("#personnage_caracteristique_bonus").val();
+    if (personnage_base && personnage_bonus) {
+      var personnage = fusionBaseBonus(jQuery.parseJSON(personnage_base), jQuery.parseJSON(personnage_bonus));
+      xps_dep += calcule_xps_attribut(personnage, type_perso);
+      xps_dep += calcule_xps_capacite(personnage, type_perso);
+      xps_dep += calcule_xps_historique(personnage, type_perso);
+      xps_dep += calcule_xps_atout(personnage, type_perso);
+      xps_dep += calcule_xps_sphere(personnage, type_perso);
+      xps_dep += calcule_xps_discipline(personnage, type_perso);
+      var xps = $("#personnage_xps").val();
+      $("#personnage_reste_xps").val(xps-xps_dep);
+    }
+  }
+
+  function calcule_xps_attribut(personnage, type_perso) {
+    liste_attributs = ["personnage_force", "personnage_dexterite", "personnage_vigueur",
+                        "personnage_charisme", "personnage_manipulation", "personnage_apparence",
+                        "personnage_perception", "personnage_intelligence", "personnage_astuce"];
+    var out = 0;
+    $.each(liste_attributs, function(key, val) {
+      attr_actuet = $("#"+val).val();
+      tmp = val.split("_");
+      out = out + manage_serie_nx(personnage.Personnage[tmp[1]], attr_actuet, type_perso, "attribut");
+    });
+    return out;
+  }
+
+  function calcule_xps_capacite(personnage, type_perso) {
+    var out = 0;
+    $("#capacites_personnages_niveau[name^=capacites_personnages]").each(function() {
+      var tmp = $("#"+extract_id_cp($(this).attr("name"))).text();
+      var idd = tmp.split(":")[0].trim();
+      var ty = tmp.split(":")[1];
+      var va_actuel = $(this).val();
+      var va_avant = 0;
+      if (ty == "Talent") {
+        va_avant = personnage.Capacites.Talent[idd];
+      } else if (ty == "Compétence") {
+        va_avant = personnage.Capacites.Competence[idd];
+      } else {
+        va_avant = personnage.Capacites.Connaissance[idd];
+      }
+      // console.log(manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "capacite"));
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "capacite");
+    });
+    return out;
+  }
+
+  function calcule_xps_historique(personnage, type_perso) {
+    var out = 0;
+    $("#historiques_personnages_niveau[name^=historiques_personnages]").each(function() {
+      var idd = $("#"+extract_id_cp($(this).attr("name"))).text();
+      var va_actuel = $(this).val();
+      var va_avant = personnage.Historiques[idd.toString()];
+      if (! va_avant) {
+        va_avant = 0;
+      }
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "capacite");
+    });
+    return out;
+  }
+
+  function calcule_xps_atout(personnage, type_perso) {
+    var out = 0;
+    $("input[id^=personnage_atout_ids]").each(function() {
+      if ($(this).attr("checked") == "checked") {
+        var vala = parseInt(extract_val_atout($(this).parent().text()));
+        var ida = parseInt(extract_id_atout($(this).attr("id")));
+        if (! personnage.Atouts[ida]) {
+          out = out + parseInt(vala) * 3;
+        }
+      }
+    });
+    return out;
+  }
+
+  function calcule_xps_sphere(personnage, type_perso) {
+    var out = 0;
+    $("input[id^=spheres_personnages_niveau]").each(function() {
+      var valeur_act = $(this).val()
+      var idsph = parseInt(extract_id_cp($(this).attr("name")));
+      var valeur_av = personnage.Spheres[idsph.toString()];
+      out = out + manage_serie_nx(valeur_av, parseInt(valeur_act), type_perso, "sphere");
+    });
+    return out;
+  }
+
+  function calcule_xps_discipline(personnage, type_perso) {
+    var out = 0;
+    $("#disciplines_personnages_niveau[name^=disciplines_personnages]").each(function() {
+      var idd = $("#"+extract_id_cp($(this).attr("name"))).text();
+      var va_actuel = $(this).val();
+      var va_avant = personnage.Disciplines[idd.toString()];
+      if (! va_avant) {
+        va_avant = 0;
+      }
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline");
+    });
+    return out;
+  }
+
+  function extract_id_cp(name) {
+    tmp = name.split("[");
+    tmp2 = tmp[1].split("]");
+    return tmp2[0];
+  }
+
+  function extract_val_atout(name) {
+    tmp = name.split("(");
+    tmp2 = tmp[1].split(")");
+    return tmp2[0];
+  }
+
+  function extract_id_atout(name) {
+    tmp = name.split("_");
+    return tmp[3];
+  }
+
+  function serie_nx_precedant(i, n, x, base) {
+    if (i > n) {
+      return 0;
+    }
+    var out = 0;
+    for (j = i; j < n; j++) {
+      if (j == 0) {
+        out = out + base;
+      } else {
+        out = out + j*x;
+      }
+    }
+    return out;
+  }
+
+  function serie_nx_suivant(i, n, x, base) {
+    if (i > n) {
+      return 0;
+    }
+    var out = 0;
+    for (j = i; j < n; j++) {
+      if (j == 0) {
+        out = out + base;
+      } else {
+        out = out + (j+1)*x;
+      }
+    }
+    return out;
+  }
+
+  // Tous les personnages dépensent l'expérieure de la même manière sauf les
+  // Mages avec l'Entelechie et les Spheres.
+  function manage_serie_nx(i, n, type_perso, pouvoir) {
+    var base = get_base(pouvoir);
+    var cout = get_cout(pouvoir, type_perso);
+    if (n < 6 && pouvoir != "entelechie" && pouvoir != "sphere") {
+      return serie_nx_precedant(i, n, cout, base);
+    } else if (pouvoir == "entelechie" || pouvoir == "sphere") {
+      return serie_nx_suivant(i, n, cout, base);
+    } else if (n >= 6) {
+      return serie_nx_precedant(i, 6, base, cout) + serie_nx_suivant(6, n, base, cout);
+    } else {
+      return serie_nx_precedant(i, n, base, cout);
+    }
+  }
+
+  function get_base(pouvoir) {
+    var out = 0;
+    switch (pouvoir) {
+      case "discipline":
+        out = 10;
+        break;
+      case "sphere":
+        out = 10;
+        break;
+      case "capacite":
+        out = 3;
+        break;
+      case "attribut":
+        out = 4;
+        break;
+      case "historique":
+        out = 3;
+        break;
+    }
+    return out;
+  }
+
+  function get_cout(pouvoir, type_perso) {
+    var out = 0;
+    switch (pouvoir) {
+      case "discipline":
+        if (type_perso = "Vampire") {
+          out = 5;
+        } else {
+          out = 15;
+        }
+        break;
+      case "sphere":
+        out = 8;
+        break;
+      case "capacite":
+        out = 2;
+        break;
+      case "attribut":
+        out = 4;
+        break;
+      case "historique":
+        out = 3;
+        break;
+    }
+    return out;
+  }
+</script>
+
+
+<a href="http://localhost:3000/personnages/52" class="btn btn-warning">Voir</a>
+<a href="http://localhost:3000/personnages" class="btn btn-primary">Retour</a>
+
+
+
+
+</body></html>

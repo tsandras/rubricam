@@ -1,0 +1,18 @@
+<div id="log_in" class="tabs">
+  <div id="menu-login" class="box">
+    <h2>Mot de passe oublié ?</h2>
+    <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs box-part1">
+        <%= f.input :email, label: "Courriel", required: true, autofocus: true %>
+      </div>
+
+      <div class="form-actions box-part1">
+        <%= f.button :submit, "Envoyer moi les instructions pour le reset", class: 'btn btn-primary btn-sm submit-login-single' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>

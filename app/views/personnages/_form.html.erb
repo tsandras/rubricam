@@ -9,139 +9,92 @@
       </ul>
     </div>
   <% end %>
-  <div class="row">
-    <div class="col-md-1">
-      <%= p.input :bonus %>
+
+  <div id="personnage">
+    <div id="menu">
+      <a href="javascript:;" class="close"></a>
+      <%#= input_xps_et_bonus(p) %>
+      <%= recherche_historique(p) %>
+      <%= recherche_atout(p) %>
+      <%= recherche_discipline(p) %>
+      <%= recherche_capacite(p) %>
     </div>
-    <div class="col-md-1">
-      <%= p.input :xps %>
-    </div>
-    <div class="col-md-1">
-      <%= p.input :reste_xps %>
-    </div>
-    <div class="col-md-1">
-      <%= button_tag "Calculer", type: "button", id: "calculer", class: "btn btn-primary" %>
+    <div id="page">
+      <%= button_tag('', type: 'button', id: "show_menu", class: 'menu_btn') %>
+      <%= button_tag('', type: 'button', id: "show_menu", class: 'menu_btn2') %>
+      <div class="row">
+        <p class="text-center"><%= show_partie(@personnage) %></p>
+      </div>
+      <div class="row info-general">
+        <p class="text-center"><b>Générale</b></p>
+        <%= input_info_general(p, @personnage) %>
+      </div>
+      <div class="row attributs">
+        <%= image_tag("barre_fiche.png", class: 'barre') %>
+        <p class="titre"><b>Attributs</b></p>
+        <p><%= show_nbs_attributs(@personnage) %></p>
+        <%= input_attributs(p, @personnage) %>
+      </div>
+      <div class="row capacites">
+        <%= image_tag("barre_fiche.png", class: 'barre') %>
+        <p class="titre2"><b>Capacités</b></p>
+        <p><%= show_nbs_capacites(@personnage) %></p>
+        <%= input_capacite(@capacites_personnages, @personnage) %>
+        <%= image_tag("barre_fiche.png", class: 'barre') %>
+      </div>
+      <% if @personnage.mage? %>
+        <div class="row spheres">
+          <p class="text-center"><b>Sphères</b></p>
+          <%= input_spheres(@personnage) %>
+        </div>
+      <% end %>
+      <div class="row disciplines">
+        <p class="text-center"><b>Disciplines</b><%= show_disciplines(@personnage) %></p>
+        <%= input_discipline(@disciplines_personnages) %>
+      </div>
+      <div class="row autre">
+        <p class="text-center"><b>Autres</b></p>
+        <div class="col-md-4">
+          <%= input_historique(@historiques_personnages, @personnage) %>
+          <%= input_atout(@atouts_personnages) %>
+        </div>
+        <div class="col-md-4">
+          <p class="text-center"><b>Important</b></p>
+          <%= input_voie(p, @personnage) %>
+          <%= input_entelechie(p, @personnage) %>
+          <%= input_volonte(p) %>
+        </div>
+        <div class="col-md-4">
+          <p class="text-center"><b>Vertues/Résonnances</b><%= show_nbs_vertues(@personnage) %></p>
+          <%= input_vertue(p, @personnage) %>
+          <%= input_resonnance(p, @personnage) %>
+        </div>
+      </div>
+      <div class="row background">
+        <p class="text-center"><b>Background</b></p>
+        <div class="col-md-4">
+          <%= p.input :background %>
+        </div>
+        <div class="col-md-4">
+          <%= p.input :paradygme %>
+        </div>
+        <div class="col-md-4">
+          <%= p.input :description %>
+        </div>
+      </div>
+      <!--
+        <%#= button_tag "Calculer", type: "button", id: "calculer", class: "btn btn-primary" %>
+       -->
+      <div class="row background">
+        <%= p.input :caracteristique_base, as: :hidden %>
+        <%= p.input :caracteristique_bonus, as: :hidden %>
+        <p class="text-center"><%= show_sauvegarder(p, @personnage) %></p>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-4">
-      <div class="row">
-        <%= p.input :nom, wrapper_html: { class: 'col-md-6' } %>
-        <%= p.input :prenom, wrapper_html: { class: 'col-md-6' } %>
-      </div>
-      <div class="row">
-        <%= p.input :nature, collection: Personnage::ARCHETYPE, wrapper_html: { class: 'col-md-6' } %>
-        <%= p.input :attitude, collection: Personnage::ARCHETYPE, wrapper_html: { class: 'col-md-6' } %>
-      </div>
-      <%= p.input :type_perso, collection: Personnage::TYPE %>
-      <%= input_tradition(p, @personnage) %>
-      <%= input_clan(p, @personnage) %>
-      <%= p.input :volonte %>
-      <div class="row">
-        <%= input_voie(p, @personnage) %>
-      </div>
-      <%= input_points_sang(p, @personnage) %>
-      <%= input_entelechie(p, @personnage) %>
-      <%= input_kinain(p, @personnage) %>
-      <div class="capacite">
-        <label for="search_capacite"> Rechercher Capacite :</label>
-        <input id="search_capacite" type="text" onkeypress="filter(this, '.capacite .checkbox .check_boxes')" onkeyup=" epurationCheckBox(this, '.capacite .checkbox .check_boxes')" />
-        <%= p.association :capacites, as: :check_boxes, :collection => Capacite.all.map {|c| ["#{c.nom} - <i>#{c.type_cap}</i>".html_safe, c.id]}.uniq,   wrapper_html: { class: 'col-md-12' } %>
-      </div>
-      <div class="row">
-      <div class="cap">
-      </div>
-      <% if @capacites_personnages != nil %>
-        <% @capacites_personnages.each do |cc| %>
-            <div class="cap" id="f_<%= cc.capacite.nom -%>">
-            <%= simple_fields_for(cc) do |c| %>
-              <div class="col-md-4">
-                <b><%= cc.capacite.nom %> - <i><%= cc.capacite.type_cap %></i></b>
-              </div>
-              <%= c.input :niveau, input_html: {name: "capacites_personnages[#{cc.id}][niveau]"}, wrapper_html: { class: 'col-md-2' } %>
-              <%= c.input :specialite, input_html: {name: "capacites_personnages[#{cc.id}][specialite]"}, wrapper_html: { class: 'col-md-6' } %>
-              <span class="hidden" id="<%= cc.id -%>"><%= cc.capacite.id %>:<%= cc.capacite.type_cap %></span>
-            <% end %>
-            </div>
-        <% end %>
-      <% end %>
-      </div>
-      <div class="row">
-        <%= input_vertue(p, @personnage) %>
-        <%= input_resonnance(p, @personnage) %>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div class="row">
-        <%= p.input :force, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_force, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :dexterite, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_dexterite, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :vigueur, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_vigueur, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :charisme, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_charisme, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :manipulation, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_manipulation, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :apparence, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_apparence, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :perception, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_perception, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :intelligence, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_intelligence, wrapper_html: { class: 'col-md-8' } %>
-        <%= p.input :astuce, wrapper_html: { class: 'col-md-4' } %>
-        <%= p.input :spec_astuce, wrapper_html: { class: 'col-md-8' } %>
-      </div>
-      <br />
-      <div class="historique">
-        <label for="search_historique"> Rechercher Historique :</label>
-        <input id="search_historique" type="text" onkeypress="filter(this, '.historique .checkbox .check_boxes')" onkeyup=" epurationCheckBox(this, '.historique .checkbox .check_boxes')" />
-        <%= p.association :historiques, as: :check_boxes, :collection => Historique.all.map {|c| [c.nom, c.id]}.uniq,   wrapper_html: { class: 'col-md-12' } %>
-      </div>
-      <div class="row">
-      <div class="his">
-      </div>
-      <% if @historiques_personnages != nil %>
-        <% @historiques_personnages.each do |cc| %>
-            <div class="his" id="f_<%= cc.historique.nom -%>">
-            <%= simple_fields_for(cc) do |c| %>
-              <div class="col-md-6">
-                <b><%= cc.historique.nom %></b>
-              </div>
-              <%= c.input :niveau, input_html: {name: "historiques_personnages[#{cc.id}][niveau]"}, wrapper_html: { class: 'col-md-6' } %>
-              <span class="hidden" id="<%= cc.id -%>"><%= cc.historique.id %></span>
-            </div>
-            <% end %>
-        <% end %>
-      <% end %>
-      </div>
-      <br />
-      <div class="atout">
-        <label for="search_atout"> Rechercher Atout :</label>
-        <input id="search_atout" type="text" onkeypress="filter(this, '.atout .checkbox .check_boxes')" onkeyup=" epurationCheckBox(this, '.atout .checkbox .check_boxes')" />
-        <%= p.association :atouts, as: :check_boxes, :collection => Atout.all.map {|c| ["#{c.nom} (#{c.cout})", c.id]}.uniq, wrapper_html: { class: 'col-md-12' } %>
-      </div>
-      <%= input_spheres(@personnage) %>
-      <br />
-      <%= input_discipline(p, @disciplines_personnages) %>
-    </div>
-    <div class="col-xs-4">
-      <%= p.input :background %>
-      <%= p.input :paradygme %>
-      <%= p.input :description %>
-      <%= p.input :date_naissance, as: :string, placeholder: 'dd/mm/yyyy', input_html: {value: local_date(@personnage.date_naissance), class: 'datepicker'} %>
-      <%= p.input :date_mort, as: :string, placeholder: 'dd/mm/yyyy', input_html: {value: local_date(@personnage.date_mort), class: 'datepicker'} %>
-    </div>
-  </div>
-  <%= p.input :caracteristique_base, as: :hidden %>
-  <%= p.input :caracteristique_bonus, as: :hidden %>
-  <%#= @personnage.caracteristique_base %>
-  <%#= @personnage.caracteristique_bonus %>
-  <%= show_sauvegarder(p, @personnage) %>
 <% end %>
-<br />
 <script type="text/javascript">
-  $(document).ready(function(){
+  $(document).ready(function() {
     $('.datepicker').datepicker();
     manageCheckBox("#search_capacite", ".capacite .checkbox .check_boxes");
     manageCheckBox("#search_historique", ".historique .checkbox .check_boxes");
@@ -149,165 +102,27 @@
     manageCheckBox("#search_discipline", ".discipline .checkbox .check_boxes");
     manageCapacites(".capacite .checkbox .check_boxes", ".cap");
     manageHistoriques(".historique .checkbox .check_boxes", ".his");
-    manageDisciplines(".discipline .checkbox .check_boxes", ".dis")
-    calcule_xps_dep();
+    manageAtouts(".atout .checkbox .check_boxes", ".ato");
+    manageDisciplines(".discipline .checkbox .check_boxes", ".dis");
+    whenclickCalculeXpsDep($("#personnage_type_perso").val(), "#calculer");
+    listenerAllAttributs();
+    listenerAllCapacites();
+    listenerAllSpheres();
+    listenerAllDisciplines();
+    listenerAllHistoriques();
+    listenerEntelechie("#personnage_entelechie");
+    listenerVolonte("#personnage_volonte");
+    listenerVertues();
+    listenerResonnances();
+    listenerPhysiqueForBase(1, 10);
+    listenerMentalForBase(1, 10);
+    listenerSocialForBase(1, 10);
+    listenerTypeCapacitesForBase("Talent", "#nbs_talents", 0, 10);
+    listenerTypeCapacitesForBase("Compétence", "#nbs_competences", 0, 10);
+    listenerTypeCapacitesForBase("Connaissance", "#nbs_connaissances", 0, 10);
+    listenerHistoriquesForBase(0);
+    listenerDisciplinesForBase();
+    listenerVertuesForBase();
+    manageMenu();
   });
-
-  function calcule_xps_dep() {
-    $("#calculer").click(function() {
-      var xps_dep = 0;
-      var personnage_base = $("#personnage_caracteristique_base").val();
-      var personnage_bonus = $("#personnage_caracteristique_bonus").val();
-      var pbase = jQuery.parseJSON(personnage_base);
-      var pbonus = jQuery.parseJSON(personnage_bonus);
-      var personnage = fusion_base_bonus(pbase, pbonus);
-      liste_attributs = ["personnage_force", "personnage_dexterite", "personnage_vigueur",
-                        "personnage_charisme", "personnage_manipulation", "personnage_apparence",
-                        "personnage_perception", "personnage_intelligence", "personnage_astuce"];
-      $.each(liste_attributs, function(key, val) {
-        attr_actuet = $("#"+val).val();
-        tmp = val.split("_");
-        xps_dep = xps_dep + serie_nx_v(personnage.Personnage[tmp[1]], attr_actuet, 4, 4);
-      });
-      $("#capacites_personnages_niveau[name^=capacites_personnages]").each(function() {
-        var tmp = $("#"+extract_id_cp($(this).attr("name"))).text();
-        var idd = tmp.split(":")[0];
-        var ty = tmp.split(":")[1];
-        var va_actuel = $(this).val();
-        var va_avant = 0;
-        if (ty == "Talent") {
-          va_avant = personnage.Capacites.Talent[idd.toString()];
-        } else if (ty == "Compétence") {
-          va_avant = personnage.Capacites.Competence[idd.toString()];
-        } else {
-          va_avant = personnage.Capacites.Connaissance[idd.toString()];
-        }
-        if (! va_avant) {
-          va_avant = 0;
-        }
-        xps_dep = xps_dep + serie_nx_v(va_avant, parseInt(va_actuel), 2, 3);
-      });
-      $("#historiques_personnages_niveau[name^=historiques_personnages]").each(function() {
-        var idd = $("#"+extract_id_cp($(this).attr("name"))).text();
-        var va_actuel = $(this).val();
-        var va_avant = personnage.Historiques[idd.toString()];
-        if (! va_avant) {
-          va_avant = 0;
-        }
-        xps_dep = xps_dep + serie_nx_v(va_avant, parseInt(va_actuel), 3);
-      });
-      $("input[id^=personnage_atout_ids]").each(function() {
-        if ($(this).attr("checked") == "checked") {
-          console.log($(this).parent().text());
-          var vala = parseInt(extract_val_atout($(this).parent().text()));
-          var ida = parseInt(extract_id_atout($(this).attr("id")));
-          if (! personnage.Atouts[ida]) {
-            xps_dep = xps_dep + parseInt(vala) * 3;
-          }
-        }
-      });
-      $("input[id^=spheres_personnages_niveau]").each(function() {
-        console.log($(this).val());
-        var valeur_act = $(this).val()
-        var idsph = parseInt(extract_id_cp($(this).attr("name")));
-        var valeur_av = personnage.Spheres[idsph.toString()];
-        xps_dep = xps_dep + serie_nx_m(valeur_av, parseInt(valeur_act), 8, 10);
-      });
-      $("#disciplines_personnages_niveau[name^=disciplines_personnages]").each(function() {
-        var idd = $("#"+extract_id_cp($(this).attr("name"))).text();
-        var va_actuel = $(this).val();
-        var va_avant = personnage.Disciplines[idd.toString()];
-        if (! va_avant) {
-          va_avant = 0;
-        }
-        xps_dep = xps_dep + serie_nx_v(va_avant, parseInt(va_actuel), 5);
-      });
-      xps = $("#personnage_xps").val();
-      $("#personnage_reste_xps").val(xps-xps_dep);
-    });
-  }
-
-  function extract_id_cp(name) {
-    tmp = name.split("[");
-    tmp2 = tmp[1].split("]");
-    return tmp2[0];
-  }
-
-  function extract_val_atout(name) {
-    tmp = name.split("(");
-    tmp2 = tmp[1].split(")");
-    return tmp2[0];
-  }
-
-  function extract_id_atout(name) {
-    tmp = name.split("_");
-    return tmp[3];
-  }
-
-  function serie_nx_v(i, n, x, base) {
-    if (i > n) {
-      return 0;
-    }
-    var out = 0;
-    for (j = i; j < n; j++) {
-      if (j == 0) {
-        out = out + base;
-      } else {
-        out = out + j*x;
-      }
-    }
-    return out;
-  }
-
-  function serie_nx_m(i, n, x, base) {
-    if (i > n) {
-      return 0;
-    }
-    var out = 0;
-    for (j = i; j < n; j++) {
-      if (j == 0) {
-        out = out + base;
-      } else {
-        out = out + (j+1)*x;
-      }
-    }
-    return out;
-  }
-
-  function fusion_base_bonus(base, bonus) {
-    var out = {};
-    out.Personnage = {};
-    out.Capacites = {};
-    out.Historiques = {};
-    out.Spheres = {};
-    out.Capacites.Talent = {};
-    out.Capacites.Competence = {};
-    out.Capacites.Connaissance = {};
-    out.Personnage["force"] = base.Personnage["force"] + bonus.Personnage["force"];
-    out.Personnage["dexterite"] = base.Personnage["dexterite"] + bonus.Personnage["dexterite"];
-    out.Personnage["vigueur"] = base.Personnage["vigueur"] + bonus.Personnage["vigueur"];
-    out.Personnage["charisme"] = base.Personnage["charisme"] + bonus.Personnage["charisme"];
-    out.Personnage["manipulation"] = base.Personnage["manipulation"] + bonus.Personnage["manipulation"];
-    out.Personnage["apparence"] = base.Personnage["apparence"] + bonus.Personnage["apparence"];
-    out.Personnage["perception"] = base.Personnage["perception"] + bonus.Personnage["perception"];
-    out.Personnage["intelligence"] = base.Personnage["intelligence"] + bonus.Personnage["intelligence"];
-    out.Personnage["astuce"] = base.Personnage["astuce"] + bonus.Personnage["astuce"];
-    $.each(base.Capacites.Talent, function(key, val) {
-      out.Capacites.Talent[key] = val + bonus.Capacites.Talent[key];
-    });
-    $.each(base.Capacites.Competence, function(key, val) {
-      out.Capacites.Competence[key] = val + bonus.Capacites.Competence[key];
-    });
-    $.each(base.Capacites.Connaissance, function(key, val) {
-      out.Capacites.Connaissance[key] = val + bonus.Capacites.Connaissance[key];
-    });
-    $.each(base.Historiques, function(key, val) {
-      out.Historiques[key] = val + bonus.Historiques[key];
-    });
-    $.each(base.Spheres, function(key, val) {
-      out.Spheres[key] = val + bonus.Spheres[key];
-    });
-    out = $.extend({}, bonus, out); // for new stuff in bonus
-    return out;
-  }
 </script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141128095129) do
+ActiveRecord::Schema.define(:version => 20150209123741) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -33,11 +33,13 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
     t.boolean  "type"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.boolean  "has_detail"
   end
 
   create_table "atouts_personnages", :force => true do |t|
     t.integer "personnage_id"
     t.integer "atout_id"
+    t.string  "detail"
   end
 
   create_table "capacites", :force => true do |t|
@@ -77,7 +79,6 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
   create_table "disciplines", :force => true do |t|
     t.string   "nom"
     t.text     "description"
-    t.integer  "niveau"
     t.string   "nom_discipline"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
@@ -86,6 +87,8 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
   create_table "disciplines_personnages", :force => true do |t|
     t.integer "personnage_id"
     t.integer "discipline_id"
+    t.integer "niveau"
+    t.string  "voie"
   end
 
   create_table "historiques", :force => true do |t|
@@ -93,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.boolean  "has_detail"
   end
 
   create_table "historiques_lieus", :force => true do |t|
@@ -105,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
     t.integer "personnage_id"
     t.integer "historique_id"
     t.integer "niveau"
+    t.string  "detail"
   end
 
   create_table "lieus", :force => true do |t|
@@ -206,6 +211,7 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
     t.string   "reste_bonus"
     t.boolean  "has_base"
     t.boolean  "has_bonus"
+    t.integer  "user_id"
   end
 
   create_table "personnages_routines", :force => true do |t|
@@ -255,5 +261,25 @@ ActiveRecord::Schema.define(:version => 20141128095129) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "pseudo"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "role",                   :default => 0,  :null => false
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
