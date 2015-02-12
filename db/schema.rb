@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150209123741) do
+ActiveRecord::Schema.define(:version => 20150212210440) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -83,6 +83,11 @@ ActiveRecord::Schema.define(:version => 20150209123741) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "disciplines_nivdisciplines", :force => true do |t|
+    t.integer "discipline_personnage_id"
+    t.integer "nivdiscipline_id"
+  end
+
   create_table "disciplines_personnages", :force => true do |t|
     t.integer "personnage_id"
     t.integer "discipline_id"
@@ -124,6 +129,14 @@ ActiveRecord::Schema.define(:version => 20150209123741) do
     t.integer "lieu_id"
     t.string  "nom"
     t.text    "description"
+  end
+
+  create_table "nivdisciplines", :force => true do |t|
+    t.string   "nom"
+    t.text     "description"
+    t.integer  "niveau"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "objets", :force => true do |t|
@@ -182,8 +195,8 @@ ActiveRecord::Schema.define(:version => 20150209123741) do
     t.integer  "points_statique"
     t.integer  "points_entropique"
     t.integer  "entelechie"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "spec_force"
     t.string   "spec_dexterite"
     t.string   "spec_vigueur"
@@ -205,7 +218,7 @@ ActiveRecord::Schema.define(:version => 20150209123741) do
     t.string   "voie"
     t.string   "tradition"
     t.string   "clan"
-    t.string   "caracteristique_base"
+    t.text     "caracteristique_base",  :limit => 255
     t.string   "caracteristique_bonus"
     t.string   "reste_bonus"
     t.boolean  "has_base"

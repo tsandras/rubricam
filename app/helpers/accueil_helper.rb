@@ -25,7 +25,7 @@ module AccueilHelper
       end
     out << "</div>".html_safe
     out << "<div class=\"menu-accueil-action\">".html_safe
-      out << link_to("Les #{name}", personnages_path, class: 'btn btn-primary btn-sm')
+      out << link_to("Les #{name}", send("#{name}_path"), class: 'btn btn-primary btn-sm')
     out << "</div>".html_safe
     out << "</div>".html_safe
     out

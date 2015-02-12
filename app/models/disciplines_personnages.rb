@@ -14,4 +14,5 @@ class DisciplinesPersonnages < ActiveRecord::Base
 
   belongs_to :personnage
   belongs_to :discipline
+  has_and_belongs_to_many :nivdiscipline, class_name: 'Nivdiscipline'
 end
