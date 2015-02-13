@@ -4,6 +4,8 @@ class CreateNivdisciplines < ActiveRecord::Migration
       t.string :nom
       t.text :description
       t.integer :niveau
+      t.string :source
+      t.integer :discipline_id
 
       t.timestamps
     end

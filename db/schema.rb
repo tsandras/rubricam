@@ -83,11 +83,6 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.datetime "updated_at",     :null => false
   end
 
-  create_table "disciplines_nivdisciplines", :force => true do |t|
-    t.integer "discipline_personnage_id"
-    t.integer "nivdiscipline_id"
-  end
-
   create_table "disciplines_personnages", :force => true do |t|
     t.integer "personnage_id"
     t.integer "discipline_id"
@@ -135,8 +130,15 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.string   "nom"
     t.text     "description"
     t.integer  "niveau"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "source"
+    t.integer  "discipline_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "nivdisciplines_personnages", :force => true do |t|
+    t.integer "personnage_id"
+    t.integer "nivdiscipline_id"
   end
 
   create_table "objets", :force => true do |t|

@@ -86,6 +86,7 @@ class Personnage < ActiveRecord::Base
   has_and_belongs_to_many :routines, class_name: 'Routine'
   has_and_belongs_to_many :combinaisons, class_name: 'Combinaison'
   has_and_belongs_to_many :disciplines, class_name: 'Discipline'
+  has_and_belongs_to_many :nivdisciplines, class_name: 'Nivdiscipline'
   has_and_belongs_to_many :royaumes, class_name: 'Royaume'
   has_and_belongs_to_many :arts, class_name: 'Art'
   has_many :relations, :class_name => 'Relation', :foreign_key => 'to_personnage_id'

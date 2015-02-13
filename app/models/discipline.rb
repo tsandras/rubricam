@@ -15,4 +15,5 @@ class Discipline < ActiveRecord::Base
 
   has_and_belongs_to_many :combinaisons, class_name: 'Combinaison'
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
+  has_many :nivdisciplines, :class_name => 'Nivdiscipline', :foreign_key => 'discipline_id'
 end
