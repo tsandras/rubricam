@@ -27,6 +27,7 @@
 
   function listenerAllDisciplines() {
     $.each($(".dis"), function(key, val) {
+      console.log($(this).attr("id"));
       if ($(this).attr("id")) {
         var tmp = $(this).attr("id").split("_");
         name = tmp[1].split(" ").join("").split("'").join("")
@@ -268,22 +269,25 @@
   }
 
   function listenerDisciplinesForBase() {
-    $.each($(".dis"), function(key, val) {
-      if ($(this).attr("id")) {
-        var tmp = $(this).attr("id").split("_");
-        name = tmp[1].split(" ").join("").split("'").join("");
-        $("#plus-"+name).click(function() {
-          if (parseInt($("#nbs_disciplines").html().trim()) < 4) {
-            $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) + 1));
-          }
-        });
-        $("#minus-"+name).click(function() {
-          if (parseInt($("#nbs_disciplines").html().trim()) > 0) {
-            $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) - 1));
-          }
-        });
-      }
-    });
+    if ($("#nbs_disciplines").val() != null) {
+      $.each($(".dis"), function(key, val) {
+        if ($(this).attr("id")) {
+          var tmp = $(this).attr("id").split("_");
+          name = tmp[1].split(" ").join("").split("'").join("");
+          $("#plus-"+name).click(function() {
+            console.log(name);
+            if (parseInt($("#nbs_disciplines").html().trim()) < 4) {
+              $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) + 1));
+            }
+          });
+          $("#minus-"+name).click(function() {
+            if (parseInt($("#nbs_disciplines").html().trim()) > 0) {
+              $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) - 1));
+            }
+          });
+        }
+      });
+    }
   }
 
   function manageNiveauVoie(idButton, value) {
@@ -324,13 +328,15 @@ function epurationCheckBox(element, filteringList) {
 function filter(element, filteringList) {
   var value = $(element).val().toUpperCase();
   showAllCheckBox(filteringList);
+  var i = 0;
   $(filteringList).each(function() {
-      if ($(this).parent().text().toUpperCase().search(value) > -1) {
+      console.log(i);
+      if ($(this).parent().text().toUpperCase().search(value) > -1 && i < 10) {
           $(this).parent().show();
-      }
-      else {
+      } else {
           $(this).parent().hide();
       }
+      i = i + 1;
   });
 }
 

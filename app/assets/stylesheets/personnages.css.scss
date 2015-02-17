@@ -7,11 +7,11 @@ td {
 }
 
 #personnage input {
-  width: 195px;
+  // width: 195px;
 }
 
 .integer input {
-  width: 45px;
+  width: 25px;
 }
 
 .spec {
@@ -55,6 +55,8 @@ td {
     outline: none;
     background: #fff;
     border: 1px solid #ddd;
+    width: 165px;
+    margin: auto;
 }
 
 .plus {
@@ -117,13 +119,29 @@ td {
   left: -120px;
 }
 
+.plus_new {
+  background:url(plus.png);
+  width: 20px;
+  height: 20px;
+  outline: none;
+  margin: 0px;
+}
+
+.moins_new {
+  background:url(minus.gif);
+  width: 20px;
+  height: 20px;
+  outline: none;
+  margin: 1px;
+}
+
 .attribut .string {
   position: relative;
   top: -10px;
 }
 
 .attributs {
-  height: 320px;
+  // height: 320px;
 }
 
 .description-attribut {
@@ -131,11 +149,15 @@ td {
 }
 
 .attribut {
-  height: 95px;
+  // height: 95px;
 }
 
 .reajuste-spe {
   top: -20px;
+}
+
+.reajuste {
+  top: -22px;
 }
 
 /* We need to put inline class in wrapper_html if you want to have label and stuff in the same line */
@@ -152,9 +174,9 @@ td {
 }
 
 .barre {
-  width: 1400px;
-  left: -10px;
-  position: relative;
+  width: 100%;
+  // left: -20px;
+  // position: relative;
   z-index: 1;
 }
 
@@ -326,7 +348,12 @@ td {
   background: #b6d339;
   border: 1px solid #b6d339;
 }
+
 .ic-checkbox-design.active i {
   left: 20px;
 }
 
+.gris {
+  background-color: #F6F6F6;
+  border: 1px solid #F6F6F6;
+}

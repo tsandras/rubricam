@@ -11,8 +11,12 @@
 </p>
 
 <p>
-  <b>Nom discipline:</b>
-  <%= @discipline.nom_discipline %>
+  <% if !@nivdisciplines.nil? %>
+    <div>Les niveaux de <%= @discipline.nom %> :</div>
+    <% @nivdisciplines.each do |nivdiscipline| %>
+      - <%= nivdiscipline.nom %> (niveau <%= nivdiscipline.niveau %>)
+    <% end %>
+  <% end %>
 </p>
 
 

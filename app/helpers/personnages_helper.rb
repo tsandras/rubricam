@@ -53,7 +53,27 @@ module PersonnagesHelper
     out = "<div class=\"discipline\">".html_safe
     out << "<label for=\"search_discipline\"> Rechercher Discipline :</label>".html_safe
     out << "<input id=\"search_discipline\" type=\"text\" onkeypress=\"filter(this, '.discipline .checkbox .check_boxes')\" onkeyup=\" epurationCheckBox(this, '.discipline .checkbox .check_boxes')\" />".html_safe
-    out << f.association(:disciplines, as: :check_boxes, :collection => Discipline.all.map {|c| [c.nom, c.id]}.uniq,   wrapper_html: { class: 'col-md-12' })
+    out << f.association(:disciplines, as: :check_boxes, label: "&nbsp;".html_safe,
+                         :collection => Discipline.all.map {|c| [c.nom, c.id]}.uniq,
+                         wrapper_html: { class: 'col-md-12' })
+    out << "</div>".html_safe
+    out
+  end
+
+  def input_modal_objet(f, type, nom)
+    out = "<div id=\"openModal#{type}\" class=\"modalDialog\">".html_safe
+      out << "<div><a href=\"#close\" title=\"Close\" class=\"close2\">X</a>".html_safe
+          out << "<h2>#{nom}</h2>".html_safe
+          if type == "discipline"
+            out << recherche_discipline(f)
+          elsif type == "atout"
+            out << recherche_atout(f)
+          elsif type == "historique"
+            out << recherche_historique(f)
+          else
+            out << recherche_capacite(f)
+          end
+      out << "</div>".html_safe
     out << "</div>".html_safe
     out
   end
