@@ -9,6 +9,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  type_cap    :string(255)
+#  source      :string(255)
 #
 
 require 'rails_helper'

@@ -8,10 +8,11 @@
 #  nom_discipline :string(255)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  source         :string(255)
 #
 
 class Discipline < ActiveRecord::Base
-  attr_accessible :description, :nom, :nom_discipline
+  attr_accessible :description, :nom, :nom_discipline, :source
 
   has_and_belongs_to_many :combinaisons, class_name: 'Combinaison'
   has_and_belongs_to_many :personnages, class_name: 'Personnage'

@@ -9,10 +9,11 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  type_cap    :string(255)
+#  source      :string(255)
 #
 
 class Capacite < ActiveRecord::Base
-  attr_accessible :description, :nom, :primaire, :type_cap
+  attr_accessible :description, :nom, :primaire, :type_cap, :source
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
 

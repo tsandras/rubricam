@@ -14,7 +14,7 @@ class DisciplinesController < ApplicationController
   # GET /disciplines/1.json
   def show
     @discipline = Discipline.find(params[:id])
-
+    @nivdisciplines = Nivdiscipline.where(discipline_id: @discipline.id)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @discipline }

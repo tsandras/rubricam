@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150212210440) do
+ActiveRecord::Schema.define(:version => 20150214154957) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.boolean  "has_detail"
+    t.string   "source"
   end
 
   create_table "atouts_personnages", :force => true do |t|
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "type_cap"
+    t.string   "source"
   end
 
   create_table "capacites_personnages", :force => true do |t|
@@ -81,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.string   "nom_discipline"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "source"
   end
 
   create_table "disciplines_personnages", :force => true do |t|
@@ -96,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.boolean  "has_detail"
+    t.string   "source"
   end
 
   create_table "historiques_lieus", :force => true do |t|
@@ -132,8 +136,11 @@ ActiveRecord::Schema.define(:version => 20150212210440) do
     t.integer  "niveau"
     t.string   "source"
     t.integer  "discipline_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "discipline_nom"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.text     "systeme"
+    t.text     "tableau"
   end
 
   create_table "nivdisciplines_personnages", :force => true do |t|

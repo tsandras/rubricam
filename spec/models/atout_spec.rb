@@ -6,10 +6,10 @@
 #  nom         :string(255)
 #  description :text
 #  cout        :integer
-#  type        :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  has_detail  :boolean
+#  source      :string(255)
 #
 
 require 'rails_helper'
