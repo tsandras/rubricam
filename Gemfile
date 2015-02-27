@@ -16,7 +16,7 @@ group :production do
   gem 'pg'
 end
 
-gem "devise", ">= 2.1.0"
+gem "devise", '2.1.0'
 
 gem 'simple_form'
 
