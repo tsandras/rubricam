@@ -14,6 +14,8 @@ Rubricam::Application.routes.draw do
 
   resources :disciplines
 
+  resources :nivdisciplines
+
   resources :objets
 
   resources :routines

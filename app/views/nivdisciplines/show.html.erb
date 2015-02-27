@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Niveau discipline nom:</b>
+  <%= @nivdiscipline.nom %>
+</p>
+
+<p>
+  <b>Niveau discipline description:</b>
+  <%= @nivdiscipline.description %>
+</p>
+
+<p>
+  <b>Niveau discipline systeme:</b>
+  <%= @nivdiscipline.systeme %>
+</p>
+
+<% if @nivdiscipline.tableau.present? %>
+  <p>
+    <b>Niveau discipline tableau:</b>
+    <%= @nivdiscipline.tableau.html_safe %>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_nivdiscipline_path(@nivdiscipline), class: 'btn btn-warning' %>
+<%= link_to 'Back', discipline_path(@discipline), class: 'btn btn-primary' %>
