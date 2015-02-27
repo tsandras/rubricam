@@ -11,7 +11,33 @@
 <body>
   <header>
   </header>
-  <div class="container">
+  <div class="container <%= params[:controller] != 'personnages' ? 'row' : nil %>">
+    <div id="block-20">
+      <%= image_tag 'v20.png', class: 'x20' %>
+      Rubricam
+      <%= image_tag 'm20.png', class: 'x20' %>
+    </div>
+    <% if params[:controller] != "personnages" %>
+      <div class="col-md-2">
+        <div id="menu-principal" class="menu-accueil">
+          <div class="menu-accueil-head">
+            Menu principale
+          </div>
+          <div class="menu-accueil-body">
+            <div><%= link_to 'Disciplines', disciplines_path, class: 'btn btn-success btn-sm' %></div><br>
+            <div><%= link_to 'Atouts', atouts_path, class: 'btn btn-success btn-sm' %></div><br>
+            <div><%= link_to 'Historiques', historiques_path, class: 'btn btn-success btn-sm' %></div><br>
+            <div><%= link_to 'Capacités', capacites_path, class: 'btn btn-success btn-sm' %></div><br>
+            <% if session["warden.user.user.key"] != nil %>
+              <div><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></div>
+            <% end %>
+          </div>
+          <div class="menu-accueil-action">
+            <%= image_tag 'classic-wod.png', class: 'classic-wod' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
     <%= yield %>
   </div>
   <footer>

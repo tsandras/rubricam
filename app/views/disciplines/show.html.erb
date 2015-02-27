@@ -13,9 +13,18 @@
 <p>
   <% if !@nivdisciplines.nil? %>
     <div>Les niveaux de <%= @discipline.nom %> :</div>
+    <table>
+      <tr>
+        <th>Nom</th>
+        <th>Niveau</th>
+      </tr>
     <% @nivdisciplines.each do |nivdiscipline| %>
-      - <%= nivdiscipline.nom %> (niveau <%= nivdiscipline.niveau %>)
+      <tr>
+        <td><%= link_to nivdiscipline.nom, nivdiscipline_path(nivdiscipline) %></td>
+        <td><%= nivdiscipline.niveau %></td>
+      </tr>
     <% end %>
+    </table>
   <% end %>
 </p>
 

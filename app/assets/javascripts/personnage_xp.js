@@ -28,7 +28,6 @@ function manageCalculeBonus() {
   var personnage_bonus = $("#personnage_caracteristique_bonus").val();
   if (personnage_base && personnage_bonus.length == 0) {
     var personnage = jQuery.parseJSON(personnage_base);
-    console.log(personnage);
     bonus_dep += calcule_xps_attribut(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_capacite(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_historique(personnage, "necrodancer", "bonus");
@@ -51,9 +50,8 @@ function calcule_xps_attribut(personnage, type_perso, type) {
     if (type == "base") {
       out = out + manage_serie_nx(personnage.Personnage[tmp[1]], attr_actuet, type_perso, "attribut");
     } else {
-      console.log(personnage.Personnage[tmp[1]], attr_actuet);
+      // console.log(personnage.Personnage[tmp[1]], attr_actuet);
       out = out + manage_bonus(personnage.Personnage[tmp[1]], parseInt(attr_actuet), "attribut");
-      console.log(out);
     }
   });
   return out;
@@ -86,15 +84,12 @@ function calcule_xps_capacite(personnage, type_perso, type) {
 function calcule_xps_historique(personnage, type_perso, type) {
   var out = 0;
   $("#historiques_personnages_niveau[name^=historiques_personnages]").each(function() {
-    console.log(extract_id_cp($(this).attr("name")));
     var idd = $("#h_"+extract_id_cp($(this).attr("name"))).text();
-    console.log("idd?"+idd);
     var va_actuel = $(this).val();
     var va_avant = personnage.Historiques[idd.toString()];
     if (! va_avant) {
       va_avant = 0;
     }
-    console.log(va_avant, parseInt(va_actuel));
     if (type == "base") {
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "historique");
     } else {
@@ -140,10 +135,8 @@ function calcule_xps_sphere(personnage, type_perso, type) {
 function calcule_xps_discipline(personnage, type_perso, type) {
   var out = 0;
   $("#disciplines_personnages_niveau[name^=disciplines_personnages]").each(function() {
-    console.log($(this).attr("name"));
     var idd = $("#d_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
-    console.log("idd?"+idd);
     var va_avant = personnage.Disciplines[idd.toString()];
     if (! va_avant) {
       va_avant = 0;
@@ -151,7 +144,6 @@ function calcule_xps_discipline(personnage, type_perso, type) {
     if (type == "base") {
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline");
     } else {
-      console.log(va_avant, parseInt(va_actuel));
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "discipline");
     }
   });
@@ -235,7 +227,7 @@ function manage_serie_nx(i, n, type_perso, pouvoir) {
 
 function manage_bonus(i, n, pouvoir) {
   var cout = get_cout_bonus(pouvoir);
-  console.log(cout, pouvoir);
+  // console.log(cout, pouvoir);
   return serie_bonus(i, n, cout);
 }
 
@@ -247,7 +239,7 @@ function serie_bonus(i, n, cout) {
   for (j = i; j < n; j++) {
     out = out + cout;
   }
-  console.log("Diff cal:"+out);
+  // console.log("Diff cal:"+out);
   return out;
 }
 

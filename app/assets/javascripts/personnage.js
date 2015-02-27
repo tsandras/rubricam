@@ -27,7 +27,6 @@
 
   function listenerAllDisciplines() {
     $.each($(".dis"), function(key, val) {
-      console.log($(this).attr("id"));
       if ($(this).attr("id")) {
         var tmp = $(this).attr("id").split("_");
         name = tmp[1].split(" ").join("").split("'").join("")
@@ -134,19 +133,15 @@
       $.each(liste_attributs, function(key, val) {
         tmp = val.split("_");
         $("#plus-"+tmp[1]).click(function() {
-          // console.log((parseInt($(this).parent().children(".control-group").children(".controls").children("input").val()) + 1) + "<" + max);
           if (parseInt($(this).parent().children(".control-group").children(".controls").children("input").val()) + 1 < max) {
             if (parseInt($("#nbs_physique").html().trim()) < 7) {
-              // console.log("|"+parseInt($("#nbs_physique").html())+"|");
               $("#nbs_physique").html(" "+(parseInt($("#nbs_physique").html()) + 1));
             }
           }
         });
         $("#minus-"+tmp[1]).click(function() {
-          // console.log($(this).parent().children(".control-group").children(".controls").children("input").val());
           if (parseInt($(this).parent().children(".control-group").children(".controls").children("input").val()) >= min) {
             if (parseInt($("#nbs_physique").html().trim()) > 0) {
-              // console.log("|"+parseInt($("#nbs_physique").html())+"|");
               $("#nbs_physique").html(" "+(parseInt($("#nbs_physique").html()) -1));
             }
           }
@@ -207,10 +202,8 @@
       $.each($(".cap"), function(key, val) {
         if ($(this).parent().hasClass(ClassType)) {
           var tmp = $(this).attr("id").split("_");
-          // console.log(tmp[1], $(this));
           // listenerNumber(tmp[1], "#" + $(this).attr("id") + " #capacites_personnages_niveau", 0, 10);
           $("#plus-"+tmp[1]).click(function() {
-            // console.log($(this).parent().children(".control-group").children(".controls").children("input").val());
             if ((parseInt($(this).parent().children(".control-group").children(".controls").children("input").val()) + 1) < max) {
               if (parseInt($(idOutput).html().trim()) < 13) {
                 $(idOutput).html(" "+(parseInt($(idOutput).html()) + 1));
@@ -275,7 +268,6 @@
           var tmp = $(this).attr("id").split("_");
           name = tmp[1].split(" ").join("").split("'").join("");
           $("#plus-"+name).click(function() {
-            console.log(name);
             if (parseInt($("#nbs_disciplines").html().trim()) < 4) {
               $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) + 1));
             }
@@ -330,7 +322,6 @@ function filter(element, filteringList) {
   showAllCheckBox(filteringList);
   var i = 0;
   $(filteringList).each(function() {
-      console.log(i);
       if ($(this).parent().text().toUpperCase().search(value) > -1 && i < 10) {
           $(this).parent().show();
       } else {
@@ -374,7 +365,7 @@ function manageHistoriques(listToListening, NameClassOfInput) {
     var tmp = $(this).parent().text();
     if(this.checked) {
       if (! $("#f_"+tmp).length) {
-        console.log($(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]);
+        // console.log($(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]);
         var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]
         $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value, id_jointure));
         listenerHistorique("#t_"+tmp.trim());
@@ -420,6 +411,72 @@ function manageDisciplines(listToListening, NameClassOfInput) {
       $("#t_"+tmp).remove();
     }
   });
+}
+
+function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle, cols_sup, image) {
+  var gris = '';
+  if (num % 2 == 0) {
+    gris = 'gris';
+  }
+  out = "<div class=\"row "+class_type+" "+gris+"\" id=\"t_"+format_nom+"\">";
+    out += "<div class=\"col-md-4\">";
+      out += "<b> "+nom+" </b>";
+      if (info_bulle) {
+        out += "<span class=\"infobulle\"><img src=\"/assets/question_icon.jpg\" class=\"question\"><i>"+info_bulle+"</i></span>";
+      }
+    out += "</div>";
+    out += "<div class=\"col-md-2\">";
+      out += "<button type=\"button\" class=\"moins_new\" id=\"minus-"+nom+"\" name=\"button\"></button>";
+      out += "<button type=\"button\" class=\"plus_new\" id=\"plus-"+nom+"\" name=\"button\"></button>";
+    out += "</div>";
+    // simple_fields_for(objet) do |o|
+      // out += o.input(:niveau, label: "&nbsp;";,
+      //         input_html: {name: "#{type}s_personnages[#{objet.id}][niveau]", class: "inpt_number #{num % 2 == 0 ? 'gris' : ''}", readonly: 'true' },
+      //         wrapper_html: { class: "col-md-1 reajuste" })
+      out += "<div class=\"control-group integer optional "+type+"s_personnages_niveau col-md-1 reajuste\">";
+      out += "<label class=\"integer optional control-label\" for=\""+type+"s_personnages_niveau\"> </label>"
+      out += "<div class=\"controls\"><input class=\"numeric integer optional inpt_number\" id=\""+type+"s_personnages_niveau\" name=\""+type+"s_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\"/></div></div>";
+      if (cols_sup) {
+        out += "<div class=\"control-group string optional capacites_personnage s_specialite col-md-6 hidden reajuste-spe\" id=\"specialite-"+tmp[0].trim()+"\">";
+        out += "<label class=\"string optional control-label\" for=\""+type+"s_personnages_specialite\">Specialite</label>";
+        out += "<div class=\"controls\"><input class=\"string optional inpt_string\" id=\""+type+"s_personnages_specialite\" name=\""+type+"s_personnages["+id+"]["+cols_sup+"]\" size=\"50\" type=\"text\" value=\"\" /></div></div>";
+        // out += o.input(cols_sup, label: "&nbsp";,
+        //         input_html: {class: "inpt_string", name: "#{type}s_personnages[#{objet.id}][#{cols_sup}]"},
+        //         wrapper_html: { class: "col-md-5 reajuste #{specialite_affichage(objet, cols_sup)}", id: "#{cols_sup}-#{format_nom}" })
+      } else {
+        out += "<div class=\"col-md-5\"></div>";
+      }
+    // end
+    if (type == "capacite") {
+      out += "<span class=\"hidden\" id=\""+id+"\"> "+id+":123</span>"; //TODO FIX type_cap
+    } else {
+      out += "<span class=\"hidden\" id=\"d_"+id+"\">"+id+"</span>";
+    }
+  out += "</div>";
+  return out;
+}
+
+  function format_name(name) {
+    return name.split(' ').join("").split("'").join("");
+  }
+
+function getHTMLInputDiscipline(name, id, id_jointure) {
+  // var id_j = parseInt(id_jointure) + 1;
+  // out = "<div class=\"dis\" id=\"t_"+name+"\">";
+  // out += "<div class=\"col-md-6\">";
+  // out += "<b>"+name+"</b>"
+  // out += "</div>"
+  // out += "<div class=\"control-group integer optional disciplines_personnages_niveau col-md-6\">";
+  // out += "<label class=\"integer optional control-label\" for=\"disciplines_personnages_niveau\"></label>";
+  // out += "<div class=\"controls\">";
+  // out += "<input class=\"numeric integer optional\" id=\"disciplines_personnages_niveau\" name=\"disciplines_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"\" /></div>";
+  // out += "<span class=\"hidden\" id=\""+id+"\">"+id+"</span>";
+  // out += "</div>"
+
+  // TODO : Find num = 42
+  console.log($(".dis").length);
+  out = getHTMLInputData(id, "discipline", "dis", name, format_name(name), 42, "test info bulel", null, null)
+  return out;
 }
 
 function getHTMLInputCapacite(name, id) {
@@ -472,21 +529,6 @@ function getHTMLInputAtout(name, id, cout) {
   out += "<div class=\"col-md-6\">";
   out += "</div>";
   out += "</div>";
-  return out;
-}
-
-function getHTMLInputDiscipline(name, id, id_jointure) {
-  // var id_j = parseInt(id_jointure) + 1;
-  out = "<div class=\"dis\" id=\"t_"+name+"\">";
-  out += "<div class=\"col-md-6\">";
-  out += "<b>"+name+"</b>"
-  out += "</div>"
-  out += "<div class=\"control-group integer optional disciplines_personnages_niveau col-md-6\">";
-  out += "<label class=\"integer optional control-label\" for=\"disciplines_personnages_niveau\"></label>";
-  out += "<div class=\"controls\">";
-  out += "<input class=\"numeric integer optional\" id=\"disciplines_personnages_niveau\" name=\"disciplines_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"\" /></div>";
-  out += "<span class=\"hidden\" id=\""+id+"\">"+id+"</span>";
-  out += "</div>"
   return out;
 }
 

@@ -30,5 +30,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :pseudo, :role
 
+  ROLE_ADMIN = 2
+  ROLE_MODER = 1
+  ROLE_NORMA = 0
+
   has_one :personnage
 end

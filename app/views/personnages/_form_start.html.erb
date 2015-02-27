@@ -78,7 +78,7 @@
     indexImg = $img.length - 1,
     i = 0,
     $currentImg = $img.eq(i);
-    console.log(indexImg);
+    // console.log(indexImg);
     $img.css('display', 'none');
     $currentImg.css('display', 'block');
 
@@ -159,7 +159,7 @@
   function manageTestAjax(idTypePerso) {
     $(idTypePerso).change(function() {
       $.ajax({url: "/personnages/get_infos", success: function(data, textStatus) {
-        console.log(data.foo);
+        // console.log(data.foo);
       }});
     });
   }

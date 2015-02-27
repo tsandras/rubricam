@@ -3,19 +3,17 @@
 <table>
   <tr>
     <th>Nom</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @historiques.each do |historique| %>
   <tr>
     <td><%= historique.nom %></td>
-    <td><%= historique.description %></td>
-    <td><%= link_to 'Show', historique %></td>
-    <td><%= link_to 'Edit', edit_historique_path(historique) %></td>
-    <td><%= link_to 'Destroy', historique, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Voir', historique_path(historique), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_historique_path(historique), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>
 <% end %>
 </table>

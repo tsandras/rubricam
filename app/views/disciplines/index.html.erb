@@ -3,21 +3,17 @@
 <table>
   <tr>
     <th>Nom</th>
-    <th>Description</th>
-    <th>Nom discipline</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @disciplines.each do |discipline| %>
   <tr>
     <td><%= discipline.nom %></td>
-    <td><%= discipline.description %></td>
-    <td><%= discipline.nom_discipline %></td>
-    <td><%= link_to 'Show', discipline %></td>
-    <td><%= link_to 'Edit', edit_discipline_path(discipline) %></td>
-    <td><%= link_to 'Destroy', discipline, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Voir', discipline_path(discipline), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_discipline_path(discipline), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>
 <% end %>
 </table>

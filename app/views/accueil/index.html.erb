@@ -1,13 +1,5 @@
 <div id="page-accueil">
-
-  <div id="block-20">
-    <%= image_tag 'v20.png', class: 'x20' %>
-    Rubricam
-    <%= image_tag 'm20.png', class: 'x20' %>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-5">
       <div id="menu-personnages" class="menu-accueil">
         <div class="menu-accueil-head">
           Vos personnages
@@ -18,7 +10,6 @@
               <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <!-- <th>Type</th> -->
                 <th>Voir</th>
                 <th>Editer</th>
               </tr>
@@ -26,7 +17,6 @@
                 <tr>
                   <td><%= p.nom %></td>
                   <td><%= p.prenom %></td>
-                  <!-- <td><%#= p.type_perso %></td> -->
                   <td><%= link_to "Profil", p, class: 'btn btn-success btn-xs' %></td>
                   <td><%= link_to 'Editer', edit_personnage_path(p), class: 'btn btn-warning btn-xs' %></td>
                 </tr>
@@ -41,39 +31,30 @@
           <%= link_to 'Créer un personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
         </div>
       </div>
-    </div>
-
-    <div class="col-sm-4">
       <%= menu_accueil(["nom", "type_cap"], "capacites", @capacites) %>
       <%= menu_accueil(["nom"], "historiques", @historiques) %>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-md-5">
       <%= menu_accueil(["nom", "cout"], "atouts", @atouts) %>
       <%= menu_accueil(["nom"], "disciplines", @disciplines) %>
+      <% if @user.role != 0 %>
+        <div id="menu-admin">
+          <%= link_to 'Personnages', personnages_path, class: 'btn btn-success btn-sm' %>
+          <%= link_to 'Capacités', capacites_path, class: 'btn btn-success btn-sm' %>
+          <%= link_to 'Atouts', atouts_path, class: 'btn btn-success btn-sm' %>
+          <%= link_to 'Historiques', historiques_path, class: 'btn btn-success btn-sm' %><br /><br />
+          <%= link_to 'Spheres', historiques_path, class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Routines', routines_path, class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Disciplines', disciplines_path, class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Combinaisons de discipline', combinaisons_path, class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Arts', arts_path, class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Royaumes', royaumes_path, class: 'btn btn-warning btn-sm' %><br /><br />
+          <%= link_to 'Relations', relations_path, class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Organisations', organisations_path, class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Lieux', lieus_path, class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Objets', objets_path, class: 'btn btn-primary btn-sm' %>
+        </div>
+      <% end %>
     </div>
-  </div>
-
-  <% if @user.role != 0 %>
-    <div id="menu-admin">
-      <%= link_to 'Personnages', personnages_path, class: 'btn btn-success btn-sm' %>
-      <%= link_to 'Capacités', capacites_path, class: 'btn btn-success btn-sm' %>
-      <%= link_to 'Atouts', atouts_path, class: 'btn btn-success btn-sm' %>
-      <%= link_to 'Historiques', historiques_path, class: 'btn btn-success btn-sm' %><br /><br />
-      <%= link_to 'Spheres', historiques_path, class: 'btn btn-warning btn-sm' %>
-      <%= link_to 'Routines', routines_path, class: 'btn btn-warning btn-sm' %>
-      <%= link_to 'Disciplines', disciplines_path, class: 'btn btn-warning btn-sm' %>
-      <%= link_to 'Combinaisons de discipline', combinaisons_path, class: 'btn btn-warning btn-sm' %>
-      <%= link_to 'Arts', arts_path, class: 'btn btn-warning btn-sm' %>
-      <%= link_to 'Royaumes', royaumes_path, class: 'btn btn-warning btn-sm' %><br /><br />
-      <%= link_to 'Relations', relations_path, class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Organisations', organisations_path, class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Lieux', lieus_path, class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Objets', objets_path, class: 'btn btn-primary btn-sm' %>
-    </div>
-  <% end %>
-
-  <div class="row">
-    <%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %>
-  </div>
 </div>

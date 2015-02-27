@@ -3,20 +3,21 @@
 <table>
   <tr>
     <th>Nom</th>
-    <th>Description</th>
     <th>Primaire</th>
     <th>Type</th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @capacites.each do |capacite| %>
   <tr>
     <td><%= link_to capacite.nom, capacite %></td>
-    <td><%= capacite.description %></td>
-    <td><%= capacite.primaire %></td>
+    <td><%= capacite.primaire ? 'Oui' : 'Non' %></td>
     <td><%= capacite.type_cap %></td>
-    <td><%= link_to 'Edit', edit_capacite_path(capacite) %></td>
-    <!-- <td><%#= link_to 'Destroy', capacite, confirm: 'Are you sure?', method: :delete %></td> -->
+    <td><%= link_to 'Voir', capacite_path(capacite), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_capacite_path(capacite), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>
 <% end %>
 </table>

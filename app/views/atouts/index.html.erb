@@ -3,21 +3,19 @@
 <table>
   <tr>
     <th>Nom</th>
-    <th>Description</th>
     <th>Cout</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @atouts.each do |atout| %>
   <tr>
     <td><%= atout.nom %></td>
-    <td><%= atout.description %></td>
     <td><%= atout.cout %></td>
-    <td><%= link_to 'Show', atout %></td>
-    <td><%= link_to 'Edit', edit_atout_path(atout) %></td>
-    <td><%= link_to 'Destroy', atout, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Voir', atout_path(atout), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_atout_path(atout), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>
 <% end %>
 </table>

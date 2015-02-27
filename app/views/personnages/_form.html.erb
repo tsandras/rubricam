@@ -11,84 +11,72 @@
   <% end %>
 
   <div id="personnage">
-    <!-- <div id="menu">
-      <a href="javascript:;" class="close"></a> -->
-      <%#= input_xps_et_bonus(p) %>
-      <%#= recherche_historique(p) %>
-      <%#= recherche_atout(p) %>
-      <%#= recherche_discipline(p) %>
-      <%#= recherche_capacite(p) %>
-    <!-- </div> -->
-    <div id="page">
-      <%#= button_tag('', type: 'button', id: "show_menu", class: 'menu_btn') %>
-      <%#= button_tag('', type: 'button', id: "show_menu", class: 'menu_btn2') %>
-      <div class="row">
-        <p class="text-center"><%= show_partie(@personnage) %></p>
+    <div class="row">
+      <p class="text-center"><%= show_partie(@personnage) %></p>
+    </div>
+    <div class="row info-general">
+      <p class="text-center"><b>Générale</b></p>
+      <%= input_info_general(p, @personnage) %>
+    </div>
+    <div class="row attributs">
+      <%= image_tag("barre_fiche.png", class: 'barre') %>
+      <!-- <p class="titre"><b>Attributs</b></p> -->
+      <p><%= show_nbs_attributs(@personnage) %></p>
+      <%= input_attributs(p, @personnage) %>
+    </div>
+    <div class="row capacites">
+      <%= image_tag("barre_fiche.png", class: 'barre') %>
+      <!-- <p class="titre2"><b>Capacités</b></p> -->
+      <p><%= show_nbs_capacites(@personnage) %><a href="#openModalcapacite">+</a></p>
+      <%= input_capacite(@capacites_personnages, @personnage) %>
+      <%= image_tag("barre_fiche.png", class: 'barre') %>
+    </div>
+    <% if @personnage.mage? %>
+      <div class="row spheres">
+        <p class="text-center"><b>Sphères</b></p>
+        <%= input_spheres(@personnage) %>
       </div>
-      <div class="row info-general">
-        <p class="text-center"><b>Générale</b></p>
-        <%= input_info_general(p, @personnage) %>
+    <% end %>
+    <div class="row disciplines">
+      <p class="text-center"><a href="#openModaldiscipline">+</a><b>Disciplines</b><%= show_disciplines(@personnage) %></p>
+      <%= input_discipline(@disciplines_personnages) %>
+    </div>
+    <div class="row autre">
+      <p class="text-center"><b>Autres</b></p>
+      <div class="col-md-4">
+        <a href="#openModalhistorique">+</a>
+        <%= input_historique(@historiques_personnages, @personnage) %>
+        <a href="#openModalatout">+</a>
+        <%= input_atout(@atouts_personnages) %>
       </div>
-      <div class="row attributs">
-        <%= image_tag("barre_fiche.png", class: 'barre') %>
-        <!-- <p class="titre"><b>Attributs</b></p> -->
-        <p><%= show_nbs_attributs(@personnage) %></p>
-        <%= input_attributs(p, @personnage) %>
+      <div class="col-md-4">
+        <p class="text-center"><b>Important</b></p>
+        <%= input_voie(p, @personnage) %>
+        <%= input_entelechie(p, @personnage) %>
+        <%= input_volonte(p) %>
       </div>
-      <div class="row capacites">
-        <%= image_tag("barre_fiche.png", class: 'barre') %>
-        <!-- <p class="titre2"><b>Capacités</b></p> -->
-        <p><%= show_nbs_capacites(@personnage) %><a href="#openModalcapacite">+</a></p>
-        <%= input_capacite(@capacites_personnages, @personnage) %>
-        <%= image_tag("barre_fiche.png", class: 'barre') %>
+      <div class="col-md-4">
+        <p class="text-center"><b>Vertues/Résonnances</b><%= show_nbs_vertues(@personnage) %></p>
+        <%= input_vertue(p, @personnage) %>
+        <%= input_resonnance(p, @personnage) %>
       </div>
-      <% if @personnage.mage? %>
-        <div class="row spheres">
-          <p class="text-center"><b>Sphères</b></p>
-          <%= input_spheres(@personnage) %>
-        </div>
-      <% end %>
-      <div class="row disciplines">
-        <p class="text-center"><a href="#openModaldiscipline">+</a><b>Disciplines</b><%= show_disciplines(@personnage) %></p>
-        <%= input_discipline(@disciplines_personnages) %>
+    </div>
+    <div class="row background">
+      <p class="text-center"><b>Background</b></p>
+      <div class="col-md-4">
+        <%= p.input :background %>
       </div>
-      <div class="row autre">
-        <p class="text-center"><b>Autres</b></p>
-        <div class="col-md-4">
-          <a href="#openModalhistorique">+</a>
-          <%= input_historique(@historiques_personnages, @personnage) %>
-          <a href="#openModalatout">+</a>
-          <%= input_atout(@atouts_personnages) %>
-        </div>
-        <div class="col-md-4">
-          <p class="text-center"><b>Important</b></p>
-          <%= input_voie(p, @personnage) %>
-          <%= input_entelechie(p, @personnage) %>
-          <%= input_volonte(p) %>
-        </div>
-        <div class="col-md-4">
-          <p class="text-center"><b>Vertues/Résonnances</b><%= show_nbs_vertues(@personnage) %></p>
-          <%= input_vertue(p, @personnage) %>
-          <%= input_resonnance(p, @personnage) %>
-        </div>
+      <div class="col-md-4">
+        <%= p.input :paradygme %>
       </div>
-      <div class="row background">
-        <p class="text-center"><b>Background</b></p>
-        <div class="col-md-4">
-          <%= p.input :background %>
-        </div>
-        <div class="col-md-4">
-          <%= p.input :paradygme %>
-        </div>
-        <div class="col-md-4">
-          <%= p.input :description %>
-        </div>
+      <div class="col-md-4">
+        <%= p.input :description %>
       </div>
-      <div class="row background">
-        <%= p.input :caracteristique_base, as: :hidden %>
-        <%= p.input :caracteristique_bonus, as: :hidden %>
-        <p class="text-center"><%= show_sauvegarder(p, @personnage) %></p>
-      </div>
+    </div>
+    <div class="row background">
+      <%= p.input :caracteristique_base, as: :hidden %>
+      <%= p.input :caracteristique_bonus, as: :hidden %>
+      <p class="text-center"><%= show_sauvegarder(p, @personnage) %></p>
     </div>
     <%= input_modal_objet(p, "discipline", "Disciplines") %>
     <%= input_modal_objet(p, "historique", "Historiques") %>
