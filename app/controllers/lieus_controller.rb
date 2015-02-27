@@ -1,6 +1,7 @@
 class LieusController < ApplicationController
   # GET /lieus
   # GET /lieus.json
+
   def index
     @lieus = Lieu.all
 

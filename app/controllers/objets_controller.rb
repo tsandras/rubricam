@@ -1,6 +1,7 @@
 class ObjetsController < ApplicationController
   # GET /objets
   # GET /objets.json
+
   def index
     @objets = Objet.all
 

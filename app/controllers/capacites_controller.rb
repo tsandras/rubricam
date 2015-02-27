@@ -1,6 +1,8 @@
 class CapacitesController < ApplicationController
   # GET /capacites
   # GET /capacites.json
+  skip_before_filter :authenticate_user!, only: [:index, :show]
+
   def index
     @capacites = Capacite.all
 
@@ -24,7 +26,7 @@ class CapacitesController < ApplicationController
   # GET /capacites/new
   # GET /capacites/new.json
   def new
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @capacite = Capacite.new
 
     respond_to do |format|
@@ -35,14 +37,14 @@ class CapacitesController < ApplicationController
 
   # GET /capacites/1/edit
   def edit
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @capacite = Capacite.find(params[:id])
   end
 
   # POST /capacites
   # POST /capacites.json
   def create
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @capacite = Capacite.new(params[:capacite])
 
     respond_to do |format|
@@ -59,7 +61,7 @@ class CapacitesController < ApplicationController
   # PUT /capacites/1
   # PUT /capacites/1.json
   def update
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @capacite = Capacite.find(params[:id])
 
     respond_to do |format|
@@ -76,7 +78,7 @@ class CapacitesController < ApplicationController
   # DELETE /capacites/1
   # DELETE /capacites/1.json
   def destroy
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @capacite = Capacite.find(params[:id])
     @capacite.destroy
 

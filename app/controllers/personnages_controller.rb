@@ -3,7 +3,8 @@ class PersonnagesController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:get_infos]
 
   def index
-    @user = User.find(session["warden.user.user.key"][0].first)
+    # raise "foo"
+    # @user = User.find(session["warden.user.user.key"][0].first)
     if @user.role != 0
       @personnages = Personnage.all
     else
@@ -17,7 +18,7 @@ class PersonnagesController < ApplicationController
 
   def show
     @personnage = Personnage.find(params[:id])
-    return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition?(@user)
     @capacites = CapacitesPersonnages.where(personnage_id: params[:id])
     @historiques = HistoriquesPersonnages.where(personnage_id: params[:id])
     # raise @historiques.inspect
@@ -43,7 +44,7 @@ class PersonnagesController < ApplicationController
   def edit
     @personnage = Personnage.find(params[:id])
     # raise session["warden.user.user.key"][0].inspect
-    return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition?(@user)
     gon.bonus = @personnage.has_bonus
     gon.base = @personnage.has_base
     @capacites_personnages = CapacitesPersonnages.where(personnage_id: params[:id])
@@ -148,7 +149,7 @@ class PersonnagesController < ApplicationController
   private
 
   def permition?(user)
-    return true if user.role != 0
+    return true if user.role != User::ROLE_NORMA
     return true if @personnage.user == user
     false
   end

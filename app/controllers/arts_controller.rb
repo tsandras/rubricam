@@ -1,6 +1,7 @@
 class ArtsController < ApplicationController
   # GET /arts
   # GET /arts.json
+
   def index
     @arts = Art.all
 

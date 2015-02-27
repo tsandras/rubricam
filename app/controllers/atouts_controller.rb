@@ -1,6 +1,7 @@
 class AtoutsController < ApplicationController
   # GET /atouts
   # GET /atouts.json
+  skip_before_filter :authenticate_user!, only: [:index, :show]
   def index
     @atouts = Atout.all
 
@@ -24,7 +25,7 @@ class AtoutsController < ApplicationController
   # GET /atouts/new
   # GET /atouts/new.json
   def new
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @atout = Atout.new
 
     respond_to do |format|
@@ -35,14 +36,14 @@ class AtoutsController < ApplicationController
 
   # GET /atouts/1/edit
   def edit
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @atout = Atout.find(params[:id])
   end
 
   # POST /atouts
   # POST /atouts.json
   def create
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @atout = Atout.new(params[:atout])
 
     respond_to do |format|
@@ -59,7 +60,7 @@ class AtoutsController < ApplicationController
   # PUT /atouts/1
   # PUT /atouts/1.json
   def update
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @atout = Atout.find(params[:id])
 
     respond_to do |format|
@@ -76,7 +77,7 @@ class AtoutsController < ApplicationController
   # DELETE /atouts/1
   # DELETE /atouts/1.json
   def destroy
-    return redirect_to root_url if !permition_to_write?(User.find(session["warden.user.user.key"][0].first))
+    return redirect_to root_url if !permition_to_write?(@user)
     @atout = Atout.find(params[:id])
     @atout.destroy
 

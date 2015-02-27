@@ -1,6 +1,7 @@
 class CombinaisonsController < ApplicationController
   # GET /combinaisons
   # GET /combinaisons.json
+
   def index
     @combinaisons = Combinaison.all
 
