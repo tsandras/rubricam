@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def create_user
-    # raise "foo"
     if session["warden.user.user.key"] != nil
       @user = User.find(session["warden.user.user.key"][1].first)
     else
