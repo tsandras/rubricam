@@ -12,6 +12,8 @@ group :development do
   gem 'railroady'
 end
 
+gem 'mandrill-api'
+
 group :production do
   gem 'pg'
 end
