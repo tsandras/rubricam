@@ -10,10 +10,11 @@
 #  type        :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  secret      :boolean
 #
 
 class Routine < ActiveRecord::Base
-  attr_accessible :combinaison, :description, :foci, :name, :type
+  attr_accessible :combinaison, :description, :foci, :name, :type, :secret
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
 end

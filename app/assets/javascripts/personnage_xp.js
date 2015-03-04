@@ -35,6 +35,7 @@ function manageCalculeBonus() {
     bonus_dep += calcule_xps_sphere(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_discipline(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_volonte(personnage, "necrodancer", "bonus");
+
     $("#nbs_bonus").html(bonus_dep);
   }
 }
@@ -50,7 +51,7 @@ function calcule_xps_attribut(personnage, type_perso, type) {
     if (type == "base") {
       out = out + manage_serie_nx(personnage.Personnage[tmp[1]], attr_actuet, type_perso, "attribut");
     } else {
-      // console.log(personnage.Personnage[tmp[1]], attr_actuet);
+
       out = out + manage_bonus(personnage.Personnage[tmp[1]], parseInt(attr_actuet), "attribut");
     }
   });
@@ -227,7 +228,7 @@ function manage_serie_nx(i, n, type_perso, pouvoir) {
 
 function manage_bonus(i, n, pouvoir) {
   var cout = get_cout_bonus(pouvoir);
-  // console.log(cout, pouvoir);
+
   return serie_bonus(i, n, cout);
 }
 
@@ -239,7 +240,7 @@ function serie_bonus(i, n, cout) {
   for (j = i; j < n; j++) {
     out = out + cout;
   }
-  // console.log("Diff cal:"+out);
+
   return out;
 }
 
@@ -277,7 +278,7 @@ function get_cout_bonus(pouvoir) {
       out = 7;
       break;
     case "capacite":
-      out = 1;
+      out = 2;
       break;
     case "attribut":
       out = 4;

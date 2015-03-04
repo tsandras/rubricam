@@ -1,68 +1,70 @@
 <%= simple_form_for(@relation) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :description %>
-    <%= f.input :date, as: :string, input_html: {value: local_date(@relation.date), class: 'datepicker'} %>
-    <%= f.input :to_personnage_id %>
-    <%= f.input :from_personnage_id %>
+  <div class="col-md-4">
+    <div class="form-inputs">
+      <%= f.input :name %>
+      <%= f.input :description %>
+      <%= f.input :to_personnage_id, input_html: { class: "hidden" } %><span id="name_relation_to"><%= @to_personnage ? "#{@to_personnage.prenom} #{@to_personnage.nom}" : '' %></span>
+      <%= f.input :from_personnage_id, input_html: { class: "hidden" } %><span id="name_relation_from"><%= @from_personnage ? "#{@from_personnage.prenom} #{@from_personnage.nom}" : '' %></span>
+    </div>
   </div>
-
-  <label for="search_personnage1"> Rechercher Personnage :</label>
-  <input id="search_personnage1" type="text" onkeypress="filter(this, '.personnage1 .checkbox .checktest')" onkeyup="epurationCheckBox(this, '.personnage1 .checkbox .checktest')" />
-  <div class="personnage1">
-  <%#= p.association :capacites, as: :check_boxes, :collection => Capacite.all.map {|c| [c.nom, c.id]}.uniq %>
-    <% if @personnages != nil %>
-      <% @personnages.each do |p| %>
-        <div class="checkbox">
-          <%#= check_box_tag p.id, p.nom %>
-          <%= "<input id='1p#{p.id}' name='#{p.id}' value='#{p.nom}' type='checkbox' />".html_safe %>
-          <%= label_tag p.id, p.nom, class: 'checktest' %>
-        </div>
+  <div class="col-md-4">
+    <label for="search_personnage1"> Rechercher Personnage :</label>
+    <input id="search_personnage1" type="text" onkeypress="filter(this, '.personnage1 .checkbox2 .checktest')" onkeyup="epurationCheckBox(this, '.personnage1 .checkbox2 .checktest')" />
+    <div class="personnage1">
+    <%#= p.association :capacites, as: :check_boxes, :collection => Capacite.all.map {|c| [c.nom, c.id]}.uniq %>
+      <% if @personnages != nil %>
+        <% @personnages.each do |p| %>
+          <div class="checkbox2">
+            <%#= check_box_tag p.id, p.nom %>
+            <%= "<input id='1p#{p.id}' name='#{p.id}' value='#{p.prenom} #{p.nom}' type='checkbox' />".html_safe %>
+            <%= label_tag p.id, p.nom, class: 'checktest' %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
-  <label for="search_personnage2"> Rechercher Personnage :</label>
-  <input id="search_personnage2" type="text" onkeypress="filter(this, '.personnage2 .checkbox2 .checktest')" onkeyup="epurationCheckBox(this, '.personnage2 .checkbox2 .checktest')" />
-  <div class="personnage2">
-    <% if @personnages != nil %>
-      <% @personnages.each do |p| %>
-        <div class="checkbox2">
-          <%#= check_box_tag p.id, p.nom %>
-          <%= "<input id='2p#{p.id}' name='#{p.id}' value='#{p.nom}' type='checkbox' />".html_safe %>
-          <%= label_tag p.id, p.nom, class: 'checktest' %>
-        </div>
+    <label for="search_personnage2"> Rechercher Personnage :</label>
+    <input id="search_personnage2" type="text" onkeypress="filter(this, '.personnage2 .checkbox2 .checktest')" onkeyup="epurationCheckBox(this, '.personnage2 .checkbox2 .checktest')" />
+    <div class="personnage2">
+      <% if @personnages != nil %>
+        <% @personnages.each do |p| %>
+          <div class="checkbox2">
+            <%#= check_box_tag p.id, p.nom %>
+            <%= "<input id='2p#{p.id}' name='#{p.id}' value='#{p.prenom} #{p.nom}' type='checkbox' />".html_safe %>
+            <%= label_tag p.id, p.nom, class: 'checktest' %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-    <span id="#test"></span>
-  </div>
-
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+    </div>
+    <%= f.input :date, as: :string, input_html: {value: local_date(@relation.date), class: 'datepicker inpt_string'}, wrapper_html: {class: 'inline'} %>
+    <%#= input_secret(f, "Relation secrète ?") %>
+    <%= f.input :secret, as: :boolean, label: "Relation secrète ?", input_html: {}, wrapper_html: {class: 'inline simple-checkbox'} %>
+    <div class="form-actions">
+      <%= f.button :submit, "Créer/Editer une relation", class: 'btn btn-success btn-sm' %>
+    </div>
+     <%= link_to 'Back', relations_path, class: "btn btn-warning btn-sm" %>
   </div>
 <% end %>
 
 <script type="text/javascript">
   $(document).ready(function(){
     $('.datepicker').datepicker();
-    manageCheckBox("#search_personnage1", ".personnage1 .checkbox .checktest");
+    manageCheckBox("#search_personnage1", ".personnage1 .checkbox2 .checktest");
     manageCheckBox("#search_personnage2", ".personnage2 .checkbox2 .checktest");
-    $(".personnage1 .checkbox").click(function(){
-      var id = $(this).children().attr("id");
+    $(".personnage1 .checkbox2").click(function(){
+      // var id = $(this).children().attr("id");
       var nom = $(this).children().attr("name");
-      console.log(id);
+      var realNom = $(this).children().val();
       $("#relation_to_personnage_id").val(nom);
-      console.log("coucou 1");
-      // $("#test").append("coucou"+nom);
+      $("#name_relation_to").text(realNom);
     });
     $(".personnage2 .checkbox2").click(function(){
       var name = $(this).children().attr("name");
-      console.log(name);
-      console.log("coucou 2");
+      var realNom = $(this).children().val();
       $("#relation_from_personnage_id").val(name);
+      $("#name_relation_from").text(realNom);
     });
   });
   function manageCheckBox(searchBox, filteringList) {

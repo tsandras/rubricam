@@ -1,11 +1,9 @@
-<p id="notice"><%= notice %></p>
-
-<p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
-<p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
-Attitude : <%= @personnage.attitude %><br />
-Nature : <%= @personnage.nature %>
-<div class="row">
-  <div class="col-xs-6">
+  <p id="notice"><%= notice %></p>
+  <div class="col-md-4">
+    <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
+    <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
+    Attitude : <%= @personnage.attitude %><br />
+    Nature : <%= @personnage.nature %><br/>
     <b>Attributs</b>
     <table>
       <tr>
@@ -39,7 +37,8 @@ Nature : <%= @personnage.nature %>
       <%= show_kinain(@personnage) %>
     </div>
   </div>
-  <div class="col-xs-6">
+  <div class="col-md-4">
+    <p><b>Rang:</b> <%= @personnage.calcule_rang %> (<%= @personnage.rang %>)</p>
     <div class="background">
       <p><b>Description:</b> <%= @personnage.description %></p>
       <p><b>Background:</b> <%= @personnage.background %></p>
@@ -53,8 +52,10 @@ Nature : <%= @personnage.nature %>
       <%= show_relations(@to_relations) %>
     </div>
     <%= show_xps(@personnage) %>
+    <%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
+    <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %>
+    <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %>
+    <% if @user.role == 2 %>
+      <%= link_to 'Supprimer', @personnage, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-sm' %>
+    <% end %>
   </div>
-</div>
-<%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
-<%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %>
-<%= link_to 'Supprimer', @personnage, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-sm' %>

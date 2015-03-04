@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150301141350) do
+ActiveRecord::Schema.define(:version => 20150303134513) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20150301141350) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "source"
+    t.boolean  "secret"
   end
 
   create_table "disciplines_personnages", :force => true do |t|
@@ -141,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20150301141350) do
     t.datetime "updated_at",     :null => false
     t.text     "systeme"
     t.text     "tableau"
+    t.boolean  "secret"
   end
 
   create_table "nivdisciplines_personnages", :force => true do |t|
@@ -157,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20150301141350) do
     t.integer  "personnage_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.boolean  "secret"
   end
 
   create_table "organisations", :force => true do |t|
@@ -233,6 +236,9 @@ ActiveRecord::Schema.define(:version => 20150301141350) do
     t.boolean  "has_base"
     t.boolean  "has_bonus"
     t.integer  "user_id"
+    t.boolean  "secret"
+    t.text     "description_publique"
+    t.string   "image_lien"
   end
 
   create_table "personnages_routines", :force => true do |t|
@@ -254,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20150301141350) do
     t.integer  "from_personnage_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.boolean  "secret"
   end
 
   create_table "routines", :force => true do |t|
@@ -264,6 +271,7 @@ ActiveRecord::Schema.define(:version => 20150301141350) do
     t.string   "type"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.boolean  "secret"
   end
 
   create_table "royaumes", :force => true do |t|

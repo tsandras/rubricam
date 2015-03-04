@@ -17,12 +17,12 @@
 
 <p>
   <b>To:</b>
-  <%= @relation.to_personnage_id %>
+  <% p1 = get_personnage(@relation.to_personnage_id) %><%= p1 ? "#{p1.prenom} #{p1.nom}" : "" %>
 </p>
 
 <p>
   <b>From:</b>
-  <%= @relation.from_personnage_id %>
+  <% p2 = get_personnage(@relation.from_personnage_id) %><%= p2 ? "#{p2.prenom} #{p2.nom}" : "" %>
 </p>
 
 <%= link_to 'Edit', edit_relation_path(@relation), class: 'btn btn-warning' %>

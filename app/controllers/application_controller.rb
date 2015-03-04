@@ -16,4 +16,13 @@ class ApplicationController < ActionController::Base
       @user.role = User::ROLE_NORMA
     end
   end
+
+  def get_personnage(id)
+    begin
+      per = Personnage.find(id)
+    rescue ActiveRecord::RecordNotFound => e
+      per = nil
+    end
+    per
+  end
 end

@@ -36,6 +36,8 @@ Rubricam::Application.routes.draw do
 
   resources :personnages do
     get :get_infos, on: :collection  #For Ajax test
+    get :public_edit, on: :member
+    post :public_update, on: :member
   end
 
 end

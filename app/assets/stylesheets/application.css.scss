@@ -549,3 +549,110 @@ input[type=number] {
     overflow:hidden;
   }
 }
+
+// New checkox style
+.custom-checkbox {
+  width: 75px;
+  height: 26px;
+
+  float: left;
+  display: inline;
+  text-align: right;
+
+  background: #F6F6F6;
+  margin: 0px auto;
+
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  position: relative;
+
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+  -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+
+.title-custom-checkbox {
+  float: left;
+  display: inline;
+  text-align: left;
+  margin: 0px 0px;
+  width: 170px;
+}
+
+.custom-checkbox:after {
+  content: 'Non';
+  font: 12px/26px Arial, sans-serif;
+  color: #000;
+  position: absolute;
+  right: 10px;
+  z-index: 0;
+  font-weight: bold;
+  text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.custom-checkbox:before {
+  content: 'Oui';
+  font: 12px/26px Arial, sans-serif;
+  color: #0033CC;
+  position: absolute;
+  left: 10px;
+  z-index: 0;
+  font-weight: bold;
+}
+
+.custom-checkbox label {
+  display: block;
+  width: 34px;
+  height: 20px;
+
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+
+  -webkit-transition: all .4s ease;
+  -moz-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  -ms-transition: all .4s ease;
+  transition: all .4s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 1;
+
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.8);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.8);
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.8);
+  background: #fcfff4;
+
+  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+}
+
+.custom-checkbox input[type=checkbox]:checked + label {
+  left: 39px;
+}
+
+.custom-checkbox input[type=checkbox] {
+  visibility: hidden;
+}
+
+// end custom checkox
+
+.plus-link {
+  width: 20px;
+  height: 20px;
+  background:url(plus.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.simple-checkbox input[type="checkbox"] {
+  position: relative;
+  margin-left: 20px;
+}

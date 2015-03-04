@@ -1,21 +1,26 @@
-<h1>Listing personnages</h1>
+<h1>Listes de vos personnages</h1>
 
-<table>
-  <tr>
-    <th>Personnage</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @personnages.each do |personnage| %>
-  <tr>
-    <td><%= link_to "#{personnage.prenom} #{personnage.nom}", personnage %></td>
-    <td><%= link_to 'Edit', edit_personnage_path(personnage) %></td>
-  </tr>
-<% end %>
-</table>
+<div class="col-md-6">
+  <table>
+    <tr>
+      <th>Personnage</th>
+      <th>Voir</th>
+      <% if @user.role == User::ROLE_ADMIN %>
+        <th>Editer</th>
+      <% end %>
+    </tr>
 
-<br />
+  <% @personnages.each do |personnage| %>
+    <tr>
+      <td><%= link_to "#{personnage.prenom} #{personnage.nom}", personnage %></td>
+      <td><%= link_to 'Voir', personnage_path(personnage), class: 'btn btn-success btn-xs' %></td>
+      <td><%= link_to('Editer', edit_personnage_path(personnage), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
+    </tr>
+  <% end %>
+  </table>
 
-<%= link_to 'New Personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
+  <br />
+
+  <%= link_to 'New Personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
+</div>

@@ -7,10 +7,6 @@ module PersonnagesHelper
     nil
   end
 
-  def get_personnage(id)
-    Personnage.find(id)
-  end
-
   def has_sphere(nom, personnage)
     begin
       return false if personnage.id.blank?

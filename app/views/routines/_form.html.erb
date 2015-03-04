@@ -1,15 +1,16 @@
 <%= simple_form_for(@routine) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-4">
     <%= f.input :name %>
     <%= f.input :description %>
+  </div>
+  <div class="col-md-4">
     <%= f.input :foci %>
     <%= f.input :combinaison %>
     <%= f.input :type %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+    <br/>
+    <%= f.button :submit, "Créer la routine", class: "btn btn-success btn-sm" %>
+    <%= link_to "Retour", routines_path, class: "btn btn-warning btn-sm" %>
   </div>
 <% end %>

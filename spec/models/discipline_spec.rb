@@ -9,6 +9,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  source         :string(255)
+#  secret         :boolean
 #
 
 require 'rails_helper'

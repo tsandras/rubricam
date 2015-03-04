@@ -60,7 +60,7 @@
     </div>
     <%= @f.input :bonus, as: :radio_buttons, label: "Points bonus de départ", label_method: ->(name) { "<span class=\"ic_radio\"><i class=\"fa fa-check\"></i></span> <span>#{name[0]} (#{name[1]}pbs) </span>&nbsp;".html_safe }, collection: [["Faible", 10], ["Normal", 15], ["Puissant", 21]], input_html: { class: 'customRadio' }, item_wrapper_class: 'custom-radio' %>
 
-    <%= @f.input :xps, label: "<label class=\"custom_checkbox\">Ajouter de l'Xps ?<input type=\"checkbox\" name=\"\" id=\"add-xps\"><span class=\"ic-checkbox-design\" for=\"add-xps\"><i class=\"ic-checkbox-circle\"></i></span>".html_safe, wrapper_html: {class: 'inline'}, input_html: {class: 'hidden inpt_number_big'} %>
+    <%= @f.input :xps, label: "Ajouter de l'Xps ?", wrapper_html: {class: 'inline'}, input_html: {class: 'inpt_number_small'} %>
     <br />
     <p class="text-center"><%= @f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %></p>
   </div>

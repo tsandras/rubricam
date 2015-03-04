@@ -10,6 +10,17 @@ td {
   // width: 195px;
 }
 
+.inpt_number_small input {
+  color: #333;
+  padding: 1px;
+  outline: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  width: 50px;
+  top: 3px;
+  position: relative;
+}
+
 .integer input {
   width: 25px;
 }
@@ -354,6 +365,11 @@ td {
 }
 
 .gris {
+  background-color: #F6F6F6;
+  border: 1px solid #F6F6F6;
+}
+
+.partie-personnage {
   background-color: #F6F6F6;
   border: 1px solid #F6F6F6;
 }

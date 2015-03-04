@@ -10,6 +10,7 @@
 #  from_personnage_id :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  secret             :boolean
 #
 
 require 'rails_helper'

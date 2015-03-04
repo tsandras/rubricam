@@ -140,16 +140,55 @@ module PersonnagesInput
                 wrapper_html: { class: 'col-md-1 reajuste' })
       end
       if personnage.send("#{name}").blank? || personnage.send("#{name}") < 4
-        out << f.input("spec_#{name}", label: "&nbsp".html_safe,
+        out << f.input("spec_#{name}", label: "&nbsp;".html_safe,
                 input_html: { class: 'inpt_string' },
                 wrapper_html: { class: 'hidden col-md-5 reajuste', id: "specialite-#{name}" })
       else
-        out << f.input("spec_#{name}", label: "&nbsp".html_safe,
+        out << f.input("spec_#{name}", label: "&nbsp;".html_safe,
                 input_html: { class: 'inpt_string' },
                 wrapper_html: { class: "col-md-5 reajuste", id: "specialite-#{name}" })
       end
     out << "</div>".html_safe
     out
+  end
+
+  def input_spheres(personnage)
+    out = ""
+    tmp = 0
+    (0..8).each do |i|
+      if tmp % 3 == 0
+        out << "<div class=\"col-xs-4\">".html_safe
+      end
+      tmp = tmp + 1
+      nom = Sphere::SPHERE[i]
+      if has_sphere(nom, personnage)
+        sphere = Sphere.where(name: nom, personnage_id: personnage.id).first
+      else
+        sphere = Sphere.create(name: nom)
+      end
+      out << "<div class=\"row sph #{i % 2 == 0 ? 'gris' : ''}\" id=\"#{nom}\">".html_safe
+        out << "<div class=\"col-md-4\">".html_safe
+          out << "<b> #{nom} </b>".html_safe
+          out << "<span class=\"infobulle\">#{image_tag('question_icon.jpg', class: 'question')}<i>#{Sphere::SPHERE_DESCRIPTION["#{nom}"]}</i></span>".html_safe
+        out << "</div>".html_safe
+        out << "<div class=\"col-md-2\">".html_safe
+          out << button_tag('', type: 'button', id: "minus-#{nom}", class: 'moins_new')
+          out << button_tag('', type: 'button', id: "plus-#{nom}", class: 'plus_new')
+        out << "</div>".html_safe
+      simple_fields_for(sphere) do |s|
+        out << s.input(:niveau, label: "&nbsp;".html_safe, input_html: { class: "inpt_number #{i % 2 == 0 ? 'gris' : ''}", id: 'spheres_personnages_niveau', name: "spheres_personnages[#{sphere.id}][niveau]", readonly: 'true', value: sphere.niveau.present? ? sphere.niveau : 0 }, wrapper_html: { class: 'col-md-1 reajuste' })
+        if sphere.niveau.blank? || sphere.niveau < 4
+          out << s.input(:specialite, label: "&nbsp;".html_safe, input_html: { class: 'inpt_string', id: 'inpt_string', name: "spheres_personnages[#{sphere.id}][specialite]" }, wrapper_html: { class: 'hidden col-md-5 reajuste', id: "specialite-#{sphere.name}" })
+        else
+          out << s.input(:specialite, label: "&nbsp;".html_safe, input_html: { class: 'inpt_string', id: 'inpt_string', name: "spheres_personnages[#{sphere.id}][specialite]" }, wrapper_html: { class: "col-md-5 reajuste", id: "specialite-#{sphere.name}" })
+        end
+      end
+      out << "</div>"
+      if tmp % 3 == 0
+        out << "</div>".html_safe
+      end
+    end
+    out.html_safe
   end
 
   # Methode for disciplines, capacites, historiques, atouts
@@ -178,7 +217,7 @@ module PersonnagesInput
       if type == "capacite"
         out << "<span class=\"hidden\" id=\"#{objet.id}\"> #{objet.capacite.id}:#{objet.capacite.type_cap}</span>".html_safe
       else
-        out << "<span class=\"hidden\" id=\"d_#{objet.id}\">#{objet.send(type).id}</span>".html_safe
+        out << "<span class=\"hidden\" id=\"#{class_type[0]}_#{objet.id}\">#{objet.send(type).id}</span>".html_safe
       end
     out << "</div>".html_safe
     out
@@ -223,44 +262,6 @@ module PersonnagesInput
     " <span id=\"nbs_mental\"> 0</span>" if !personnage.has_base
   end
 
-  def input_spheres(personnage)
-    out = ""
-    tmp = 0
-    (0..8).each do |i|
-      if tmp % 3 == 0
-        out << "<div class=\"col-xs-4\">".html_safe
-      end
-      tmp = tmp + 1
-      nom = Sphere::SPHERE[i]
-      if has_sphere(nom, personnage)
-        sphere = Sphere.where(name: nom, personnage_id: personnage.id).first
-      else
-        sphere = Sphere.create(name: nom)
-      end
-      out << "<div class=\"row sph\" id=\"#{nom}\">".html_safe
-      out << button_tag('', type: 'button', id: "minus-#{nom}", class: 'moins_cap')
-      out << button_tag('', type: 'button', id: "plus-#{nom}", class: 'plus_cap')
-      out << simple_fields_for(sphere) do |s|
-        "<div class='col-md-4'><b>#{nom}</b></div>".html_safe <<
-        s.input(:niveau, label: "&nbsp;".html_safe, input_html: { id: 'spheres_personnages_niveau', name: "spheres_personnages[#{sphere.id}][niveau]", class: 'inpt_number', readonly: 'true', value: sphere.niveau.present? ? sphere.niveau : 0 }, wrapper_html: { class: 'col-md-2' }) <<
-        "<div class=\"col-md-6 reajuste-spe\">".html_safe <<
-        if sphere.niveau.blank? || sphere.niveau < 4
-          "<div class=\"description-attribut\" id=\"description-#{nom}\"> #{Sphere::SPHERE_DESCRIPTION["#{nom}"]} </div>".html_safe <<
-          s.input(:specialite, label: "Specialite", input_html: { id: 'spheres_personnages_specialite', name: "spheres_personnages[#{sphere.id}][specialite]", class: 'inpt_string' }, wrapper_html: { class: 'hidden', id: "specialite-#{sphere.name}" })
-        else
-          "<div class=\"description-attribut hidden\" id=\"description-#{nom}\"> #{Sphere::SPHERE_DESCRIPTION["#{nom}"]} </div>".html_safe <<
-          s.input(:specialite, label: "Specialite", input_html: { id: 'spheres_personnages_specialite', name: "spheres_personnages[#{sphere.id}][specialite]" }, wrapper_html: { id: "specialite-#{sphere.name}" })
-        end
-      end
-      out << "</div>"
-      out << "</div>"
-      if tmp % 3 == 0
-        out << "</div>".html_safe
-      end
-    end
-    out.html_safe
-  end
-
   # To do: FIX bug when there are nom like "Force d'âme"
   def input_discipline(disciplines)
     out_final = "".html_safe
@@ -287,9 +288,9 @@ module PersonnagesInput
 
   def input_capacite(capacites_personnages, personnage)
     out = "".html_safe
-    talent = "<div class=\"col-xs-4 Talent\"><p class=\"text-center\"><b>Talents</b>#{show_nbs_talent(personnage)}</p>".html_safe
-    competence = "<div class=\"col-xs-4 Compétence\"><p class=\"text-center\"><b>Compétences</b>#{show_nbs_competences(personnage)}</p>".html_safe
-    connaissance = "<div class=\"col-xs-4 Connaissance\"><p class=\"text-center\"><b>Connaissances</b>#{show_nbs_connaissances(personnage)}</p>".html_safe
+    talent = "<div class=\"col-xs-4 Talent\"><p class=\"text-center\"><a href=\"#openModalcapacite\" class=\"plus-link\"></a><b>Talents</b>#{show_nbs_talent(personnage)}</p>".html_safe
+    competence = "<div class=\"col-xs-4 Compétence\"><p class=\"text-center\"><a href=\"#openModalcapacite\" class=\"plus-link\"></a><b>Compétences</b>#{show_nbs_competences(personnage)}</p>".html_safe
+    connaissance = "<div class=\"col-xs-4 Connaissance\"><p class=\"text-center\"><a href=\"#openModalcapacite\" class=\"plus-link\"></a><b>Connaissances</b>#{show_nbs_connaissances(personnage)}</p>".html_safe
     if capacites_personnages != nil && capacites_personnages.count > 0
       i = 0
       capacites_personnages.each do |cc|
@@ -329,7 +330,7 @@ module PersonnagesInput
 
   def input_historique(historiques_personnages, personnage)
     out = "<div>".html_safe
-    out << "<p class=\"text-center his\"><b>Historiques</b>#{show_nbs_historiques(personnage)}</p>".html_safe
+    out << "<p class=\"text-center his\"><a href=\"#openModalhistorique\" class=\"plus-link\"></a><b>Historiques</b>#{show_nbs_historiques(personnage)}</p>".html_safe
     if historiques_personnages != nil
       i = 0
       historiques_personnages.each do |cc|
@@ -346,7 +347,7 @@ module PersonnagesInput
   end
 
   def input_atout(atouts_personnages)
-    out = "<p class=\"text-center ato\"><b>Atouts</b></p>".html_safe
+    out = "<p class=\"text-center ato\"><a href=\"#openModalatout\" class=\"plus-link\"></a><b>Atouts</b></p>".html_safe
     if atouts_personnages != nil
       i = 0
       atouts_personnages.each do |cc|

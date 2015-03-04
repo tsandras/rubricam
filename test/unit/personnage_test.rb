@@ -58,6 +58,9 @@
 #  has_base              :boolean
 #  has_bonus             :boolean
 #  user_id               :integer
+#  secret                :boolean
+#  description_publique  :text
+#  image_lien            :string(255)
 #
 
 require 'test_helper'

@@ -105,4 +105,9 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                    "perception" => "Ce trait exprime la capacité d'un personnage à remarquer les détails de son environnement.",
                    "intelligence" => "L'Intelligence définit ce que les gens appellent l'habilé. Cela represente la capacité a résoudre des problèmes, à se rappeler de certains faits, à évaluer des situations, à raisonner et faire preuve de logique.",
                    "astuce" => "l'Astuce de votre personnage représente sa capacité à penser rapidement, à réagir avec bon sens aux situations critiques et à trouver des solutions créatives aux problemes immédiats."}
+
+  SEUIL_C = 200
+  SEUIL_B = 350
+  SEUIL_A = 600
+  SEUIL_S = 1000
 end

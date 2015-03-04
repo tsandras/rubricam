@@ -27,26 +27,24 @@
     <div class="row capacites">
       <%= image_tag("barre_fiche.png", class: 'barre') %>
       <!-- <p class="titre2"><b>Capacités</b></p> -->
-      <p><%= show_nbs_capacites(@personnage) %><a href="#openModalcapacite">+</a></p>
+      <p><%= show_nbs_capacites(@personnage) %></p>
       <%= input_capacite(@capacites_personnages, @personnage) %>
       <%= image_tag("barre_fiche.png", class: 'barre') %>
     </div>
     <% if @personnage.mage? %>
       <div class="row spheres">
-        <p class="text-center"><b>Sphères</b></p>
+        <p class="text-center"><b>Sphères</b><%= show_spheres_for_base(@personnage) %></p>
         <%= input_spheres(@personnage) %>
       </div>
     <% end %>
     <div class="row disciplines">
-      <p class="text-center"><a href="#openModaldiscipline">+</a><b>Disciplines</b><%= show_disciplines(@personnage) %></p>
+      <p class="text-center"><a href="#openModaldiscipline" class="plus-link"></a><b>Disciplines</b><%= show_disciplines(@personnage) %></p>
       <%= input_discipline(@disciplines_personnages) %>
     </div>
     <div class="row autre">
       <p class="text-center"><b>Autres</b></p>
       <div class="col-md-4">
-        <a href="#openModalhistorique">+</a>
         <%= input_historique(@historiques_personnages, @personnage) %>
-        <a href="#openModalatout">+</a>
         <%= input_atout(@atouts_personnages) %>
       </div>
       <div class="col-md-4">
@@ -114,6 +112,7 @@
     listenerHistoriquesForBase(0);
     listenerDisciplinesForBase();
     listenerVertuesForBase();
+    listenerSpheresForBase();
     manageMenu();
   });
 </script>

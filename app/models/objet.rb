@@ -11,10 +11,11 @@
 #  personnage_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  secret        :boolean
 #
 
 class Objet < ActiveRecord::Base
-  attr_accessible :description, :name, :niveau, :personnage_id, :resonnance, :type
+  attr_accessible :description, :name, :niveau, :personnage_id, :resonnance, :type, :secret
 
   belongs_to :personnage
 end

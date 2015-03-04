@@ -58,6 +58,9 @@
 #  has_base              :boolean
 #  has_bonus             :boolean
 #  user_id               :integer
+#  secret                :boolean
+#  description_publique  :text
+#  image_lien            :string(255)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

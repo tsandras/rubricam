@@ -5,7 +5,7 @@ class PersonnagesController < ApplicationController
   def index
     # raise "foo"
     # @user = User.find(session["warden.user.user.key"][0].first)
-    if @user.role != 0
+    if @user.role == Role::ROLE_ADMIN
       @personnages = Personnage.all
     else
       @personnages = Personnage.where(user_id: @user.id)
@@ -52,12 +52,23 @@ class PersonnagesController < ApplicationController
     @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
     @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id])
     add_discipline_clan(@personnage.clan) if @personnage.vampire?
+    add_sphere_tradition(@personnage.tradition) if @personnage.mage?
     add_historique
     add_capacite
   end
 
+  def public_edit
+    @personnage = Personnage.find(params[:id])
+  end
+
+  def public_update
+    @personnage = Personnage.find(params[:id])
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
   def create
-    @user = User.find(session["warden.user.user.key"][0].first)
+    # @user = User.find(session["warden.user.user.key"][0].first)
     params[:personnage].delete("capacite_ids")
     params[:personnage].delete("historique_ids")
     params[:personnage].delete("discipline_ids")
@@ -209,6 +220,13 @@ class PersonnagesController < ApplicationController
     end
   end
 
+  def add_sphere_tradition(tradition)
+    sph = Sphere.where(name: Personnage::SPHERES_TRADITION[tradition], personnage_id: @personnage.id).first
+    if !sph
+      Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_TRADITION[tradition], niveau: 1)
+    end
+  end
+
   def update_capacites(capacites_personnages)
     if capacites_personnages != nil
       capacites_personnages.each do |i, cp|
@@ -324,14 +342,14 @@ class PersonnagesController < ApplicationController
     false
   end
 
-  # def has_sp(key)
-  #   begin
-  #     cap = Sphere.where(id: key, personnage_id: @personnage.id)
-  #   rescue ActiveRecord::RecordNotFound => e
-  #     cap = nil
-  #   end
-  #   return true if cap.count > 0
-  #   false
-  # end
+  def has_sp(key)
+    begin
+      cap = Sphere.where(id: key, personnage_id: @personnage.id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
 
 end

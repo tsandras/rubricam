@@ -27,11 +27,15 @@ module PersonnagesShow
   end
 
   def show_nbs_vertues(personnage)
-    " <span id=\"nbs_vertues\">0</span>/<span id=\"max_vertues\">5</span>".html_safe if !personnage.has_base
+    " <span id=\"nbs_vertues\">0</span>/<span id=\"max_vertues\">5</span>".html_safe if !personnage.has_base && personnage.vampire?
   end
 
   def show_disciplines(personnage)
-    " <span id=\"nbs_disciplines\">0</span>/<span id=\"max_disciplines\">4</span>".html_safe if !personnage.has_base
+    " <span id=\"nbs_disciplines\">0</span>/<span id=\"max_disciplines\">4</span>".html_safe if !personnage.has_base && personnage.vampire?
+  end
+
+  def show_spheres_for_base(personnage)
+    " <span id=\"nbs_spheres\">#{personnage.tradition == 'orphelins' ? '0' : '1'}</span>/<span id=\"max_spheres\">#{personnage.tradition == 'orphelins' ? '5' : '6'}</span>".html_safe if !personnage.has_base && personnage.mage?
   end
 
   def show_pts_bonus(personnage)
@@ -87,13 +91,26 @@ module PersonnagesShow
   end
 
   def show_partie(personnage)
+    infos = Personnage::BASE_BY_TYPE[personnage.type_perso].split(";")
+    out = "".html_safe
+    out << "<div class=\"partie-personnage\">".html_safe
     if !personnage.has_base
-      "<b>Répartition des points de départ</b>".html_safe
+      out << "<b>ETAPE 1 : Répartition des points de départ</b><br/>".html_safe
+      # out << "Vous jouez un #{personnage.type_perso} #{personnage.vampire? ? personnage.clan : personnage.tradition}.</br>".html_safe
+      out << "Vous devez répartir #{infos[0]} points dans les Attributs.<br/>".html_safe
+      out << "Vous devez répartir #{infos[1]} dans les Capacités.<br/>".html_safe
+      out << "Vous devez répartir #{infos[2]} points dans les Historiques.<br/>".html_safe
+      out << "Vous devez répartir 5 points dans les vertues ainsi que 4 points dans les Disciplines" if personnage.vampire?
+      out << "Vous devez répartir #{personnage.tradition == 'Orphelins' ? '5' : '6'} points dans les Sphères." if personnage.mage?
     elsif !personnage.has_bonus
-      "<b>Répartition des points bonus</b>#{show_pts_bonus(personnage)}".html_safe
+      out << "<b>ETAPE 2 : Répartition des points bonus</b>#{show_pts_bonus(personnage)}<br/>".html_safe
+      out << "Vous devez répartir #{personnage.bonus} points.".html_safe
     else
-      "<b>Répartition des points d'expériences (ou pas)</b>".html_safe
+      out << "<b>ETAPE 3 : Répartition des points d'expériences (ou pas)</b><br/>".html_safe
+      out << "Ce personnage à un total de #{personnage.xps.to_i} dont #{personnage.reste_xps.to_i} non dépensés."
     end
+    out << "</div>".html_safe
+    out
   end
 
   def show_kinain(personnage)
@@ -111,6 +128,7 @@ module PersonnagesShow
       out += "<table>"
       tmp = 0
       capacites.each do |c|
+        if c.niveau > 0
           if tmp % 3 == 0
             out += "<tr>"
           end
@@ -119,6 +137,7 @@ module PersonnagesShow
           if tmp % 3 == 0
             out += "</tr>"
           end
+        end
       end
       out += "</table>"
       out += "<br />"
@@ -211,7 +230,7 @@ module PersonnagesShow
       out += "<table>"
       tmp = 0
       personnage.spheres.each do |sphere|
-        if sphere.niveau.present?
+        if sphere.niveau.present? && sphere.niveau > 0
           if tmp % 3 == 0
             out += "<tr>"
           end

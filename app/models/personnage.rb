@@ -58,6 +58,9 @@
 #  has_base              :boolean
 #  has_bonus             :boolean
 #  user_id               :integer
+#  secret                :boolean
+#  description_publique  :text
+#  image_lien            :string(255)
 #
 
 class Personnage < ActiveRecord::Base
@@ -74,7 +77,8 @@ class Personnage < ActiveRecord::Base
   :spec_apparence, :spec_perception, :spec_intelligence, :spec_astuce,
   :reste_xps, :reste_bonus, :type_perso, :nature, :attitude, :rang, :points_sang, :glamour,
   :banalite, :niveau_voie, :voie, :tradition, :clan,
-  :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id
+  :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
+  :description_publique, :image_lien
 
   validates_presence_of :type_perso, :bonus
 
@@ -115,6 +119,28 @@ class Personnage < ActiveRecord::Base
 
   def humain?
     type_perso == "Humain"
+  end
+
+  def calcule_rang
+    p_attribus = (force + dexterite + vigueur + charisme + manipulation + apparence + perception + intelligence + astuce) * 4
+    p_capacites = CapacitesPersonnages.where(personnage_id: id).sum(&:niveau) * 2
+    p_historiques = HistoriquesPersonnages.where(personnage_id: id).sum(&:niveau)
+    p_atout = AtoutsPersonnages.where(personnage_id: id).sum(&:niveau) * 3
+    p_disciplines = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
+    p_autre = volonte.to_i * 4 + entelechie.to_i * 8 + spheres.sum(&:niveau).to_i * 8 + (points_conscience.to_i + points_maitrise.to_i + points_courage.to_i) * 3
+    p_autre = p_autre + (points_statique + points_entropique + points_dynamique) * 2
+    self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre
+    if rang < SEUIL_C
+      "D"
+    elsif rang < SEUIL_B
+      "C"
+    elsif rang < SEUIL_A
+      "B"
+    elsif rang < SEUIL_S
+      "A"
+    else
+      "S"
+    end
   end
 
   def ok_base(personnage, capacites, historiques, spheres, disciplines)
@@ -186,7 +212,7 @@ class Personnage < ActiveRecord::Base
         spheres.each do |key, c|
           sph = sph + c[:niveau].to_i
         end
-        return false if sph != 5
+        return false if sph != 6 || (sph != 5 && tradition == "Orphelins")
         return true
       else
         return false
@@ -236,7 +262,7 @@ class Personnage < ActiveRecord::Base
     points_surnaturels = ok_bonus_surnaturel(perso_base, spheres, disciplines)
     # raise points_surnaturels.inspect
     points_bonus = points_attributs + points_capacites + points_historique + points_surnaturels + points_volonte
-    # raise bonus.inspect
+    # raise points_capacites.inspect
     return false if points_bonus != bonus
     true
   end
@@ -352,9 +378,7 @@ class Personnage < ActiveRecord::Base
     his = {}
     historiques.each do |key, c|
       if key.split("_")[0] == "t"
-        # raise key.split("_")[1].to_i.inspect
         hiss = Historique.find(key.split("_")[1].to_i)
-        # raise hiss.inspect
       else
         if is_hp(key)
           hisper = HistoriquesPersonnages.find(key)

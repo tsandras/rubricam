@@ -17,7 +17,7 @@
       Rubricam
       <%= image_tag 'm20.png', class: 'x20' %>
     </div>
-    <% if params[:controller] != "personnages" %>
+    <% if !(params[:controller] == "personnages" && (params[:action] == "edit" || params[:action] == "new")) %>
       <div class="col-md-2">
         <div id="menu-principal" class="menu-accueil">
           <div class="menu-accueil-head">
@@ -28,7 +28,9 @@
             <div><%= link_to 'Atouts', atouts_path, class: 'btn btn-success btn-sm' %></div><br>
             <div><%= link_to 'Historiques', historiques_path, class: 'btn btn-success btn-sm' %></div><br>
             <div><%= link_to 'Capacités', capacites_path, class: 'btn btn-success btn-sm' %></div><br>
-            <% if session["warden.user.user.key"] != nil %>
+            <% if @user != nil %>
+              <div><%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %></div><br>
+              <div><%= link_to 'Personnages', personnages_path, class: 'btn btn-success btn-sm' %></div><br>
               <div><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></div>
             <% end %>
           </div>
