@@ -12,6 +12,11 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  secret        :boolean
+#  valeur        :integer
+#  dynamique     :integer
+#  statique      :integer
+#  entropique    :integer
+#  routine_id    :integer
 #
 
 require 'rails_helper'

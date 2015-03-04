@@ -3,29 +3,24 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Description</th>
-    <th>Foci</th>
-    <th>Combinaison</th>
     <th>Type</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @routines.each do |routine| %>
   <tr>
     <td><%= routine.name %></td>
-    <td><%= routine.description %></td>
-    <td><%= routine.foci %></td>
-    <td><%= routine.combinaison %></td>
     <td><%= routine.type %></td>
-    <td><%= link_to 'Show', routine %></td>
-    <td><%= link_to 'Edit', edit_routine_path(routine) %></td>
-    <td><%= link_to 'Destroy', routine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Voir', routine_path(routine), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_routine_path(routine), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Routine', new_routine_path %>
+<%= link_to 'Nouvelle routine', new_routine_path, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>

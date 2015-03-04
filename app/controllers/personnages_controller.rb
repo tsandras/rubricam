@@ -5,7 +5,7 @@ class PersonnagesController < ApplicationController
   def index
     # raise "foo"
     # @user = User.find(session["warden.user.user.key"][0].first)
-    if @user.role == Role::ROLE_ADMIN
+    if @user.role == User::ROLE_ADMIN
       @personnages = Personnage.all
     else
       @personnages = Personnage.where(user_id: @user.id)

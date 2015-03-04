@@ -12,10 +12,19 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  secret        :boolean
+#  valeur        :integer
+#  dynamique     :integer
+#  statique      :integer
+#  entropique    :integer
+#  routine_id    :integer
 #
 
 class Objet < ActiveRecord::Base
-  attr_accessible :description, :name, :niveau, :personnage_id, :resonnance, :type, :secret
+  attr_accessible :description, :name, :niveau, :personnage_id, :resonnance,
+                  :type, :secret, :valeur, :dynamique, :statique, :entropique,
+                  :routine_id
 
   belongs_to :personnage
+
+  TYPE_OBJET = ["Statique", "Dynamique"]
 end

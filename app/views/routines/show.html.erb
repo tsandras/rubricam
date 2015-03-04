@@ -1,30 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @routine.name %>
-</p>
+<div class="col-md-4">
+  <p>
+    <b>Name:</b>
+    <%= @routine.name %>
+  </p>
 
-<p>
-  <b>Description:</b>
-  <%= @routine.description %>
-</p>
+  <p>
+    <b>Description:</b>
+    <%= @routine.description %>
+  </p>
 
-<p>
-  <b>Foci:</b>
-  <%= @routine.foci %>
-</p>
+  <p>
+    <b>Foci:</b>
+    <%= @routine.foci %>
+  </p>
 
-<p>
-  <b>Combinaison:</b>
-  <%= @routine.combinaison %>
-</p>
+  <p>
+    <b>Type:</b>
+    <%= @routine.type %>
+  </p>
 
-<p>
-  <b>Type:</b>
-  <%= @routine.type %>
-</p>
+  <%= link_to 'Editer', edit_routine_path(@routine), class: "btn btn-success btn-sm" %>
+  <%= link_to 'Retour', routines_path, class: "btn btn-warning btn-sm" %>
+</div>
 
-
-<%= link_to 'Edit', edit_routine_path(@routine) %> |
-<%= link_to 'Back', routines_path %>
+<div class="col-md-4">
+  <%= show_spheres_for_routines(@routine) %>
+  <% if @routine.nbs_succes.present? %>
+    <p><b>Nombres de succès necessaire:</b><%= @routine.nbs_succes %></p>
+  <% end %>
+  <% if @routine.nbs_succes.present? %>
+    <p><b>Nombres de points de quintessence necessaire:</b><%= @routine.nbs_quintessence %></p>
+  <% end %>
+  <p><b>Dépense de volonté permanente ?</b><%= @routine.volonte_permanente %></p>
+  <p><b>Effet: </b><%= @routine.effet %></p>
+</div>

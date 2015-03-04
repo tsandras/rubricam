@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150303134513) do
+ActiveRecord::Schema.define(:version => 20150304081828) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -160,6 +160,11 @@ ActiveRecord::Schema.define(:version => 20150303134513) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.boolean  "secret"
+    t.integer  "valeur"
+    t.integer  "dynamique"
+    t.integer  "statique"
+    t.integer  "entropique"
+    t.integer  "routine_id"
   end
 
   create_table "organisations", :force => true do |t|
@@ -269,9 +274,22 @@ ActiveRecord::Schema.define(:version => 20150303134513) do
     t.text     "foci"
     t.string   "combinaison"
     t.string   "type"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.boolean  "secret"
+    t.integer  "nbs_succes"
+    t.integer  "nbs_quintessence"
+    t.boolean  "volonte_permanente"
+    t.text     "effet"
+    t.integer  "correspondance"
+    t.integer  "entropie"
+    t.integer  "esprit"
+    t.integer  "forces"
+    t.integer  "matiere"
+    t.integer  "prime"
+    t.integer  "psyche"
+    t.integer  "temps"
+    t.integer  "vie"
   end
 
   create_table "royaumes", :force => true do |t|
