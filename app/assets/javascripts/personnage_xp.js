@@ -23,6 +23,7 @@ function manageCalculeXps(type_perso) {
     xps_dep += calcule_xps_discipline(personnage, type_perso, "base");
     // console.log("Xps dépensé apres discipline :"+xps_dep);
     xps_dep += calcule_xps_volonte(personnage, type_perso, "base");
+    xps_dep += calcule_xps_entelechie(personnage, type_perso, "base");
     var xps = $("#personnage_xps").val();
     // console.log(xps-xps_dep);
     $("#personnage_reste_xps").val(xps-xps_dep);
@@ -44,7 +45,7 @@ function manageCalculeBonus() {
     bonus_dep += calcule_xps_sphere(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_discipline(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_volonte(personnage, "necrodancer", "bonus");
-
+    bonus_dep += calcule_xps_entelechie(personnage, "necrodancer", "bonus");
     $("#nbs_bonus").html(bonus_dep);
   }
 }
@@ -134,6 +135,7 @@ function calcule_xps_sphere(personnage, type_perso, type) {
     var valeur_act = $(this).val()
     var idsph = parseInt(extract_id_cp($(this).attr("name")));
     var valeur_av = personnage.Spheres[idsph.toString()];
+    // console.log("La valeur avant =>"+valeur_av)
     if (type == "base") {
       out = out + manage_serie_nx(valeur_av, parseInt(valeur_act), type_perso, "sphere");
     } else {
@@ -149,7 +151,6 @@ function calcule_xps_discipline(personnage, type_perso, type) {
     var idd = $("#d_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
     var va_avant = personnage.Disciplines[idd.toString()];
-    // console.log("La valeur avant =>"+va_avant)
     if (! va_avant) {
       va_avant = 0;
     }
@@ -159,6 +160,19 @@ function calcule_xps_discipline(personnage, type_perso, type) {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "discipline");
     }
   });
+  return out;
+}
+
+function calcule_xps_entelechie(personnage, type_perso, type) {
+  var out = 0;
+  var va_actuel = $("#personnage_entelechie").val();
+  var va_avant = personnage.Entelechie;
+  // console.log(personnage);
+  if (type == "base") {
+    out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "entelechie");
+  } else {
+    out = out + manage_bonus(va_avant, parseInt(va_actuel), "entelechie");
+  }
   return out;
 }
 
@@ -285,6 +299,9 @@ function get_cout_bonus(pouvoir) {
     case "discipline":
       out = 7;
       break;
+    case "entelechie":
+      out = 4
+      break;
     case "sphere":
       out = 7;
       break;
@@ -315,6 +332,9 @@ function get_cout(pouvoir, type_perso) {
       }
       break;
     case "sphere":
+      out = 8;
+      break;
+    case "entelechie":
       out = 8;
       break;
     case "capacite":

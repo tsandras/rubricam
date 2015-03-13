@@ -296,7 +296,7 @@ module PersonnagesShow
 
   def show_entelechie(personnage)
     if personnage.type_perso =~ /Mage/i
-      "Entelechie : #{personnage.entelechie}<br />".html_safe
+      "<b>Entéléchie</b> : #{personnage.entelechie}<br />".html_safe
     end
   end
 end

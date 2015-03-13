@@ -566,15 +566,19 @@ function fusionBaseBonus(base, bonus) {
       out.Historiques[key] = val;
     }
   });
-  $.each(base.Disciplines, function(key, val) {
-    out.Disciplines[key] = val + bonus.Disciplines[key];
-  });
-  $.each(bonus.Disciplines, function(key, val) {
-    if (!out.Disciplines) {
-      out.Disciplines[key] = val;
-    }
-  });
-  if (base.Sphere) {
+  if (base.Disciplines) {
+    $.each(base.Disciplines, function(key, val) {
+      out.Disciplines[key] = val + bonus.Disciplines[key];
+    });
+  }
+  if (bonus.Disciplines) {
+    $.each(bonus.Disciplines, function(key, val) {
+      if (!out.Disciplines) {
+        out.Disciplines[key] = val;
+      }
+    });
+  }
+  if (base.Spheres) {
     $.each(base.Spheres, function(key, val) {
       out.Spheres[key] = val + bonus.Spheres[key];
     });

@@ -268,6 +268,7 @@ class Personnage < ActiveRecord::Base
         return false
       end
     end
+    return false if personage[:entelechie].to_i != 1
     true
   end
 
@@ -320,8 +321,9 @@ class Personnage < ActiveRecord::Base
     end
     points_volonte = (personnage[:volonte].to_i - perso_base["Volonte"]);
     points_surnaturels = ok_bonus_surnaturel(perso_base, spheres, disciplines)
-    # raise points_surnaturels.inspect
-    points_bonus = points_attributs + points_capacites + points_historique + points_surnaturels + points_volonte
+    # raise perso_base["Entelechie"].inspect
+    ent = (personnage[:entelechie].to_i - perso_base["Entelechie"].to_i) * 4
+    points_bonus = points_attributs + points_capacites + points_historique + points_surnaturels + points_volonte + ent
     return false if points_bonus != bonus
     true
   end
@@ -405,6 +407,7 @@ class Personnage < ActiveRecord::Base
         perso_bonus["Spheres"][key] = c[:niveau].to_i - perso_base["Spheres"][key].to_i
       end
     end
+    perso_bonus["Entelechie"] = personnage[:entelechie].to_i - perso_base["Entelechie"].to_i
     if disciplines != nil
       perso_bonus["Disciplines"] = {}
       disciplines.each do |key, c|
@@ -488,6 +491,7 @@ class Personnage < ActiveRecord::Base
       out += ", \"Disciplines\":"+dis.to_json
     end
     out += ", \"Volonte\":"+volonte.to_json
+    out += ", \"Entelechie\":1"
     out += "}"
     out
   end
