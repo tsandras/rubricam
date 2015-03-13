@@ -29,9 +29,9 @@ class Objet < ActiveRecord::Base
   belongs_to :user
   has_one :routine
 
-  scope :none_secret, lambda { where("secret IS NOT ?", true) }
+  scope :none_secret, lambda { where("secret <> ?", true) }
   scope :own_objets, ->(user_id) { where("user_id = ?", user_id) }
-  scope :none_secret_and_own_objets, ->(user_id) { where("user_id = ? or secret IS NOT ?", user_id, true) }
+  scope :none_secret_and_own_objets, ->(user_id) { where("user_id = ? or secret <> ?", user_id, true) }
 
   TYPE_OBJET = ["Statique", "Dynamique"]
 

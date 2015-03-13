@@ -110,6 +110,7 @@ class Personnage < ActiveRecord::Base
 
   scope :own_personnages, ->(user_id) { where("user_id = ?", user_id) }
   scope :pnjs, lambda { where("pnj = ?", true) }
+  scope :pjs, lambda { where("pnj <> ?", true) }
   scope :none_secret, lambda { where("secret <> ?", true) }
   scope :none_secret_and_pnjs, lambda { where("secret = ? and pnj = ?", false, true) }
 

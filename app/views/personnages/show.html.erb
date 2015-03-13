@@ -1,10 +1,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.js"></script>
   <p id="notice"><%= notice %></p>
-  <div class="col-md-4">
-    <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
-    <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
-    Attitude : <%= @personnage.attitude %><br />
-    Nature : <%= @personnage.nature %><br/>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-8">
+        <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
+        <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
+        Attitude : <%= @personnage.attitude %><br />
+        Nature : <%= @personnage.nature %><br/>
+      </div>
+      <div class="col-md-4">
+        <%= show_image_type(@personnage) %>
+      </div>
+    </div>
     <b>Attributs</b>
     <table>
       <tr>
@@ -26,15 +33,16 @@
     <br />
     <%= show_capacite(@capacites) %>
     <%= show_historique(@historiques) %>
+    <%= show_spheres(@personnage) %>
+    <%= show_disciplines_all(@personnage) %>
     <%= show_atout(@atouts) %>
     <%= show_vertue(@personnage) %>
     <%= show_resonnance(@personnage) %>
     <div>
-      Volonté : <%= @personnage.volonte %><br />
+      <b>Volonté</b> : <%= @personnage.volonte %><br />
       <%= show_voie(@personnage) %>
       <%= show_points_sang(@personnage) %>
       <%= show_entelechie(@personnage) %>
-      <%= show_spheres(@personnage) %>
       <%= show_kinain(@personnage) %>
     </div>
   </div>
@@ -48,14 +56,20 @@
       <p><b>Description:</b> <%= @personnage.description %></p>
       <p><b>Background:</b> <%= @personnage.background %></p>
       <p><b>Paradigme:</b> <%= @personnage.paradygme %></p>
-      <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
-      <p><b>Date mort:</b> <%= @personnage.date_mort %></p>
+      <% if @personnage.date_naissance.present? %>
+        <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
+      <% end %>
+      <% if @personnage.date_mort.present? %>
+        <p><b>Date mort:</b> <%= @personnage.date_mort %></p>
+      <% end %>
     </div>
-    <div class="relations">
-      <b>Relations</b><br />
-      <%= show_relations(@from_relations) %>
-      <%= show_relations(@to_relations) %>
-    </div>
+    <% if @from_relations.nil? && @to_relations.nil? %>
+      <div class="relations">
+        <b>Relations</b><br />
+        <%= show_relations(@from_relations) %>
+        <%= show_relations(@to_relations) %>
+      </div>
+    <% end %>
     <%= show_xps(@personnage) %>
     <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
     <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />

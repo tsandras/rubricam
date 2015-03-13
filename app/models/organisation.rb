@@ -22,7 +22,7 @@ class Organisation < ActiveRecord::Base
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
 
-  scope :none_secret, lambda { where("secret IS NOT ?", true) }
+  scope :none_secret, lambda { where("secret <> ?", true) }
 
   TYPE_ORGANISATION = ["Tradition", "Fondation", "Corporation", "Cabale", "Clan", "Lignée", "Secte", "Coterie"]
 end

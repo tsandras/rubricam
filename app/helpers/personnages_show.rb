@@ -48,7 +48,9 @@ module PersonnagesShow
 
   def show_points_sang(personnage)
     if personnage.type_perso == "Vampire"
-      "Points de sang : #{personnage.points_sang}<br />".html_safe
+      niveau_gen = HistoriquesPersonnages.where(personnage_id: personnage.id, historique_id: Historique.where(nom: "Génération").first.id).first.niveau
+      generation = 13 - niveau_gen
+      "<b>Points de sang</b> : #{Personnage::POINTS_SANG[generation.to_s]}<br />".html_safe
     end
   end
 
@@ -191,7 +193,7 @@ module PersonnagesShow
 
   def show_voie(personnage)
     if personnage.voie.present?
-      "#{personnage.voie} : #{personnage.niveau_voie}<br />".html_safe
+      "<b>#{personnage.voie}</b> : #{personnage.points_conscience + personnage.points_maitrise}<br />".html_safe
     end
   end
 
@@ -245,6 +247,45 @@ module PersonnagesShow
       out += "<br />"
       out.html_safe
     end
+  end
+
+  def show_disciplines_all(personnage)
+    if personnage.disciplines.count != 0
+      out = ""
+      out += "<b>Disciplines</b>"
+      out += "<table>"
+      tmp = 0
+      personnage.disciplines.each do |discipline|
+        disper = DisciplinesPersonnages.where(personnage_id: personnage.id, discipline_id: discipline.id).first
+        if disper.niveau.present? && disper.niveau > 0
+          if tmp % 3 == 0
+            out += "<tr>"
+          end
+          tmp = tmp + 1
+          out += "<td> #{discipline.nom} #{disper.niveau}</td>"
+          if tmp % 3 == 0
+            out += "</tr>"
+          end
+        end
+      end
+      out += "</table>"
+      out += "<br />"
+      out.html_safe
+    end
+  end
+
+  def show_image_type(personnage)
+    if personnage.mage?
+      name = I18n.transliterate(personnage.tradition.split(" ").join("_").split("'").join("")).downcase
+      image_tag("traditions/#{name}.jpg", class: "image-tradition")
+    elsif personnage.vampire?
+      name = I18n.transliterate(personnage.clan.split(" ").join("_").split("'").join("")).downcase
+      image_tag("clans/#{name}.png", class: "image-clan")
+    end
+  end
+
+  def show_image_perso
+
   end
 
   def show_clan(personnage)

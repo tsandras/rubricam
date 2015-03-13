@@ -45,6 +45,7 @@ Rubricam::Application.routes.draw do
     get :routine_edit, on: :member
     post :routine_update, on: :member
     get :pnjs, on: :collection
+    get :pjs, on: :collection
   end
 
 end

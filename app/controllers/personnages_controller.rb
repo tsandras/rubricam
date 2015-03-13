@@ -23,15 +23,20 @@ class PersonnagesController < ApplicationController
     else
       @pnjs = Personnage.none_secret_and_pnjs
     end
+  end
 
+  def pjs
+    @pjs = Personnage.pjs
   end
 
   def show
     @personnage = Personnage.find(params[:id])
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user)
+    @personnage.calcule_rang
+    @personnage.calcule_graph
     @capacites = CapacitesPersonnages.where(personnage_id: params[:id])
     @historiques = HistoriquesPersonnages.where(personnage_id: params[:id])
-    # raise @historiques.inspect
+
     @atouts = AtoutsPersonnages.where(personnage_id: params[:id])
     @to_relations = Relation.where(to_personnage_id: params[:id])
     @from_relations = Relation.where(from_personnage_id: params[:id])
