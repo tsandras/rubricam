@@ -296,10 +296,20 @@ class Personnage < ActiveRecord::Base
       capper = CapacitesPersonnages.where(capacite_id: key, personnage_id: id).first
       points_capacites = points_capacites + (capacites[capper.id.to_s][:niveau].to_i - pb.to_i) * 2
     end
-    perso_base["Historiques"].each do |key, pb|
-      key = key.split("_")[1].to_i if key.split("_")[0] == "t"
-      hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
-      points_capacites = points_capacites + (historiques[hisper.id.to_s][:niveau].to_i - pb.to_i)
+    # perso_base["Historiques"].each do |key, pb|
+    #   key = key.split("_")[1].to_i if key.split("_")[0] == "t"
+    #   hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
+    #   points_capacites = points_capacites + (historiques[hisper.id.to_s][:niveau].to_i - pb.to_i)
+    # end
+    # raise historiques.inspect
+    historiques.each do |key, pb|
+      if key.split("_")[0] == "t"
+        key_batard = key.split("_")[1].to_i
+        his = Historique.find(key_batard)
+      else
+        his = HistoriquesPersonnages.find(key.to_i).historique
+      end
+      points_capacites = points_capacites + (historiques[key][:niveau].to_i - perso_base["Historiques"][his.id.to_s].to_i)
     end
     personnage["atout_ids"].each do |id|
       if id.present?
@@ -311,7 +321,6 @@ class Personnage < ActiveRecord::Base
     points_surnaturels = ok_bonus_surnaturel(perso_base, spheres, disciplines)
     # raise points_surnaturels.inspect
     points_bonus = points_attributs + points_capacites + points_historique + points_surnaturels + points_volonte
-    # raise points_capacites.inspect
     return false if points_bonus != bonus
     true
   end
@@ -368,10 +377,20 @@ class Personnage < ActiveRecord::Base
       perso_bonus["Capacites"]["Connaissance"][key] = capacites[capper.id.to_s][:niveau].to_i - pb.to_i
     end
     perso_bonus["Historiques"] = {}
-    perso_base["Historiques"].each do |key, pb|
-      hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
-      perso_bonus["Historiques"][key] = historiques[hisper.id.to_s][:niveau].to_i - pb.to_i
+    # perso_base["Historiques"].each do |key, pb|
+    #   hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
+    #   perso_bonus["Historiques"][key] = historiques[hisper.id.to_s][:niveau].to_i - pb.to_i
+    # end
+    historiques.each do |key, pb|
+      if key.split("_")[0] == "t"
+        key_batard = key.split("_")[1].to_i
+        his = Historique.find(key_batard)
+      else
+        his = HistoriquesPersonnages.find(key.to_i).historique
+      end
+      perso_bonus["Historiques"][his.id.to_s] = historiques[key][:niveau].to_i - perso_base["Historiques"][his.id.to_s].to_i
     end
+
     perso_bonus["Atouts"] = {}
     personnage["atout_ids"].each do |id|
       if id.present?

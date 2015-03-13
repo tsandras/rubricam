@@ -74,6 +74,8 @@
       </div>
     </div>
     <div class="row background">
+      <%#= @personnage.caracteristique_base %>
+      <%#= @personnage.caracteristique_bonus %>
       <%= p.input :caracteristique_base, as: :hidden %>
       <%= p.input :caracteristique_bonus, as: :hidden %>
       <%= p.input :xps, as: :hidden %>

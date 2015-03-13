@@ -561,9 +561,18 @@ function fusionBaseBonus(base, bonus) {
   $.each(base.Historiques, function(key, val) {
     out.Historiques[key] = val + bonus.Historiques[key];
   });
+  $.each(bonus.Historiques, function(key, val) {
+    if (!out.Historiques[key]) {
+      out.Historiques[key] = val;
+    }
+  });
   $.each(base.Disciplines, function(key, val) {
-    console.log(val, bonus.Disciplines[key], key);
     out.Disciplines[key] = val + bonus.Disciplines[key];
+  });
+  $.each(bonus.Disciplines, function(key, val) {
+    if (!out.Disciplines) {
+      out.Disciplines[key] = val;
+    }
   });
   if (base.Sphere) {
     $.each(base.Spheres, function(key, val) {

@@ -10,26 +10,28 @@ function manageCalculeXps(type_perso) {
   var personnage_bonus = $("#personnage_caracteristique_bonus").val();
   if (personnage_base && personnage_bonus) {
     var personnage = fusionBaseBonus(jQuery.parseJSON(personnage_base), jQuery.parseJSON(personnage_bonus));
-    console.log(personnage["Disciplines"]);
+    // console.log(personnage["Disciplines"]);
     xps_dep += calcule_xps_attribut(personnage, type_perso, "base");
     xps_dep += calcule_xps_capacite(personnage, type_perso, "base");
+    // console.log("Xps dépensé apres capacite :"+xps_dep);
     xps_dep += calcule_xps_historique(personnage, type_perso, "base");
+    // console.log("Xps dépensé apres historique :"+xps_dep);
     xps_dep += calcule_xps_atout(personnage, type_perso, "base");
-    console.log("Xps dépensé apres atout :"+xps_dep);
+    // console.log("Xps dépensé apres atout :"+xps_dep);
     xps_dep += calcule_xps_sphere(personnage, type_perso, "base");
-    console.log("Xps dépensé apres spheres :"+xps_dep);
+    // console.log("Xps dépensé apres spheres :"+xps_dep);
     xps_dep += calcule_xps_discipline(personnage, type_perso, "base");
-    console.log("Xps dépensé apres discipline :"+xps_dep);
+    // console.log("Xps dépensé apres discipline :"+xps_dep);
     xps_dep += calcule_xps_volonte(personnage, type_perso, "base");
     var xps = $("#personnage_xps").val();
-    console.log(xps-xps_dep);
+    // console.log(xps-xps_dep);
     $("#personnage_reste_xps").val(xps-xps_dep);
     $("#reste_xps").text(xps-xps_dep);
   }
 }
 
 function manageCalculeBonus() {
-  console.log("Coucou manage bonus !");
+  // console.log("Coucou manage bonus !");
   var bonus_dep = 0;
   var personnage_base = $("#personnage_caracteristique_base").val();
   var personnage_bonus = $("#personnage_caracteristique_bonus").val();
@@ -94,6 +96,7 @@ function calcule_xps_historique(personnage, type_perso, type) {
   $("#historiques_personnages_niveau[name^=historiques_personnages]").each(function() {
     var idd = $("#h_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
+    // console.log(personnage.Historiques)
     var va_avant = personnage.Historiques[idd.toString()];
     if (! va_avant) {
       va_avant = 0;
@@ -146,7 +149,7 @@ function calcule_xps_discipline(personnage, type_perso, type) {
     var idd = $("#d_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
     var va_avant = personnage.Disciplines[idd.toString()];
-    console.log("La valeur avant =>"+va_avant)
+    // console.log("La valeur avant =>"+va_avant)
     if (! va_avant) {
       va_avant = 0;
     }
