@@ -256,12 +256,13 @@ class PersonnagesController < ApplicationController
   def update_capacites(capacites_personnages)
     if capacites_personnages != nil
       capacites_personnages.each do |i, cp|
+        ii = i
+        ii = Capacite.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
         if is_cp(i)
           cap = CapacitesPersonnages.where(id: i, personnage_id: @personnage.id)
           cap.first.update_attributes(cp)
         else
-          cap_f = Capacite.find(i)
-          CapacitesPersonnages.create(personnage_id: @personnage.id, capacite_id: cap_f.id, niveau: cp[:niveau], specialite: cp[:specialite])
+          CapacitesPersonnages.create(personnage_id: @personnage.id, capacite_id: ii.id, niveau: cp[:niveau], specialite: cp[:specialite])
         end
       end
     end
@@ -286,11 +287,13 @@ class PersonnagesController < ApplicationController
     if disciplines_personnages != nil
       # raise "disciplines !"
       disciplines_personnages.each do |i, cp|
+        ii = i
+        ii = Discipline.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
         if is_dp(i)
           cap = DisciplinesPersonnages.where(id: i, personnage_id: @personnage.id)
           cap.first.update_attributes(cp)
         else
-          DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: i.to_i, niveau: cp[:niveau])
+          DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: ii.to_i, niveau: cp[:niveau])
         end
       end
     end

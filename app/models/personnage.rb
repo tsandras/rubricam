@@ -406,11 +406,15 @@ class Personnage < ActiveRecord::Base
     competence = {}
     connaissance = {}
     capacites.each do |key, c|
-      if is_cp(key)
-        capper = CapacitesPersonnages.find(key)
-        cap = capper.capacite
+      if key.split("_")[0] == "t"
+        cap = Capacite.find(key.split("_")[1].to_i)
       else
-        cap = Capacite.find(key)
+        if is_cp(key)
+          capper = CapacitesPersonnages.find(key)
+          cap = capper.capacite
+        else
+          cap = Capacite.find(key)
+        end
       end
       if cap.type_cap == "Talent"
         talent[cap.id] = c[:niveau].to_i
@@ -449,11 +453,15 @@ class Personnage < ActiveRecord::Base
     if disciplines != nil
       dis = {}
       disciplines.each do |key, c|
-        if is_dp(key)
-          hisper = DisciplinesPersonnages.find(key)
-          hiss = hisper.discipline
+        if key.split("_")[0] == "t"
+          hiss = Discipline.find(key.split("_")[1].to_i)
         else
-          hiss = Discipline.find(key)
+          if is_dp(key)
+            hisper = DisciplinesPersonnages.find(key)
+            hiss = hisper.discipline
+          else
+            hiss = Discipline.find(key)
+          end
         end
         dis[hiss.id] = c[:niveau].to_i
       end

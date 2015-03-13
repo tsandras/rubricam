@@ -67,7 +67,7 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                       "Gangrel" => ["Animalisme", "Force d'âme", "Protéisme"], "Giovanni" => ["Domination", "Nécromancie", "Puissance"],
                       "Lasombra" => ["Puissance", "Obténébration", "Domination"], "Malkavian" => ["Auspex", "Aliénation", "Occultation"],
                       "Nosferatu" => ["Animalisme", "Occultation", "Puissance"], "Ravnos" => ["Animalisme", "Chimérie", "Force d'âme"],
-                      "Salubrien" => ["Obéah", "Force d'âme", "Auspex"], "Toreador" => ["Auspex", "Célérite", "Présence"],
+                      "Salubrien" => ["Obéah", "Force d'âme", "Auspex"], "Toreador" => ["Auspex", "Célérité", "Présence"],
                       "Tremere" => ["Domination", "Auspex", "Thaumaturgie"], "Tzimisce" => ["Animalisme", "Auspex", "Vicissitude"],
                       "Ventrue" => ["Force d'âme", "Domination", "Présence"],
                       "Baali" => ["Daimonon", "Occultation", "Présence"], "Caïtiffs" => ["Puissance", "Célérite", "Force d'âme"],

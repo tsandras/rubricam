@@ -432,7 +432,7 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
       //         wrapper_html: { class: "col-md-1 reajuste" })
       out += "<div class=\"control-group integer optional "+type+"s_personnages_niveau col-md-1 reajuste\">";
       out += "<label class=\"integer optional control-label\" for=\""+type+"s_personnages_niveau\">&nbsp;</label>"
-      out += "<div class=\"controls\"><input class=\"numeric integer optional inpt_number "+gris+"\" id=\""+type+"s_personnages_niveau\" name=\""+type+"s_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\"/></div></div>";
+      out += "<div class=\"controls\"><input class=\"numeric integer optional inpt_number "+gris+"\" id=\""+type+"s_personnages_niveau\" name=\""+type+"s_personnages[t_"+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\"/></div></div>";
       if (cols_sup) {
         out += "<div class=\"control-group string optional capacites_personnage s_specialite col-md-6 hidden reajuste-spe\" id=\"specialite-"+nom+"\">";
         out += "<label class=\"string optional control-label\" for=\""+type+"s_personnages_specialite\">Specialite</label>";
