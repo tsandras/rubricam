@@ -109,9 +109,9 @@ class Personnage < ActiveRecord::Base
   belongs_to :user
 
   scope :own_personnages, ->(user_id) { where("user_id = ?", user_id) }
-  scope :pnjs, lambda { where("pnj IS ?", true) }
-  scope :none_secret, lambda { where("secret IS NOT ?", true) }
-  scope :none_secret_and_pnjs, lambda { where("secret IS ? and pnj IS ?", false, true) }
+  scope :pnjs, lambda { where("pnj = ?", true) }
+  scope :none_secret, lambda { where("secret <> ?", true) }
+  scope :none_secret_and_pnjs, lambda { where("secret = ? and pnj = ?", false, true) }
 
   def has_resonnances
     return false if points_dynamique == nil && points_entropique == nil && points_statique == nil
