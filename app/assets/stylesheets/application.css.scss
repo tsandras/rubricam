@@ -207,7 +207,7 @@ img {
 #log_in {
   #menu-login {
     width: 290px;
-    float: right;
+    // float: right;
   }
   .box
   {
@@ -673,4 +673,17 @@ input[type=number] {
 .image-perso {
   width: 200px;
   height: 200px;
+}
+
+.treestime {
+  width: 25%;
+}
+
+.info-accueil {
+  background-color: #F6F6F6;
+  border: 1px solid #F6F6F6;
+}
+
+.banderole {
+  height: 260px
 }

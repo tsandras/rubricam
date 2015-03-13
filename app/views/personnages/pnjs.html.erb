@@ -10,7 +10,7 @@
 
   <% @pnjs.each do |personnage| %>
     <tr>
-      <td><%= "<p><b>#{personnage.prenom} #{personnage.nom}</b></p>".html_safe %></td>
+      <td><%= "<p><b>#{personnage.nom_publique}</b></p>".html_safe %></td>
       <td><%= personnage.description_publique %></td>
       <td><%= image_tag("#{personnage.image_lien}", class: 'image-perso') if personnage.image_lien.present? %></td>
     </tr>
