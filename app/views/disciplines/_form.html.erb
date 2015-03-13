@@ -1,20 +1,20 @@
 <%= simple_form_for(@discipline) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-5">
     <%= f.input :nom %>
     <%= f.input :description %>
-    <%= f.input :nom_discipline %>
+    <%= f.input :nom_discipline %><br/>
+    <%= f.button :submit, "Créer/Editer une discipline", class: 'btn btn-success btn-sm' %>
+    <%= link_to 'Retour', root_path, class: 'btn btn-warning btn-sm' %>
   </div>
 
-  <div class="discipline">
-  <label for="search_discipline"> Rechercher niveau discipline :</label>
-  <input id="search_discipline" type="text" onkeypress="filter(this, '.discipline .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.discipline .checkbox .check_boxes')">
-  <%= f.association(:nivdisciplines, as: :check_boxes, :collection => Nivdiscipline.all.map {|c| [c.nom, c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-5">
+    <div class="discipline">
+      <label for="search_discipline"> Rechercher niveau discipline :</label>
+      <input id="search_discipline" type="text" onkeypress="filter(this, '.discipline .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.discipline .checkbox .check_boxes')">
+      <%= f.association(:nivdisciplines, as: :check_boxes, :collection => Nivdiscipline.all.map {|c| [c.nom, c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
+    </div>
   </div>
 <% end %>
 

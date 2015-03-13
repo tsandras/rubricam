@@ -11,7 +11,7 @@
 <body>
   <header>
   </header>
-  <div class="container <%= params[:controller] != 'personnages' ? 'row' : nil %>">
+  <div class="container <%= !(params[:controller] == 'personnages' && (params[:action] == 'edit' || params[:action] == 'new')) ? 'row' : nil %>">
     <div id="block-20">
       <%= image_tag 'v20.png', class: 'x20' %>
       Rubricam
@@ -24,17 +24,24 @@
             Menu principale
           </div>
           <div class="menu-accueil-body">
-            <div><%= link_to 'Disciplines', disciplines_path, class: 'btn btn-success btn-sm' %></div><br>
-            <div><%= link_to 'Atouts', atouts_path, class: 'btn btn-success btn-sm' %></div><br>
-            <div><%= link_to 'Historiques', historiques_path, class: 'btn btn-success btn-sm' %></div><br>
-            <div><%= link_to 'Capacités', capacites_path, class: 'btn btn-success btn-sm' %></div><br>
-            <% if @user != nil %>
-              <div><%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %></div><br>
-              <div><%= link_to 'Personnages', personnages_path, class: 'btn btn-success btn-sm' %></div><br>
-              <div><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></div>
+            <div><span><%= link_to 'Accueil', root_url, class: 'btn btn-success btn-sm' %></span>
+            <span><%= link_to 'Disciplines', disciplines_path, class: 'btn btn-info btn-sm' %></span></div><br/>
+            <div><span><%= link_to 'Atouts', atouts_path, class: 'btn btn-primary btn-sm' %></span>
+            <span><%= link_to 'Historiques', historiques_path, class: 'btn btn-warning btn-sm' %></span></div><br/>
+            <div><%= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %></div><br/>
+            <% if @user.id.present? %>
+              <div><span><%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %></span>
+              <span><%= link_to 'Objets', objets_path, class: 'btn btn-info btn-sm' %></span></div><br/>
+              <div><span><%= link_to 'Personnages', personnages_path, class: 'btn btn-primary btn-sm' %></span>
+              <span><%= link_to 'Lieux', lieus_path, class: 'btn btn-warning btn-sm' %></span></div><br/>
+              <div><span><%= link_to 'Organisations', organisations_path, class: 'btn btn-info btn-sm' %></span>
+              <span><%= link_to 'Pnjs', pnjs_personnages_path, class: 'btn btn-success btn-sm' %></span></div><br/>
+              <div><span><%= link_to 'Parties', parties_path, class: 'btn btn-warning btn-sm' %></span></div><br/>
+              <span><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></span>
             <% end %>
           </div>
           <div class="menu-accueil-action">
+            <%= image_tag 'rails.png', class: 'rails-image' %>
             <%= image_tag 'classic-wod.png', class: 'classic-wod' %>
           </div>
         </div>

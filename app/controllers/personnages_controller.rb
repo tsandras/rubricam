@@ -16,9 +16,19 @@ class PersonnagesController < ApplicationController
     end
   end
 
+  def pnjs
+    # raise "foo"
+    if @user.role == User::ROLE_ADMIN
+      @pnjs = Personnage.pnjs
+    else
+      @pnjs = Personnage.none_secret_and_pnjs
+    end
+
+  end
+
   def show
     @personnage = Personnage.find(params[:id])
-    return redirect_to root_url if !permition?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user)
     @capacites = CapacitesPersonnages.where(personnage_id: params[:id])
     @historiques = HistoriquesPersonnages.where(personnage_id: params[:id])
     # raise @historiques.inspect
@@ -44,7 +54,7 @@ class PersonnagesController < ApplicationController
   def edit
     @personnage = Personnage.find(params[:id])
     # raise session["warden.user.user.key"][0].inspect
-    return redirect_to root_url if !permition?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user)
     gon.bonus = @personnage.has_bonus
     gon.base = @personnage.has_base
     @capacites_personnages = CapacitesPersonnages.where(personnage_id: params[:id])
@@ -67,6 +77,20 @@ class PersonnagesController < ApplicationController
     redirect_to personnage_path(@personnage)
   end
 
+  def public_show
+    @personnage = Personnage.find(params[:id])
+  end
+
+  def routine_edit
+    @personnage = Personnage.find(params[:id])
+  end
+
+  def routine_update
+    @personnage = Personnage.find(params[:id])
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
   def create
     # @user = User.find(session["warden.user.user.key"][0].first)
     params[:personnage].delete("capacite_ids")
@@ -79,7 +103,7 @@ class PersonnagesController < ApplicationController
     vertues_base
     respond_to do |format|
       if @personnage.save()
-        format.html { redirect_to edit_personnage_path(@personnage), notice: 'Personnage was successfully created.' }
+        format.html { redirect_to edit_personnage_path(@personnage), notice: 'Personnage a été crée avec succès.' }
         format.json { render action: 'edit', status: :created, location: @personnage }
       else
         format.html { render action: "new" }
@@ -94,7 +118,7 @@ class PersonnagesController < ApplicationController
     params[:personnage].delete("historique_ids")
     params[:personnage].delete("discipline_ids")
     @personnage = Personnage.find(params[:id])
-    # return redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
+    # return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(User.find(session["warden.user.user.key"][0].first))
     # update_atouts(params[:atouts_personnages])
     ok = false
     unless @personnage.has_base
@@ -125,12 +149,14 @@ class PersonnagesController < ApplicationController
     puts "On est a la fin ok = #{ok} et valid ? = #{@personnage.valid?}"
     respond_to do |format|
       if ok && @personnage.valid?
+        @personnage.calcule_rang
+        @personnage.calcule_graph
         @personnage.update_attributes(params[:personnage])
         update_capacites(params[:capacites_personnages])
         update_historiques(params[:historiques_personnages])
         update_spheres(params[:spheres_personnages])
         update_disciplines(params[:disciplines_personnages])
-        format.html { redirect_to @personnage, notice: 'Personnage was successfully updated.' }
+        format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { redirect_to edit_personnage_path(@personnage) }
@@ -148,7 +174,7 @@ class PersonnagesController < ApplicationController
 
   def destroy
     @personnage = Personnage.find(params[:id])
-    redirect_to root_url if !permition?(User.find(session["warden.user.user.key"][0].first))
+    redirect_to root_url if !permition?(@user)
     @personnage.destroy
 
     respond_to do |format|

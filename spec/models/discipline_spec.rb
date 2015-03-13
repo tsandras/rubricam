@@ -10,6 +10,7 @@
 #  updated_at     :datetime         not null
 #  source         :string(255)
 #  secret         :boolean
+#  meta_dis       :boolean
 #
 
 require 'rails_helper'

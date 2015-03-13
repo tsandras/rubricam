@@ -24,6 +24,7 @@
 #  psyche             :integer
 #  temps              :integer
 #  vie                :integer
+#  user_id            :integer
 #
 
 require 'rails_helper'

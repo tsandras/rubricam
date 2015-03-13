@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require bootstrap-datepicker
+ *= require select2
  *= require_tree .
 */
 
@@ -655,4 +656,8 @@ input[type=number] {
 .simple-checkbox input[type="checkbox"] {
   position: relative;
   margin-left: 20px;
+}
+
+.icon-sphere {
+  width: 10%;
 }

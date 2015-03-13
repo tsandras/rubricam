@@ -18,7 +18,7 @@ class RelationsController < ApplicationController
   # GET /relations/1.json
   def show
     @relation = Relation.find(params[:id])
-    return redirect_to root_url if !permition?(@user, @relation)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user, @relation)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @relation }
@@ -39,7 +39,7 @@ class RelationsController < ApplicationController
   # GET /relations/1/edit
   def edit
     @relation = Relation.find(params[:id])
-    return redirect_to root_url if !permition?(@user, @relation)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user, @relation)
     @personnages = Personnage.all
     @from_personnage = get_personnage(@relation.from_personnage_id)
     @to_personnage = get_personnage(@relation.to_personnage_id)
@@ -52,7 +52,7 @@ class RelationsController < ApplicationController
     @relation.secret = false if @user.role != User::ROLE_ADMIN
     respond_to do |format|
       if @relation.save
-        format.html { redirect_to @relation, notice: 'Relation was successfully created.' }
+        format.html { redirect_to @relation, notice: 'Relation a été crée avec succès.' }
         format.json { render json: @relation, status: :created, location: @relation }
       else
         format.html { render action: "new" }
@@ -68,7 +68,7 @@ class RelationsController < ApplicationController
     params[:relation][:secret] = false if @user.role != User::ROLE_ADMIN
     respond_to do |format|
       if @relation.update_attributes(params[:relation])
-        format.html { redirect_to @relation, notice: 'Relation was successfully updated.' }
+        format.html { redirect_to @relation, notice: 'Relation a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

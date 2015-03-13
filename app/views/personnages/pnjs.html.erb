@@ -1,0 +1,17 @@
+<h1>Listes des Pnjs</h1>
+
+<div class="col-md-6">
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @pnjs.each do |personnage| %>
+    <tr>
+      <td><%= "<p><b>#{personnage.prenom} #{personnage.nom}</b></p>".html_safe + personnage.description_publique %></td>
+      <td><%= image_tag("#{personnage.image_lien}") if personnage.image_lien.present? %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>

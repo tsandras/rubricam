@@ -15,6 +15,8 @@
 class Capacite < ActiveRecord::Base
   attr_accessible :description, :nom, :primaire, :type_cap, :source
 
+  validates_presence_of :description, :nom, :primaire, :type_cap, :source
+
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
 
   TYPE_CAPACITE = ["Talent", "Compétence", "Connaissance"]

@@ -45,7 +45,7 @@ class CombinaisonsController < ApplicationController
 
     respond_to do |format|
       if @combinaison.save
-        format.html { redirect_to @combinaison, notice: 'Combinaison was successfully created.' }
+        format.html { redirect_to @combinaison, notice: 'Combinaison a été crée avec succès.' }
         format.json { render json: @combinaison, status: :created, location: @combinaison }
       else
         format.html { render action: "new" }
@@ -61,7 +61,7 @@ class CombinaisonsController < ApplicationController
 
     respond_to do |format|
       if @combinaison.update_attributes(params[:combinaison])
-        format.html { redirect_to @combinaison, notice: 'Combinaison was successfully updated.' }
+        format.html { redirect_to @combinaison, notice: 'Combinaison a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

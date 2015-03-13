@@ -1,29 +1,25 @@
-<h1>Listing organisations</h1>
-
+<h1>Listes des organisations</h1>
+<div class="col-md-10">
 <table>
   <tr>
     <th>Nom</th>
-    <th>Description</th>
     <th>Type</th>
-    <th>Date</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <th>Editer</th>
   </tr>
 
 <% @organisations.each do |organisation| %>
   <tr>
     <td><%= organisation.nom %></td>
-    <td><%= organisation.description %></td>
-    <td><%= organisation.type %></td>
-    <td><%= organisation.date %></td>
-    <td><%= link_to 'Show', organisation %></td>
-    <td><%= link_to 'Edit', edit_organisation_path(organisation) %></td>
-    <td><%= link_to 'Destroy', organisation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= organisation.type_organisation %></td>
+    <td><%= link_to 'Voir', organisation_path(organisation), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_organisation_path(organisation), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Organisation', new_organisation_path %>
+<%= link_to 'Nouvelle organisation', new_organisation_path, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', root_path, class: 'btn btn-warning btn-sm' %>
+</div>

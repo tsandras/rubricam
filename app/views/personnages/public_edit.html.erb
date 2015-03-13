@@ -1,7 +1,9 @@
 <div class="col-md-6">
   <%= simple_form_for(@personnage, url: public_update_personnage_path, method: :post) do |f| %>
+    <%= f.input :nom_publique, label: 'Description publique :' %>
     <%= f.input :description_publique, label: 'Description publique :' %>
-    <%#= f.input :prenom, label: 'Prénom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
+    <%= f.input :image_lien, label: "Lien de l'image :" %>
+    <br />
     <p><%= f.button :submit, "Sauvegarder profil publique", class: 'btn btn-primary btn-sm' %></p>
   <% end %>
 </div>

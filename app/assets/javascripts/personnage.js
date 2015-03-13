@@ -98,34 +98,35 @@
     listenerNumber(tmp[1], idVolonte, 1, 10);
   }
 
-  function listenerNumber(name, idInput, min, max) {
-    listenerUp("#plus-"+name, idInput, max);
-    listenerDown("#minus-"+name, idInput, min);
-  }
+  // function listenerNumber(name, idInput, min, max) {
+  //   listenerUp("#plus-"+name, idInput, max);
+  //   listenerDown("#minus-"+name, idInput, min);
+  // }
 
-  function listenerUp(idButton, idInput, max) {
-    $(idButton).click(function() {
-      if (parseInt($(idInput).val()) < max) {
-        manageShowSpecialite(parseInt($(idInput).val()) + 1, idButton);
-        $(idInput).val(parseInt($(idInput).val()) + 1);
-        manageNiveauVoie(idButton, 1);
-        manageCalculeXps($("#personnage_type_perso").val());
-        manageCalculeBonus();
-      }
-    });
-  }
+  // function listenerUp(idButton, idInput, max) {
+  //   $(idButton).click(function() {
+  //     if (parseInt($(idInput).val()) < max) {
+  //       console.log("coucou ?");
+  //       manageShowSpecialite(parseInt($(idInput).val()) + 1, idButton);
+  //       $(idInput).val(parseInt($(idInput).val()) + 1);
+  //       manageNiveauVoie(idButton, 1);
+  //       manageCalculeXps($("#personnage_type_perso").val());
+  //       manageCalculeBonus();
+  //     }
+  //   });
+  // }
 
-  function listenerDown(idButton, idInput, min) {
-    $(idButton).click(function() {
-      if (parseInt($(idInput).val()) > min) {
-        manageShowSpecialite(parseInt($(idInput).val()) - 1, idButton);
-        $(idInput).val(parseInt($(idInput).val()) - 1);
-        manageNiveauVoie(idButton, -1);
-        manageCalculeXps($("#personnage_type_perso").val());
-        manageCalculeBonus();
-      }
-    });
-  }
+  // function listenerDown(idButton, idInput, min) {
+  //   $(idButton).click(function() {
+  //     if (parseInt($(idInput).val()) > min) {
+  //       manageShowSpecialite(parseInt($(idInput).val()) - 1, idButton);
+  //       $(idInput).val(parseInt($(idInput).val()) - 1);
+  //       manageNiveauVoie(idButton, -1);
+  //       manageCalculeXps($("#personnage_type_perso").val());
+  //       manageCalculeBonus();
+  //     }
+  //   });
+  // }
 
   function listenerPhysiqueForBase(min, max) {
     liste_attributs = ["#personnage_force", "#personnage_dexterite", "#personnage_vigueur"];
@@ -228,17 +229,34 @@
       if ($(this).attr("id")) {
         var tmp = $(this).attr("id").split("_");
         $("#plus-"+tmp[1]).click(function() {
-          if (parseInt($("#nbs_historiques").html().trim()) < max) {
+          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) < max) {
             $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) + 1));
           }
         });
         $("#minus-"+tmp[1]).click(function() {
-          if (parseInt($("#nbs_historiques").html().trim()) > min) {
+          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) > min) {
             $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) - 1));
           }
         });
       }
     });
+  }
+
+  function listenerHistoriqueForBase(idWrapper, min) {
+    var max = parseInt($("#max_historiques").html());
+    if ($(idWrapper).attr("id")) {
+      var tmp = $(idWrapper).attr("id").split("_");
+      $("#plus-"+tmp[1]).click(function() {
+        if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) < max) {
+          $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) + 1));
+        }
+      });
+      $("#minus-"+tmp[1]).click(function() {
+        if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) > min) {
+          $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) - 1));
+        }
+      });
+    }
   }
 
   function listenerSpheresForBase() {
@@ -247,12 +265,12 @@
       if ($(this).attr("id")) {
         var name = $(this).attr("id");
         $("#plus-"+name).click(function() {
-          if (parseInt($("#nbs_spheres").html().trim()) < max) {
+          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_spheres").html().trim()) < max) {
             $("#nbs_spheres").html(" "+(parseInt($("#nbs_spheres").html()) + 1));
           }
         });
         $("#minus-"+name).click(function() {
-          if (parseInt($("#nbs_spheres").html().trim()) > min) {
+          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_spheres").html().trim()) > min) {
             $("#nbs_spheres").html(" "+(parseInt($("#nbs_spheres").html()) - 1));
           }
         });
@@ -320,50 +338,6 @@
     }
   }
 
-function manageCheckBox(searchBox, filteringList) {
-    hideAllCheckBoxWhenNoneChecked(filteringList);
-    $(filteringList).click(function() {
-      $(searchBox).val('');
-      showAllCheckBox(filteringList);
-      hideAllCheckBoxWhenNoneChecked(filteringList);
-    });
-}
-
-function epurationCheckBox(element, filteringList) {
-  if ($(element).val() == '') {
-    showAllCheckBox(filteringList);
-    hideAllCheckBoxWhenNoneChecked(filteringList);
-  }
-}
-
-function filter(element, filteringList) {
-  var value = $(element).val().toUpperCase();
-  showAllCheckBox(filteringList);
-  var i = 0;
-  $(filteringList).each(function() {
-      if ($(this).parent().text().toUpperCase().search(value) > -1 && i < 10) {
-          $(this).parent().show();
-      } else {
-          $(this).parent().hide();
-      }
-      i = i + 1;
-  });
-}
-
-function showAllCheckBox(filteringList) {
-  $(filteringList).each(function() {
-    $(this).parent().show();
-  });
-}
-
-function hideAllCheckBoxWhenNoneChecked(filteringList) {
-  $(filteringList).each(function() {
-    if (!$(this).attr("checked")) {
-      $(this).parent().hide();
-    }
-  });
-}
-
 function manageCapacites(listToListening, NameClassOfInput) {
   $(listToListening).change(function() {
     var tmp = $(this).parent().text().split("-");
@@ -384,10 +358,10 @@ function manageHistoriques(listToListening, NameClassOfInput) {
     var tmp = $(this).parent().text();
     if(this.checked) {
       if (! $("#f_"+tmp).length) {
-        // console.log($(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]);
         var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]
         $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value, id_jointure));
         listenerHistorique("#t_"+tmp.trim());
+        listenerHistoriqueForBase("#t_"+tmp.trim());
       }
     } else {
       $("#t_"+tmp).remove();
@@ -561,6 +535,7 @@ function fusionBaseBonus(base, bonus) {
   out.Personnage = {};
   out.Capacites = {};
   out.Historiques = {};
+  out.Disciplines = {};
   out.Spheres = {};
   out.Capacites.Talent = {};
   out.Capacites.Competence = {};
@@ -585,6 +560,10 @@ function fusionBaseBonus(base, bonus) {
   });
   $.each(base.Historiques, function(key, val) {
     out.Historiques[key] = val + bonus.Historiques[key];
+  });
+  $.each(base.Disciplines, function(key, val) {
+    console.log(val, bonus.Disciplines[key], key);
+    out.Disciplines[key] = val + bonus.Disciplines[key];
   });
   if (base.Sphere) {
     $.each(base.Spheres, function(key, val) {

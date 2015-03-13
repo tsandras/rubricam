@@ -44,7 +44,7 @@ class RoyaumesController < ApplicationController
 
     respond_to do |format|
       if @royaume.save
-        format.html { redirect_to @royaume, notice: 'Royaume was successfully created.' }
+        format.html { redirect_to @royaume, notice: 'Royaume a été crée avec succès.' }
         format.json { render json: @royaume, status: :created, location: @royaume }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class RoyaumesController < ApplicationController
 
     respond_to do |format|
       if @royaume.update_attributes(params[:royaume])
-        format.html { redirect_to @royaume, notice: 'Royaume was successfully updated.' }
+        format.html { redirect_to @royaume, notice: 'Royaume a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

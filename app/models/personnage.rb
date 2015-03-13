@@ -61,6 +61,14 @@
 #  secret                :boolean
 #  description_publique  :text
 #  image_lien            :string(255)
+#  niveau_physique       :integer
+#  niveau_social         :integer
+#  niveau_mental         :integer
+#  niveau_magdynamique   :integer
+#  niveau_magstatique    :integer
+#  niveau_ressources     :integer
+#  pnj                   :boolean
+#  nom_publique          :string(255)
 #
 
 class Personnage < ActiveRecord::Base
@@ -78,9 +86,9 @@ class Personnage < ActiveRecord::Base
   :reste_xps, :reste_bonus, :type_perso, :nature, :attitude, :rang, :points_sang, :glamour,
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
-  :description_publique, :image_lien
+  :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj
 
-  validates_presence_of :type_perso, :bonus
+  validates_presence_of :type_perso, :bonus, :prenom
 
   has_and_belongs_to_many :capacites, class_name: 'Capacite'
   has_and_belongs_to_many :atouts, class_name: 'Atout'
@@ -93,11 +101,17 @@ class Personnage < ActiveRecord::Base
   has_and_belongs_to_many :nivdisciplines, class_name: 'Nivdiscipline'
   has_and_belongs_to_many :royaumes, class_name: 'Royaume'
   has_and_belongs_to_many :arts, class_name: 'Art'
+  has_and_belongs_to_many :parties, class_name: 'Partie'
   has_many :relations, :class_name => 'Relation', :foreign_key => 'to_personnage_id'
   has_many :relations, :class_name => 'Relation', :foreign_key => 'from_personnage_id'
   has_many :spheres, :class_name => 'Sphere', :foreign_key => 'personnage_id'
   has_many :objets, :class_name => 'Objet', :foreign_key => 'personnage_id'
   belongs_to :user
+
+  scope :own_personnages, ->(user_id) { where("user_id = ?", user_id) }
+  scope :pnjs, lambda { where("pnj IS ?", true) }
+  scope :none_secret, lambda { where("secret IS NOT ?", true) }
+  scope :none_secret_and_pnjs, lambda { where("secret IS ? and pnj IS ?", false, true) }
 
   def has_resonnances
     return false if points_dynamique == nil && points_entropique == nil && points_statique == nil
@@ -107,6 +121,16 @@ class Personnage < ActiveRecord::Base
   def has_vertues
     return false if points_conscience == nil && points_courage == nil && points_maitrise == nil
     true
+  end
+
+  def has_graph
+    if niveau_physique.present? && niveau_social.present? &&
+       niveau_mental.present? && niveau_magdynamique.present? &&
+       niveau_magstatique.present? && niveau_ressources.present?
+      true
+    else
+      false
+    end
   end
 
   def vampire?
@@ -122,24 +146,49 @@ class Personnage < ActiveRecord::Base
   end
 
   def calcule_rang
-    p_attribus = (force + dexterite + vigueur + charisme + manipulation + apparence + perception + intelligence + astuce) * 4
-    p_capacites = CapacitesPersonnages.where(personnage_id: id).sum(&:niveau) * 2
-    p_historiques = HistoriquesPersonnages.where(personnage_id: id).sum(&:niveau)
-    p_atout = AtoutsPersonnages.where(personnage_id: id).sum(&:niveau) * 3
-    p_disciplines = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
-    p_autre = volonte.to_i * 4 + entelechie.to_i * 8 + spheres.sum(&:niveau).to_i * 8 + (points_conscience.to_i + points_maitrise.to_i + points_courage.to_i) * 3
-    p_autre = p_autre + (points_statique + points_entropique + points_dynamique) * 2
-    self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre
-    if rang < SEUIL_C
-      "D"
-    elsif rang < SEUIL_B
-      "C"
-    elsif rang < SEUIL_A
-      "B"
-    elsif rang < SEUIL_S
-      "A"
+    if has_base
+      p_attribus = (force + dexterite + vigueur + charisme + manipulation + apparence + perception + intelligence + astuce) * 4
+      p_capacites = CapacitesPersonnages.where(personnage_id: id).sum(&:niveau) * 2
+      p_historiques = HistoriquesPersonnages.where(personnage_id: id).sum(&:niveau)
+      p_atout = AtoutsPersonnages.where(personnage_id: id).map{|ap| ap.atout.cout }.sum() * 3
+      p_disciplines = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
+      p_autre = volonte.to_i * 4 + entelechie.to_i * 8 + spheres.sum(&:niveau).to_i * 8 + (points_conscience.to_i + points_maitrise.to_i + points_courage.to_i) * 3
+      p_autre = p_autre + (points_statique.to_i + points_entropique.to_i + points_dynamique.to_i) * 2
+      self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre
     else
-      "S"
+      self.rang = 0
+    end
+  end
+
+  def calcule_graph
+    if has_base
+      cap_phy_id = capacites.select{|cap| Personnage::CAP_PHYSIQUE.include?(cap.nom)}.map{|cap| cap.id}
+      cap_soc_id = capacites.select{|cap| Personnage::CAP_SOCIAL.include?(cap.nom)}.map{|cap| cap.id}
+      cap_men_id = capacites.select{|cap| Personnage::CAP_MENTAL.include?(cap.nom)}.map{|cap| cap.id}
+      self.niveau_physique = (force + dexterite + vigueur) * 4 + CapacitesPersonnages.where(capacite_id: cap_phy_id, personnage_id: id).sum(&:niveau)
+      self.niveau_social = (charisme + manipulation + apparence) * 4 + CapacitesPersonnages.where(capacite_id: cap_phy_id, personnage_id: id).sum(&:niveau)
+      self.niveau_mental = (perception + intelligence + astuce) * 4 + CapacitesPersonnages.where(capacite_id: cap_phy_id, personnage_id: id).sum(&:niveau)
+      self.niveau_magdynamique = spheres.sum(&:niveau).to_i * 8
+      self.niveau_magstatique = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
+      self.niveau_ressources = HistoriquesPersonnages.where(personnage_id: id).sum(&:niveau) * 3
+    end
+  end
+
+  def name_rang
+    if has_base && !rang.nil?
+      if rang < SEUIL_C
+          "D"
+      elsif rang < SEUIL_B
+        "C"
+      elsif rang < SEUIL_A
+        "B"
+      elsif rang < SEUIL_S
+        "A"
+      else
+        "S"
+      end
+    else
+      "-"
     end
   end
 
@@ -414,6 +463,8 @@ class Personnage < ActiveRecord::Base
     out += "}"
     out
   end
+
+  private
 
   def is_cp(key)
     begin

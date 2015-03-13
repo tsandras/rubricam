@@ -1,13 +1,28 @@
 <%= simple_form_for(@lieu) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-5">
     <%= f.input :nom %>
     <%= f.input :description %>
-    <%= f.input :type %>
+    <%= f.input :type_lieu, collection: Lieu::TYPE_LIEUX %><br/>
+    <%= f.button :submit, "Créer/Editer un lieu", class: 'btn btn-success btn-sm' %>
+    <%= link_to 'Retour', lieus_path, class: 'btn btn-warning btn-sm' %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-5">
+    <%= f.input :description_publique %>
+    <%= f.input :image_lien %>
+    <br/>
+    <div class="personnage">
+      <label for="search_personnage"> Rechercher personnage :</label>
+      <input id="search_personnage" type="text" onkeypress="filter(this, '.personnage .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.personnage .checkbox .check_boxes')">
+      <%= f.association(:personnages, as: :check_boxes, :collection => Personnage.all.map {|c| [c.nom, c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
+    </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
+  });
+</script>

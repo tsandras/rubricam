@@ -2,13 +2,16 @@
 #
 # Table name: organisations
 #
-#  id          :integer          not null, primary key
-#  nom         :string(255)
-#  description :text
-#  type        :string(255)
-#  date        :datetime
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                   :integer          not null, primary key
+#  nom                  :string(255)
+#  description          :text
+#  type_organisation    :string(255)
+#  date                 :datetime
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  secret               :boolean
+#  description_publique :text
+#  image_lien           :string(255)
 #
 
 require 'rails_helper'

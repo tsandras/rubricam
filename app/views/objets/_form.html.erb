@@ -1,16 +1,143 @@
 <%= simple_form_for(@objet) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-5">
     <%= f.input :name %>
+    <%= f.input :type_objet, collection: Objet::TYPE_OBJET %>
+    <br/>
+    <div class="row sph gris">
+      <div class="col-md-4">
+        <b> Niveau </b>
+      </div>
+      <div class="col-md-2">
+        <%= button_tag('', type: 'button', id: "minus-niveau", class: 'moins_new') %>
+        <%= button_tag('', type: 'button', id: "plus-niveau", class: 'plus_new') %>
+      </div>
+        <%= f.input(:niveau, label: "&nbsp;".html_safe,
+                            input_html: { class: "inpt_number gris", readonly: 'true',
+                            value: @objet.niveau.present? ? @objet.niveau : 0,
+                            data_button: "niveau" },
+                            wrapper_html: { class: 'col-md-1 reajuste' }) %>
+      <div class="col-md-5"></div>
+    </div>
+
+    <div class="row sph">
+      <div class="col-md-4">
+        <b> Valeur </b>
+      </div>
+      <div class="col-md-2">
+        <%= button_tag('', type: 'button', id: "minus-valeur", class: 'moins_new') %>
+        <%= button_tag('', type: 'button', id: "plus-valeur", class: 'plus_new') %>
+      </div>
+        <%= f.input(:valeur, label: "&nbsp;".html_safe,
+                            input_html: { class: "inpt_number", readonly: 'true',
+                            value: @objet.valeur.present? ? @objet.valeur : 0,
+                            data_button: "valeur" },
+                            wrapper_html: { class: 'col-md-1 reajuste' }) %>
+      <div class="col-md-5"></div>
+    </div>
     <%= f.input :description %>
-    <%= f.input :niveau %>
-    <%= f.input :type %>
-    <%= f.input :resonnance %>
-    <%= f.input :personnage_id %>
+    <%= f.input :secret, label: "Voulez-vous que cet objet soit secret ?", wrapper_html: {class: 'inline simple-checkbox'} %>
+    <%= f.button :submit, "Créer/Editer", class: "btn btn-success btn-sm" %>
+    <%= link_to 'Retour', objets_path, class: "btn btn-warning btn-sm" %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-5">
+    <%= f.input :resonnance %><br/>
+    <div class="row sph gris">
+      <div class="col-md-4">
+        <b> Dynamique </b>
+      </div>
+      <div class="col-md-2">
+        <%= button_tag('', type: 'button', id: "minus-dynamique", class: 'moins_new') %>
+        <%= button_tag('', type: 'button', id: "plus-dynamique", class: 'plus_new') %>
+      </div>
+        <%= f.input(:dynamique, label: "&nbsp;".html_safe,
+                            input_html: { class: "inpt_number gris", readonly: 'true',
+                            value: @objet.dynamique.present? ? @objet.dynamique : 0,
+                            data_button: "dynamique" },
+                            wrapper_html: { class: 'col-md-1 reajuste' }) %>
+      <div class="col-md-5"></div>
+    </div>
+    <div class="row sph">
+      <div class="col-md-4">
+        <b> Statique </b>
+      </div>
+      <div class="col-md-2">
+        <%= button_tag('', type: 'button', id: "minus-statique", class: 'moins_new') %>
+        <%= button_tag('', type: 'button', id: "plus-statique", class: 'plus_new') %>
+      </div>
+        <%= f.input(:statique, label: "&nbsp;".html_safe,
+                            input_html: { class: "inpt_number", readonly: 'true',
+                            value: @objet.statique.present? ? @objet.statique : 0,
+                            data_button: "statique" },
+                            wrapper_html: { class: 'col-md-1 reajuste' }) %>
+      <div class="col-md-5"></div>
+    </div>
+    <div class="row sph gris">
+      <div class="col-md-4">
+        <b> Entropique </b>
+      </div>
+      <div class="col-md-2">
+        <%= button_tag('', type: 'button', id: "minus-entropique", class: 'moins_new') %>
+        <%= button_tag('', type: 'button', id: "plus-entropique", class: 'plus_new') %>
+      </div>
+        <%= f.input(:entropique, label: "&nbsp;".html_safe,
+                            input_html: { class: "inpt_number gris", readonly: 'true',
+                            value: @objet.entropique.present? ? @objet.entropique : 0,
+                            data_button: "entropique" },
+                            wrapper_html: { class: 'col-md-1 reajuste' }) %>
+      <div class="col-md-5"></div>
+    </div>
+    <br />
+
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner une routine si cette objet est lié à une routine</label>
+      <div class="controls">
+        <select class="select optional" id="objet_routine_id" name="objet[routine_id]" value="<%= @objet.routine_id %>">
+          <optgroup label="Routines">
+          <option value="">Sélectionner une routine</option>
+          <% @routines.each do |rou| %>
+              <option value="<%= rou.id %>"<%= @objet.routine_id == rou.id  ? 'selected' : nil %>><%= rou.name %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner un personnage si cette objet est possédé par un personnage</label>
+      <div class="controls">
+        <select class="select optional" id="objet_personnage_id" name="objet[personnage_id]" value="<%= @objet.personnage_id %>">
+          <optgroup label="Personnages">
+          <option value="">Sélectionner un personnage</option>
+          <% @personnages.each do |per| %>
+              <option value="<%= per.id %>"<%= @objet.personnage_id == per.id  ? 'selected' : nil %>><%= per.prenom %> <%= per.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    listenerAllIntegerForObjet();
+    $("#objet_personnage_id").select2();
+    $("#objet_routine_id").select2();
+    manageCheckBox("#search_routine", ".routine .checkbox .check_boxes");
+    manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
+  });
+
+  function listenerAllIntegerForObjet() {
+    var list = ["#objet_niveau", "#objet_valeur", "#objet_dynamique",
+                "#objet_statique", "#objet_entropique"]
+    $.each(list, function(key, val) {
+      if ($(val).attr("id")) {
+        listenerNumber($(val).attr("data_button"), "#"+$(val).attr("id"), 0, 50);
+      }
+    });
+  }
+</script>

@@ -110,4 +110,8 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
   SEUIL_B = 350
   SEUIL_A = 600
   SEUIL_S = 1000
+
+  CAP_PHYSIQUE = ["Athlétisme", "Bagarre", "Vigilance", "Armes à feu", "Conduite", "Furtivité", "Larcin", "Mêlée", "Survie"]
+  CAP_MENTAL = ["Conscience", "Artisanats", "Méditation", "Droit", "Érudition", "Finances", "Informatique", "Investigation", "Médecine", "Occultisme", "Politique", "Sciences", "Technologie"]
+  CAP_SOCIAL = ["Commandement", "Empathie", "Expérience de la rue", "Expression", "Intimidation", "Intuition", "Subterfuge", "Animaux", "Étiquette", "Représentation"]
 end

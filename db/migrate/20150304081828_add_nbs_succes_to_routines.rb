@@ -13,10 +13,13 @@ class AddNbsSuccesToRoutines < ActiveRecord::Migration
     add_column :routines, :psyche, :integer
     add_column :routines, :temps, :integer
     add_column :routines, :vie, :integer
+    add_column :routines, :user_id, :integer
     add_column :objets, :valeur, :integer
     add_column :objets, :dynamique, :integer
     add_column :objets, :statique, :integer
     add_column :objets, :entropique, :integer
     add_column :objets, :routine_id, :integer
+    add_column :objets, :user_id, :integer
+    rename_column :objets, :type, :type_objet
   end
 end

@@ -14,6 +14,8 @@
 class Historique < ActiveRecord::Base
   attr_accessible :description, :nom, :has_detail, :source
 
+  validates_presence_of :description, :nom, :source
+
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
   has_and_belongs_to_many :lieus, class_name: 'Lieu'
 end

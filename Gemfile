@@ -13,6 +13,7 @@ group :development do
 end
 
 gem 'mandrill-api'
+gem "select2-rails"
 
 group :production do
   gem 'pg'

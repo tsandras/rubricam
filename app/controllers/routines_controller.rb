@@ -1,8 +1,16 @@
 class RoutinesController < ApplicationController
+
+  before_filter :redirect_unauthorized_to_show, :only=> [:show]
+  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
+
   # GET /routines
   # GET /routines.json
   def index
-    @routines = Routine.all
+    if @user.role == User::ROLE_ADMIN
+      @routines = Routine.all
+    else
+      @routines = Routine.none_secret_or_own_routines(@user.id)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,10 +49,10 @@ class RoutinesController < ApplicationController
   # POST /routines.json
   def create
     @routine = Routine.new(params[:routine])
-
+    @routine.user_id = @user.id
     respond_to do |format|
       if @routine.save
-        format.html { redirect_to @routine, notice: 'Routine was successfully created.' }
+        format.html { redirect_to @routine, notice: 'Routine a été crée avec succès.' }
         format.json { render json: @routine, status: :created, location: @routine }
       else
         format.html { render action: "new" }
@@ -57,10 +65,10 @@ class RoutinesController < ApplicationController
   # PUT /routines/1.json
   def update
     @routine = Routine.find(params[:id])
-
+    @routine.user_id = @user.id
     respond_to do |format|
       if @routine.update_attributes(params[:routine])
-        format.html { redirect_to @routine, notice: 'Routine was successfully updated.' }
+        format.html { redirect_to @routine, notice: 'Routine a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -79,5 +87,30 @@ class RoutinesController < ApplicationController
       format.html { redirect_to routines_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def redirect_unauthorized_to_show
+    @routine = Routine.find(params[:id])
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_show?(@user)
+  end
+
+  def redirect_unauthorized_to_write
+    @routine = Routine.find(params[:id])
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
+  end
+
+  def permition_show?(user)
+    return true if user.role != User::ROLE_NORMA
+    return true if @routine.user_id == user.id
+    return true if !@routine.secret
+    false
+  end
+
+  def permition_write?(user)
+    return true if user.role == User::ROLE_ADMIN
+    return true if @routine.user_id == user.id
+    false
   end
 end

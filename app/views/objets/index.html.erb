@@ -1,33 +1,29 @@
-<h1>Listing objets</h1>
-
+<h1>Listes des objets</h1>
+<div class="col-md-10">
 <table>
   <tr>
     <th>Name</th>
-    <th>Description</th>
     <th>Niveau</th>
     <th>Type</th>
-    <th>Resonnance</th>
-    <th>Personnage</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @objets.each do |objet| %>
   <tr>
     <td><%= objet.name %></td>
-    <td><%= objet.description %></td>
     <td><%= objet.niveau %></td>
-    <td><%= objet.type %></td>
-    <td><%= objet.resonnance %></td>
-    <td><%= objet.personnage_id %></td>
-    <td><%= link_to 'Show', objet %></td>
-    <td><%= link_to 'Edit', edit_objet_path(objet) %></td>
-    <td><%= link_to 'Destroy', objet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= objet.type_objet %></td>
+    <td><%= link_to 'Voir', objet_path(objet), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_objet_path(objet), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Objet', new_objet_path %>
+<%= link_to 'Nouvelle Objet', new_objet_path, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
+</div>

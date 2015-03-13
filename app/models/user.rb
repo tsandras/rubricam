@@ -40,5 +40,8 @@ class User < ActiveRecord::Base
   ROLE_MODER = 1
   ROLE_NORMA = 0
 
-  has_one :personnage
+  has_many :personnages
+  has_many :objets
+  has_many :routines
+
 end

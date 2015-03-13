@@ -1,5 +1,6 @@
 <div id="page-accueil">
     <div class="col-md-5">
+      <p id="notice"><%= notice %></p>
       <div id="menu-personnages" class="menu-accueil">
         <div class="menu-accueil-head">
           Vos personnages
@@ -31,30 +32,13 @@
           <%= link_to 'Créer un personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
         </div>
       </div>
-      <%= menu_accueil(["nom", "type_cap"], "capacites", @capacites) %>
-      <%= menu_accueil(["nom"], "historiques", @historiques) %>
+      <%= menu_accueil(["nom", "type_cap"], "capacites", @capacites, "capacités") %>
+      <%= menu_accueil(["nom"], "historiques", @historiques, "historiques") %>
     </div>
 
     <div class="col-md-5">
-      <%= menu_accueil(["nom", "cout"], "atouts", @atouts) %>
-      <%= menu_accueil(["nom"], "disciplines", @disciplines) %>
-      <% if @user.role != 0 %>
-        <div id="menu-admin">
-          <%= link_to 'Personnages', personnages_path, class: 'btn btn-success btn-sm' %>
-          <%= link_to 'Capacités', capacites_path, class: 'btn btn-success btn-sm' %>
-          <%= link_to 'Atouts', atouts_path, class: 'btn btn-success btn-sm' %>
-          <%= link_to 'Historiques', historiques_path, class: 'btn btn-success btn-sm' %><br /><br />
-          <%= link_to 'Spheres', historiques_path, class: 'btn btn-warning btn-sm' %>
-          <%= link_to 'Routines', routines_path, class: 'btn btn-warning btn-sm' %>
-          <%= link_to 'Disciplines', disciplines_path, class: 'btn btn-warning btn-sm' %>
-          <%= link_to 'Combinaisons de discipline', combinaisons_path, class: 'btn btn-warning btn-sm' %>
-          <%= link_to 'Arts', arts_path, class: 'btn btn-warning btn-sm' %>
-          <%= link_to 'Royaumes', royaumes_path, class: 'btn btn-warning btn-sm' %><br /><br />
-          <%= link_to 'Relations', relations_path, class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Organisations', organisations_path, class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Lieux', lieus_path, class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Objets', objets_path, class: 'btn btn-primary btn-sm' %>
-        </div>
-      <% end %>
+      <%= menu_accueil(["nom_publique"], "personnages", @pnjs, "pnjs") %>
+      <%= menu_accueil(["nom", "cout"], "atouts", @atouts, "atouts") %>
+      <%= menu_accueil(["nom"], "disciplines", @disciplines, "disciplines") %>
     </div>
 </div>

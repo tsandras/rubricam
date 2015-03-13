@@ -1,18 +1,22 @@
 <p id="notice"><%= notice %></p>
-
+<div class="col-md-10">
 <p>
   <b>Nom:</b>
   <%= @organisation.nom %>
 </p>
-
+<% if @user.role == User::ROLE_ADMIN %>
+  <p>
+    <b>Description:</b>
+    <%= @organisation.description %>
+  </p>
+<% end %>
 <p>
-  <b>Description:</b>
-  <%= @organisation.description %>
+  <b>Description publique:</b>
+  <%= @organisation.description_publique %>
 </p>
-
 <p>
   <b>Type:</b>
-  <%= @organisation.type %>
+  <%= @organisation.type_organisation %>
 </p>
 
 <p>
@@ -20,6 +24,16 @@
   <%= @organisation.date %>
 </p>
 
+<p>
+<b>Membres:</b><br/>
+<% if !@membres.nil? %>
+  <% @membres.each do |membre| %>
+    <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>
+  <% end %>
+<% end %>
+</p>
 
-<%= link_to 'Edit', edit_organisation_path(@organisation) %> |
-<%= link_to 'Back', organisations_path %>
+
+<%= link_to 'Editer', edit_organisation_path(@organisation), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', organisations_path, class: 'btn btn-warning btn-sm' %>
+</div>

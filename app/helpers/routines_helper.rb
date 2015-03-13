@@ -28,9 +28,21 @@ module RoutinesHelper
     list = ["correspondance", "entropie", "esprit", "forces", "matiere", "prime", "psyche", "temps", "vie"]
     out = "<p><b>Liste des sphères:</b> ".html_safe
     list.each do |sphere|
-      out << "#{sphere} (#{routine.send(sphere)}) ".html_safe if routine.send(sphere) > 0
+      out << "#{sphere} (#{routine.send(sphere)}) ".html_safe if routine.send(sphere).present? && routine.send(sphere) > 0
     end
     out << "</p>".html_safe
+    out
+  end
+
+  def display_spheres(routine)
+    list = ["correspondance", "entropie", "esprit", "forces", "matiere", "prime", "psyche", "temps", "vie"]
+    out = "".html_safe
+    list.each do |sph|
+      if routine.send(sph) && routine.send(sph) > 0
+        out << "#{routine.send(sph)}"
+        out << image_tag("spheres/#{sph}.jpg", class: "icon-sphere")
+      end
+    end
     out
   end
 end

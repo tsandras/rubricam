@@ -3,29 +3,25 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Description</th>
-    <th>Date</th>
     <th>To</th>
     <th>From</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+    <% end %>
   </tr>
 
 <% @relations.each do |relation| %>
   <tr>
-    <td><%= link_to relation.name, relation %></td>
-    <td><%= relation.description %></td>
-    <td><%= relation.date %></td>
+    <td><%= relation.name %></td>
     <td><% p1 = get_personnage(relation.to_personnage_id) %><%= p1 ? "#{p1.prenom} #{p1.nom}" : "" %></td>
     <td><% p2 = get_personnage(relation.from_personnage_id) %><%= p2 ? "#{p2.prenom} #{p2.nom}" : "" %></td>
-    <td><%= link_to 'Show', relation %></td>
-    <td><%= link_to 'Edit', edit_relation_path(relation) %></td>
-    <!-- <td><%#= link_to 'Destroy', relation, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+    <td><%= link_to 'Voir', relation_path(relation), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_relation_path(relation), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Relation', new_relation_path, class: 'btn btn-success' %>
+<%= link_to 'Nouvelle relation', new_relation_path, class: 'btn btn-success btn-sm' %>

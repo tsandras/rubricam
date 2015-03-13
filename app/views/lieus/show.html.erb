@@ -1,20 +1,36 @@
 <p id="notice"><%= notice %></p>
-
+<div class="col-md-10">
 <p>
   <b>Nom:</b>
   <%= @lieu.nom %>
 </p>
 
+<% if @user.role == User::ROLE_ADMIN %>
+  <p>
+    <b>Description:</b>
+    <%= @lieu.description %>
+  </p>
+<% end %>
+
 <p>
-  <b>Description:</b>
-  <%= @lieu.description %>
+  <b>Description publique:</b>
+  <%= @lieu.description_publique %>
 </p>
 
 <p>
   <b>Type:</b>
-  <%= @lieu.type %>
+  <%= @lieu.type_lieu %>
 </p>
 
+<p>
+<b>Membres:</b><br/>
+<% if !@membres.nil? %>
+  <% @membres.each do |membre| %>
+    <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>
+  <% end %>
+<% end %>
+</p>
 
-<%= link_to 'Edit', edit_lieu_path(@lieu) %> |
-<%= link_to 'Back', lieus_path %>
+<%= link_to 'Editer', edit_lieu_path(@lieu), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', lieus_path, class: 'btn btn-warning btn-sm' %>
+</div>

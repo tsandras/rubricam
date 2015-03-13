@@ -66,14 +66,18 @@
       </div>
       <div class="col-md-4">
         <%= p.input :paradygme %>
+        <%= p.input :secret, label: "Voulez-vous que ce personnage soit secret ?", wrapper_html: {class: 'inline simple-checkbox'} if @user.role == User::ROLE_ADMIN %>
       </div>
       <div class="col-md-4">
         <%= p.input :description %>
+        <%= p.input :pnj, label: "Voulez-vous que ce personnage soit un pnj ?", wrapper_html: {class: 'inline simple-checkbox'} if @user.role == User::ROLE_ADMIN %>
       </div>
     </div>
     <div class="row background">
       <%= p.input :caracteristique_base, as: :hidden %>
       <%= p.input :caracteristique_bonus, as: :hidden %>
+      <%= p.input :xps, as: :hidden %>
+      <%= p.input :reste_xps, as: :hidden %>
       <p class="text-center"><%= show_sauvegarder(p, @personnage) %></p>
     </div>
     <%= input_modal_objet(p, "discipline", "Disciplines") %>

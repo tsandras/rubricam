@@ -1,7 +1,10 @@
 class LieusController < ApplicationController
+
+  before_filter :redirect_unauthorized_to_show, :only=> [:show]
+  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
+
   # GET /lieus
   # GET /lieus.json
-
   def index
     @lieus = Lieu.all
 
@@ -15,7 +18,11 @@ class LieusController < ApplicationController
   # GET /lieus/1.json
   def show
     @lieu = Lieu.find(params[:id])
-
+    if @user.role == User::ROLE_ADMIN
+      @membres = @lieu.personnages
+    else
+      @membres = @lieu.personnages.none_secret
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @lieu }
@@ -25,6 +32,7 @@ class LieusController < ApplicationController
   # GET /lieus/new
   # GET /lieus/new.json
   def new
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if @user.role != User::ROLE_ADMIN
     @lieu = Lieu.new
 
     respond_to do |format|
@@ -45,7 +53,7 @@ class LieusController < ApplicationController
 
     respond_to do |format|
       if @lieu.save
-        format.html { redirect_to @lieu, notice: 'Lieu was successfully created.' }
+        format.html { redirect_to @lieu, notice: 'Lieu a été crée avec succès.' }
         format.json { render json: @lieu, status: :created, location: @lieu }
       else
         format.html { render action: "new" }
@@ -61,7 +69,7 @@ class LieusController < ApplicationController
 
     respond_to do |format|
       if @lieu.update_attributes(params[:lieu])
-        format.html { redirect_to @lieu, notice: 'Lieu was successfully updated.' }
+        format.html { redirect_to @lieu, notice: 'Lieu a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -80,5 +88,27 @@ class LieusController < ApplicationController
       format.html { redirect_to lieus_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def redirect_unauthorized_to_show
+    @lieu = Lieu.find(params[:id])
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_show?(@user)
+  end
+
+  def redirect_unauthorized_to_write
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
+  end
+
+  def permition_show?(user)
+    return true if user.role != User::ROLE_NORMA
+    return true if !@lieu.secret
+    false
+  end
+
+  def permition_write?(user)
+    return true if user.role == User::ROLE_ADMIN
+    false
   end
 end

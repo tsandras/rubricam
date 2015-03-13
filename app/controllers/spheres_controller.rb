@@ -44,7 +44,7 @@ class SpheresController < ApplicationController
 
     respond_to do |format|
       if @sphere.save
-        format.html { redirect_to @sphere, notice: 'Sphere was successfully created.' }
+        format.html { redirect_to @sphere, notice: 'Sphere a été crée avec succès.' }
         format.json { render json: @sphere, status: :created, location: @sphere }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class SpheresController < ApplicationController
 
     respond_to do |format|
       if @sphere.update_attributes(params[:sphere])
-        format.html { redirect_to @sphere, notice: 'Sphere was successfully updated.' }
+        format.html { redirect_to @sphere, notice: 'Sphere a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

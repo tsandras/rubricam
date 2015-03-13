@@ -61,6 +61,14 @@
 #  secret                :boolean
 #  description_publique  :text
 #  image_lien            :string(255)
+#  niveau_physique       :integer
+#  niveau_social         :integer
+#  niveau_mental         :integer
+#  niveau_magdynamique   :integer
+#  niveau_magstatique    :integer
+#  niveau_ressources     :integer
+#  pnj                   :boolean
+#  nom_publique          :string(255)
 #
 
 require 'test_helper'

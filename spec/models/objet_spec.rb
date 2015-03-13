@@ -6,7 +6,7 @@
 #  name          :string(255)
 #  description   :text
 #  niveau        :integer
-#  type          :string(255)
+#  type_objet    :string(255)
 #  resonnance    :string(255)
 #  personnage_id :integer
 #  created_at    :datetime         not null
@@ -17,6 +17,7 @@
 #  statique      :integer
 #  entropique    :integer
 #  routine_id    :integer
+#  user_id       :integer
 #
 
 require 'rails_helper'

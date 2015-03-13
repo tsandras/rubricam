@@ -24,15 +24,27 @@
 #  psyche             :integer
 #  temps              :integer
 #  vie                :integer
+#  user_id            :integer
 #
 
 class Routine < ActiveRecord::Base
   attr_accessible :combinaison, :description, :foci, :name, :type, :secret,
                   :nbs_succes, :nbs_quintessence, :volonte_permanente, :effet,
                   :correspondance, :entropie, :esprit, :forces, :matiere,
-                  :prime, :psyche, :temps, :vie
+                  :prime, :psyche, :temps, :vie, :user_id
+
+  validates_presence_of :name, :type, :description
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
+  has_many :objets, class_name: 'Objet'
+  belongs_to :user
+
+  scope :none_secret, lambda { where("secret IS NOT ?", true) }
+  scope :own_routines, ->(user_id) { where("user_id = ?", user_id) }
+  scope :none_secret_or_own_routines, ->(user_id) { where("user_id = ? or secret IS NOT ?", user_id, true) }
 
   TYPE_ROUTINE = ["Routine", "Enchantement", "Rituel", "Création d'objet"]
+
+  validates_presence_of :name, :type, :description
+
 end

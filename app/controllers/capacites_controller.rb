@@ -1,8 +1,10 @@
 class CapacitesController < ApplicationController
+
+  skip_before_filter :authenticate_user!, only: [:index, :show]
+  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy, :new, :create]
+
   # GET /capacites
   # GET /capacites.json
-  skip_before_filter :authenticate_user!, only: [:index, :show]
-
   def index
     @capacites = Capacite.all
 
@@ -26,7 +28,7 @@ class CapacitesController < ApplicationController
   # GET /capacites/new
   # GET /capacites/new.json
   def new
-    return redirect_to root_url if !permition_to_write?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_to_write?(@user)
     @capacite = Capacite.new
 
     respond_to do |format|
@@ -37,19 +39,19 @@ class CapacitesController < ApplicationController
 
   # GET /capacites/1/edit
   def edit
-    return redirect_to root_url if !permition_to_write?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_to_write?(@user)
     @capacite = Capacite.find(params[:id])
   end
 
   # POST /capacites
   # POST /capacites.json
   def create
-    return redirect_to root_url if !permition_to_write?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_to_write?(@user)
     @capacite = Capacite.new(params[:capacite])
 
     respond_to do |format|
       if @capacite.save
-        format.html { redirect_to @capacite, notice: 'Capacite was successfully created.' }
+        format.html { redirect_to @capacite, notice: 'Capacite a été crée avec succès.' }
         format.json { render json: @capacite, status: :created, location: @capacite }
       else
         format.html { render action: "new" }
@@ -61,12 +63,12 @@ class CapacitesController < ApplicationController
   # PUT /capacites/1
   # PUT /capacites/1.json
   def update
-    return redirect_to root_url if !permition_to_write?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_to_write?(@user)
     @capacite = Capacite.find(params[:id])
 
     respond_to do |format|
       if @capacite.update_attributes(params[:capacite])
-        format.html { redirect_to @capacite, notice: 'Capacite was successfully updated.' }
+        format.html { redirect_to @capacite, notice: 'Capacite a été édité avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -78,7 +80,7 @@ class CapacitesController < ApplicationController
   # DELETE /capacites/1
   # DELETE /capacites/1.json
   def destroy
-    return redirect_to root_url if !permition_to_write?(@user)
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_to_write?(@user)
     @capacite = Capacite.find(params[:id])
     @capacite.destroy
 
@@ -86,5 +88,16 @@ class CapacitesController < ApplicationController
       format.html { redirect_to capacites_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def redirect_unauthorized_to_write
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
+  end
+
+  def permition_write?(user)
+    return true if user.role == User::ROLE_ADMIN
+    false
   end
 end

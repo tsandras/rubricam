@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<div class="col-md-10">
+
+<p>
+  <b>Nom:</b>
+  <%= @party.nom %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @party.date %>
+</p>
+
+<p>
+  <b>Duree:</b>
+  <%= @party.duree %> heures
+</p>
+
+<p>
+  <b>Xps:</b>
+  <%= @party.xps %>
+</p>
+
+<% if @user.role == User::ROLE_ADMIN %>
+<p>
+  <b>Description:</b>
+  <%= @party.description %>
+</p>
+<% end %>
+
+<p>
+  <b>Description publique:</b>
+  <%= @party.description_publique %>
+</p>
+
+<% if @user.role == User::ROLE_ADMIN %>
+<p>
+  <b>Notes:</b>
+  <%= @party.notes %>
+</p>
+<% end %>
+
+<p>
+<b>Membres:</b><br/>
+<% if !@membres.nil? %>
+  <% @membres.each do |type, group| %>
+    <b><%= type ? "Pnjs" : "Joueurs" %></b><br/>
+    <% group.each do |mem| %>
+      <%= link_to "#{mem.prenom} #{mem.nom}", public_show_personnage_path(mem) %><br/>
+    <% end %>
+  <% end %>
+<% end %>
+</p>
+
+<%= link_to 'Editer', edit_party_path(@party), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', parties_path, class: 'btn btn-warning btn-sm' %>
+
+</div>

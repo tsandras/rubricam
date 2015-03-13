@@ -5,45 +5,41 @@
     <div class="form-inputs">
       <%= f.input :name %>
       <%= f.input :description %>
-      <%= f.input :to_personnage_id, input_html: { class: "hidden" } %><span id="name_relation_to"><%= @to_personnage ? "#{@to_personnage.prenom} #{@to_personnage.nom}" : '' %></span>
-      <%= f.input :from_personnage_id, input_html: { class: "hidden" } %><span id="name_relation_from"><%= @from_personnage ? "#{@from_personnage.prenom} #{@from_personnage.nom}" : '' %></span>
     </div>
   </div>
   <div class="col-md-4">
-    <label for="search_personnage1"> Rechercher Personnage :</label>
-    <input id="search_personnage1" type="text" onkeypress="filter(this, '.personnage1 .checkbox2 .checktest')" onkeyup="epurationCheckBox(this, '.personnage1 .checkbox2 .checktest')" />
-    <div class="personnage1">
-    <%#= p.association :capacites, as: :check_boxes, :collection => Capacite.all.map {|c| [c.nom, c.id]}.uniq %>
-      <% if @personnages != nil %>
-        <% @personnages.each do |p| %>
-          <div class="checkbox2">
-            <%#= check_box_tag p.id, p.nom %>
-            <%= "<input id='1p#{p.id}' name='#{p.id}' value='#{p.prenom} #{p.nom}' type='checkbox' />".html_safe %>
-            <%= label_tag p.id, p.nom, class: 'checktest' %>
-          </div>
-        <% end %>
-      <% end %>
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner le personnage de départ</label>
+      <div class="controls">
+        <select class="select optional" id="relation_to_personnage_id" name="relation[to_personnage_id]" value="<%= @relation.to_personnage_id %>">
+          <optgroup label="Personnages">
+          <option value="">Sélectionner un personnage</option>
+          <% @personnages.each do |per| %>
+              <option value="<%= per.id %>"<%= @relation.to_personnage_id == per.id  ? 'selected' : nil %>><%= per.prenom %> <%= per.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
     </div>
-
-    <label for="search_personnage2"> Rechercher Personnage :</label>
-    <input id="search_personnage2" type="text" onkeypress="filter(this, '.personnage2 .checkbox2 .checktest')" onkeyup="epurationCheckBox(this, '.personnage2 .checkbox2 .checktest')" />
-    <div class="personnage2">
-      <% if @personnages != nil %>
-        <% @personnages.each do |p| %>
-          <div class="checkbox2">
-            <%#= check_box_tag p.id, p.nom %>
-            <%= "<input id='2p#{p.id}' name='#{p.id}' value='#{p.prenom} #{p.nom}' type='checkbox' />".html_safe %>
-            <%= label_tag p.id, p.nom, class: 'checktest' %>
-          </div>
-        <% end %>
-      <% end %>
+    <br/>
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner le personnage d'arrivé</label>
+      <div class="controls">
+        <select class="select optional" id="relation_from_personnage_id" name="relation[from_personnage_id]" value="<%= @relation.from_personnage_id %>">
+          <optgroup label="Personnages">
+          <option value="">Sélectionner un personnage</option>
+          <% @personnages.each do |per| %>
+              <option value="<%= per.id %>"<%= @relation.from_personnage_id == per.id  ? 'selected' : nil %>><%= per.prenom %> <%= per.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
     </div>
+    <br/>
     <%= f.input :date, as: :string, input_html: {value: local_date(@relation.date), class: 'datepicker inpt_string'}, wrapper_html: {class: 'inline'} %>
     <%#= input_secret(f, "Relation secrète ?") %>
     <%= f.input :secret, as: :boolean, label: "Relation secrète ?", input_html: {}, wrapper_html: {class: 'inline simple-checkbox'} %>
-    <div class="form-actions">
-      <%= f.button :submit, "Créer/Editer une relation", class: 'btn btn-success btn-sm' %>
-    </div>
+    <%= f.button :submit, "Créer/Editer une relation", class: 'btn btn-success btn-sm' %>
      <%= link_to 'Back', relations_path, class: "btn btn-warning btn-sm" %>
   </div>
 <% end %>
@@ -51,62 +47,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $('.datepicker').datepicker();
-    manageCheckBox("#search_personnage1", ".personnage1 .checkbox2 .checktest");
-    manageCheckBox("#search_personnage2", ".personnage2 .checkbox2 .checktest");
-    $(".personnage1 .checkbox2").click(function(){
-      // var id = $(this).children().attr("id");
-      var nom = $(this).children().attr("name");
-      var realNom = $(this).children().val();
-      $("#relation_to_personnage_id").val(nom);
-      $("#name_relation_to").text(realNom);
-    });
-    $(".personnage2 .checkbox2").click(function(){
-      var name = $(this).children().attr("name");
-      var realNom = $(this).children().val();
-      $("#relation_from_personnage_id").val(name);
-      $("#name_relation_from").text(realNom);
-    });
+    $("#relation_to_personnage_id").select2();
+    $("#relation_from_personnage_id").select2();
   });
-  function manageCheckBox(searchBox, filteringList) {
-      hideAllCheckBoxWhenNoneChecked(filteringList);
-      $(filteringList).click(function() {
-        $(searchBox).val('');
-        showAllCheckBox(filteringList);
-        hideAllCheckBoxWhenNoneChecked(filteringList);
-      });
-  }
-
-  function epurationCheckBox(element, filteringList) {
-    if ($(element).val() == '') {
-      showAllCheckBox(filteringList);
-      hideAllCheckBoxWhenNoneChecked(filteringList);
-    }
-  }
-
-  function filter(element, filteringList) {
-    var value = $(element).val().toUpperCase();
-    showAllCheckBox(filteringList);
-    $(filteringList).each(function() {
-        if ($(this).text().toUpperCase().search(value) > -1) {
-            $(this).parent().show();
-        }
-        else {
-            $(this).parent().hide();
-        }
-    });
-  }
-
-  function showAllCheckBox(filteringList) {
-    $(filteringList).each(function() {
-      $(this).parent().show();
-    });
-  }
-
-  function hideAllCheckBoxWhenNoneChecked(filteringList) {
-    $(filteringList).each(function() {
-      if (!$(this).attr("checked")) {
-        $(this).parent().hide();
-      }
-    });
-  }
 </script>

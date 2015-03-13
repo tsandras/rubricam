@@ -10,6 +10,7 @@
 #  updated_at  :datetime         not null
 #  has_detail  :boolean
 #  source      :string(255)
+#  type_atout  :string(255)
 #
 
 require 'rails_helper'

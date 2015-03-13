@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :create_user
 
   def permition_to_write?(user)
-    return true if user.role != 0
+    return true if user.role != User::ROLE_NORMA
     false
   end
 

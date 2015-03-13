@@ -2,12 +2,15 @@
 #
 # Table name: lieus
 #
-#  id          :integer          not null, primary key
-#  nom         :string(255)
-#  description :string(255)
-#  type        :string(255)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                   :integer          not null, primary key
+#  nom                  :string(255)
+#  description          :text(255)
+#  type_lieu            :string(255)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  secret               :boolean
+#  description_publique :text
+#  image_lien           :string(255)
 #
 
 require 'rails_helper'

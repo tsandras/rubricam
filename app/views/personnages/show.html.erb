@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.js"></script>
   <p id="notice"><%= notice %></p>
   <div class="col-md-4">
     <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
@@ -38,7 +39,11 @@
     </div>
   </div>
   <div class="col-md-4">
-    <p><b>Rang:</b> <%= @personnage.calcule_rang %> (<%= @personnage.rang %>)</p>
+    <%#= raise @personnage.inspect %>
+    <p><b>Rang:</b> <%= @personnage.name_rang %> (<%= @personnage.rang %>)</p>
+    <% if @personnage.has_graph %>
+      <canvas id="myChart" width="300" height="300"></canvas>
+    <% end %>
     <div class="background">
       <p><b>Description:</b> <%= @personnage.description %></p>
       <p><b>Background:</b> <%= @personnage.background %></p>
@@ -52,10 +57,90 @@
       <%= show_relations(@to_relations) %>
     </div>
     <%= show_xps(@personnage) %>
-    <%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
-    <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %>
+    <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
+    <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />
+    <%= link_to 'Editer routines du personnage', routine_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' if @personnage.mage? %>
     <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %>
-    <% if @user.role == 2 %>
+    <% if @user.role == User::ROLE_ADMIN %>
       <%= link_to 'Supprimer', @personnage, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-sm' %>
     <% end %>
   </div>
+
+  <script type="text/javascript">
+
+    var points = [parseInt("<%= @personnage.niveau_physique.to_i %>"),
+                  parseInt("<%= @personnage.niveau_social.to_i %>"),
+                  parseInt("<%= @personnage.niveau_mental.to_i %>"),
+                  parseInt("<%= @personnage.niveau_magstatique.to_i %>"),
+                  parseInt("<%= @personnage.niveau_magdynamique.to_i %>"),
+                  parseInt("<%= @personnage.niveau_ressources.to_i %>")]
+
+    var datasetechelon = {
+        label: "Echelon",
+        fillColor: "rgba(220,220,220,0.2)",
+        strokeColor: "rgba(220,220,220,1)",
+        pointColor: "rgba(220,220,220,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: [200, 200, 200, 200, 200, 200, 200]
+    };
+    var data = {
+      labels: ["Physique", "Social", "Mental", "Mag. statique", "Mag. dynamique", "Ressources"],
+      datasets: [create_dataset_personnage(points), datasetechelon]
+    };
+
+    var options = {
+    //Boolean - Whether to show lines for each scale point
+    scaleShowLine : true,
+    //Boolean - Whether we show the angle lines out of the radar
+    angleShowLineOut : true,
+    //Boolean - Whether to show labels on the scale
+    scaleShowLabels : false,
+    // Boolean - Whether the scale should begin at zero
+    scaleBeginAtZero : true,
+    //String - Colour of the angle line
+    angleLineColor : "rgba(0,0,0,.1)",
+    //Number - Pixel width of the angle line
+    angleLineWidth : 1,
+    //String - Point label font declaration
+    pointLabelFontFamily : "'Arial'",
+    //String - Point label font weight
+    pointLabelFontStyle : "normal",
+    //Number - Point label font size in pixels
+    pointLabelFontSize : 10,
+    //String - Point label font colour
+    pointLabelFontColor : "#666",
+    //Boolean - Whether to show a dot for each point
+    pointDot : true,
+    //Number - Radius of each point dot in pixels
+    pointDotRadius : 3,
+    //Number - Pixel width of point dot stroke
+    pointDotStrokeWidth : 1,
+    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+    pointHitDetectionRadius : 20,
+    //Boolean - Whether to show a stroke for datasets
+    datasetStroke : true,
+    //Number - Pixel width of dataset stroke
+    datasetStrokeWidth : 2,
+    //Boolean - Whether to fill the dataset with a colour
+    datasetFill : true,
+    //String - A legend template
+    legendTemplate : "test"
+    };
+    var ctx = $("#myChart").get(0).getContext("2d");
+    var myRadarChart = new Chart(ctx).Radar(data, options);
+
+  function create_dataset_personnage(points) {
+    return {
+      label: "Personnage",
+      fillColor: "rgba(151,187,205,0.2)",
+      strokeColor: "rgba(151,187,205,1)",
+      pointColor: "rgba(151,187,205,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(151,187,205,1)",
+      data: points
+    }
+  }
+  </script>

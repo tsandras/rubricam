@@ -1,9 +1,10 @@
 <h1>Listes des routines</h1>
-
+<div class="col-md-10">
 <table>
   <tr>
     <th>Name</th>
     <th>Type</th>
+    <th>Sphères</th>
     <th>Voir</th>
     <% if @user.role == User::ROLE_ADMIN %>
       <th>Editer</th>
@@ -14,8 +15,9 @@
   <tr>
     <td><%= routine.name %></td>
     <td><%= routine.type %></td>
+    <td><%= display_spheres(routine) %></td>
     <td><%= link_to 'Voir', routine_path(routine), class: 'btn btn-success btn-xs' %></td>
-    <td><%= link_to('Editer', edit_routine_path(routine), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
+    <td><%= link_to('Editer', edit_routine_path(routine), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>
@@ -24,3 +26,4 @@
 
 <%= link_to 'Nouvelle routine', new_routine_path, class: 'btn btn-success btn-sm' %>
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
+</div>

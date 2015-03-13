@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150304081828) do
+ActiveRecord::Schema.define(:version => 20150313110530) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.datetime "updated_at",  :null => false
     t.boolean  "has_detail"
     t.string   "source"
+    t.string   "type_atout"
   end
 
   create_table "atouts_personnages", :force => true do |t|
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.datetime "updated_at",     :null => false
     t.string   "source"
     t.boolean  "secret"
+    t.boolean  "meta_dis"
   end
 
   create_table "disciplines_personnages", :force => true do |t|
@@ -118,10 +120,13 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
 
   create_table "lieus", :force => true do |t|
     t.string   "nom"
-    t.string   "description"
-    t.string   "type"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.text     "description",          :limit => 255
+    t.string   "type_lieu"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "secret"
+    t.text     "description_publique"
+    t.string   "image_lien"
   end
 
   create_table "lieus_personnages", :force => true do |t|
@@ -154,7 +159,7 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.string   "name"
     t.text     "description"
     t.integer  "niveau"
-    t.string   "type"
+    t.string   "type_objet"
     t.string   "resonnance"
     t.integer  "personnage_id"
     t.datetime "created_at",    :null => false
@@ -165,15 +170,19 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.integer  "statique"
     t.integer  "entropique"
     t.integer  "routine_id"
+    t.integer  "user_id"
   end
 
   create_table "organisations", :force => true do |t|
     t.string   "nom"
     t.text     "description"
-    t.string   "type"
+    t.string   "type_organisation"
     t.datetime "date"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.boolean  "secret"
+    t.text     "description_publique"
+    t.string   "image_lien"
   end
 
   create_table "organisations_personnages", :force => true do |t|
@@ -183,6 +192,25 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.text     "description"
     t.datetime "date_debut"
     t.datetime "date_fin"
+  end
+
+  create_table "parties", :force => true do |t|
+    t.datetime "date"
+    t.integer  "duree"
+    t.string   "nom"
+    t.text     "description"
+    t.text     "description_publique"
+    t.boolean  "secret"
+    t.string   "image_lien"
+    t.integer  "xps"
+    t.text     "notes"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  create_table "parties_personnages", :force => true do |t|
+    t.integer "personnage_id"
+    t.integer "partie_id"
   end
 
   create_table "personnages", :force => true do |t|
@@ -244,6 +272,14 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.boolean  "secret"
     t.text     "description_publique"
     t.string   "image_lien"
+    t.integer  "niveau_physique"
+    t.integer  "niveau_social"
+    t.integer  "niveau_mental"
+    t.integer  "niveau_magdynamique"
+    t.integer  "niveau_magstatique"
+    t.integer  "niveau_ressources"
+    t.boolean  "pnj"
+    t.string   "nom_publique"
   end
 
   create_table "personnages_routines", :force => true do |t|
@@ -290,6 +326,7 @@ ActiveRecord::Schema.define(:version => 20150304081828) do
     t.integer  "psyche"
     t.integer  "temps"
     t.integer  "vie"
+    t.integer  "user_id"
   end
 
   create_table "royaumes", :force => true do |t|

@@ -5,7 +5,7 @@
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.input :foci %>
-    <%= f.input :secret, wrapper_html: {class: 'inline simple-checkbox'} if @user.role == User::ROLE_ADMIN %>
+    <%= f.input :secret, label: "Voulez-vous que cette routine soit secrete ?", wrapper_html: {class: 'inline simple-checkbox'} %>
     <%= f.button :submit, "Créer/Editer la routine", class: "btn btn-success btn-sm" %>
     <%= link_to "Retour", routines_path, class: "btn btn-warning btn-sm" %>
     <%= link_to 'Show', @routine, class: "btn btn-primary btn-sm" %>
@@ -31,29 +31,6 @@
     $.each($(".sph"), function(key, val) {
       if ($(this).attr("id")) {
         listenerNumber($(this).attr("id"), "#routine_"+$(this).attr("id"), 0, 5);
-      }
-    });
-  }
-
-  function listenerNumber(name, idInput, min, max) {
-    listenerUp("#plus-"+name, idInput, max);
-    listenerDown("#minus-"+name, idInput, min);
-  }
-
-  function listenerUp(idButton, idInput, max) {
-    $(idButton).click(function() {
-      if (parseInt($(idInput).val()) < max) {
-        manageShowSpecialite(parseInt($(idInput).val()) + 1, idButton);
-        $(idInput).val(parseInt($(idInput).val()) + 1);
-      }
-    });
-  }
-
-  function listenerDown(idButton, idInput, min) {
-    $(idButton).click(function() {
-      if (parseInt($(idInput).val()) > min) {
-        manageShowSpecialite(parseInt($(idInput).val()) - 1, idButton);
-        $(idInput).val(parseInt($(idInput).val()) - 1);
       }
     });
   }

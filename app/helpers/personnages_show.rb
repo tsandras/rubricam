@@ -107,7 +107,7 @@ module PersonnagesShow
       out << "Vous devez répartir #{personnage.bonus} points.".html_safe
     else
       out << "<b>ETAPE 3 : Répartition des points d'expériences (ou pas)</b><br/>".html_safe
-      out << "Ce personnage à un total de #{personnage.xps.to_i} dont #{personnage.reste_xps.to_i} non dépensés."
+      out << "Ce personnage à un total de #{personnage.xps.to_i} dont <span id=\"reste_xps\">#{personnage.reste_xps.to_i}</span> non dépensés.".html_safe
     end
     out << "</div>".html_safe
     out

@@ -199,13 +199,17 @@ module PersonnagesInput
         out << "<span class=\"infobulle\">#{image_tag('question_icon.jpg', class: 'question')}<i>#{info_bulle}</i></span>".html_safe if info_bulle != nil
       out << "</div>".html_safe
       out << "<div class=\"col-md-2\">".html_safe
-        out << button_tag('', type: 'button', id: "minus-#{format_nom}", class: 'moins_new')
-        out << button_tag('', type: 'button', id: "plus-#{format_nom}", class: 'plus_new')
+        out << button_tag('', type: 'button', id: "minus-#{format_nom}", class: 'moins_new') if type != "atout"
+        out << button_tag('', type: 'button', id: "plus-#{format_nom}", class: 'plus_new') if type != "atout"
       out << "</div>".html_safe
       simple_fields_for(objet) do |o|
-        out << o.input(:niveau, label: "&nbsp;".html_safe,
+        if type != "atout"
+          out << o.input(:niveau, label: "&nbsp;".html_safe,
                 input_html: {name: "#{type}s_personnages[#{objet.id}][niveau]", class: "inpt_number #{num % 2 == 0 ? 'gris' : ''}", readonly: 'true' },
                 wrapper_html: { class: "col-md-1 reajuste" })
+        else
+          out << "<div class=\"col-md-1\">#{objet.atout.cout}</div>".html_safe
+        end
         if cols_sup != nil
           out << o.input(cols_sup, label: "&nbsp".html_safe,
                   input_html: {class: "inpt_string", name: "#{type}s_personnages[#{objet.id}][#{cols_sup}]"},
@@ -351,7 +355,7 @@ module PersonnagesInput
     if atouts_personnages != nil
       i = 0
       atouts_personnages.each do |cc|
-        if cc.historique.has_detail
+        if cc.atout.has_detail
           out << input_data(cc, "atout", "ato", cc.atout.nom, format_name(cc.atout.nom), i, cc.atout.description, "detail")
         else
           out << input_data(cc, "atout", "ato", cc.atout.nom, format_name(cc.atout.nom), i, cc.atout.description)
