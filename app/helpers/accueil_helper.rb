@@ -5,7 +5,7 @@ module AccueilHelper
     out << "10 derniers #{titre}".html_safe
     out << "</div>".html_safe
     out << "<div class=\"menu-accueil-body\">".html_safe
-      if list != []
+      if !list.nil? && list != []
         out << "<table>".html_safe
           out << "<tr>".html_safe
             tab.each do |val|
