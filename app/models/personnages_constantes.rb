@@ -108,7 +108,7 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
 
   SEUIL_C = 200
   SEUIL_B = 350
-  SEUIL_A = 520
+  SEUIL_A = 500
   SEUIL_S = 700
 
   CAP_PHYSIQUE = ["Athlétisme", "Bagarre", "Vigilance", "Armes à feu", "Conduite", "Furtivité", "Larcin", "Mêlée", "Survie"]

@@ -155,6 +155,7 @@ function calcule_xps_discipline(personnage, type_perso, type) {
       va_avant = 0;
     }
     if (type == "base") {
+      // console.log("id=>"+ idd +"val=>"+manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline"));
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline");
     } else {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "discipline");
@@ -245,9 +246,9 @@ function manage_serie_nx(i, n, type_perso, pouvoir) {
   } else if (pouvoir == "entelechie" || pouvoir == "sphere") {
     return serie_nx_suivant(i, n, cout, base);
   } else if (n >= 6) {
-    return serie_nx_precedant(i, 6, base, cout) + serie_nx_suivant(6, n, base, cout);
+    return serie_nx_precedant(i, 5, cout, base) + serie_nx_suivant(5, n, cout, base);
   } else {
-    return serie_nx_precedant(i, n, base, cout);
+    return serie_nx_precedant(i, n, cout, base);
   }
 }
 
