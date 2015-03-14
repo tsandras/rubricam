@@ -72,12 +72,13 @@ function filter(element, filteringList) {
   showAllCheckBox(filteringList);
   var i = 0;
   $(filteringList).each(function() {
+      console.log($(this).parent().text());
       if ($(this).parent().text().toUpperCase().search(value) > -1 && i < 10) {
           $(this).parent().show();
+          i = i + 1;
       } else {
           $(this).parent().hide();
       }
-      i = i + 1;
   });
 }
 
