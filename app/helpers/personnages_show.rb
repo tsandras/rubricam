@@ -277,7 +277,9 @@ module PersonnagesShow
   def show_image_type(personnage)
     if personnage.mage?
       name = I18n.transliterate(personnage.tradition.split(" ").join("_").split("'").join("")).downcase
-      image_tag("traditions/#{name}.jpg", class: "image-tradition")
+      if name != "orphelins"
+        image_tag("traditions/#{name}.jpg", class: "image-tradition")
+      end
     elsif personnage.vampire?
       name = I18n.transliterate(personnage.clan.split(" ").join("_").split("'").join("")).downcase
       image_tag("clans/#{name}.png", class: "image-clan")
