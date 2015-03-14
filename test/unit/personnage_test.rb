@@ -52,8 +52,8 @@
 #  voie                  :string(255)
 #  tradition             :string(255)
 #  clan                  :string(255)
-#  caracteristique_base  :text(255)
-#  caracteristique_bonus :string(255)
+#  caracteristique_base  :text
+#  caracteristique_bonus :text
 #  reste_bonus           :string(255)
 #  has_base              :boolean
 #  has_bonus             :boolean

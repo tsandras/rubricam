@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150313110530) do
+ActiveRecord::Schema.define(:version => 20150314075446) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -240,8 +240,8 @@ ActiveRecord::Schema.define(:version => 20150313110530) do
     t.integer  "points_statique"
     t.integer  "points_entropique"
     t.integer  "entelechie"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.string   "spec_force"
     t.string   "spec_dexterite"
     t.string   "spec_vigueur"
@@ -263,8 +263,8 @@ ActiveRecord::Schema.define(:version => 20150313110530) do
     t.string   "voie"
     t.string   "tradition"
     t.string   "clan"
-    t.text     "caracteristique_base",  :limit => 255
-    t.string   "caracteristique_bonus"
+    t.text     "caracteristique_base"
+    t.text     "caracteristique_bonus"
     t.string   "reste_bonus"
     t.boolean  "has_base"
     t.boolean  "has_bonus"
