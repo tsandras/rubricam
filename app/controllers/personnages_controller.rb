@@ -242,12 +242,21 @@ class PersonnagesController < ApplicationController
   end
 
   def add_discipline_clan(clan)
-    (0..2).each do |i|
-      dis = Discipline.where(nom: Personnage::DISCIPLINES_CLAN[clan][i]).first
-      # raise dis.id.inspect
-      if !is_dp_by_id_dp(dis.id)
-        DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+    if clan != "Caïtiff"
+      (0..2).each do |i|
+        dis = Discipline.where(nom: Personnage::DISCIPLINES_CLAN[clan][i]).first
+        # raise dis.id.inspect
+        if !is_dp_by_id_dp(dis.id)
+          DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+        end
       end
+    else
+      dis = Discipline.where(nom: "Puissance").first
+      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+      dis = Discipline.where(nom: "Force d'âme").first
+      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+      dis = Discipline.where(nom: "Célérité").first
+      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
     end
   end
 
