@@ -53,9 +53,9 @@
       <canvas id="myChart" width="300" height="300"></canvas>
     <% end %>
     <div class="background">
-      <p><b>Description:</b> <%= @personnage.description %></p>
-      <p><b>Background:</b> <%= @personnage.background %></p>
-      <p><b>Paradigme:</b> <%= @personnage.paradygme %></p>
+      <p><b>Description:</b> <%= simple_format @personnage.description %></p>
+      <p><b>Background:</b> <%= simple_format @personnage.background %></p>
+      <p><b>Paradigme:</b> <%= simple_format @personnage.paradygme %></p>
       <% if @personnage.date_naissance.present? %>
         <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
       <% end %>

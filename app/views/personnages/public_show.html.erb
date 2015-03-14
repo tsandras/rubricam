@@ -1,5 +1,5 @@
 <div class="col-md-10">
     <%= @personnage.nom_publique %><br/>
     <%= image_tag("#{@personnage.image_lien}") if @personnage.image_lien.present? %>
-    <%= @personnage.description_publique %>
+    <%= simple_format @personnage.description_publique %>
 </div>

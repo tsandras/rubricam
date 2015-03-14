@@ -25,19 +25,19 @@
 <% if @user.role == User::ROLE_ADMIN %>
 <p>
   <b>Description:</b>
-  <%= @party.description %>
+  <%= simple_format @party.description %>
 </p>
 <% end %>
 
 <p>
   <b>Description publique:</b>
-  <%= @party.description_publique %>
+  <%= simple_format @party.description_publique %>
 </p>
 
 <% if @user.role == User::ROLE_ADMIN %>
 <p>
   <b>Notes:</b>
-  <%= @party.notes %>
+  <%= simple_format @party.notes %>
 </p>
 <% end %>
 

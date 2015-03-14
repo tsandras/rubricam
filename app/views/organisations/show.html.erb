@@ -7,12 +7,12 @@
 <% if @user.role == User::ROLE_ADMIN %>
   <p>
     <b>Description:</b>
-    <%= @organisation.description %>
+    <%= simple_format @organisation.description %>
   </p>
 <% end %>
 <p>
   <b>Description publique:</b>
-  <%= @organisation.description_publique %>
+  <%= simple_format @organisation.description_publique %>
 </p>
 <p>
   <b>Type:</b>
