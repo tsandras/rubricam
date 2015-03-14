@@ -252,11 +252,11 @@ class PersonnagesController < ApplicationController
       end
     else
       dis = Discipline.where(nom: "Puissance").first
-      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
       dis = Discipline.where(nom: "Force d'âme").first
-      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
       dis = Discipline.where(nom: "Célérité").first
-      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
+      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
     end
   end
 
