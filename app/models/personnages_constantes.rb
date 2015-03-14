@@ -31,8 +31,8 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
 
   CLAN = ["Assamites", "Brujah", "Cappadocian", "Setite", "Gangrel", "Giovanni",
           "Lasombra", "Malkavian", "Nosferatu", "Ravnos", "Salubrien", "Toreador",
-          "Tremere", "Tzimisce", "Ventrue", "Baali", "Caïtiffs", "Gargouilles",
-          "Kiasyds", "Lhiannan", "Nagaraja", "Samedi",
+          "Tremere", "Tzimisce", "Ventrue", "Baali", "Caïtiff", "Gargouilles",
+          "Kiasyd", "Lhiannan", "Nagaraja", "Samedi",
           "Vrai Brujah", "Andas", "Noiad", "Agarash"]
 
   CLAN_DESCRIPTION = {"Assamites" => "Les Assamites sont arrivés des étendues désertiques de l'Orient. Ils sont connus des vampires comme étant des assassins, travaillant pour ceux qui y mettent le prix. Le prix qu'ils demandent est de la vitae d'autres vampires. Pour eux la diablerie est le plus grand des sacrements et aucun autre clan n'a acquis une telle réputation en ce qui concerne ce sujet. Discipline de Clan : Célérité, Occultation, Quietus.",
