@@ -1,13 +1,17 @@
 <%= simple_form_for(@atout) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-5">
     <%= f.input :nom %>
     <%= f.input :description %>
-    <%= f.input :cout %>
+    <%= f.button :submit, "Créer/Editer l'atout", class: 'btn btn-success btn-sm' %>
+    <%= link_to "Retour", atouts_path, class: "btn btn-warning btn-sm" %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-5">
+    <%= f.input :cout %>
+    <%= f.input :type_atout, collection: Atout::TYPE_ATOUT %>
+    <%= f.input :source, collection: Atout::SOURCE %>
+    <%= f.input :has_detail, label: "Ajouter un champs pour précision ?", wrapper_html: {class: 'inline simple-checkbox'} %>
   </div>
 <% end %>

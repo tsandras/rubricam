@@ -21,4 +21,5 @@ class Atout < ActiveRecord::Base
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
 
   TYPE_ATOUT = ["Physique", "Social", "Mental", "Surnaturel"]
+  SOURCE = ["V20", "M20", "Personnelle", "Autre"]
 end
