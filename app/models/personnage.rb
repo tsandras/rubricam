@@ -262,7 +262,9 @@ class Personnage < ActiveRecord::Base
         spheres.each do |key, c|
           sph = sph + c[:niveau].to_i
         end
-        return false if sph != 6 || (sph != 5 && tradition == "Orphelins")
+        # raise (sph != 6 || (sph != 5 && tradition == "Orphelins")).inspect
+        return false if sph != 6 && tradition != "Orphelins"
+        return false if sph != 5 && tradition == "Orphelins"
         return true
       else
         return false
