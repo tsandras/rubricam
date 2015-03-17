@@ -7,7 +7,7 @@
 #  description        :text
 #  foci               :text
 #  combinaison        :string(255)
-#  type               :string(255)
+#  type_routine       :string(255)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  secret             :boolean

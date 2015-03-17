@@ -7,7 +7,7 @@
 #  description        :text
 #  foci               :text
 #  combinaison        :string(255)
-#  type               :string(255)
+#  type_routine       :string(255)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  secret             :boolean
@@ -28,12 +28,12 @@
 #
 
 class Routine < ActiveRecord::Base
-  attr_accessible :combinaison, :description, :foci, :name, :type, :secret,
+  attr_accessible :combinaison, :description, :foci, :name, :type_routine, :secret,
                   :nbs_succes, :nbs_quintessence, :volonte_permanente, :effet,
                   :correspondance, :entropie, :esprit, :forces, :matiere,
                   :prime, :psyche, :temps, :vie, :user_id
 
-  validates_presence_of :name, :type, :description
+  validates_presence_of :name, :type_routine, :description
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
   has_many :objets, class_name: 'Objet'
@@ -45,6 +45,6 @@ class Routine < ActiveRecord::Base
 
   TYPE_ROUTINE = ["Routine", "Enchantement", "Rituel", "Création d'objet"]
 
-  validates_presence_of :name, :type, :description
+  validates_presence_of :name, :type_routine, :description
 
 end

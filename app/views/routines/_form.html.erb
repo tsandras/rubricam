@@ -13,7 +13,7 @@
   <div class="col-md-5">
     <%#= f.input :combinaison %>
     <%= input_spheres_for_routines(f, @routine) %>
-    <%= f.input :type, collection: Routine::TYPE_ROUTINE %>
+    <%= f.input :type_routine, collection: Routine::TYPE_ROUTINE %>
     <%= f.input :nbs_succes, label: "Nombres de succès nécessaires : ", wrapper_html: {class: 'inline'} %>
     <%= f.input :nbs_quintessence, label: "Nombres de points de quintessence nécessaires : ", wrapper_html: {class: 'inline'} %>
     <%= f.input :volonte_permanente, as: :boolean, label: "Perte d'un point de volonté permanente ?", wrapper_html: {class: 'inline simple-checkbox'} %>

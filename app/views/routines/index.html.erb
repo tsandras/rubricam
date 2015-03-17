@@ -14,7 +14,7 @@
 <% @routines.each do |routine| %>
   <tr>
     <td><%= routine.name %></td>
-    <td><%= routine.type %></td>
+    <td><%= routine.type_routine %></td>
     <td><%= display_spheres(routine) %></td>
     <td><%= link_to 'Voir', routine_path(routine), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_routine_path(routine), class: 'btn btn-warning btn-xs') %></td>
