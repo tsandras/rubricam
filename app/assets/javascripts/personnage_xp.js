@@ -113,17 +113,18 @@ function calcule_xps_historique(personnage, type_perso, type) {
 
 function calcule_xps_atout(personnage, type_perso, type) {
   var out = 0;
+  console.log("Coucou les loulous ?");
   $("input[id^=personnage_atout_ids]").each(function() {
     if ($(this).attr("checked") == "checked") {
       var vala = parseInt(extract_val_atout($(this).parent().text()));
       var ida = parseInt(extract_id_atout($(this).attr("id")));
-      if (! personnage.Atouts[ida]) {
-        if (type == "base") {
-          out = out + parseInt(vala) * 3;
-        } else {
-          out = out + parseInt(vala);
-        }
+      // if (! personnage.Atouts[ida]) {
+      if (type == "base") {
+        out = out + parseInt(vala) * 3;
+      } else {
+        out = out + parseInt(vala);
       }
+      // }
     }
   });
   return out;

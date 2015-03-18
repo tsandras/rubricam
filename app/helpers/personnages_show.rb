@@ -82,9 +82,9 @@ module PersonnagesShow
       out += "<b>Resonnances</b>"
       out += "<table>"
         out += "<tr>"
-          out += "<td>Dymamique : #{@personnage.points_dynamique} </td>"
-          out += "<td>Statique : #{@personnage.points_statique} </td>"
-          out += "<td>Entropique : #{@personnage.points_entropique} </td>"
+          out += "<td>Dymamique : #{@personnage.points_dynamique} #{@personnage.detail_dynamique.present? ? "<i>(#{@personnage.detail_dynamique})</i>" : ""} </td>"
+          out += "<td>Statique : #{@personnage.points_statique} #{@personnage.detail_statique.present? ? "<i>(#{@personnage.detail_statique})</i>" : ""} </td>"
+          out += "<td>Entropique : #{@personnage.points_entropique} #{@personnage.detail_entropique.present? ? "<i>(#{@personnage.detail_entropique})</i>" : ""} </td>"
         out += "</tr>"
       out += "</table>"
       out += "<br />"
@@ -158,7 +158,11 @@ module PersonnagesShow
             out += "<tr>"
           end
           tmp = tmp + 1
-          out += "<td> #{c.historique.nom} : #{c.niveau}</td>"
+          if !c.historique.has_detail
+            out += "<td> #{c.historique.nom} #{c.niveau}</td>"
+          else
+            out += "<td> #{c.historique.nom} #{c.niveau} <i>(#{c.detail})</i></td>"
+          end
           if tmp % 3 == 0
             out += "</tr>"
           end
@@ -180,7 +184,11 @@ module PersonnagesShow
             out += "<tr>"
           end
           tmp = tmp + 1
-          out += "<td> #{c.atout.nom} (#{c.atout.cout})</td>"
+          if !c.atout.has_detail
+            out += "<td> #{c.atout.nom} (#{c.atout.cout})</td>"
+          else
+            out += "<td> #{c.atout.nom} (#{c.atout.cout}) <i>[#{c.detail}]</i></td>"
+          end
           if tmp % 3 == 0
             out += "</tr>"
           end
@@ -237,7 +245,11 @@ module PersonnagesShow
             out += "<tr>"
           end
           tmp = tmp + 1
-          out += "<td> #{sphere.name} #{sphere.niveau}</td>"
+          if sphere.niveau < 4
+            out += "<td> #{sphere.name} #{sphere.niveau}</td>"
+          else
+            out += "<td> #{sphere.name} #{sphere.niveau} <i>(#{sphere.specialite})</i></td>"
+          end
           if tmp % 3 == 0
             out += "</tr>"
           end

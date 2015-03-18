@@ -69,6 +69,9 @@
 #  niveau_ressources     :integer
 #  pnj                   :boolean
 #  nom_publique          :string(255)
+#  detail_dynamique      :string(255)
+#  detail_statique       :string(255)
+#  detail_entropique     :string(255)
 #
 
 require 'test_helper'

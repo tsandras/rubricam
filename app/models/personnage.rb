@@ -69,6 +69,9 @@
 #  niveau_ressources     :integer
 #  pnj                   :boolean
 #  nom_publique          :string(255)
+#  detail_dynamique      :string(255)
+#  detail_statique       :string(255)
+#  detail_entropique     :string(255)
 #
 
 class Personnage < ActiveRecord::Base
@@ -86,7 +89,8 @@ class Personnage < ActiveRecord::Base
   :reste_xps, :reste_bonus, :type_perso, :nature, :attitude, :rang, :points_sang, :glamour,
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
-  :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj
+  :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
+  :detail_statique, :detail_entropique
 
   validates_presence_of :type_perso, :bonus, :prenom
 

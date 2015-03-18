@@ -120,5 +120,9 @@
     listenerVertuesForBase();
     listenerSpheresForBase();
     manageMenu();
+    $(".close2").click(function() {
+      manageCalculeBonus();
+      manageCalculeXps($("#personnage_type_perso").val());
+    });
   });
 </script>

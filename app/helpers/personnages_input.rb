@@ -87,23 +87,29 @@ module PersonnagesInput
       out << f.input(:points_dynamique, label: "&nbsp;".html_safe, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_dynamique ? personnage.points_dynamique : 0}, wrapper_html: { class: 'col-md-2' })
       out << button_tag('', type: 'button', id: "minus-dynamique", class: 'moins_cap')
       out << button_tag('', type: 'button', id: "plus-dynamique", class: 'plus_cap')
-      out << "<div class=\"col-md-6\"></div>".html_safe
+      # out << "<div class=\"col-md-6\">".html_safe
+      out << f.input(:detail_dynamique, label: "&nbsp;".html_safe, input_html: { class: 'inpt_string' }, wrapper_html: { class: 'col-md-6 reajuste' })
+      # out << "</div>".html_safe
       out << "</div>".html_safe
 
       out <<"<div class=\"row resonnance\">".html_safe
       out << "<div class='col-md-4'><b>Statique</b></div>".html_safe
-      out << f.input(:points_statique, label: "&nbsp;".html_safe, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_dynamique ? personnage.points_dynamique : 0}, wrapper_html: { class: 'col-md-2' })
+      out << f.input(:points_statique, label: "&nbsp;".html_safe, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_statique ? personnage.points_statique : 0}, wrapper_html: { class: 'col-md-2' })
       out << button_tag('', type: 'button', id: "minus-statique", class: 'moins_cap')
       out << button_tag('', type: 'button', id: "plus-statique", class: 'plus_cap')
-      out << "<div class=\"col-md-6\"></div>".html_safe
+      # out << "<div class=\"col-md-6\">".html_safe
+      out << f.input(:detail_statique, label: "&nbsp;".html_safe, input_html: { class: 'inpt_string' }, wrapper_html: { class: 'col-md-6 reajuste' })
+      # out << "</div>".html_safe
       out << "</div>".html_safe
 
       out <<"<div class=\"row resonnance\">".html_safe
       out << "<div class='col-md-4'><b>Entropique</b></div>".html_safe
-      out << f.input(:points_entropique, label: "&nbsp;".html_safe, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_dynamique ? personnage.points_dynamique : 0}, wrapper_html: { class: 'col-md-2' })
+      out << f.input(:points_entropique, label: "&nbsp;".html_safe, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_entropique ? personnage.points_entropique : 0}, wrapper_html: { class: 'col-md-2' })
       out << button_tag('', type: 'button', id: "minus-entropique", class: 'moins_cap')
       out << button_tag('', type: 'button', id: "plus-entropique", class: 'plus_cap')
-      out << "<div class=\"col-md-6\"></div>".html_safe
+      # out << "<div class=\"col-md-6\">".html_safe
+      out << f.input(:detail_entropique, label: "&nbsp;".html_safe, input_html: { class: 'inpt_string' }, wrapper_html: { class: 'col-md-6 reajuste' })
+      # out << "</div>".html_safe
       out << "</div>".html_safe
       out
     end
