@@ -261,9 +261,11 @@ class PersonnagesController < ApplicationController
   end
 
   def add_sphere_tradition(tradition)
-    sph = Sphere.where(name: Personnage::SPHERES_TRADITION[tradition], personnage_id: @personnage.id).first
-    if !sph
-      Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_TRADITION[tradition], niveau: 1)
+    if Personnage::SPHERES_TRADITION[tradition] != "Aucun"
+      sph = Sphere.where(name: Personnage::SPHERES_TRADITION[tradition], personnage_id: @personnage.id).first
+      if !sph
+        Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_TRADITION[tradition], niveau: 1)
+      end
     end
   end
 
