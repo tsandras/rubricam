@@ -122,6 +122,7 @@ class PersonnagesController < ApplicationController
     params[:personnage].delete("capacite_ids")
     params[:personnage].delete("historique_ids")
     params[:personnage].delete("discipline_ids")
+    params[:personnage].delete("atout_ids")
     @personnage = Personnage.find(params[:id])
     # return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(User.find(session["warden.user.user.key"][0].first))
     # update_atouts(params[:atouts_personnages])
@@ -156,11 +157,13 @@ class PersonnagesController < ApplicationController
       if ok && @personnage.valid?
         @personnage.calcule_rang
         @personnage.calcule_graph
+        # raise params[:personnage].inspect
         @personnage.update_attributes(params[:personnage])
         update_capacites(params[:capacites_personnages])
         update_historiques(params[:historiques_personnages])
         update_spheres(params[:spheres_personnages])
         update_disciplines(params[:disciplines_personnages])
+        update_atouts(params[:atouts_personnages])
         format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
@@ -326,6 +329,22 @@ class PersonnagesController < ApplicationController
     end
   end
 
+  def update_atouts(atouts_personnages)
+    if atouts_personnages != nil
+      # raise atouts_personnages.inspect
+      atouts_personnages.each do |i, ap|
+        ii = i
+        ii = Atout.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
+        if is_ap(ii)
+          ato = AtoutsPersonnages.where(id: ii, personnage_id: @personnage.id)
+          ato.first.update_attributes(ap)
+        else
+          AtoutsPersonnages.create(personnage_id: @personnage.id, atout_id: ii.to_i, detail: ap[:detail])
+        end
+      end
+    end
+  end
+
   def is_cp(key)
     begin
       cap = CapacitesPersonnages.where(id: key, personnage_id: @personnage.id)
@@ -356,6 +375,15 @@ class PersonnagesController < ApplicationController
     false
   end
 
+  def is_ap(key)
+    begin
+      ato = AtoutsPersonnages.where(id: key, personnage_id: @personnage.id)
+    rescue ActiveRecord::RecordNotFound => e
+      ato = nil
+    end
+    return true if ato.count > 0
+    false
+  end
 
   def is_dp_by_id_dp(key)
     begin
