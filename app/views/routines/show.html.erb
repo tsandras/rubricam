@@ -8,12 +8,12 @@
 
   <p>
     <b>Description:</b>
-    <%= @routine.description %>
+    <%= simple_format @routine.description %>
   </p>
 
   <p>
     <b>Foci:</b>
-    <%= @routine.foci %>
+    <%= simple_format @routine.foci %>
   </p>
 
   <p>
@@ -34,5 +34,5 @@
     <p><b>Nombres de points de quintessence necessaire:</b><%= @routine.nbs_quintessence %></p>
   <% end %>
   <p><b>Dépense de volonté permanente ?</b><%= @routine.volonte_permanente %></p>
-  <p><b>Effet: </b><%= @routine.effet %></p>
+  <p><b>Effet: </b><%= simple_format @routine.effet %></p>
 </div>
