@@ -1,9 +1,13 @@
-<div class="col-md-6">
-  <%= simple_form_for(@personnage, url: public_update_personnage_path, method: :post) do |f| %>
-    <%= f.input :nom_publique, label: 'Nom publique :' %>
-    <%= f.input :description_publique, label: 'Description publique :' %>
-    <%= f.input :image_lien, label: "Lien de l'image (copier coller l'url de l'image [pas d'ébergement d'image pour l'instant], attention pour l'instant il faut prendre des images proche de 200*200px) :" %>
-    <br />
-    <p><%= f.button :submit, "Sauvegarder profil publique", class: 'btn btn-primary btn-sm' %></p>
-  <% end %>
-</div>
+<%= simple_form_for(@personnage, url: public_update_personnage_path, method: :post) do |f| %>
+    <div class="col-md-6">
+        <%= f.input :nom_publique, label: 'Nom publique :' %>
+        <%= f.input :description_publique, label: 'Description publique :' %>
+        <br />
+        <p><%= f.button :submit, "Sauvegarder profil publique", class: 'btn btn-primary btn-sm' %></p>
+    </div>
+    <div class="col-md-4">
+        <%= image_tag(@personnage.avatar_url) if @personnage.avatar? %>
+        <%= f.file_field :avatar %>
+        <%= f.hidden_field :avatar_cache %>
+    </div>
+<% end %>

@@ -10,7 +10,7 @@
           <%= simple_format personnage.description_publique %>
         </div>
         <div class="col-md-4">
-          <%= image_tag("#{personnage.image_lien}", class: 'image-perso') if personnage.image_lien.present? %>
+          <%= image_tag(personnage.avatar_url) if personnage.avatar? %>
         </div>
       </div>
       <br/>

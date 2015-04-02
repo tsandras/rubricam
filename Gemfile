@@ -14,6 +14,7 @@ end
 
 gem 'mandrill-api'
 gem "select2-rails"
+gem 'carrierwave'
 
 group :production do
   gem 'pg'

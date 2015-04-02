@@ -73,6 +73,7 @@
 #  detail_statique       :string(255)
 #  detail_entropique     :string(255)
 #
+require 'carrierwave/orm/activerecord'
 
 class Personnage < ActiveRecord::Base
   include PersonnagesConstantes
@@ -90,7 +91,9 @@ class Personnage < ActiveRecord::Base
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
-  :detail_statique, :detail_entropique
+  :detail_statique, :detail_entropique, :avatar, :avatar_cache
+
+  mount_uploader :avatar, AvatarUploader
 
   validates_presence_of :type_perso, :bonus, :prenom
 

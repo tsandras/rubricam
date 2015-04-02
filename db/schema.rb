@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150317203422) do
+ActiveRecord::Schema.define(:version => 20150402131830) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -283,6 +283,11 @@ ActiveRecord::Schema.define(:version => 20150317203422) do
     t.string   "detail_dynamique"
     t.string   "detail_statique"
     t.string   "detail_entropique"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "avatar"
   end
 
   create_table "personnages_routines", :force => true do |t|
