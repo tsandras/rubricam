@@ -16,3 +16,6 @@
 
 # Others
 .DS_Store
+
+# image upload in local
+/public/uploads/
