@@ -20,6 +20,26 @@ module PersonnagesShow
     end
   end
 
+  def show_organisations(organisations)
+    if organisations.count > 0
+      out = "<b>Organisations</b><br/>"
+      organisations.each do |o|
+        out << link_to("#{o.nom} (#{o.type_organisation})", o) + "<br/>".html_safe
+      end
+      out.html_safe
+    end
+  end
+
+  def show_lieus(lieus)
+    if lieus.count > 0
+      out = "<b>Lieux</b><br/>"
+      lieus.each do |l|
+        out << link_to("#{l.nom} (#{l.type_lieu})", l) + "<br/>".html_safe
+      end
+      out.html_safe
+    end
+  end
+
   def show_nbs_attributs(personnage)
     " (#{Personnage::BASE_BY_TYPE[personnage.type_perso].split(";")[0]})" if !personnage.has_base
   end

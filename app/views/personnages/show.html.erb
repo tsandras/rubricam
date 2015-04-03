@@ -71,6 +71,14 @@
       <%= show_relations(@from_relations) if @from_relations.count > 0 %>
       <%= show_relations(@to_relations) if @to_relations.count > 0 %>
     </div>
+    <br/>
+    <div class="organisations">
+      <%= show_organisations(@organisations) %>
+    </div>
+    <br/>
+    <div class="lieus">
+      <%= show_lieus(@lieus) %>
+    </div>
     <%= show_xps(@personnage) %>
     <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
     <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />
