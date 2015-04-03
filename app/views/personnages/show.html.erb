@@ -66,13 +66,11 @@
         <p><b>Date mort:</b> <%= @personnage.date_mort %></p>
       <% end %>
     </div>
-    <% if @from_relations.nil? && @to_relations.nil? %>
-      <div class="relations">
-        <b>Relations</b><br />
-        <%= show_relations(@from_relations) %>
-        <%= show_relations(@to_relations) %>
-      </div>
-    <% end %>
+    <div class="relations">
+      <b>Relations</b><br />
+      <%= show_relations(@from_relations) if @from_relations.count > 0 %>
+      <%= show_relations(@to_relations)  @to_relations.count > 0 %>
+    </div>
     <%= show_xps(@personnage) %>
     <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
     <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />
