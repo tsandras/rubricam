@@ -2,12 +2,12 @@ Rubricam::Application.routes.draw do
 
   resources :parties
 
-
   devise_for :users
 
   resources :users
 
   root :to => 'accueil#index'
+  match '/regles', to: 'accueil#regles'
 
   resources :arts
 
