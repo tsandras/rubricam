@@ -10,6 +10,16 @@ module PersonnagesShow
     out.html_safe
   end
 
+  def show_routines(routines)
+    if routines.count > 0
+      out = "<b>Routines</b><br/>"
+      routines.each do |r|
+        out << link_to("#{r.name} (#{r.type_routine})", r) + " " + display_spheres(r, true) + "<br/>".html_safe
+      end
+      out.html_safe
+    end
+  end
+
   def show_nbs_attributs(personnage)
     " (#{Personnage::BASE_BY_TYPE[personnage.type_perso].split(";")[0]})" if !personnage.has_base
   end

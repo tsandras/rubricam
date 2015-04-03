@@ -33,16 +33,4 @@ module RoutinesHelper
     out << "</p>".html_safe
     out
   end
-
-  def display_spheres(routine)
-    list = ["correspondance", "entropie", "esprit", "forces", "matiere", "prime", "psyche", "temps", "vie"]
-    out = "".html_safe
-    list.each do |sph|
-      if routine.send(sph) && routine.send(sph) > 0
-        out << "#{routine.send(sph)}"
-        out << image_tag("spheres/#{sph}.jpg", class: "icon-sphere")
-      end
-    end
-    out
-  end
 end

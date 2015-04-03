@@ -40,6 +40,8 @@ class PersonnagesController < ApplicationController
     @atouts = AtoutsPersonnages.where(personnage_id: params[:id])
     @to_relations = Relation.where(to_personnage_id: params[:id])
     @from_relations = Relation.where(from_personnage_id: params[:id])
+
+    @routines = @personnage.routines
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @personnage }
