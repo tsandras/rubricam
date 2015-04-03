@@ -69,7 +69,7 @@
     <div class="relations">
       <b>Relations</b><br />
       <%= show_relations(@from_relations) if @from_relations.count > 0 %>
-      <%= show_relations(@to_relations)  @to_relations.count > 0 %>
+      <%= show_relations(@to_relations) if @to_relations.count > 0 %>
     </div>
     <%= show_xps(@personnage) %>
     <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
