@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150402131830) do
+ActiveRecord::Schema.define(:version => 20150503213430) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -240,8 +240,8 @@ ActiveRecord::Schema.define(:version => 20150402131830) do
     t.integer  "points_statique"
     t.integer  "points_entropique"
     t.integer  "entelechie"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "spec_force"
     t.string   "spec_dexterite"
     t.string   "spec_vigueur"
@@ -269,7 +269,7 @@ ActiveRecord::Schema.define(:version => 20150402131830) do
     t.boolean  "has_base"
     t.boolean  "has_bonus"
     t.integer  "user_id"
-    t.boolean  "secret"
+    t.boolean  "secret",                :default => false
     t.text     "description_publique"
     t.string   "image_lien"
     t.integer  "niveau_physique"
@@ -278,7 +278,7 @@ ActiveRecord::Schema.define(:version => 20150402131830) do
     t.integer  "niveau_magdynamique"
     t.integer  "niveau_magstatique"
     t.integer  "niveau_ressources"
-    t.boolean  "pnj"
+    t.boolean  "pnj",                   :default => false
     t.string   "nom_publique"
     t.string   "detail_dynamique"
     t.string   "detail_statique"
