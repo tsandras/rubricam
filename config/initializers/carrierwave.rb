@@ -1,6 +1,4 @@
-puts "WEFWEFWEFWEFWEFWEFWEFWEFWEFWEFWEF FIRST VERSION"
 if !Rails.env.development?
-    puts "WEFWEFWEFWEFWEFWEFWEFWEFWEFWEFWEF"
     CarrierWave.configure do |config|
       config.storage    = :aws
       config.aws_bucket = ENV.fetch('AWS_BUCKET')
