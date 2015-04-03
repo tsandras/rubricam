@@ -29,7 +29,7 @@ class Objet < ActiveRecord::Base
   belongs_to :user
   has_one :routine
 
-  scope :none_secret, lambda { where("secret <> ?", true) }
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
   scope :own_objets, ->(user_id) { where("user_id = ?", user_id) }
   scope :none_secret_and_own_objets, ->(user_id) { where("user_id = ? or secret <> ?", user_id, true) }
 

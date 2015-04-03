@@ -39,9 +39,9 @@ class Routine < ActiveRecord::Base
   has_many :objets, class_name: 'Objet'
   belongs_to :user
 
-  scope :none_secret, lambda { where("secret <> ?", true) }
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
   scope :own_routines, ->(user_id) { where("user_id = ?", user_id) }
-  scope :none_secret_or_own_routines, ->(user_id) { where("user_id = ? or secret <> ?", user_id, true) }
+  scope :none_secret_or_own_routines, ->(user_id) { where("user_id = ? or secret = ? or secret is null", user_id, true) }
 
   TYPE_ROUTINE = ["Routine", "Enchantement", "Rituel", "Création d'objet"]
 
