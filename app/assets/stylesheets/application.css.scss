@@ -470,6 +470,11 @@ input[type=number] {
 
 }
 
+.col-md-2 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .menu-accueil {
   width: 100%;
   background:#fefefe;
@@ -488,14 +493,14 @@ input[type=number] {
 }
 
 .menu-accueil-head {
-  padding:10px 20px;
+  padding:10px 10px;
 }
 
 .menu-accueil-body {
   background:#fefefe;
   border-top:1px solid #dde0e8;
   border-bottom:1px solid #dde0e8;
-  padding:10px 20px;
+  padding:10px 10px;
   // overflow:scroll;
   td {
     padding: 2px;
@@ -505,7 +510,7 @@ input[type=number] {
 .menu-accueil-action {
   background:#eff4f6;
   border-top:1px solid #fff;
-  padding:10px 20px;
+  padding:10px 10px;
   overflow:hidden;
 }
 
@@ -529,14 +534,14 @@ input[type=number] {
   }
 
   .menu-accueil-head {
-    padding:10px 20px;
+    padding:10px 10px;
   }
 
   .menu-accueil-body {
     background:#fefefe;
     border-top:1px solid #dde0e8;
     border-bottom:1px solid #dde0e8;
-    padding:10px 20px;
+    padding:10px 10px;
     min-height: 200px;
     td {
       padding: 2px;
@@ -546,7 +551,7 @@ input[type=number] {
   .menu-accueil-action {
     background:#eff4f6;
     border-top:1px solid #fff;
-    padding:10px 20px;
+    padding:10px 10px;
     overflow:hidden;
   }
 }
