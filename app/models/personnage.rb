@@ -117,9 +117,9 @@ class Personnage < ActiveRecord::Base
 
   scope :own_personnages, ->(user_id) { where("user_id = ?", user_id) }
   scope :pnjs, lambda { where("pnj = ?", true) }
-  scope :pjs, lambda { where("pnj = ? or pnj = ?", false, nil) }
-  scope :none_secret, lambda { where("secret = ?", false) }
-  scope :none_secret_and_pnjs, lambda { where("secret = ? and pnj = ?", false, true) }
+  scope :pjs, lambda { where("pnj = ? or pnj is null", false) }
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
+  scope :none_secret_and_pnjs, lambda { where("(secret = ? or secret is null) and pnj = ?", false, true) }
 
   def has_resonnances
     return false if points_dynamique == nil && points_entropique == nil && points_statique == nil
