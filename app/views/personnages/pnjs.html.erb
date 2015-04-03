@@ -10,7 +10,8 @@
           <%= simple_format personnage.description_publique %>
         </div>
         <div class="col-md-4">
-          <%= image_tag(personnage.avatar_url) if personnage.avatar? %>
+          <% url = Rails.env.development? ? personnage.avatar_url : personnage.avatar_url_perso if personnage.avatar? %>
+          <%= image_tag(url, class: "avatar") if personnage.avatar? %>
         </div>
       </div>
       <br/>

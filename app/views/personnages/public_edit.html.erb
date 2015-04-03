@@ -6,7 +6,8 @@
         <p><%= f.button :submit, "Sauvegarder profil publique", class: 'btn btn-primary btn-sm' %></p>
     </div>
     <div class="col-md-4">
-        <%= image_tag(@personnage.avatar_url) if @personnage.avatar? %>
+        <% url = Rails.env.development? ? @personnage.avatar_url : @personnage.avatar_url_perso if @personnage.avatar %>
+        <%= image_tag(url, class: "avatar") if @personnage.avatar? %>
         <%= f.file_field :avatar %>
         <%= f.hidden_field :avatar_cache %>
     </div>

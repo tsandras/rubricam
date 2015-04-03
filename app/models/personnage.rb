@@ -153,6 +153,11 @@ class Personnage < ActiveRecord::Base
     type_perso == "Humain"
   end
 
+  def avatar_url_perso
+    out = avatar_url.split("/")
+    "#{out[0..2].join("/")}/rubricam-avatars/#{out[3..-1].join("/")}"
+  end
+
   def calcule_rang
     if has_base
       p_attribus = (force + dexterite + vigueur + charisme + manipulation + apparence + perception + intelligence + astuce) * 4
