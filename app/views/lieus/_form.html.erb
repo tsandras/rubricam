@@ -16,7 +16,7 @@
     <div class="personnage">
       <label for="search_personnage"> Rechercher personnage :</label>
       <input id="search_personnage" type="text" onkeypress="filter(this, '.personnage .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.personnage .checkbox .check_boxes')">
-      <%= f.association(:personnages, as: :check_boxes, :collection => Personnage.all.map {|c| [c.nom, c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
+      <%= f.association(:personnages, as: :check_boxes, :collection => Personnage.all.map {|c| ["#{c.prenom} #{c.nom}", c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
     </div>
   </div>
 <% end %>
