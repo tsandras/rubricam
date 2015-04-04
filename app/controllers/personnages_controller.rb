@@ -125,7 +125,7 @@ class PersonnagesController < ApplicationController
     params[:personnage].delete("capacite_ids")
     params[:personnage].delete("historique_ids")
     params[:personnage].delete("discipline_ids")
-    params[:personnage].delete("atout_ids")
+    # params[:personnage].delete("atout_ids")
     @personnage = Personnage.find(params[:id])
     # return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(User.find(session["warden.user.user.key"][0].first))
     # update_atouts(params[:atouts_personnages])

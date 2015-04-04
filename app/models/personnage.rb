@@ -327,6 +327,7 @@ class Personnage < ActiveRecord::Base
       end
       points_capacites = points_capacites + (historiques[key][:niveau].to_i - perso_base["Historiques"][his.id.to_s].to_i)
     end
+    # raise personnage.inspect
     personnage["atout_ids"].each do |id|
       if id.present?
         at = Atout.find(id)
