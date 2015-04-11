@@ -56,7 +56,7 @@
 
   function listenerHistorique(idHistorique) {
     var tmp = idHistorique.split("_");
-    listenerNumber(tmp[1], idHistorique + " #historiques_personnages_niveau", 0, 10);
+    listenerNumber(format_name(tmp[1]), format_name(idHistorique) + " #historiques_personnages_niveau", 0, 10);
   }
 
   function listenerVertues() {
@@ -343,9 +343,9 @@ function manageCapacites(listToListening, NameClassOfInput) {
     var tmp = $(this).parent().text().split("-");
     if(this.checked) {
       if (! $("#f_"+tmp[0].trim()).length) {
+        // listenerCapacite("=>"+$(this).parent().text());
         $("."+tmp[1].trim() +" "+ NameClassOfInput).last().parent().append(getHTMLInputCapacite($(this).parent().text(), this.value));
-        // console.log("On écoute le nouveau !" + tmp[0].trim());
-        listenerCapacite("#t_"+tmp[0].trim());
+        listenerCapacite("#t_"+format_name(tmp[0].trim()));
       }
     } else {
       $("#t_"+tmp[0].trim()).remove();
@@ -387,7 +387,7 @@ function manageDisciplines(listToListening, NameClassOfInput) {
   $(listToListening).change(function() {
     var tmp = $(this).parent().text();
     if(this.checked) {
-      if (! $("#f_"+tmp).length) {
+      if (! $("#f_"+format_name(tmp)).length) {
         var nbs = $(".dis").length;
         // En fonction du nombre de discipline que possède le personnage, faire poper la discipline sur la bonne colone
         var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1];
@@ -398,7 +398,7 @@ function manageDisciplines(listToListening, NameClassOfInput) {
         } else {
           $(".col-dis-2").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure, nbs));
         }
-        listenerDiscipline("#t_"+tmp);
+        listenerDiscipline("#t_"+format_name(tmp));
       }
     } else {
       $("#t_"+tmp).remove();
@@ -412,8 +412,8 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
     gris = 'gris';
   }
   if (type == "capacite") {
-    nom = nom.split("-")[0].trim();
     var type_cap = nom.split("-")[1].trim();
+    nom = nom.split("-")[0].trim();
   }
   out = "<div class=\"row "+class_type+" "+gris+"\" id=\"t_"+format_nom+"\">";
     out += "<div class=\"col-md-4\">";
@@ -423,8 +423,8 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
       }
     out += "</div>";
     out += "<div class=\"col-md-2\">";
-      out += "<button type=\"button\" class=\"moins_new\" id=\"minus-"+nom+"\" name=\"button\"></button>";
-      out += "<button type=\"button\" class=\"plus_new\" id=\"plus-"+nom+"\" name=\"button\"></button>";
+      out += "<button type=\"button\" class=\"moins_new\" id=\"minus-"+format_nom+"\" name=\"button\"></button>";
+      out += "<button type=\"button\" class=\"plus_new\" id=\"plus-"+format_nom+"\" name=\"button\"></button>";
     out += "</div>";
     // simple_fields_for(objet) do |o|
       // out += o.input(:niveau, label: "&nbsp;";,
@@ -490,7 +490,7 @@ function getHTMLInputCapacite(name, id) {
   // out += "<span class=\"hidden\" id=\""+id+"\">"+id+":"+tmp[1].trim()+"</span>";
   // out += "</div>"
   var nbs = $(".cap").length;
-  out = getHTMLInputData(id, "capacite", "cap", name, format_name(name), nbs + 1, "", null, null);
+  out = getHTMLInputData(id, "capacite", "cap", name, format_name(name.split("-")[0].trim()), nbs + 1, "", null, null);
   return out;
 }
 
