@@ -240,6 +240,8 @@ class PersonnagesController < ApplicationController
         his = Historique.where(nom: "Génération").first
       elsif (@personnage.mage?)
         his = Historique.where(nom: "Avatar").first
+      else
+        his = Historique.where(nom: "Alliés").first
       end
       if !is_hp_by_id_hp(his.id)
         HistoriquesPersonnages.create(personnage_id: @personnage.id, historique_id: his.id, niveau: 0)
