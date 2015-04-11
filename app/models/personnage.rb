@@ -244,15 +244,46 @@ class Personnage < ActiveRecord::Base
     # puts "talent : #{talent}, competence : #{competence}, connaissance : #{connaissance}"
     # puts "historique : #{historique}, surnaturel : #{ok_base_surnaturel(personnage, spheres, disciplines)}"
     return false unless ok_base_surnaturel(personnage, spheres, disciplines)
-    return false unless physique != 10 || physique != 8 || physique != 6
-    return false unless social != 10 || social != 8 || social != 6
-    return false unless mental != 10 || mental != 8 || mental != 6
+    return false if !ok_base_attribut(physique, social, mental)
+    return false if !ok_base_capacites(competence, talent, connaissance)
+    return false if !ok_base_historique(historique)
+    true
+  end
+
+  def ok_base_attribut(physique, social, mental)
+    if vampire? || mage?
+      return false unless physique != 10 || physique != 8 || physique != 6
+      return false unless social != 10 || social != 8 || social != 6
+      return false unless mental != 10 || mental != 8 || mental != 6
+    else
+      return false unless physique != 9 || physique != 7 || physique != 5
+      return false unless social != 9 || social != 7 || social != 5
+      return false unless mental != 9 || mental != 7 || mental != 5
+    end
     return false if physique == mental || physique == social || social == mental
-    return false unless talent != 13 || talent != 9 || talent != 5
-    return false unless competence != 13 || competence != 9 || competence != 5
-    return false unless connaissance != 13 || connaissance != 9 || connaissance != 5
+    true
+  end
+
+  def ok_base_capacites(competence, talent, connaissance)
+    if vampire? || mage?
+      return false unless talent != 13 || talent != 9 || talent != 5
+      return false unless competence != 13 || competence != 9 || competence != 5
+      return false unless connaissance != 13 || connaissance != 9 || connaissance != 5
+    else
+      return false unless talent != 11 || talent != 7 || talent != 3
+      return false unless competence != 11 || competence != 7 || competence != 3
+      return false unless connaissance != 11 || connaissance != 7 || connaissance != 3
+    end
     return false if talent == competence || talent == connaissance || competence == connaissance
-    return false if historique != 7
+    true
+  end
+
+  def ok_base_historique(historique)
+    if vampire? || mage?
+      return false if historique != 7
+    else
+      return false if historique != 5
+    end
     true
   end
 
