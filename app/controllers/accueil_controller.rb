@@ -12,5 +12,6 @@ class AccueilController < ApplicationController
   def carte
     # TODO some stuff
     @user = User.first
+    @lieux = Lieu.all
   end
 end

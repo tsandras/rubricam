@@ -12,6 +12,8 @@
 #  description_publique :text
 #  image_lien           :string(255)
 #  avatar               :string(255)
+#  svg_x                :decimal(5, 6)
+#  svg_y                :decimal(5, 6)
 #
 
 require 'rails_helper'

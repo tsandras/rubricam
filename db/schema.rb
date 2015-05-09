@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150510133445) do
+ActiveRecord::Schema.define(:version => 20150509182726) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -122,12 +122,14 @@ ActiveRecord::Schema.define(:version => 20150510133445) do
     t.string   "nom"
     t.text     "description",          :limit => 255
     t.string   "type_lieu"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
     t.boolean  "secret"
     t.text     "description_publique"
     t.string   "image_lien"
     t.string   "avatar"
+    t.decimal  "svg_x",                               :precision => 5, :scale => 6
+    t.decimal  "svg_y",                               :precision => 5, :scale => 6
   end
 
   create_table "lieus_organisations", :force => true do |t|
@@ -294,10 +296,6 @@ ActiveRecord::Schema.define(:version => 20150510133445) do
     t.string   "detail_dynamique"
     t.string   "detail_statique"
     t.string   "detail_entropique"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.string   "avatar"
   end
 

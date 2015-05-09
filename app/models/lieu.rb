@@ -12,13 +12,16 @@
 #  description_publique :text
 #  image_lien           :string(255)
 #  avatar               :string(255)
+#  svg_x                :decimal(5, 6)
+#  svg_y                :decimal(5, 6)
 #
 
 require 'carrierwave/orm/activerecord'
 
 class Lieu < ActiveRecord::Base
   attr_accessible :description, :nom, :type_lieu, :secret, :description_publique,
-                  :image_lien, :personnage_ids, :organisation_ids, :avatar, :avatar_cache
+                  :image_lien, :personnage_ids, :organisation_ids, :avatar, :avatar_cache,
+                  :image_lien, :personnage_ids, :organisation_ids, :svg_x, :svg_y
 
   mount_uploader :avatar, AvatarUploader
 

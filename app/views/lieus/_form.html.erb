@@ -5,6 +5,8 @@
     <%= f.input :nom %>
     <%= f.input :description %>
     <%= f.input :type_lieu, collection: Lieu::TYPE_LIEUX %><br/>
+    <%= f.input :svg_x %>
+    <%= f.input :svg_y %>
     <%= f.button :submit, "Créer/Editer un lieu", class: 'btn btn-success btn-sm' %>
     <%= link_to 'Retour', lieus_path, class: 'btn btn-warning btn-sm' %>
   </div>

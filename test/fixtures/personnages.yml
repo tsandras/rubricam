@@ -72,10 +72,6 @@
 #  detail_dynamique      :string(255)
 #  detail_statique       :string(255)
 #  detail_entropique     :string(255)
-#  avatar_file_name      :string(255)
-#  avatar_content_type   :string(255)
-#  avatar_file_size      :integer
-#  avatar_updated_at     :datetime
 #  avatar                :string(255)
 #
 
