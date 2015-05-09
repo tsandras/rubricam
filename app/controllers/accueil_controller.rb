@@ -8,4 +8,8 @@ class AccueilController < ApplicationController
     @disciplines = Discipline.order('created_at DESC').limit(10)
     @capacites = Capacite.order('created_at DESC').limit(10)
   end
+
+  def carte
+    # TODO some stuff
+  end
 end
