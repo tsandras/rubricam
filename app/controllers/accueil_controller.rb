@@ -11,5 +11,6 @@ class AccueilController < ApplicationController
 
   def carte
     # TODO some stuff
+    @user = User.first
   end
 end
