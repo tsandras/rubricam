@@ -23,6 +23,11 @@ class LieusController < ApplicationController
     else
       @membres = @lieu.personnages.none_secret
     end
+    if @user.role == User::ROLE_ADMIN
+      @organisations = @lieu.organisations
+    else
+      @organisations = @lieu.organisations.none_secret
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @lieu }

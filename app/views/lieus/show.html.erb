@@ -23,7 +23,16 @@
 </p>
 
 <p>
-<b>Membres:</b><br/>
+
+<b>Organisations:</b><br/>
+<% if !@organisations.nil? %>
+  <% @organisations.each do |organisation| %>
+    <%= link_to "#{organisation.nom}", organisation_path(organisation) %><br/>
+  <% end %>
+<% end %>
+</p>
+
+<b>Habitants:</b><br/>
 <% if !@membres.nil? %>
   <% @membres.each do |membre| %>
     <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>

@@ -15,11 +15,12 @@
 
 class Lieu < ActiveRecord::Base
   attr_accessible :description, :nom, :type_lieu, :secret, :description_publique,
-                  :image_lien, :personnage_ids
+                  :image_lien, :personnage_ids, :organisation_ids
 
   validates_presence_of :type_lieu, :nom, :description
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
+  has_and_belongs_to_many :organisations, class_name: 'Organisation'
   has_and_belongs_to_many :historiques, class_name: 'Historique'
 
   TYPE_LIEUX = ["Plan", "Planète", "Pays", "Ville", "Lieu"]

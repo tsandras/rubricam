@@ -21,6 +21,7 @@ class Organisation < ActiveRecord::Base
   validates_presence_of :nom, :type_organisation, :description
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
+  has_and_belongs_to_many :lieus, class_name: 'Lieu'
 
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
 

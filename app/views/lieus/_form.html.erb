@@ -18,11 +18,18 @@
       <input id="search_personnage" type="text" onkeypress="filter(this, '.personnage .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.personnage .checkbox .check_boxes')">
       <%= f.association(:personnages, as: :check_boxes, :collection => Personnage.all.map {|c| ["#{c.prenom} #{c.nom}", c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
     </div>
+
+    <div class="organisation">
+      <label for="search_organisation"> Rechercher organisation :</label>
+      <input id="search_organisation" type="text" onkeypress="filter(this, '.organisation .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.organisation .checkbox .check_boxes')">
+      <%= f.association(:organisations, as: :check_boxes, :collection => Organisation.all.map {|c| ["#{c.nom}", c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
+    </div>
   </div>
 <% end %>
 
 <script type="text/javascript">
   $(document).ready(function() {
     manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
+    manageCheckBox("#search_organisation", ".organisation .checkbox .check_boxes");
   });
 </script>

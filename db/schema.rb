@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150503213430) do
+ActiveRecord::Schema.define(:version => 20150507145835) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -127,6 +127,15 @@ ActiveRecord::Schema.define(:version => 20150503213430) do
     t.boolean  "secret"
     t.text     "description_publique"
     t.string   "image_lien"
+  end
+
+  create_table "lieus_organisations", :force => true do |t|
+    t.integer  "lieu_id"
+    t.integer  "organisation_id"
+    t.string   "nom"
+    t.text     "description"
+    t.datetime "date_debut"
+    t.datetime "date_fin"
   end
 
   create_table "lieus_personnages", :force => true do |t|
