@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<div class="col-md-10">
+<div class="col-md-6">
 <p>
   <b>Nom:</b>
   <%= @organisation.nom %>
@@ -40,4 +40,9 @@
 
 <%= link_to 'Editer', edit_organisation_path(@organisation), class: 'btn btn-success btn-sm' %>
 <%= link_to 'Retour', organisations_path, class: 'btn btn-warning btn-sm' %>
+</div>
+
+<div class="col-md-4">
+  <% url = Rails.env.development? ? @organisation.avatar_url : @organisation.avatar_url_perso if @organisation.avatar? %>
+  <%= image_tag(url, class: "avatar") if @organisation.avatar? %>
 </div>

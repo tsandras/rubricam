@@ -10,8 +10,14 @@
     <%= link_to 'Retour', organisations_path, class: 'btn btn-warning btn-sm' %>
   </div>
   <div class="col-md-5">
+
+    <% url = Rails.env.development? ? @organisation.avatar_url : @organisation.avatar_url_perso if @organisation.avatar? %>
+    <%= image_tag(url, class: "avatar") if @organisation.avatar? %>
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %>
+
     <%= f.input :description_publique %>
-    <%= f.input :image_lien %>
+    <%#= f.input :image_lien %>
     <br/>
     <div class="personnage">
       <label for="search_personnage"> Rechercher personnage :</label>

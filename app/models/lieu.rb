@@ -11,11 +11,16 @@
 #  secret               :boolean
 #  description_publique :text
 #  image_lien           :string(255)
+#  avatar               :string(255)
 #
+
+require 'carrierwave/orm/activerecord'
 
 class Lieu < ActiveRecord::Base
   attr_accessible :description, :nom, :type_lieu, :secret, :description_publique,
-                  :image_lien, :personnage_ids, :organisation_ids
+                  :image_lien, :personnage_ids, :organisation_ids, :avatar, :avatar_cache
+
+  mount_uploader :avatar, AvatarUploader
 
   validates_presence_of :type_lieu, :nom, :description
 
@@ -24,4 +29,9 @@ class Lieu < ActiveRecord::Base
   has_and_belongs_to_many :historiques, class_name: 'Historique'
 
   TYPE_LIEUX = ["Plan", "Planète", "Pays", "Ville", "Lieu"]
+
+  def avatar_url_perso
+    out = avatar_url.split("/")
+    "#{out[0..2].join("/")}/rubricam-avatars/#{out[3..-1].join("/")}"
+  end
 end

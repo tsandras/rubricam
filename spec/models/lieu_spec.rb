@@ -11,6 +11,7 @@
 #  secret               :boolean
 #  description_publique :text
 #  image_lien           :string(255)
+#  avatar               :string(255)
 #
 
 require 'rails_helper'

@@ -10,8 +10,14 @@
   </div>
 
   <div class="col-md-5">
+
+    <% url = Rails.env.development? ? @lieu.avatar_url : @lieu.avatar_url_perso if @lieu.avatar? %>
+    <%= image_tag(url, class: "avatar") if @lieu.avatar? %>
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %>
+
     <%= f.input :description_publique %>
-    <%= f.input :image_lien %>
+    <%#= f.input :image_lien %>
     <br/>
     <div class="personnage">
       <label for="search_personnage"> Rechercher personnage :</label>

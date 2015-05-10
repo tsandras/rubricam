@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<div class="col-md-10">
+<div class="col-md-6">
 <p>
   <b>Nom:</b>
   <%= @lieu.nom %>
@@ -46,4 +46,9 @@
 
 <%= link_to 'Editer', edit_lieu_path(@lieu), class: 'btn btn-success btn-sm' %>
 <%= link_to 'Retour', lieus_path, class: 'btn btn-warning btn-sm' %>
+</div>
+
+<div class="col-md-4">
+  <% url = Rails.env.development? ? @lieu.avatar_url : @lieu.avatar_url_perso if @lieu.avatar? %>
+  <%= image_tag(url, class: "avatar") if @lieu.avatar? %>
 </div>
