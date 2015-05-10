@@ -8,6 +8,7 @@ Rubricam::Application.routes.draw do
 
   root :to => 'accueil#index'
   match '/regles', to: 'accueil#regles'
+  match '/fan_art', to: 'accueil#fan_art'
 
   resources :arts
 

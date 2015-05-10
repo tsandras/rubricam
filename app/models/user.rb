@@ -36,12 +36,34 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :pseudo, :role
 
+  validate :value_of_role
+
   ROLE_ADMIN = 2
   ROLE_MODER = 1
   ROLE_NORMA = 0
+
+  ROLES = [["Admin", ROLE_NORMA], ["Modérateur", ROLE_MODER], ["Utilisateur", ROLE_NORMA]]
+  ROLE_IDS = {"Utilisateur" => 0, "Modérateur" => 1, "Admin" => 2}
 
   has_many :personnages
   has_many :objets
   has_many :routines
 
+  def role_name
+    if role == ROLE_ADMIN
+      "Admin"
+    elsif role == ROLE_MODER
+      "Modérateur"
+    elsif role == ROLE_NORMA
+      "Utilisateur"
+    else
+      "Erreur"
+    end
+  end
+
+  def value_of_role
+    return false if role.blank?
+    return true if role >= 0 && role <= 2
+    false
+  end
 end

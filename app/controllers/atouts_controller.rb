@@ -96,7 +96,7 @@ class AtoutsController < ApplicationController
   end
 
   def permition_write?(user)
-    return true if user.role == User::ROLE_ADMIN
+    return true if user.role == User::ROLE_ADMIN || user.role == User::ROLE_MODER
     false
   end
 end

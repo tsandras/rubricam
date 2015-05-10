@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<div class="col-md-10">
 <p>
   <b>Nom:</b>
   <%= @historique.nom %>
@@ -10,5 +10,6 @@
   <%= @historique.description %>
 </p>
 
-<%= link_to 'Edit', edit_historique_path(@historique) %> |
-<%= link_to 'Back', historiques_path %>
+<%= link_to 'Editer', edit_historique_path(@historique), class: "btn btn-success btn-sm" %>
+<%= link_to 'Retour', historiques_path, class: "btn btn-warning btn-sm" %>
+</div>

@@ -1,12 +1,15 @@
 <%= simple_form_for(@user) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-5">
     <%= f.input :pseudo %>
     <%= f.input :email %>
+    <%= f.input :role, collection: User::ROLES, selected: User::ROLE_IDS[@user.role_name] %>
+    <!-- User::ROLES[@user.role_name][1] -->
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-5">
+    <%= f.button :submit, "Éditer l'utilisateur", class: "btn btn-success btn-sm" %>
+    <%= link_to "Retour", users_path, class: "btn btn-warning btn-sm" %>
   </div>
 <% end %>

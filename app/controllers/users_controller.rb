@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+  before_filter :redirect_unauthorized
   # GET /users
   # GET /users.json
   def index
@@ -46,7 +48,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-
+    params[:user][:role] = 0 if params[:user][:role].blank?
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User a été crée avec succès.' }
@@ -62,7 +64,7 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-
+    params[:user][:role] = 0 if params[:user][:role].blank?
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: 'User a été édité avec succès.' }
@@ -84,5 +86,11 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def redirect_unauthorized
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if @user.role != User::ROLE_ADMIN
   end
 end

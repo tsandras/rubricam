@@ -1,15 +1,23 @@
 <p id="notice"><%= notice %></p>
 
+<div class="col-md-4">
+<% if @user.pseudo.present? %>
 <p>
   <b>Pseudo:</b>
   <%= @user.pseudo %>
 </p>
+<% end %>
 
 <p>
   <b>Email:</b>
   <%= @user.email %>
 </p>
 
+<p>
+  <b>Role:</b>
+  <%= @user.role_name %>
+</p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Editer', edit_user_path(@user), class: "btn btn-success btn-sm" %>
+<%= link_to 'Retour', users_path, class: "btn btn-warning btn-sm" %>
+</div>
