@@ -28,7 +28,11 @@
 <b>Membres:</b><br/>
 <% if !@membres.nil? %>
   <% @membres.each do |membre| %>
-    <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <%= link_to "#{membre.prenom} #{membre.nom}", personnage_path(membre) %><br/>
+    <% else %>
+      <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>
+    <% end %>
   <% end %>
 <% end %>
 </p>
