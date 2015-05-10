@@ -18,7 +18,7 @@ class ObjetsController < ApplicationController
   # GET /objets/1.json
   def show
     @objet = Objet.find(params[:id])
-
+    @personnage = @objet.personnage
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @objet }

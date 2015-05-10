@@ -25,8 +25,10 @@
   <%= @objet.resonnance %>
 </p>
 
-<p>
-  <b>Personnage:</b>
-  <%= @objet.personnage_id %>
-</p>
+<% if @personnage.present? %>
+  <p>
+    <b>Personnage:</b>
+    <%= @personnage.prenom %> <%= @personnage.nom %>
+  </p>
+<% end %>
 
