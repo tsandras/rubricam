@@ -35,6 +35,7 @@
     <%= show_historique(@historiques) %>
     <%= show_spheres(@personnage) %>
     <%= show_disciplines_all(@personnage) %>
+    <%= show_advanced_disciplines(@personnage) %>
     <%= show_atout(@atouts) %>
     <%= show_vertue(@personnage) %>
     <%= show_resonnance(@personnage) %>
@@ -81,8 +82,7 @@
     </div>
     <%= show_xps(@personnage) %>
     <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
-    <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />
-    <div><%= link_to 'Editer routines du personnage', routine_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' if @personnage.mage? %>
+    <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %>
     <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %></div><br />
     <%= manage_reset(@personnage) %>
     <%= link_to 'Supprimer', @personnage, confirm: "C'est votre ultime bafouille ?", method: :delete, class: 'btn btn-danger btn-sm' %>

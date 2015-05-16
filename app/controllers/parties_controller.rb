@@ -5,7 +5,7 @@ class PartiesController < ApplicationController
   # GET /parties
   # GET /parties.json
   def index
-    @parties = Partie.order('date')
+    @parties = Partie.order(:date)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -90,7 +90,7 @@ class Personnage < ActiveRecord::Base
   :intelligence, :manipulation, :perception,
   :points_conscience, :points_courage, :points_maitrise,
   :points_dynamique, :points_entropique, :points_statique,
-  :volonte, :xps, :bonus, :entelechie, :capacite_ids, :historique_ids, :atout_ids, :discipline_ids,
+  :volonte, :xps, :bonus, :entelechie, :capacite_ids, :historique_ids, :atout_ids, :discipline_ids, :nivdiscipline_ids,
   :spec_force, :spec_dexterite, :spec_vigueur, :spec_charisme, :spec_manipulation,
   :spec_apparence, :spec_perception, :spec_intelligence, :spec_astuce,
   :reste_xps, :reste_bonus, :type_perso, :nature, :attitude, :rang, :points_sang, :glamour,

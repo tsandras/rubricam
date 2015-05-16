@@ -18,6 +18,11 @@
   <%= @user.role_name %>
 </p>
 
+<p>
+  <b>Compte crée le :</b>
+  <%= @user.created_at %>
+</p>
+
 <%= link_to 'Editer', edit_user_path(@user), class: "btn btn-success btn-sm" %>
 <%= link_to 'Retour', users_path, class: "btn btn-warning btn-sm" %>
 </div>

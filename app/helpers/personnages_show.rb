@@ -11,10 +11,14 @@ module PersonnagesShow
   end
 
   def show_routines(routines)
-    if routines.count > 0
-      out = "<b>Routines</b><br/>"
-      routines.each do |r|
-        out << link_to("#{r.name} (#{r.type_routine})", r) + " " + display_spheres(r, true) + "<br/>".html_safe
+    if @personnage.mage?
+      out = "<b>Routines "
+      out += link_to('Editer routines', routine_edit_personnage_path(@personnage), class: 'btn btn-success btn-xs')
+      out += "</b><br/>"
+      if routines.count > 0
+        routines.each do |r|
+          out << link_to("#{r.name} (#{r.type_routine})", r) + " " + display_spheres(r, true) + "<br/>".html_safe
+        end
       end
       out.html_safe
     end
@@ -294,7 +298,8 @@ module PersonnagesShow
   def show_disciplines_all(personnage)
     if personnage.disciplines.count != 0
       out = ""
-      out += "<b>Disciplines</b>"
+      out += "<b>Disciplines "
+      out += "</b>"
       out += "<table>"
       tmp = 0
       personnage.disciplines.each do |discipline|
@@ -308,6 +313,35 @@ module PersonnagesShow
           if tmp % 3 == 0
             out += "</tr>"
           end
+        end
+      end
+      out += "</table>"
+      out += "<br />"
+      out.html_safe
+    end
+  end
+
+  def show_advanced_disciplines(personnage)
+    bool = false
+    personnage.disciplines.each do |discipline|
+      disper = DisciplinesPersonnages.where(personnage_id: personnage.id, discipline_id: discipline.id).first
+      bool = true if disper.niveau > 5
+    end
+    if bool
+      out = ""
+      out += "<b>Pouvoirs avancées "
+      out += link_to('Disciplines avancées', discipline_edit_personnage_path(@personnage), class: 'btn btn-success btn-xs')
+      out += "</b>"
+      out += "<table>"
+      tmp = 0
+      personnage.nivdisciplines.each do |nivdiscipline|
+        if tmp % 3 == 0
+          out += "<tr>"
+        end
+        tmp = tmp + 1
+        out += "<td> #{nivdiscipline.nom} (#{nivdiscipline.discipline_nom} #{nivdiscipline.niveau})</td>"
+        if tmp % 3 == 0
+          out += "</tr>"
         end
       end
       out += "</table>"

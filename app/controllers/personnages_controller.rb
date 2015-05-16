@@ -89,6 +89,17 @@ class PersonnagesController < ApplicationController
     @personnage = Personnage.find(params[:id])
   end
 
+  def discipline_edit
+    @personnage = Personnage.find(params[:id])
+    @disciplines_personnages = DisciplinesPersonnages.where("niveau > 5")
+  end
+
+  def discipline_update
+    @personnage = Personnage.find(params[:id])
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
   def routine_edit
     @personnage = Personnage.find(params[:id])
   end

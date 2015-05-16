@@ -1,0 +1,24 @@
+<%= simple_form_for(@personnage, url: discipline_update_personnage_path, method: :post) do |f| %>
+  <div class="col-md-4">
+    <%= f.button :submit, "Sauvegarder disciplines avancées", class: 'btn btn-primary btn-sm' %>
+  </div>
+  <div class="col-md-4">
+    <div class"partie-personnage">
+      Vous avez <%= @disciplines_personnages.count %> disciplines avancées.<br />
+      <% @disciplines_personnages.each do |disper| %>
+        Vous devez choisir <%= disper.niveau - 5 %> pouvoirs avancés dans <%= disper.discipline.nom %>.<br />
+      <% end %>
+    </div>
+    <label for="search_nivdiscipline">Rechercher une discipline avancé :</label>
+    <input id="search_nivdiscipline" type="text" onkeypress="filter(this, '.nivdiscipline .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.nivdiscipline .checkbox .check_boxes')" />
+    <div class="nivdiscipline">
+      <%= f.association :nivdisciplines, as: :check_boxes, :collection => Nivdiscipline.where("niveau > 5").map {|c| ["#{c.nom} (niveau #{c.niveau} de #{c.discipline_nom})", c.id]}.uniq %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    manageCheckBox("#search_nivdiscipline", ".nivdiscipline .checkbox .check_boxes");
+  });
+</script>
