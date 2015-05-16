@@ -47,6 +47,9 @@ Rubricam::Application.routes.draw do
     post :routine_update, on: :member
     get :pnjs, on: :collection
     get :pjs, on: :collection
+    get :reset_xps, on: :member
+    get :reset_bonus, on: :member
+    get :reset_base, on: :member
   end
 
 end

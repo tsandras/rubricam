@@ -552,7 +552,139 @@ class Personnage < ActiveRecord::Base
     out
   end
 
+  def reset_xps
+    perso = fusion
+    reset_at(perso)
+    self.reste_xps = self.xps
+    self.save
+  end
+
+  def reset_bonus
+    base = JSON.parse(caracteristique_base)
+    reset_at(base)
+    self.caracteristique_bonus = nil
+    self.has_bonus = false
+    self.save
+  end
+
+  def reset_base
+    self.force = 1
+    self.dexterite = 1
+    self.vigueur = 1
+    self.charisme = 1
+    self.manipulation = 1
+    self.apparence = 1
+    self.perception = 1
+    self.intelligence = 1
+    self.astuce = 1
+    cappers = CapacitesPersonnages.where(personnage_id: id)
+    cappers.each do |capper|
+      capper.update_attributes(niveau: 0)
+    end
+    hispers = HistoriquesPersonnages.where(personnage_id: id)
+    hispers.each do |hisper|
+      hisper.update_attributes(niveau: 0)
+    end
+    atpers = AtoutsPersonnages.where(personnage_id: id)
+    atpers.each do |atper|
+      atper.update_attributes(niveau: 0)
+    end
+    spheres = Sphere.where(personnage_id: id)
+    if !spheres.nil?
+      spheres.each do |sphere|
+        sphere.update_attributes(niveau: 0)
+      end
+    end
+    dispers = DisciplinesPersonnages.where(personnage_id: id)
+    if !dispers.nil?
+      dispers.each do |disper|
+        disper.update_attributes(niveau: 0)
+      end
+    end
+    if mage?
+      self.volonte = 5
+    elsif vampire?
+      self.volonte = 3
+    else
+      self.volonte = 1
+    end
+    self.caracteristique_base = nil
+    self.caracteristique_bonus = nil
+    self.has_base = false
+    self.has_bonus = false
+    self.save
+  end
+
+  def fusion
+    base = JSON.parse(caracteristique_base)
+    bonus = JSON.parse(caracteristique_bonus)
+    out = {}
+    out["Personnage"] = bonus["Personnage"].merge(base["Personnage"]){|k, a, b| a+b}
+    out["Capacites"] = {}
+    out["Capacites"]["Talent"] = bonus["Capacites"]["Talent"].merge(base["Capacites"]["Talent"]){|k, a, b| a+b}
+    out["Capacites"]["Competence"] = bonus["Capacites"]["Competence"].merge(base["Capacites"]["Competence"]){|k, a, b| a+b}
+    out["Capacites"]["Connaissance"] = bonus["Capacites"]["Connaissance"].merge(base["Capacites"]["Connaissance"]){|k, a, b| a+b}
+    out["Historiques"] = bonus["Historiques"].merge(base["Historiques"]){|k, a, b| a+b}
+    out["Disciplines"] = bonus["Disciplines"].merge(base["Disciplines"]){|k, a, b| a+b} if bonus["Disciplines"].present? && base["Disciplines"].present?
+    out["Spheres"] = bonus["Spheres"].merge(base["Spheres"]){|k, a, b| a+b} if bonus["Spheres"].present? && base["Spheres"].present?
+    if bonus["Volonte"].present?
+      out["Volonte"] = bonus["Volonte"].merge(base["Volonte"]){|k, a, b| a+b}
+    else
+      out["Volonte"] = base["Volonte"]
+    end
+    out
+  end
+
   private
+
+  def reset_at(perso)
+    self.force = perso["Personnage"]["force"];
+    self.dexterite = perso["Personnage"]["dexterite"];
+    self.vigueur = perso["Personnage"]["vigueur"];
+    self.charisme = perso["Personnage"]["charisme"];
+    self.manipulation = perso["Personnage"]["manipulation"];
+    self.apparence = perso["Personnage"]["apparence"];
+    self.perception = perso["Personnage"]["perception"];
+    self.intelligence = perso["Personnage"]["intelligence"];
+    self.astuce = perso["Personnage"]["astuce"];
+    perso["Capacites"]["Talent"].each do |key, pb|
+      capper = CapacitesPersonnages.where(capacite_id: key, personnage_id: id).first
+      capper.update_attributes(niveau: pb.to_i)
+    end
+    perso["Capacites"]["Competence"].each do |key, pb|
+      capper = CapacitesPersonnages.where(capacite_id: key, personnage_id: id).first
+      capper.update_attributes(niveau: pb.to_i)
+    end
+    perso["Capacites"]["Connaissance"].each do |key, pb|
+      capper = CapacitesPersonnages.where(capacite_id: key, personnage_id: id).first
+      capper.update_attributes(niveau: pb.to_i)
+    end
+    perso["Historiques"].each do |key, pb|
+      key = key.split("_")[1].to_i if key.split("_")[0] == "t"
+      hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
+      hisper.update_attributes(niveau: pb.to_i)
+    end
+    if perso["Atouts"] != nil
+      perso["Atouts"].each do |key, pb|
+        atper = AtoutsPersonnage.where(atout_id: key, personnage_id: id).first
+        atper.update_attributes(niveau: pb.to_i)
+      end
+    end
+    self.volonte = perso["Volonte"];
+    if perso["Spheres"] != nil
+      perso["Spheres"].each do |key, pb|
+        sphere = Sphere.where(personnage_id: id, id: key).first
+        sphere.update_attributes(niveau: pb.to_i)
+      end
+    end
+    if perso["Disciplines"] != nil
+      perso["Disciplines"].each do |key, pb|
+        disper = DisciplinesPersonnages.where(personnage_id: id, discipline_id: key).first
+        disper.update_attributes(niveau: pb.to_i)
+      end
+    end
+    self.save
+  end
 
   def is_cp(key)
     begin

@@ -77,4 +77,14 @@ module PersonnagesHelper
   def format_name(name)
     name.split(' ').join().split("'").join()
   end
+
+  def manage_reset(personnage)
+    if personnage.has_base && personnage.has_bonus && personnage.reste_xps != personnage.xps
+      link_to 'Réinitialiser xps', reset_xps_personnage_path(@personnage), confirm: "C'est votre ultime bafouille ?", class: 'btn btn-info btn-sm'
+    elsif personnage.has_base && personnage.has_bonus
+      link_to 'Réinitialiser bonus', reset_bonus_personnage_path(@personnage), confirm: "C'est votre ultime bafouille ?", class: 'btn btn-info btn-sm'
+    elsif personnage.has_base && !personnage.has_bonus
+      link_to 'Réinitialiser base', reset_base_personnage_path(@personnage), confirm: "C'est votre ultime bafouille ?", class: 'btn btn-info btn-sm'
+    end
+  end
 end

@@ -194,6 +194,24 @@ class PersonnagesController < ApplicationController
     end
   end
 
+  def reset_xps
+    @personnage = Personnage.find(params[:id])
+    @personnage.reset_xps
+    redirect_to personnage_path(@personnage)
+  end
+
+  def reset_bonus
+    @personnage = Personnage.find(params[:id])
+    @personnage.reset_bonus
+    redirect_to personnage_path(@personnage)
+  end
+
+  def reset_base
+    @personnage = Personnage.find(params[:id])
+    @personnage.reset_base
+    redirect_to personnage_path(@personnage)
+  end
+
   private
 
   def permition?(user)

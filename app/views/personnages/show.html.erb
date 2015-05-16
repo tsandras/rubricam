@@ -82,11 +82,10 @@
     <%= show_xps(@personnage) %>
     <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
     <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />
-    <%= link_to 'Editer routines du personnage', routine_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' if @personnage.mage? %>
-    <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <%= link_to 'Supprimer', @personnage, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-sm' %>
-    <% end %>
+    <div><%= link_to 'Editer routines du personnage', routine_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' if @personnage.mage? %>
+    <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %></div><br />
+    <%= manage_reset(@personnage) %>
+    <%= link_to 'Supprimer', @personnage, confirm: "C'est votre ultime bafouille ?", method: :delete, class: 'btn btn-danger btn-sm' %>
   </div>
 
   <script type="text/javascript">
