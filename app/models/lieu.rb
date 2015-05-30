@@ -31,6 +31,8 @@ class Lieu < ActiveRecord::Base
   has_and_belongs_to_many :organisations, class_name: 'Organisation'
   has_and_belongs_to_many :historiques, class_name: 'Historique'
 
+  scope :locatable, -> { where("svg_x is not null and svg_y is not null") }
+
   TYPE_LIEUX = ["Plan", "Planète", "Pays", "Ville", "Lieu"]
 
   def avatar_url_perso

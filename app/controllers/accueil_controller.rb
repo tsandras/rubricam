@@ -12,6 +12,6 @@ class AccueilController < ApplicationController
   def carte
     # TODO some stuff
     @user = User.first
-    @lieux = Lieu.all
+    @lieux = Lieu.includes(:organisations, :personnages).locatable
   end
 end
