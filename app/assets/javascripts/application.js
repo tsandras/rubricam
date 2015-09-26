@@ -95,3 +95,91 @@ function hideAllCheckBoxWhenNoneChecked(filteringList) {
     }
   });
 }
+
+// MAP here
+
+function init_map_admin(lieux_villes) {
+  var lieux = lieux_villes;
+  var svg = document.querySelector('svg');
+
+  ManageCursorPoint(svg);
+  addPoints(lieux, svg);
+}
+
+function ManageCursorPoint(svg) {
+  // Create an SVGPoint for future math
+  var pt = svg.createSVGPoint();
+  svg.addEventListener('click',function(evt){
+    var loc = cursorPoint(evt, pt, svg);
+    console.log("("+loc.x+";"+loc.y+")");
+  },false);
+}
+
+// Get point in global SVG space
+function cursorPoint(evt, pt, svg){
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function zoom(svg) {
+  // Zoom
+  var panZoomTiger = svgPanZoom(svg, {minZoom: 1});
+
+  $('#world-map-svg').css({
+    'height':'800px',
+    'width':'800px'
+  });
+}
+
+function addPoints(lieux, svg) {
+  // Ajout des points
+  // var map = $('#layer1');
+  for (i in lieux) {
+    console.log(lieux[i]);
+    // var s = '<circle style="opacity:1;fill:#00ffff;fill-opacity:1;stroke:none;stroke-opacity:1" id="lieu-'+lieux[i].id+'" cx="'+lieux[i].svg_x+'" cy="'+lieux[i].svg_y+'" r="5" />';
+    // console.log(s);
+    // map.after(s);
+    if (lieux[i].svg_x != null && lieux[i].svg_y != null) {
+      var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle'); //Create a path in SVG's namespace
+      newElement.setAttributeNS(null, "cx", parseFloat(lieux[i].svg_x));
+      newElement.setAttributeNS(null, "cy", parseFloat(lieux[i].svg_y));
+      newElement.setAttributeNS(null, "r",  5);
+      newElement.setAttributeNS(null, "fill", "green");
+      newElement.setAttributeNS(null, "uid", lieux[i].id);
+      newElement.setAttributeNS(null, "class", "point");
+      newElement.style.stroke = "#000"; //Set stroke colour
+      newElement.style.strokeWidth = "2px"; //Set stroke width
+      svg.appendChild(newElement);
+      setDataLieu(lieux[i]);
+    }
+  }
+}
+
+function init_map(lieux_villes) {
+  var lieux = lieux_villes;
+  var svg = document.querySelector('svg');
+
+  ManageCursorPoint(svg);
+  addPoints(lieux, svg);
+  zoom(svg);
+}
+
+function setDataLieu(lieu) {
+  out = "";
+  out += "<b>"+lieu.nom+"</b><br/>";
+  lieu.organisations.forEach(function(organisation) {
+    out += "["+organisation.type_organisation+"]";
+    out += "<a href='/organisations/"+organisation.id+"'>"+organisation.nom+"</a><br/>";
+  });
+  lieu.personnages.forEach(function(personnage) {
+    out += "<a href='/personnages/"+personnage.id+"'>"+personnage.nom+" "+personnage.prenom+"</a><br/>";
+  });
+  $("#list-data-lieux").append("<div id='"+lieu.id+"' class='data-lieu'>"+out+"</div>");
+}
+
+function managerDataLieu() {
+  $(".point").on("click", function() {
+    $(".data-lieu").hide();
+    $("#"+$(this).attr("uid")).show();
+  });
+}
