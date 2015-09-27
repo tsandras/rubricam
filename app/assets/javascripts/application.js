@@ -126,8 +126,8 @@ function zoom(svg) {
   var panZoomTiger = svgPanZoom(svg, {minZoom: 1});
 
   $('#world-map-svg').css({
-    'height':'800px',
-    'width':'800px'
+    'height':'750px',
+    'width':'750px'
   });
 }
 
@@ -143,12 +143,12 @@ function addPoints(lieux, svg) {
       var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle'); //Create a path in SVG's namespace
       newElement.setAttributeNS(null, "cx", parseFloat(lieux[i].svg_x));
       newElement.setAttributeNS(null, "cy", parseFloat(lieux[i].svg_y));
-      newElement.setAttributeNS(null, "r",  5);
+      newElement.setAttributeNS(null, "r", 0.5);
       newElement.setAttributeNS(null, "fill", "green");
       newElement.setAttributeNS(null, "uid", lieux[i].id);
       newElement.setAttributeNS(null, "class", "point");
-      newElement.style.stroke = "#000"; //Set stroke colour
-      newElement.style.strokeWidth = "2px"; //Set stroke width
+      // newElement.style.stroke = "#000"; //Set stroke colour
+      // newElement.style.strokeWidth = "1px"; //Set stroke width
       svg.appendChild(newElement);
       setDataLieu(lieux[i]);
     }
