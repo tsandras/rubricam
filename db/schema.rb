@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150509182726) do
+ActiveRecord::Schema.define(:version => 20150510133445) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -127,8 +127,9 @@ ActiveRecord::Schema.define(:version => 20150509182726) do
     t.boolean  "secret"
     t.text     "description_publique"
     t.string   "image_lien"
-    t.decimal  "svg_x",                               :precision => 5, :scale => 6
-    t.decimal  "svg_y",                               :precision => 5, :scale => 6
+    t.decimal  "svg_x",                               :precision => 8, :scale => 2
+    t.decimal  "svg_y",                               :precision => 8, :scale => 2
+    t.string   "avatar"
   end
 
   create_table "lieus_organisations", :force => true do |t|
@@ -194,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20150509182726) do
     t.boolean  "secret"
     t.text     "description_publique"
     t.string   "image_lien"
+    t.string   "avatar"
   end
 
   create_table "organisations_personnages", :force => true do |t|
