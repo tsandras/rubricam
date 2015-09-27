@@ -5,6 +5,8 @@
     <%= f.input :nom %>
     <%= f.input :description %>
     <%= f.input :type_lieu, collection: Lieu::TYPE_LIEUX %><br/>
+    <%= f.input :svg_x %>
+    <%= f.input :svg_y %>
     <%= f.button :submit, "Créer/Editer un lieu", class: 'btn btn-success btn-sm' %>
     <%= link_to 'Retour', lieus_path, class: 'btn btn-warning btn-sm' %>
   </div>
@@ -31,11 +33,15 @@
       <%= f.association(:organisations, as: :check_boxes, :collection => Organisation.all.map {|c| ["#{c.nom}", c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
     </div>
   </div>
+    <div id="world-map">
+      <%= render 'accueil/carte_v2' %>
+    </div>
 <% end %>
 
 <script type="text/javascript">
   $(document).ready(function() {
     manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
     manageCheckBox("#search_organisation", ".organisation .checkbox .check_boxes");
+    init_map_admin(<%= raw @lieux_villes.to_json(include: [:organisations, :personnages]) %>);
   });
 </script>

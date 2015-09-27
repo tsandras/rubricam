@@ -8,4 +8,12 @@ class AccueilController < ApplicationController
     @disciplines = Discipline.order('created_at DESC').limit(10)
     @capacites = Capacite.order('created_at DESC').limit(10)
   end
+
+  def carte
+    @user = User.first
+    @lieux_villes = Lieu
+      .includes(:organisations, :personnages)
+      .locatable
+      .lieu_ou_ville
+  end
 end

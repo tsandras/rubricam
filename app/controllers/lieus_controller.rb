@@ -39,7 +39,10 @@ class LieusController < ApplicationController
   def new
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if @user.role != User::ROLE_ADMIN
     @lieu = Lieu.new
-
+    @lieux_villes = Lieu
+      .includes(:organisations, :personnages)
+      .locatable
+      .lieu_ou_ville
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @lieu }
@@ -49,6 +52,10 @@ class LieusController < ApplicationController
   # GET /lieus/1/edit
   def edit
     @lieu = Lieu.find(params[:id])
+    @lieux_villes = Lieu
+      .includes(:organisations, :personnages)
+      .locatable
+      .lieu_ou_ville
   end
 
   # POST /lieus

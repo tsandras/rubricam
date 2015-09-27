@@ -41,14 +41,13 @@
 
               <div><span><%= link_to 'Parties', parties_path, class: 'btn btn-warning btn-sm' %></span>
               <span><%= link_to 'Pjs', pjs_personnages_path, class: 'btn btn-info btn-sm' %></span></div><br/>
-
-              <div><span><%= link_to 'Règles de ma partie', regles_path, class: 'btn btn-success btn-sm' %></span></div><br/>
-
               <div><span><%= link_to 'Royaumes', fan_art_path, class: 'btn btn-info btn-sm' %></span>
               <% if @user.role == User::ROLE_ADMIN %>
                 <span><%= link_to 'Utilisateurs', users_path, class: 'btn btn-success btn-sm' %></span>
               <% end %>
               </div><br/>
+              <div><span><%= link_to 'Règles', regles_path, class: 'btn btn-success btn-sm' %></span>
+              <span><%= link_to 'Carte', carte_path, class: 'btn btn-danger btn-sm' %></span></div><br/>
               <span><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></span>
             <% end %>
           </div>

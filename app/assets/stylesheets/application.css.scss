@@ -706,3 +706,11 @@ input[type=number] {
   background-color: #F6F6F6;
   border: 1px solid #F6F6F6;
 }
+
+.data-lieu {
+  display: none;
+}
+
+.point:hover {
+  cursor: pointer;
+}
