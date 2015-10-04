@@ -1,3 +1,4 @@
+<div class="col-md-10">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -11,10 +12,18 @@
 </p>
 
 <p>
-  <b>Niveau:</b>
-  <%= @combinaison.niveau %>
+  <b>Cout:</b>
+  <%= @combinaison.cout %>
+</p>
+
+<p>
+  <b>Pré-requis:</b>
+  <% @combinaisons_disciplines.each do |combinaisons_discipline| %>
+  	<br /><%= combinaisons_discipline.discipline.nom %>: <%= combinaisons_discipline.niveau %>
+  <% end %>
 </p>
 
 
-<%= link_to 'Edit', edit_combinaison_path(@combinaison) %> |
-<%= link_to 'Back', combinaisons_path %>
+<%= link_to 'Editer', edit_combinaison_path(@combinaison), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', combinaisons_path, class: 'btn btn-warning btn-sm' %>
+</div>

@@ -100,6 +100,18 @@ class PersonnagesController < ApplicationController
     redirect_to personnage_path(@personnage)
   end
 
+
+  def combinaison_edit
+    @personnage = Personnage.find(params[:id])
+    @combinaisons_personnages = CombinaisonsPersonnages.where("niveau > 5")
+  end
+
+  def combinaison_update
+    @personnage = Personnage.find(params[:id])
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
   def routine_edit
     @personnage = Personnage.find(params[:id])
   end

@@ -16,18 +16,17 @@
 #  dynamique     :integer
 #  statique      :integer
 #  entropique    :integer
-#  routine_id    :integer
 #  user_id       :integer
 #
 
 class Objet < ActiveRecord::Base
   attr_accessible :description, :name, :niveau, :personnage_id, :resonnance,
                   :type_objet, :secret, :valeur, :dynamique, :statique, :entropique,
-                  :routine_id, :user_id
+                  :user_id, :routine_ids
 
   belongs_to :personnage
   belongs_to :user
-  has_one :routine
+  has_and_belongs_to_many :routines, class_name: 'Routine'
 
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
   scope :own_objets, ->(user_id) { where("user_id = ?", user_id) }

@@ -5,9 +5,11 @@
 #  id          :integer          not null, primary key
 #  nom         :string(255)
 #  description :text
-#  niveau      :integer
+#  cout        :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :integer
+#  secret      :boolean
 #
 
 require 'rails_helper'

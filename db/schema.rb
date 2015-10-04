@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150510133445) do
+ActiveRecord::Schema.define(:version => 20151003070504) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -63,14 +63,17 @@ ActiveRecord::Schema.define(:version => 20150510133445) do
   create_table "combinaisons", :force => true do |t|
     t.string   "nom"
     t.text     "description"
-    t.integer  "niveau"
+    t.integer  "cout"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "user_id"
+    t.boolean  "secret"
   end
 
   create_table "combinaisons_disciplines", :force => true do |t|
     t.integer "combinaison_id"
     t.integer "discipline_id"
+    t.integer "niveau"
   end
 
   create_table "combinaisons_personnages", :force => true do |t|
@@ -181,8 +184,12 @@ ActiveRecord::Schema.define(:version => 20150510133445) do
     t.integer  "dynamique"
     t.integer  "statique"
     t.integer  "entropique"
-    t.integer  "routine_id"
     t.integer  "user_id"
+  end
+
+  create_table "objets_routines", :force => true do |t|
+    t.integer "objet_id"
+    t.integer "routine_id"
   end
 
   create_table "organisations", :force => true do |t|

@@ -2,16 +2,11 @@ class NivdisciplinesController < ApplicationController
   # GET /disciplines
   # GET /disciplines.json
   skip_before_filter :authenticate_user!, only: [:index, :show]
+  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy, :new, :create]
 
   def index
     # raise params.inspect
     @nivdisciplines = Nivdiscipline.all
-    if session["warden.user.user.key"] != nil
-      @user = User.find(session["warden.user.user.key"][0].first)
-    else
-      @user = User.new
-      @user.role = User::ROLE_NORMA
-    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -95,5 +90,16 @@ class NivdisciplinesController < ApplicationController
       format.html { redirect_to disciplines_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def redirect_unauthorized_to_write
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
+  end
+
+  def permition_write?(user)
+    return true if user.role == User::ROLE_ADMIN
+    false
   end
 end

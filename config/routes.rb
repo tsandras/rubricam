@@ -48,6 +48,8 @@ Rubricam::Application.routes.draw do
     post :routine_update, on: :member
     get :discipline_edit, on: :member
     post :discipline_update, on: :member
+    get :combinaison_edit, on: :member
+    post :combinaison_update, on: :member
     get :pnjs, on: :collection
     get :pjs, on: :collection
     get :reset_xps, on: :member

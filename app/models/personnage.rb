@@ -93,7 +93,7 @@ class Personnage < ActiveRecord::Base
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
-  :detail_statique, :detail_entropique, :avatar, :avatar_cache
+  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids
 
   mount_uploader :avatar, AvatarUploader
 

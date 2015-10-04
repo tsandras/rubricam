@@ -91,18 +91,10 @@
     </div>
     <br />
 
-    <div class="control-group optional">
-      <label class="select optional control-label">Sélectionner une routine si cette objet est lié à une routine</label>
-      <div class="controls">
-        <select class="select optional" id="objet_routine_id" name="objet[routine_id]" value="<%= @objet.routine_id %>">
-          <optgroup label="Routines">
-          <option value="">Sélectionner une routine</option>
-          <% @routines.each do |rou| %>
-              <option value="<%= rou.id %>"<%= @objet.routine_id == rou.id  ? 'selected' : nil %>><%= rou.name %></option>
-          <% end %>
-          </optgroup>
-        </select>
-      </div>
+    <div class="routine">
+      <label for="search_routine"> Rechercher routine :</label>
+      <input id="search_routine" type="text" onkeypress="filter(this, '.routine .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.routine .checkbox .check_boxes')">
+      <%= f.association(:routines, as: :check_boxes, :collection => Routine.all.map {|c| ["#{c.name}", c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
     </div>
     <br />
     <div class="control-group optional">
@@ -126,9 +118,8 @@
   $(document).ready(function() {
     listenerAllIntegerForObjet();
     $("#objet_personnage_id").select2();
-    $("#objet_routine_id").select2();
+    // $("#objet_routine_id").select2();
     manageCheckBox("#search_routine", ".routine .checkbox .check_boxes");
-    manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
   });
 
   function listenerAllIntegerForObjet() {

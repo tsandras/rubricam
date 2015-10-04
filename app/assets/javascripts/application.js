@@ -168,11 +168,12 @@ function setDataLieu(lieu) {
   out = "";
   out += "<b>"+lieu.nom+"</b><br/>";
   lieu.organisations.forEach(function(organisation) {
-    out += "["+organisation.type_organisation+"]";
+    out += "["+organisation.type_organisation+"] ";
     out += "<a href='/organisations/"+organisation.id+"'>"+organisation.nom+"</a><br/>";
+    out += ""+organisation.description_publique+"<br/>";
   });
   lieu.personnages.forEach(function(personnage) {
-    out += "<a href='/personnages/"+personnage.id+"'>"+personnage.nom+" "+personnage.prenom+"</a><br/>";
+    out += "<a href='/personnages/"+personnage.id+"/public_show'>"+personnage.nom+" "+personnage.prenom+"</a><br/>";
   });
   $("#list-data-lieux").append("<div id='"+lieu.id+"' class='data-lieu'>"+out+"</div>");
 }
@@ -180,6 +181,7 @@ function setDataLieu(lieu) {
 function managerDataLieu() {
   $(".point").on("click", function() {
     $(".data-lieu").hide();
+    console.log($(this).attr("uid"));
     $("#"+$(this).attr("uid")).show();
   });
 }

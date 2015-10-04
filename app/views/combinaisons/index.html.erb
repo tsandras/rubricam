@@ -1,27 +1,29 @@
-<h1>Listing combinaisons</h1>
-
+<h1>Liste des combinaisons de disciplines</h1>
+<div class="col-md-10">
 <table>
   <tr>
     <th>Nom</th>
-    <th>Description</th>
-    <th>Niveau</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Cout</th>
+    <th>Voir</th>
+    <% if @user.role == User::ROLE_ADMIN %>
+      <th>Editer</th>
+      <th>Supprimer</th>
+    <% end %>
   </tr>
 
 <% @combinaisons.each do |combinaison| %>
   <tr>
     <td><%= combinaison.nom %></td>
-    <td><%= combinaison.description %></td>
-    <td><%= combinaison.niveau %></td>
-    <td><%= link_to 'Show', combinaison %></td>
-    <td><%= link_to 'Edit', edit_combinaison_path(combinaison) %></td>
-    <td><%= link_to 'Destroy', combinaison, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= combinaison.cout %></td>
+    <td><%= link_to 'Voir', combinaison, class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to 'Editer', edit_combinaison_path(combinaison), class: 'btn btn-warning btn-xs' %></td>
+    <td><%= link_to 'Supprimer', combinaison, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Combinaison', new_combinaison_path %>
+<%= link_to 'Nouvelle combinaison', new_combinaison_path, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
+</div>

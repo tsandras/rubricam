@@ -16,7 +16,6 @@
 #  dynamique     :integer
 #  statique      :integer
 #  entropique    :integer
-#  routine_id    :integer
 #  user_id       :integer
 #
 

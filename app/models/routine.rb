@@ -36,7 +36,7 @@ class Routine < ActiveRecord::Base
   validates_presence_of :name, :type_routine, :description
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
-  has_many :objets, class_name: 'Objet'
+  has_and_belongs_to_many :objets, class_name: 'Objet'
   belongs_to :user
 
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }

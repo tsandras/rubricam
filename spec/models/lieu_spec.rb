@@ -11,9 +11,9 @@
 #  secret               :boolean
 #  description_publique :text
 #  image_lien           :string(255)
+#  svg_x                :decimal(8, 2)
+#  svg_y                :decimal(8, 2)
 #  avatar               :string(255)
-#  svg_x                :decimal(5, 6)
-#  svg_y                :decimal(5, 6)
 #
 
 require 'rails_helper'

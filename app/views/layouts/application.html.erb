@@ -28,7 +28,8 @@
             <span><%= link_to 'Disciplines', disciplines_path, class: 'btn btn-info btn-sm' %></span></div><br/>
             <div><span><%= link_to 'Atouts', atouts_path, class: 'btn btn-primary btn-sm' %></span>
             <span><%= link_to 'Historiques', historiques_path, class: 'btn btn-warning btn-sm' %></span></div><br/>
-            <div><%= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %></div><br/>
+            <div><span><%= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %></span>
+            <span><%= link_to 'Pouvoirs', combinaisons_path, class: 'btn btn-success btn-sm' %></span></div><br/>
             <% if @user.id.present? %>
               <div><span><%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %></span>
               <span><%= link_to 'Objets', objets_path, class: 'btn btn-info btn-sm' %></span></div><br/>

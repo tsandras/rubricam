@@ -48,6 +48,7 @@ class ObjetsController < ApplicationController
   def create
     @objet = Objet.new(params[:objet])
     @objet.user_id = @user.id
+    load_ressources
     respond_to do |format|
       if @objet.save
         format.html { redirect_to @objet, notice: 'Objet a été crée avec succès.' }
@@ -64,6 +65,7 @@ class ObjetsController < ApplicationController
   def update
     @objet = Objet.find(params[:id])
     @objet.user_id = @user.id
+    load_ressources
     respond_to do |format|
       if @objet.update_attributes(params[:objet])
         format.html { redirect_to @objet, notice: 'Objet a été édité avec succès.' }

@@ -1,0 +1,18 @@
+<%= simple_form_for(@personnage, url: combinaison_update_personnage_path, method: :post) do |f| %>
+  <div class="col-md-4">
+    <%= f.button :submit, "Sauvegarder combinaisons", class: 'btn btn-primary btn-sm' %>
+  </div>
+  <div class="col-md-4">
+    <label for="search_combinaison">Rechercher une combinaison :</label>
+    <input id="search_combinaison" type="text" onkeypress="filter(this, '.combinaison .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.combinaison .checkbox .check_boxes')" />
+    <div class="combinaison">
+      <%= f.association :combinaisons, as: :check_boxes, :collection => Combinaison.all.map {|c| ["#{c.nom} (#{c.cout})", c.id]}.uniq %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    manageCheckBox("#search_combinaison", ".combinaison .checkbox .check_boxes");
+  });
+</script>

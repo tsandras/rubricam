@@ -1,13 +1,27 @@
 <%= simple_form_for(@combinaison) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-5">
     <%= f.input :nom %>
     <%= f.input :description %>
-    <%= f.input :niveau %>
+    <%= f.input :cout %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-5">
+    <%= f.input :secret, label: "Voulez-vous que cette combinaison soit secrete ?", wrapper_html: {class: 'inline simple-checkbox'} %>
+    <div class="disciplines">
+      <label for="search_discipline"> Rechercher discipline :</label>
+      <input id="search_discipline" type="text" onkeypress="filter(this, '.disciplines .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.disciplines .checkbox .check_boxes')">
+      <%= f.association(:disciplines, as: :check_boxes, :collection => Discipline.all.map {|c|[manage_niveau(c), c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
+    </div>
+    <%= f.button :submit, "Créer/Editer la combinaison", class: "btn btn-success btn-sm" %>
+    <%= link_to "Retour", combinaisons_path, class: "btn btn-warning btn-sm" %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		console.log("Coucou");
+		manageCheckBox("#search_discipline", ".disciplines .checkbox .check_boxes");
+	});
+</script>
