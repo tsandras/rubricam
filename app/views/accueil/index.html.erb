@@ -1,44 +1,43 @@
-<div id="page-accueil">
-    <div class="col-md-4">
-      <p id="notice"><%= notice %></p>
-      <div id="menu-personnages" class="menu-accueil">
-        <div class="menu-accueil-head">
-          Vos personnages
-        </div>
-        <div class="menu-accueil-body">
-          <% if @personnages != nil %>
-            <table>
-              <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Voir</th>
-                <th>Editer</th>
-              </tr>
-              <% @personnages.each do |p| %>
-                <tr>
-                  <td><%= p.nom %></td>
-                  <td><%= p.prenom %></td>
-                  <td><%= link_to "Profil", p, class: 'btn btn-success btn-xs' %></td>
-                  <td><%= link_to 'Editer', edit_personnage_path(p), class: 'btn btn-warning btn-xs' %></td>
-                </tr>
-              <% end %>
-            </table>
-          <% else %>
-            Vous n'avez pas de personnages.
+<h1>Accueil</h1>
+<div class="col-md-5">
+  <p id="notice"><%= notice %></p>
+  <div id="menu-personnages" class="menu-accueil">
+    <div class="menu-accueil-head">
+      Vos personnages
+    </div>
+    <div class="menu-accueil-body">
+      <% if @personnages != nil %>
+        <table>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Voir</th>
+            <th>Editer</th>
+          </tr>
+          <% @personnages.each do |p| %>
+            <tr>
+              <td><%= p.nom %></td>
+              <td><%= p.prenom %></td>
+              <td><%= link_to "Profil", p, class: 'btn btn-success btn-xs' %></td>
+              <td><%= link_to 'Editer', edit_personnage_path(p), class: 'btn btn-warning btn-xs' %></td>
+            </tr>
           <% end %>
-        </div>
-        <div class="menu-accueil-action">
-          <%= link_to 'Détail listing', personnages_path, class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Créer un personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
-        </div>
-      </div>
-      <%= menu_accueil(["nom", "type_cap"], "capacites", @capacites, "capacités") %>
-      <%= menu_accueil(["nom"], "historiques", @historiques, "historiques") %>
+        </table>
+      <% else %>
+        Vous n'avez pas de personnages.
+      <% end %>
     </div>
+    <div class="menu-accueil-action">
+      <%= link_to 'Détail listing', personnages_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Créer un personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
+    </div>
+  </div>
+  <%= menu_accueil(["nom", "type_cap"], "capacites", @capacites, "capacités") %>
+  <%= menu_accueil(["nom"], "historiques", @historiques, "historiques") %>
+</div>
 
-    <div class="col-md-5">
-      <%= menu_accueil(["nom_publique"], "personnages", @pnjs, "pnjs") %>
-      <%= menu_accueil(["nom", "cout"], "atouts", @atouts, "atouts") %>
-      <%= menu_accueil(["nom"], "disciplines", @disciplines, "disciplines") %>
-    </div>
+<div class="col-md-5">
+  <%= menu_accueil(["nom_publique"], "personnages", @pnjs, "pnjs") %>
+  <%= menu_accueil(["nom", "cout"], "atouts", @atouts, "atouts") %>
+  <%= menu_accueil(["nom"], "disciplines", @disciplines, "disciplines") %>
 </div>

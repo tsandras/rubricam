@@ -1,93 +1,94 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.js"></script>
-  <p id="notice"><%= notice %></p>
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-8">
-        <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
-        <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
-        Attitude : <%= @personnage.attitude %><br />
-        Nature : <%= @personnage.nature %><br/>
-      </div>
-      <div class="col-md-4">
-        <%= show_image_type(@personnage) %>
-      </div>
+<h2></h2>
+<p id="notice"><%= notice %></p>
+<div class="col-md-6">
+  <div class="row">
+    <div class="col-md-8">
+      <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
+      <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
+      Attitude : <%= @personnage.attitude %><br />
+      Nature : <%= @personnage.nature %><br/>
     </div>
-    <b>Attributs</b>
-    <table>
-      <tr>
-        <td>Force <%= spec(@personnage.spec_force) %> : <%= @personnage.force %></td>
-        <td>Charisme <%= spec(@personnage.spec_charisme) %> : <%= @personnage.charisme %></td>
-        <td>Perception <%= spec(@personnage.spec_perception) %> : <%= @personnage.perception %></td>
-      </tr>
-      <tr>
-        <td>Dextérité <%= spec(@personnage.spec_dexterite) %> : <%= @personnage.dexterite %></td>
-        <td>Manipulation <%= spec(@personnage.spec_manipulation) %> : <%= @personnage.manipulation %></td>
-        <td>Intelligence <%= spec(@personnage.spec_intelligence) %> : <%= @personnage.intelligence %></td>
-      </tr>
-      <tr>
-        <td>Vigueur <%= spec(@personnage.spec_vigueur) %> : <%= @personnage.vigueur %></td>
-        <td>Apparence <%= spec(@personnage.spec_apparence) %> : <%= @personnage.apparence %></td>
-        <td>Astuce <%= spec(@personnage.spec_astuce) %> : <%= @personnage.astuce %></td>
-      </tr>
-    </table>
-    <br />
-    <%= show_capacite(@capacites) %>
-    <%= show_historique(@historiques) %>
-    <%= show_spheres(@personnage) %>
-    <%= show_disciplines_all(@personnage) %>
-    <%= show_advanced_disciplines(@personnage) %>
-    <%= show_combinaisons_disciplines(@personnage) %>
-    <%= show_atout(@atouts) %>
-    <%= show_vertue(@personnage) %>
-    <%= show_resonnance(@personnage) %>
-    <div>
-      <b>Volonté</b> : <%= @personnage.volonte %><br />
-      <%= show_voie(@personnage) %>
-      <%= show_points_sang(@personnage) %>
-      <%= show_entelechie(@personnage) %>
-      <%= show_kinain(@personnage) %>
-    </div>
-    <div>
-      <%= show_routines(@routines) %>
+    <div class="col-md-4">
+      <%= show_image_type(@personnage) %>
     </div>
   </div>
-  <div class="col-md-4">
-    <%#= raise @personnage.inspect %>
-    <p><b>Rang:</b> <%= @personnage.name_rang %> (<%= @personnage.rang %>)</p>
-    <% if @personnage.has_graph %>
-      <canvas id="myChart" width="300" height="300"></canvas>
+  <b>Attributs</b>
+  <table>
+    <tr>
+      <td>Force <%= spec(@personnage.spec_force) %> : <%= @personnage.force %></td>
+      <td>Charisme <%= spec(@personnage.spec_charisme) %> : <%= @personnage.charisme %></td>
+      <td>Perception <%= spec(@personnage.spec_perception) %> : <%= @personnage.perception %></td>
+    </tr>
+    <tr>
+      <td>Dextérité <%= spec(@personnage.spec_dexterite) %> : <%= @personnage.dexterite %></td>
+      <td>Manipulation <%= spec(@personnage.spec_manipulation) %> : <%= @personnage.manipulation %></td>
+      <td>Intelligence <%= spec(@personnage.spec_intelligence) %> : <%= @personnage.intelligence %></td>
+    </tr>
+    <tr>
+      <td>Vigueur <%= spec(@personnage.spec_vigueur) %> : <%= @personnage.vigueur %></td>
+      <td>Apparence <%= spec(@personnage.spec_apparence) %> : <%= @personnage.apparence %></td>
+      <td>Astuce <%= spec(@personnage.spec_astuce) %> : <%= @personnage.astuce %></td>
+    </tr>
+  </table>
+  <br />
+  <%= show_capacite(@capacites) %>
+  <%= show_historique(@historiques) %>
+  <%= show_spheres(@personnage) %>
+  <%= show_disciplines_all(@personnage) %>
+  <%= show_advanced_disciplines(@personnage) %>
+  <%= show_combinaisons_disciplines(@personnage) %>
+  <%= show_atout(@atouts) %>
+  <%= show_vertue(@personnage) %>
+  <%= show_resonnance(@personnage) %>
+  <div>
+    <b>Volonté</b> : <%= @personnage.volonte %><br />
+    <%= show_voie(@personnage) %>
+    <%= show_points_sang(@personnage) %>
+    <%= show_entelechie(@personnage) %>
+    <%= show_kinain(@personnage) %>
+  </div>
+  <div>
+    <%= show_routines(@routines) %>
+  </div>
+</div>
+<div class="col-md-4">
+  <%#= raise @personnage.inspect %>
+  <p><b>Rang:</b> <%= @personnage.name_rang %> (<%= @personnage.rang %>)</p>
+  <% if @personnage.has_graph %>
+    <canvas id="myChart" width="300" height="300"></canvas>
+  <% end %>
+  <div class="background">
+    <p><b>Description:</b> <%= simple_format @personnage.description %></p>
+    <p><b>Background:</b> <%= simple_format @personnage.background %></p>
+    <p><b>Paradigme:</b> <%= simple_format @personnage.paradygme %></p>
+    <% if @personnage.date_naissance.present? %>
+      <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
     <% end %>
-    <div class="background">
-      <p><b>Description:</b> <%= simple_format @personnage.description %></p>
-      <p><b>Background:</b> <%= simple_format @personnage.background %></p>
-      <p><b>Paradigme:</b> <%= simple_format @personnage.paradygme %></p>
-      <% if @personnage.date_naissance.present? %>
-        <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
-      <% end %>
-      <% if @personnage.date_mort.present? %>
-        <p><b>Date mort:</b> <%= @personnage.date_mort %></p>
-      <% end %>
-    </div>
-    <div class="relations">
-      <b>Relations</b><br />
-      <%= show_relations(@from_relations) if @from_relations.count > 0 %>
-      <%= show_relations(@to_relations) if @to_relations.count > 0 %>
-    </div>
-    <br/>
-    <div class="organisations">
-      <%= show_organisations(@organisations) %>
-    </div>
-    <br/>
-    <div class="lieus">
-      <%= show_lieus(@lieus) %>
-    </div>
-    <%= show_xps(@personnage) %>
-    <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
-    <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %>
-    <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %></div><br />
-    <%= manage_reset(@personnage) %>
-    <%= link_to 'Supprimer', @personnage, confirm: "C'est votre ultime bafouille ?", method: :delete, class: 'btn btn-danger btn-sm' %>
+    <% if @personnage.date_mort.present? %>
+      <p><b>Date mort:</b> <%= @personnage.date_mort %></p>
+    <% end %>
   </div>
+  <div class="relations">
+    <b>Relations</b><br />
+    <%= show_relations(@from_relations) if @from_relations.count > 0 %>
+    <%= show_relations(@to_relations) if @to_relations.count > 0 %>
+  </div>
+  <br/>
+  <div class="organisations">
+    <%= show_organisations(@organisations) %>
+  </div>
+  <br/>
+  <div class="lieus">
+    <%= show_lieus(@lieus) %>
+  </div>
+  <%= show_xps(@personnage) %>
+  <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
+  <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %>
+  <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %></div><br />
+  <%= manage_reset(@personnage) %>
+  <%= link_to 'Supprimer', @personnage, confirm: "C'est votre ultime bafouille ?", method: :delete, class: 'btn btn-danger btn-sm' %>
+</div>
 
   <script type="text/javascript">
 

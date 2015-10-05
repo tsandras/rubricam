@@ -18,7 +18,7 @@
 
 html {
   overflow-y: scroll;
-  background-color: #ebeeef;
+  background-color: #f8f8f8;
 }
 
 body {
@@ -29,12 +29,13 @@ body {
 
 footer {
   margin-top: 10px;
-  border-top: 3px solid #337ab7;
+  border-top: 1px solid #e7e7e7;
   background-color: #ebeeef;
   min-height: 40px;
   font-size: 18px;
   line-height: 18px;
-  color: #333333;
+  background-color: #f8f8f8;
+  color: #777777
 }
 
 a:link {
@@ -713,4 +714,8 @@ input[type=number] {
 
 .point:hover {
   cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
 }

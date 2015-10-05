@@ -10,6 +10,7 @@ Rubricam::Application.routes.draw do
   match '/regles', to: 'accueil#regles'
   match '/fan_art', to: 'accueil#fan_art'
   match '/carte', to: 'accueil#carte'
+  match '/navigation', to: 'accueil#navigation'
 
   resources :arts
 

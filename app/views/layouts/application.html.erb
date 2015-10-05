@@ -11,57 +11,84 @@
 <body>
   <header>
   </header>
-  <div class="container <%= !(params[:controller] == 'personnages' && (params[:action] == 'edit' || params[:action] == 'new')) ? 'row' : nil %>">
-    <div id="block-20">
-      <%= image_tag 'v20.png', class: 'x20' %>
-      Rubricam
-      <%= image_tag 'm20.png', class: 'x20' %>
-    </div>
-    <% if !(params[:controller] == "personnages" && (params[:action] == "edit" || params[:action] == "new")) %>
-      <div class="col-md-2">
-        <div id="menu-principal" class="menu-accueil">
-          <div class="menu-accueil-head">
-            version Beta
-          </div>
-          <div class="menu-accueil-body">
-            <div><span><%= link_to 'Accueil', root_url, class: 'btn btn-success btn-sm' %></span>
-            <span><%= link_to 'Disciplines', disciplines_path, class: 'btn btn-info btn-sm' %></span></div><br/>
-            <div><span><%= link_to 'Atouts', atouts_path, class: 'btn btn-primary btn-sm' %></span>
-            <span><%= link_to 'Historiques', historiques_path, class: 'btn btn-warning btn-sm' %></span></div><br/>
-            <div><span><%= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %></span>
-            <span><%= link_to 'Pouvoirs', combinaisons_path, class: 'btn btn-success btn-sm' %></span></div><br/>
-            <% if @user.id.present? %>
-              <div><span><%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %></span>
-              <span><%= link_to 'Objets', objets_path, class: 'btn btn-info btn-sm' %></span></div><br/>
-
-              <div><span><%= link_to 'Personnages', personnages_path, class: 'btn btn-primary btn-sm' %></span>
-              <span><%= link_to 'Lieux', lieus_path, class: 'btn btn-warning btn-sm' %></span></div><br/>
-
-              <div><span><%= link_to 'Organisations', organisations_path, class: 'btn btn-info btn-sm' %></span>
-              <span><%= link_to 'Pnjs', pnjs_personnages_path, class: 'btn btn-success btn-sm' %></span></div><br/>
-
-              <div><span><%= link_to 'Parties', parties_path, class: 'btn btn-warning btn-sm' %></span>
-              <span><%= link_to 'Pjs', pjs_personnages_path, class: 'btn btn-info btn-sm' %></span></div><br/>
-
-              <div><span><%= link_to 'Royaume', fan_art_path, class: 'btn btn-info btn-sm' %></span>
-              <% if @user.role == User::ROLE_ADMIN %>
-                <span><%= link_to 'Joueurs', users_path, class: 'btn btn-success btn-sm' %></span>
-              <% end %>
-              </div><br/>
-
-              <div><span><%= link_to 'Règles', regles_path, class: 'btn btn-success btn-sm' %></span>
-              <span><%= link_to 'Carte', carte_path, class: 'btn btn-danger btn-sm' %></span></div><br/>
-              <span><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></span>
-            <% end %>
-          </div>
-          <div class="menu-accueil-action">
-            <%= image_tag 'rails.png', class: 'rails-image' %>
-            <%= image_tag 'classic-wod.png', class: 'classic-wod' %>
-            <%= image_tag 'treestime.jpg', class: 'treestime' %>
-          </div>
+  <div class="container">
+    <%#= image_tag 'v20.png', class: 'x20' %>
+    <%#= image_tag 'm20.png', class: 'x20' %>
+    <!-- navbar-static-top -->
+    <nav class="navbar navbar-default navbar-fixed-top" id="my-nav">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Rubricam</a>
         </div>
-      </div>
-    <% end %>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><%= link_to 'Accueil', root_url %></li>
+            <li><%= link_to 'Navigation', navigation_path %></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wiki<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Disciplines', disciplines_path %></li>
+                <li><%= link_to 'Combinaisons de discipline', combinaisons_path %></li>
+                <li><%= link_to 'Atouts', atouts_path %></li>
+                <li><%= link_to 'Historiques', historiques_path %></li>
+                <li><%= link_to 'Capacités', capacites_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to 'Règles', regles_path %></li>
+              </ul>
+            </li>
+
+            <% if @user.id.present? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Partie<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Routines', routines_path %></li>
+                <li><%= link_to 'Objets', objets_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to 'Lieux', lieus_path %></li>
+                <li><%= link_to 'Organisations', organisations_path %></li>
+                <li><%= link_to 'Parties', parties_path %></li>
+                <li><%= link_to 'Vos personnages', personnages_path %></li>
+                <li><%= link_to 'Pnjs', pnjs_personnages_path %></li>
+                <li><%= link_to 'Pjs', pjs_personnages_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to 'Carte', carte_path %></li>
+              </ul>
+            </li>
+            <% end %>
+
+            <% if @user.role == User::ROLE_ADMIN %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Mj<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Joueurs', users_path %></li>
+                  <li><%= link_to 'Personnages', personnages_path %></li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+          <% if @user.id.present? %>
+            <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to 'Royaume', fan_art_path %></li>
+              <li><%= link_to 'Profil', user_path(@user) %></li>
+              <li><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete %></li>
+            </ul>
+          <% end %>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <script type="text/javascript">
+      // TODO: add class active with rails
+      // manageActiveDiv();
+    </script>
     <%= yield %>
   </div>
   <footer>

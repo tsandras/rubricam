@@ -324,10 +324,10 @@ module PersonnagesShow
   def show_combinaisons_disciplines(personnage)
     comper = personnage.combinaisons
     out = ""
+    out += "<b>Combinaisons Discipline </b>"
+    out += "</b>"
     out += link_to('Combinaisons disciplines', combinaison_edit_personnage_path(@personnage), class: 'btn btn-success btn-xs')
     if comper.count > 0
-      out += "<b>Combinaisons Discipline</b>"
-      out += "</b>"
       out += "<table>"
       tmp = 0
       comper.each do |com|
@@ -355,7 +355,7 @@ module PersonnagesShow
     end
     if bool
       out = ""
-      out += "<b>Pouvoirs avancées "
+      out += "<b>Disciplines avancées "
       out += link_to('Disciplines avancées', discipline_edit_personnage_path(@personnage), class: 'btn btn-success btn-xs')
       out += "</b>"
       out += "<table>"

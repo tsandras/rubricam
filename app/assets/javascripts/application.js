@@ -185,3 +185,9 @@ function managerDataLieu() {
     $("#"+$(this).attr("uid")).show();
   });
 }
+
+function manageActiveDiv() {
+  $("#my-nav li").on("click", function() {
+    $(this).addClass("active");
+  });
+}

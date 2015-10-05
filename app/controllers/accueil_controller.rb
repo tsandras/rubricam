@@ -16,4 +16,8 @@ class AccueilController < ApplicationController
       .locatable
       .lieu_ou_ville
   end
+
+  def navigation
+    
+  end
 end

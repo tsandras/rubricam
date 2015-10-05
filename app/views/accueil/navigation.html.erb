@@ -1,0 +1,25 @@
+<h1>Navigation</h1>
+<%= link_to 'Accueil', root_url, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Navigation', navigation_path, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Disciplines', disciplines_path, class: 'btn btn-info btn-sm' %>
+<%= link_to 'Combinaisons de discipline', combinaisons_path, class: 'btn btn-success btn-sm' %>
+<%= link_to 'Atouts', atouts_path, class: 'btn btn-primary btn-sm' %>
+<%= link_to 'Historiques', historiques_path, class: 'btn btn-warning btn-sm' %>
+<%= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %>
+<%= link_to 'Règles', regles_path, class: 'btn btn-success btn-sm' %>
+<% if @user.id.present? %>
+  <%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %>
+  <%= link_to 'Objets', objets_path, class: 'btn btn-info btn-sm' %>
+  <%= link_to 'Personnages', personnages_path, class: 'btn btn-primary btn-sm' %>
+  <%= link_to 'Lieux', lieus_path, class: 'btn btn-warning btn-sm' %>
+  <%= link_to 'Organisations', organisations_path, class: 'btn btn-info btn-sm' %>
+  <%= link_to 'Pnjs', pnjs_personnages_path, class: 'btn btn-success btn-sm' %>
+  <%= link_to 'Parties', parties_path, class: 'btn btn-warning btn-sm' %>
+  <%= link_to 'Pjs', pjs_personnages_path, class: 'btn btn-info btn-sm' %>
+  <%= link_to 'Carte', carte_path, class: 'btn btn-danger btn-sm' %>
+<% end %>
+<% if @user.role == User::ROLE_ADMIN %>
+  <%= link_to 'Joueurs', users_path, class: 'btn btn-success btn-sm' %>
+<% end %>
+<%= link_to 'Royaume', fan_art_path, class: 'btn btn-info btn-sm' %>
+<%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></li>
