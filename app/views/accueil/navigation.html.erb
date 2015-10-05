@@ -1,25 +1,112 @@
-<h1>Navigation</h1>
-<%= link_to 'Accueil', root_url, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Navigation', navigation_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Disciplines', disciplines_path, class: 'btn btn-info btn-sm' %>
-<%= link_to 'Combinaisons de discipline', combinaisons_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Atouts', atouts_path, class: 'btn btn-primary btn-sm' %>
-<%= link_to 'Historiques', historiques_path, class: 'btn btn-warning btn-sm' %>
-<%= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %>
-<%= link_to 'Règles', regles_path, class: 'btn btn-success btn-sm' %>
-<% if @user.id.present? %>
-  <%= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %>
-  <%= link_to 'Objets', objets_path, class: 'btn btn-info btn-sm' %>
-  <%= link_to 'Personnages', personnages_path, class: 'btn btn-primary btn-sm' %>
-  <%= link_to 'Lieux', lieus_path, class: 'btn btn-warning btn-sm' %>
-  <%= link_to 'Organisations', organisations_path, class: 'btn btn-info btn-sm' %>
-  <%= link_to 'Pnjs', pnjs_personnages_path, class: 'btn btn-success btn-sm' %>
-  <%= link_to 'Parties', parties_path, class: 'btn btn-warning btn-sm' %>
-  <%= link_to 'Pjs', pjs_personnages_path, class: 'btn btn-info btn-sm' %>
-  <%= link_to 'Carte', carte_path, class: 'btn btn-danger btn-sm' %>
-<% end %>
-<% if @user.role == User::ROLE_ADMIN %>
-  <%= link_to 'Joueurs', users_path, class: 'btn btn-success btn-sm' %>
-<% end %>
-<%= link_to 'Royaume', fan_art_path, class: 'btn btn-info btn-sm' %>
-<%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></li>
+<h1></h1>
+<%#= link_to 'Accueil', root_url, class: 'btn btn-success btn-sm' %>
+<%#= link_to 'Navigation', navigation_path, class: 'btn btn-success btn-sm' %>
+<%#= link_to 'Disciplines', disciplines_path, class: 'btn btn-info btn-sm' %>
+<%#= link_to 'Combinaisons de discipline', combinaisons_path, class: 'btn btn-success btn-sm' %>
+<%#= link_to 'Atouts', atouts_path, class: 'btn btn-primary btn-sm' %>
+<%#= link_to 'Historiques', historiques_path, class: 'btn btn-warning btn-sm' %>
+<%#= link_to 'Capacités', capacites_path, class: 'btn btn-danger btn-sm' %>
+<%#= link_to 'Règles', regles_path, class: 'btn btn-success btn-sm' %>
+<%# if @user.id.present? %>
+  <%#= link_to 'Routines', routines_path, class: 'btn btn-success btn-sm' %>
+  <%#= link_to 'Objets', objets_path, class: 'btn btn-info btn-sm' %>
+  <%#= link_to 'Personnages', personnages_path, class: 'btn btn-primary btn-sm' %>
+  <%#= link_to 'Lieux', lieus_path, class: 'btn btn-warning btn-sm' %>
+  <%#= link_to 'Organisations', organisations_path, class: 'btn btn-info btn-sm' %>
+  <%#= link_to 'Pnjs', pnjs_personnages_path, class: 'btn btn-success btn-sm' %>
+  <%#= link_to 'Parties', parties_path, class: 'btn btn-warning btn-sm' %>
+  <%#= link_to 'Pjs', pjs_personnages_path, class: 'btn btn-info btn-sm' %>
+  <%#= link_to 'Carte', carte_path, class: 'btn btn-danger btn-sm' %>
+<%# end %>
+<%# if @user.role == User::ROLE_ADMIN %>
+  <%#= link_to 'Joueurs', users_path, class: 'btn btn-success btn-sm' %>
+<%# end %>
+<%#= link_to 'Royaume', fan_art_path, class: 'btn btn-info btn-sm' %>
+<%#= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete, class: 'btn btn-danger btn-sm' %></li>
+<div class="col-md-12">
+  <div id="mynetwork"></div>
+</div>
+<script type="text/javascript">
+  // create an array with nodes
+  var menus = [
+    {id: 0, label: "Rubricam", group: 0},
+    {id: 1, label: "Accueil", group: 1},
+    {id: 2, label: "Navigation", group: 1},
+    {id: 3, label: "Wiki", group: 1},
+    {id: 4, label: "Partie", group: 1},
+    {id: 5, label: "Mj", group: 1},
+    {id: 6, label: "Disciplines", group: 2},
+    {id: 7, label: "Combinaisons de discipline", group: 2},
+    {id: 8, label: "Atouts", group: 2},
+    {id: 9, label: "Historiques", group: 2},
+    {id: 10, label: "Capacités", group: 2},
+    {id: 11, label: "Règles", group: 2},
+    {id: 12, label: "Objets", group: 3},
+    {id: 13, label: "Personnages", group: 3},
+    {id: 14, label: "Lieux", group: 3},
+    {id: 15, label: "Organisations", group: 3},
+    {id: 16, label: "Pnjs", group: 3},
+    {id: 17, label: "Parties", group: 3},
+    {id: 18, label: "Pjs", group: 3},
+    {id: 19, label: "Carte", group: 3},
+    {id: 20, label: "Joueurs", group: 4},
+    {id: 21, label: "Royaume", group: 1},
+  ]
+
+  var refs = ["","","","","","","disciplines","combinaisons","atouts","historiques","capacites","regles","objets","personnages","lieus","organisations","personnages/pnjs","parties","personnages/pjs","carte","joueurs","fan_art"]
+
+  var nodes = new vis.DataSet(menus);
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+    {from: 0, to: 1},
+    {from: 0, to: 2},
+    {from: 0, to: 3},
+    {from: 0, to: 4},
+    {from: 0, to: 5},
+    {from: 3, to: 6},
+    {from: 3, to: 7},
+    {from: 3, to: 8},
+    {from: 3, to: 9},
+    {from: 3, to: 10},
+    {from: 3, to: 11},
+    {from: 4, to: 12},
+    {from: 4, to: 13},
+    {from: 4, to: 14},
+    {from: 4, to: 15},
+    {from: 4, to: 16},
+    {from: 4, to: 17},
+    {from: 4, to: 18},
+    {from: 4, to: 19},
+    {from: 5, to: 20},
+    {from: 0, to: 21}
+  ]);
+
+  // create a network
+  var container = document.getElementById('mynetwork');
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {
+    nodes: {
+      fixed: true
+    },
+    edges: {
+      smooth: false
+    },
+    interaction: {
+      dragView: false,
+      zoomView: false
+    },
+    physics: {
+      enabled: false,
+      minVelocity: 0.75
+    }
+  };
+  var network = new vis.Network(container, data, options);
+
+  network.on("doubleClick", function (params) {
+    window.location.replace($(location).attr('protocol')+"//"+$(location).attr('host')+"/"+refs[params["nodes"][0]]);
+  });
+</script>
