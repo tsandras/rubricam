@@ -145,7 +145,7 @@ function addPoints(lieux, svg) {
       newElement.setAttributeNS(null, "cy", parseFloat(lieux[i].svg_y));
       newElement.setAttributeNS(null, "r", 0.5);
       newElement.setAttributeNS(null, "fill", "green");
-      newElement.setAttributeNS(null, "uid", lieux[i].id);
+      newElement.setAttributeNS(null, "uid", "uid"+lieux[i].id);
       newElement.setAttributeNS(null, "class", "point");
       // newElement.style.stroke = "#000"; //Set stroke colour
       // newElement.style.strokeWidth = "1px"; //Set stroke width
@@ -175,13 +175,12 @@ function setDataLieu(lieu) {
   lieu.personnages.forEach(function(personnage) {
     out += "<a href='/personnages/"+personnage.id+"/public_show'>"+personnage.nom+" "+personnage.prenom+"</a><br/>";
   });
-  $("#list-data-lieux").append("<div id='"+lieu.id+"' class='data-lieu'>"+out+"</div>");
+  $("#list-data-lieux").append("<div id='uid"+lieu.id+"' class='data-lieu'>"+out+"</div>");
 }
 
 function managerDataLieu() {
   $(".point").on("click", function() {
     $(".data-lieu").hide();
-    console.log($(this).attr("uid"));
     $("#"+$(this).attr("uid")).show();
   });
 }
