@@ -1,9 +1,5 @@
+<h2><%= @nivdiscipline.nom %></h2>
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Niveau discipline nom:</b>
-  <%= @nivdiscipline.nom %>
-</p>
 
 <p>
   <b>Niveau discipline description:</b>
@@ -22,5 +18,5 @@
   </p>
 <% end %>
 
-<%= link_to 'Edit', edit_nivdiscipline_path(@nivdiscipline), class: 'btn btn-warning' %>
-<%= link_to 'Back', discipline_path(@discipline), class: 'btn btn-primary' %>
+<%= link_to 'Editer', edit_nivdiscipline_path(@nivdiscipline), class: 'btn btn-warning btn-sm' %>
+<%= link_to 'Retour', discipline_path(@discipline), class: 'btn btn-primary btn-sm' %>

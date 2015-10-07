@@ -22,4 +22,7 @@ class Nivdiscipline < ActiveRecord::Base
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
   belongs_to :discipline
+
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
+  scope :secret, lambda { where("secret = ?", true) }
 end
