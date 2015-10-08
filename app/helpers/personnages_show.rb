@@ -322,29 +322,31 @@ module PersonnagesShow
   end
 
   def show_combinaisons_disciplines(personnage)
-    comper = personnage.combinaisons
-    out = ""
-    out += "<b>Combinaisons Discipline </b>"
-    out += "</b>"
-    out += link_to('Combinaisons disciplines', combinaison_edit_personnage_path(@personnage), class: 'btn btn-success btn-xs')
-    if comper.count > 0
-      out += "<table>"
-      tmp = 0
-      comper.each do |com|
-        if tmp % 3 == 0
-          out += "<tr>"
+    if personnage.disciplines.count != 0
+      comper = personnage.combinaisons
+      out = ""
+      out += "<b>Combinaisons Discipline </b>"
+      out += "</b>"
+      out += link_to('Combinaisons disciplines', combinaison_edit_personnage_path(@personnage), class: 'btn btn-success btn-xs')
+      if comper.count > 0
+        out += "<table>"
+        tmp = 0
+        comper.each do |com|
+          if tmp % 3 == 0
+            out += "<tr>"
+          end
+          tmp = tmp + 1
+          out += "<td> #{com.nom} (#{com.cout})</td>"
+          if tmp % 3 == 0
+            out += "</tr>"
+          end
         end
-        tmp = tmp + 1
-        out += "<td> #{com.nom} (#{com.cout})</td>"
-        if tmp % 3 == 0
-          out += "</tr>"
-        end
+        out += "</table>"
+        out += "<br />"
+        out.html_safe
       end
-      out += "</table>"
-      out += "<br />"
       out.html_safe
     end
-    out.html_safe
   end
 
   def show_advanced_disciplines(personnage)
@@ -377,14 +379,19 @@ module PersonnagesShow
   end
 
   def show_image_type(personnage)
-    if personnage.mage?
-      name = I18n.transliterate(personnage.tradition.split(" ").join("_").split("'").join("")).downcase
-      if name != "orphelins"
-        image_tag("traditions/#{name}.jpg", class: "image-tradition")
-      end
-    elsif personnage.vampire?
-      name = I18n.transliterate(personnage.clan.split(" ").join("_").split("'").join("")).downcase
-      image_tag("clans/#{name}.png", class: "image-clan")
+    # if personnage.mage?
+    #   name = I18n.transliterate(personnage.tradition.split(" ").join("_").split("'").join("")).downcase
+    #   if name != "orphelins"
+    #     image_tag("traditions/#{name}.jpg", class: "image-tradition")
+    #   end
+    # elsif personnage.vampire?
+    #   name = I18n.transliterate(personnage.clan.split(" ").join("_").split("'").join("")).downcase
+    #   image_tag("clans/#{name}.png", class: "image-clan")
+    # end
+    type = personnage.mage? ? personnage.tradition : personnage.clan
+    name = I18n.transliterate(type.split(" ").join("_").split("'").join("")).downcase
+    if name != "orphelins"
+      image_tag("wod/#{name}.png", class: "image-clan")
     end
   end
 

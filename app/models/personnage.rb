@@ -73,6 +73,7 @@
 #  detail_statique       :string(255)
 #  detail_entropique     :string(255)
 #  avatar                :string(255)
+#  appartenance_perso    :string(255)
 #
 
 require 'carrierwave/orm/activerecord'
@@ -93,11 +94,12 @@ class Personnage < ActiveRecord::Base
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
-  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids
+  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso
 
   mount_uploader :avatar, AvatarUploader
 
-  validates_presence_of :type_perso, :bonus, :prenom
+  validates_presence_of :type_perso, :appartenance_perso, :bonus, :prenom
+  validate :validity_of_perso
 
   has_and_belongs_to_many :capacites, class_name: 'Capacite'
   has_and_belongs_to_many :atouts, class_name: 'Atout'
@@ -122,6 +124,12 @@ class Personnage < ActiveRecord::Base
   scope :pjs, lambda { where("pnj = ? or pnj is null", false) }
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
   scope :none_secret_and_pnjs, lambda { where("(secret = ? or secret is null) and pnj = ?", false, true) }
+
+  def validity_of_perso
+    return false if !Personnage::TYPE.include?(type_perso)
+    return false if !appartenance_perso.blank? && !Personnage::APPARTENANCE.include?(appartenance_perso) 
+    true
+  end
 
   def has_resonnances
     return false if points_dynamique == nil && points_entropique == nil && points_statique == nil

@@ -38,6 +38,16 @@ footer {
   color: #777777
 }
 
+@font-face {
+  font-family: 'wod';
+  src: url('wod_annoa.ttf') format('truetype');
+}
+
+.wod {
+  font-family: "wod";
+  font-size: 14pt;
+}
+
 a:link {
   text-decoration: none;
 }
@@ -718,4 +728,16 @@ input[type=number] {
 
 .dropdown {
   position: relative;
+}
+
+.question-one-line label,
+  {
+    display: inline-flex;
+    *zoom: 1;
+    *display: inline;
+  }
+
+#relations {
+  //width: 700px;
+  height: 400px;
 }

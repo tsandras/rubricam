@@ -73,6 +73,7 @@
 #  detail_statique       :string(255)
 #  detail_entropique     :string(255)
 #  avatar                :string(255)
+#  appartenance_perso    :string(255)
 #
 
 require 'test_helper'

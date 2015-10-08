@@ -12,6 +12,18 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                "Fraternité Akashite", "Euthanatos", "Onirologues", "Fils de l'Ether",
                "Culte de l'Extase", "Excavés", "Orphelins"]
 
+  TECHNOCRATIE = ["Ingénieur du vide", "Progéniteur", "Nouvel ordre mondial", "Itération X", "Syndicat"]
+
+  AUTRE_MAGE = ["Ahl'I'Batin", "Taftani", "Solificati"]
+
+  MAGE_BY_TYPE = {
+    "Tradition" => TRADITION,
+    "Technocratie" => TECHNOCRATIE,
+    "Autre mages" => AUTRE_MAGE,
+    "Maraudeur" => ["Maraudeur"],
+    "Nefandi" => ["Nefendi"]
+  }
+
   TRADITION_DESCRIPTION = {"Verbena" => "Nous venons au monde sauguinolents et criads, nous traquons la chair et les fruits pour notre suirvie. Nous grandissons, apprenons et nous adaptons. Nous Défaillons et mourrons, pour pourrir une nouvelle vie. Ce Cycle sans fin préoccupe les Vervena et son pouls constant bas au coeur de la Tradition. Sorciers primordiaux, puissants guérisseurs, habile métamorphes, les Verbena aiment le sexe, le sang et la chair.\nSphère de spécialisation : Vie.",
                            "Ordre d'Hermès" => "Ancêtre des Traditions, mystiques hors pairs, détenteurs des clefs du Paradis, l'Ordre d'Hermès veut porter tous ces noms. Que cette prétention soit honorable ou pur orgueil, l'Ordre a donné plus aux Traditions, possède plus d'Archimages et a crée plus de théories magiques codifiées que tous les autres groupes du Conseil. Ces travailleurs archarnés affichent fièrement leurs réussites de sorciers, de maîtres des rituels et des sorts, de sages de grand renom et de constructeurs d'artefacts eet de Fondations. Pourtant, leur unité cache de puissantes intrigues poliques.\nSphère de spécialisation : Force.",
                            "Choeur Céleste" => "Le Choeur célèste est l'une des Traditions les moins comprises. Bien que ce soit indubitablement une Tradition religieuse, elle ne préfère pas une religion à une autre. l'Unique et le Prime que révère le Choeur transcendent toutes les déités. Toute ]'humanité fait partie du chant cosmique, de l'éclat radieux du Pur et du Prime. Lorsque l'hmanité sera réunie à nouveau dans cette foi, le Prime sera entier, le chant sera manifeste et l'univers guéri.\nSphère de spécialisation : Prime.",
@@ -33,7 +45,16 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
           "Lasombra", "Malkavian", "Nosferatu", "Ravnos", "Salubrien", "Toreador",
           "Tremere", "Tzimisce", "Ventrue", "Baali", "Caïtiff", "Gargouilles",
           "Kiasyd", "Lhiannan", "Nagaraja", "Samedi",
-          "Vrai Brujah", "Andas", "Noiad", "Agarash"]
+          "Vrai Brujah", "Andas", "Noiad", "Agarash", "Disciple de Kali"]
+
+  APPARTENANCE = TRADITION + TECHNOCRATIE + AUTRE_MAGE + ["Maraudeur"] + ["Nefendi"] + CLAN
+
+  CLAN_BY_TYPE = {
+    "Camarilla" => ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue", "Gargouilles"],
+    "Sabbat" => ["Lasombra", "Tzimisce", "Kiasyd", "Samedi"],
+    "Indépendant" => ["Assamites", "Cappadocian", "Setite", "Giovanni", "Ravnos"],
+    "Autre" => ["Lhiannan", "Salubrien", "Baali", "Nagaraja", "Vrai Brujah", "Andas", "Noiad", "Agarash", "Disciple de Kali"]
+  }
 
   CLAN_DESCRIPTION = {"Assamites" => "Les Assamites sont arrivés des étendues désertiques de l'Orient. Ils sont connus des vampires comme étant des assassins, travaillant pour ceux qui y mettent le prix. Le prix qu'ils demandent est de la vitae d'autres vampires. Pour eux la diablerie est le plus grand des sacrements et aucun autre clan n'a acquis une telle réputation en ce qui concerne ce sujet. Discipline de Clan : Célérité, Occultation, Quietus.",
                       "Brujah" => "Les Brujahs étaient autrefois les rois philosophes de la Mésopotamie, de la Perse et de Babylone. Ils contrôlaient un empire s'étendant du berceau de la civilisation au nord de l'Afrique, et accumulèrent des connaissances du monde entier. Cependant, il est dit que dans leur recherche de liberté et d'illumination, ils tuèrent leur fondateur. Discipline de Clan : Célérité, Puissance, Présence.",
@@ -53,14 +74,15 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                       "Baali" => "La lignée est apparue dans les temps anciens. Le plus Vieil infant né d'un Antédiluvien coureur, esclave de basse extraction d'un peuple proto-mésopotamien, s'est élevé contre les treize Antédiluviens. Ce traître démoniaque a forgé une alliance avec les ombres qui vivaient à la périphérie de ce monde. Discipline de Clan : Daimonon, Occultation, Présence.",
                       "Caïtiffs" => "Les sans clans",
                       "Gargouilles" => " Leur histoire est étroitement liée à celle des Tremere, et notament à Goratrix, et à la Fondation de Ceoris. En 1230, il existe des rumeurs sur une colonie libre de gargouilles... alors même qu'elles ne sont pas censées pouvoir donner le Baiser. Discipline de Clan : Force d'âme, Puissance, Visceratika, Vol.",
-                      "Kiasyds" => "Les Kiasyds sont apparus sous le règne de Julien l'Apostat (vers 360). Cette lignée est la création de 3 Lasombras qui opéraient à découvrir la propre nature de leur discipline, Obtenebration. Discipline de Clan : Domination, Mytherceria, Obténébration.",
+                      "Kiasyd" => "Les Kiasyds sont apparus sous le règne de Julien l'Apostat (vers 360). Cette lignée est la création de 3 Lasombras qui opéraient à découvrir la propre nature de leur discipline, Obtenebration. Discipline de Clan : Domination, Mytherceria, Obténébration.",
                       "Lhiannan" => "Les Lhiannans sont largement matriarcales, au point même de repousser le mythe de Caïn. Elles prétendent qu'un personnage obscur féminin, appelée la Vieille, aurait parcouru le monde antique et créé les Lhiannans des gouttes de son sang. Discipline de Clan : Animalisme, Ogham, Présence.",
                       "Nagaraja" => "Les Nagarajas sont des sorcières cannibales provennant, selon certains érudits caïnites, d'un culte de la mort du Moyen-Orient. D'autres ajoutent qu'elles ont également des relations ésotériques avec d'autres sorciers. Très peu nombreuses et en plus chassées et traquées depuis la destruction d'Enoch, elles parlent peu et se cachent. Discipline de Clan : Auspex, Domination, Nécromancie.",
                       "Samedi" => "  La lignée existe depuis quelques centaines d'années et est apparue en Italie et aux Caraïbes. Elle pourrait descendre des clans Nosferatu ou Giovanni mais aucun des deux ne s'en attribue le mérite ou le blâme. Très peu de Samedi se sont répandus aux Etats-Unis. Par contre la lignée s'est largement répandu au cours des 200 dernières années. Il semble que la lignée soit originaire des Caraïbes et qu'elle est un fort héritage vaudou. Discipline de Clan : Force d'ame, Occultation, Thanatosis.",
                       "Vrai Brujah" => "Les Vrai Brujahs sont les descendants directs de Brujah lui-même et non de l'usurpateur qui a engendré le clan Brujah. De ce fait, ils éprouvent un certain dédain pour les Brujahs et leur héritage continuel de diablerie. Ce sont des chroniqueurs et des chercheurs qui voient le monde sans aucune passion. Discipline de Clan : Puissance, Présence, Temporis.",
                       "Andas" => "Ce sont des Mongols Gangrel. Leurs légendes disent que les bandits démons Xia ont combattu les enfants de la Terre Itürgen. Discipline de Clan : Animalisme, Force d'ame, Protéisme.",
                       "Noiad" => "Ces Gangrel viennent de Scandinavie. Ils se disent serviteurs des Sami (peuple finlandais). Ils protègent ce peuple, et interprètent les messages des Dieux. Durant les 3 mois d'été, chaque tribu réveille son Noaid protecteur et lui donne du Sang, ce qui demande une confiance réciproque énorme. Ils pensent ne rien avoir à faire avec les autres vampires, et défendent leur culture déjà déclinante au Moyen-Age. Discipline de Clan : Animalisme, Auspex, Protéisme.",
-                      "Agarash" => "Secret"}
+                      "Agarash" => "Secret",
+                      "Disciple de Kali" => "Secret"}
 
   DISCIPLINES_CLAN = {"Assamites" => ["Célérité", "Occultation", "Quietus"], "Brujah" => ["Célérité", "Puissance", "Présence"],
                       "Cappadocian" => ["Auspex", "Force d'âme", "Nécromancie"], "Setite" => ["Occultation", "Présence", "Serpentis"],
@@ -71,11 +93,12 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                       "Tremere" => ["Domination", "Auspex", "Thaumaturgie"], "Tzimisce" => ["Animalisme", "Auspex", "Vicissitude"],
                       "Ventrue" => ["Force d'âme", "Domination", "Présence"],
                       "Baali" => ["Daimonon", "Occultation", "Présence"], "Caïtiffs" => ["Puissance", "Célérite", "Force d'âme"],
-                      "Gargouilles" => ["Force d'âme", "Puissance", "Visceratika", "Vol"], "Kiasyds" => ["Domination", "Mytherceria", "Obténébration"],
+                      "Gargouilles" => ["Force d'âme", "Puissance", "Visceratika", "Vol"], "Kiasyd" => ["Domination", "Mytherceria", "Obténébration"],
                       "Lhiannan" => ["Animalisme", "Ogham", "Présence"], "Nagaraja" => ["Auspex", "Domination", "Nécromancie"],
                       "Samedi" => ["Force d'âme", "Occultation", "Thanatosis"],
                       "Vrai Brujah" => ["Puissance", "Présence", "Temporis"], "Andas" => ["Animalisme", "Force d'âme", "Protéisme"],
-                      "Noiad" => ["Animalisme", "Auspex", "Protéisme"], "Agarash" => ["Nécromancie", "Protéisme", "Domination"]}
+                      "Noiad" => ["Animalisme", "Auspex", "Protéisme"], "Agarash" => ["Nécromancie", "Protéisme", "Domination"],
+                      "Diciple de Kali" => ["Puissance", "Obténébration", "Présence"]}
 
   VOIE = ["La Voie de l'Humanité", "La Voie de la Bête", "La Voie de la Chevalerie", "La Voie des Coeurs Ecorchés",
           "La Voie de la concentration Intérieure", "La Voie du Diable", "La Voie de Lilith",
@@ -116,4 +139,16 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
   CAP_SOCIAL = ["Commandement", "Empathie", "Expérience de la rue", "Expression", "Intimidation", "Intuition", "Subterfuge", "Animaux", "Étiquette", "Représentation"]
 
   POINTS_SANG = {"13" => 10, "12" => 11, "11" => 12, "10" => 13, "9" => 14, "8" => 15, "7" => 20, "6" => 30, "5" => 40, "4" => 50}
+
+  FONT_WOD = {
+        "correspondance" => 'a',
+        "entropie" => 'b',
+        "esprit" => 'c',
+        "forces" => 'd',
+        "matiere" => 'e',
+        "prime" => 'f',
+        "psyche" => 'g',
+        "temps" => 'h',
+        "vie" => 'i'
+  }
 end
