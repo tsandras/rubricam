@@ -36,7 +36,9 @@ Rubricam::Application.routes.draw do
 
   resources :atouts
 
-  resources :relations
+  resources :relations do
+    get :visuel, on: :collection
+  end
 
   resources :capacites
 

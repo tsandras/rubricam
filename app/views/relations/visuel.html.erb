@@ -1,0 +1,32 @@
+<h2>Visuel des relations</h2>
+<div class="col-md-12">
+	<div id="relations"></div>
+</div>
+
+<script type="text/javascript">
+	var relations = <%= raw @relations.to_json %>
+	var personnages = <%= raw @personnages.to_json %>
+	console.log(relations);
+	console.log(personnages);
+
+	var tmpNodes = [];
+	for (var j in personnages) {
+		console.log(personnages[j].id);
+		tmpNodes.push({id: personnages[j].id, label: personnages[j].prenom});
+	}
+	var tmpEdges = []
+	var i = 0
+	for (var j in relations) {
+		tmpEdges.push({id: i, from: relations[j].from_personnage_id, to: relations[j].to_personnage_id, label: relations[j].name});
+		i++;
+	}
+	var nodes = new vis.DataSet(tmpNodes);
+	var edges = new vis.DataSet(tmpEdges);
+	var container = document.getElementById('relations');
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+</script>

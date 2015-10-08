@@ -89,6 +89,11 @@ class RelationsController < ApplicationController
     end
   end
 
+  def visuel
+    @relations = Relation.all
+    @personnages = Personnage.all
+  end
+
   private
 
     def permition?(user, relation)

@@ -1,9 +1,5 @@
+<h2><%= @relation.name %></h2>
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @relation.name %>
-</p>
 
 <p>
   <b>Description:</b>
@@ -25,5 +21,5 @@
   <% p2 = get_personnage(@relation.from_personnage_id) %><%= p2 ? "#{p2.prenom} #{p2.nom}" : "" %>
 </p>
 
-<%= link_to 'Edit', edit_relation_path(@relation), class: 'btn btn-warning' %>
-<%= link_to 'Back', relations_path, class: 'btn btn-primary' %>
+<%= link_to 'Editer', edit_relation_path(@relation), class: 'btn btn-warning btn-sm' %>
+<%= link_to 'Retour', relations_path, class: 'btn btn-primary btn-sm' %>
