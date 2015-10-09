@@ -58,6 +58,10 @@ Rubricam::Application.routes.draw do
     get :reset_xps, on: :member
     get :reset_bonus, on: :member
     get :reset_base, on: :member
+    get :background_edit, on: :member
+    post :background_update, on: :member
+    get :secret_update, on: :member
+    get :pnj_update, on: :member
   end
 
 end

@@ -40,7 +40,7 @@ footer {
 
 @font-face {
   font-family: 'wod';
-  src: url('wod_annoa.ttf') format('truetype');
+  src: url('WODannoa.ttf') format('truetype');
 }
 
 .wod {
@@ -740,4 +740,13 @@ input[type=number] {
 #relations {
   //width: 700px;
   height: 400px;
+}
+
+.small-font {
+  font-size: 8pt;
+}
+
+.help-inline {
+  color: red;
+  margin-left: 2px;
 }

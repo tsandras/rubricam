@@ -51,8 +51,10 @@
   <div>
     <%= show_routines(@routines) %>
   </div>
+  <br/>
+  <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %>
 </div>
-<div class="col-md-4">
+<div class="col-md-6">
   <%#= raise @personnage.inspect %>
   <p><b>Rang:</b> <%= @personnage.name_rang %> (<%= @personnage.rang %>)</p>
   <% if @personnage.has_graph %>
@@ -84,9 +86,30 @@
   </div>
   <%= show_xps(@personnage) %>
   <div><%= link_to 'Editer', edit_personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
-  <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %>
-  <%= link_to 'Retour', personnages_path, class: 'btn btn-primary btn-sm' %></div><br />
-  <%= manage_reset(@personnage) %>
+  <%= link_to 'Editer description publique', public_edit_personnage_path(@personnage), class: 'btn btn-success btn-sm' %></div><br />
+  <div><%= link_to 'Editer background', background_edit_personnage_path(@personnage), class: 'btn btn-info btn-sm' %>
+  <%= manage_reset(@personnage) %></div><br />
+  <% if @user.role == User::ROLE_ADMIN %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Changement</th>
+          <th>Etat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= link_to 'Secret', secret_update_personnage_path(@personnage), class: 'btn btn-primary btn-xs' %></td>
+          <td><%= activation(@personnage, "secret") %></td>
+        </tr>
+        <tr>
+          <td><%= link_to 'PNJ', pnj_update_personnage_path(@personnage), class: 'btn btn-warning btn-xs' %></td>
+          <td><%= activation(@personnage, "pnj") %></td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+  <% end %>
   <%= link_to 'Supprimer', @personnage, confirm: "C'est votre ultime bafouille ?", method: :delete, class: 'btn btn-danger btn-sm' %>
 </div>
 

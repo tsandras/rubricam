@@ -87,4 +87,44 @@ module PersonnagesHelper
       link_to 'Réinitialiser base', reset_base_personnage_path(@personnage), confirm: "C'est votre ultime bafouille ?", class: 'btn btn-info btn-sm'
     end
   end
+
+  def activation(personnage, field)
+    if personnage.send(field)
+      content_tag :span, 'Oui', class: 'label label-success'
+    else
+      content_tag :span, 'Non', class: 'label label-default'
+    end
+  end
+
+  def label_secret(personnage)
+    if personnage.secret
+      content_tag :span, 'Secret', class: 'label label-warning'
+    else
+      content_tag :span, 'Publique', class: 'label label-info'
+    end
+  end
+
+  def label_pnj(personnage)
+    if personnage.pnj
+      content_tag :span, 'PNJ', class: 'label label-default'
+    else
+      content_tag :span, 'PJ', class: 'label label-success'
+    end
+  end
+
+  def label_rang(personnage)
+    color = ""
+    if personnage.name_rang == 'S'
+      color = "label-danger"
+    elsif personnage.name_rang == 'A'
+      color = "label-warning"
+    elsif personnage.name_rang == 'B'
+      color = "label-success"
+    elsif personnage.name_rang == 'C'  
+      color = "label-info"
+    else
+      color = "label-default"
+    end
+    content_tag :span, personnage.name_rang, class: "label #{color}"
+  end
 end

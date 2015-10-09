@@ -342,9 +342,9 @@ module PersonnagesShow
           end
         end
         out += "</table>"
-        out += "<br />"
         out.html_safe
       end
+      out += "<br />"
       out.html_safe
     end
   end

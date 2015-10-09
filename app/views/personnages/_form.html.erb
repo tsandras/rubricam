@@ -61,20 +61,6 @@
       </div>
     </div>
     <div class="row background">
-      <p class="text-center"><b>Background</b></p>
-      <div class="col-md-4">
-        <%= p.input :background %>
-      </div>
-      <div class="col-md-4">
-        <%= p.input :paradygme %>
-        <%= p.input :secret, label: "Voulez-vous que ce personnage soit secret ?", wrapper_html: {class: 'inline simple-checkbox'} if @user.role == User::ROLE_ADMIN %>
-      </div>
-      <div class="col-md-4">
-        <%= p.input :description %>
-        <%= p.input :pnj, label: "Voulez-vous que ce personnage soit un pnj ?", wrapper_html: {class: 'inline simple-checkbox'} if @user.role == User::ROLE_ADMIN %>
-      </div>
-    </div>
-    <div class="row background">
       <%#= @personnage.caracteristique_base %>
       <%#= @personnage.caracteristique_bonus %>
       <%= p.input :caracteristique_base, as: :hidden %>

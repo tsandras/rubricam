@@ -3,3 +3,13 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+    errors:
+      models:
+        personnage:
+          attributes:
+            prenom:
+              blank: "Vous devez remplir ce champs"
+            bonus:
+              blank: "Vous devez remplir ce champs"

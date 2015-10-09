@@ -59,9 +59,6 @@
                 <li><%= link_to 'Vos personnages', personnages_path %></li>
                 <li><%= link_to 'Pnjs', pnjs_personnages_path %></li>
                 <li><%= link_to 'Pjs', pjs_personnages_path %></li>
-                <li role="separator" class="divider"></li>
-                <li><%= link_to 'Carte', carte_path %></li>
-                <li><%= link_to 'Relations', visuel_relations_path %></li>
               </ul>
             </li>
             <% end %>
@@ -72,13 +69,16 @@
                 <ul class="dropdown-menu">
                   <li><%= link_to 'Joueurs', users_path %></li>
                   <li><%= link_to 'Personnages', personnages_path %></li>
+                  <li><%= link_to 'Relations', relations_path %></li>
                 </ul>
               </li>
             <% end %>
           </ul>
           <% if @user.id.present? %>
             <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to 'Carte', carte_path %></li>
               <li><%= link_to 'Royaume', fan_art_path %></li>
+              <li><%= link_to 'Visuel relations', visuel_relations_path %></li>
               <li><%= link_to 'Profil', user_path(@user) %></li>
               <li><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete %></li>
             </ul>

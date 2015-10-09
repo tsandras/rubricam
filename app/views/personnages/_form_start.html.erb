@@ -1,16 +1,15 @@
 <h2></h2>
 <%= simple_form_for(@personnage) do |f| %>
-  <% @f = f %>
-  <% if @personnage.errors.any? %>
+<!--   <%# if @personnage.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@personnage.errors.count, "error") %> prohibited this personnage from being saved:</h2>
+      <h2><%#= pluralize(@personnage.errors.count, "error") %> prohibited this personnage from being saved:</h2>
       <ul>
-      <% @personnage.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+      <%# @personnage.errors.full_messages.each do |msg| %>
+        <li><%#= msg %></li>
+      <%# end %>
       </ul>
     </div>
-  <% end %>
+  <%# end %> -->
 
   <div class="col-md-6">
     <div id="choixtype"></div>
@@ -25,22 +24,22 @@
       Enfin choisissez vos points bonus de départ et votre expérience.<br/>
     </div>
     <br />
-    <%= @f.input :nom, label: 'Nom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
-    <%= @f.input :prenom, label: 'Prénom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
-    <%= @f.input :type_perso, wrapper_html: { class: 'hidden'} %>
+    <%= f.input :nom, label: 'Nom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
+    <%= f.input :prenom, label: 'Prénom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
+    <%= f.input :type_perso, wrapper_html: { class: 'hidden'} %>
     <div><label class="string required control-label">Type personnage :</label><span id="type-perso"></span></div>
-    <%= @f.input :appartenance_perso, wrapper_html: { class: 'hidden'} %>
-    <%= @f.input :clan, wrapper_html: { class: 'hidden'} %>
-    <%= @f.input :tradition, wrapper_html: { class: 'hidden'} %>
+    <%= f.input :appartenance_perso, wrapper_html: { class: 'hidden'} %>
+    <%= f.input :clan, wrapper_html: { class: 'hidden'} %>
+    <%= f.input :tradition, wrapper_html: { class: 'hidden'} %>
     <div><label class="string required control-label">Appartenance :</label><span id="appartenance-perso"></span></div>
-    <%= @f.input :bonus, label: "Points bonus :", collection: [["10 pts", 10], ["15 pts", 15], ["21 pts", 21], ["42 pts", 42]], wrapper_html: {class: 'inline'} %>
-    <div class="partie-personnage">
-      Si vous choississez 42 points bonus vous pourrez répartir un nombre variable de point bonus jusqu'à 42 points. Pour les autres vous devrez exactement dépenser le nombre de point bonnus indiqué.
+    <%= f.input :bonus, label: "Points bonus :", collection: [["10 pts", 10], ["15 pts", 15], ["21 pts", 21], ["42 pts", 42]], wrapper_html: {class: 'inline'} %>
+    <div class="partie-personnage small-font">
+      Si vous choississez 42 points bonus vous pourrez répartir un nombre variable de point bonus jusqu'à 42 points. Pour les autres vous devrez exactement dépenser le nombre de point bonus indiqué.
     </div>
-    <%= @f.input :xps, label: "Ajouter de l'Xps ?", wrapper_html: {class: 'inline'}, input_html: {class: 'spe-xps'} %>
+    <%= f.input :xps, label: "Ajouter de l'Xps :", wrapper_html: {class: 'inline'}, input_html: {class: 'spe-xps'} %>
     <br />
     <p class="text-center">
-      <%= @f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %>
+      <%= f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %>
       <%= link_to 'Retour', personnages_path, class: 'btn btn-warning btn-sm' %>
     </p>
   </div>
@@ -52,28 +51,26 @@
     // New Code
     //////////////////
     var types = [
-      {id: 0, label: "Personnage", group: 0},
-      {id: 1, label: "Vampire", group: 1, value: "Vampire"},
-      {id: 2, label: "Mage", group: 1, value: "Mage"},
-      {id: 3, label: "Mortel", group: 1, value: "Mortel"},
-
-      {id: 4, label: "Métamorphe", group: 1, value: "Métamorphe"},
-      {id: 5, label: "Changelin", group: 1, value: "Changelin"},
-      {id: 6, label: "Ombre", group: 1, value: "Ombre"},
-
+      {id: 0, label: "Personnage", group: 0, shape: 'image', image: '/assets/wod/personnage.png', shapeProperties: {useImageSize: true}},
+      {id: 1, label: "Vampire", group: 1, value: "Vampire", shape: 'image', image: '/assets/wod/vampire.png', shapeProperties: {useImageSize: true}},
+      {id: 2, label: "Mage", group: 1, value: "Mage", shape: 'image', image: '/assets/wod/mage.png', shapeProperties: {useImageSize: true}},
+      {id: 3, label: "Mortel", group: 1, value: "Mortel", shape: 'image', image: '/assets/wod/humain.png', shapeProperties: {useImageSize: true}},
+      {id: 4, label: "Métamorphe", group: 1, value: "Métamorphe", shape: 'image', image: '/assets/wod/metamorphe.png', shapeProperties: {useImageSize: true}},
+      {id: 5, label: "Changelin", group: 1, value: "Changelin", shape: 'image', image: '/assets/wod/changelin.png', shapeProperties: {useImageSize: true}},
+      {id: 6, label: "Ombre", group: 1, value: "Ombre", shape: 'image', image: '/assets/wod/ombre.png', shapeProperties: {useImageSize: true}},
       {id: 7, label: "Camarilla", group: 2, value: "Camarilla", shape: 'image', image: '/assets/wod/camarilla.png', shapeProperties: {useImageSize: true}},
       {id: 8, label: "Sabbat", group: 2, value: "Sabbat", shape: 'image', image: '/assets/wod/sabbat.png', shapeProperties: {useImageSize: true}},
-      {id: 9, label: "Indépendant", group: 2, value: "Indépendant"},
-      {id: 10, label: "Autre", group: 2, value: "Autre"},
+      {id: 9, label: "Indépendant", group: 2, value: "Indépendant", shape: 'image', image: '/assets/wod/independant.png', shapeProperties: {useImageSize: true}},
+      {id: 10, label: "Disparue", group: 2, value: "Disparue", shape: 'image', image: '/assets/wod/disparue.png', shapeProperties: {useImageSize: true}},
       {id: 11, label: "Traditions", group: 3, value: "Traditions", shape: 'image', image: '/assets/wod/neuf_traditions.png', shapeProperties: {useImageSize: true}},
-      {id: 12, label: "Autre", group: 3, value: "Autre"},
+      {id: 12, label: "Autre", group: 3, value: "Autre", shape: 'image', image: '/assets/wod/autre.png', shapeProperties: {useImageSize: true}},
       {id: 13, label: "Technocratie", group: 3, value: "Technocratie", shape: 'image', image: '/assets/wod/technocratie.png', shapeProperties: {useImageSize: true}},
       {id: 14, label: "Maraudeur", group: 3, value: "Maraudeur", shape: 'image', image: '/assets/wod/maraudeur.png', shapeProperties: {useImageSize: true}},
       {id: 15, label: "Nefandi", group: 3, value: "Nefandi", shape: 'image', image: '/assets/wod/nefandi.png', shapeProperties: {useImageSize: true}},
       {id: 16, label: "Verbena", group: 4, value: "Verbena", shape: 'image', image: '/assets/wod/verbena.png', shapeProperties: {useImageSize: true}},
       {id: 17, label: "Euthanatos", group: 4, value: "Euthanatos", shape: 'image', image: '/assets/wod/euthanatos.png', shapeProperties: {useImageSize: true}},
       {id: 18, label: "Ordre d'Hermès", group: 4, value: "Ordre d'Hermès", shape: 'image', image: '/assets/wod/ordre_dhermes.png', shapeProperties: {useImageSize: true}},
-      {id: 19, label: "Choeur Céleste", group: 4, value: "Choeur Céleste", shape: 'image', image: '/assets/wod/coeur_celeste.png', shapeProperties: {useImageSize: true}},
+      {id: 19, label: "Choeur Céleste", group: 4, value: "Choeur Céleste", shape: 'image', image: '/assets/wod/choeur_celeste.png', shapeProperties: {useImageSize: true}},
       {id: 20, label: "Adepte du virtuel", group: 4, value: "Adepte du virtuel", shape: 'image', image: '/assets/wod/adepte_du_virtuel.png', shapeProperties: {useImageSize: true}},
       {id: 21, label: "Culte de l'Extase", group: 4, value: "Culte de l'Extase", shape: 'image', image: '/assets/wod/culte_de_lextase.png', shapeProperties: {useImageSize: true}},
       {id: 22, label: "Excavés", group: 4, value: "Excavés", shape: 'image', image: '/assets/wod/excaves.png', shapeProperties: {useImageSize: true}},
@@ -286,7 +283,7 @@
 
   function showAllNodesTo(network, nodeId, nodes, edges) {
     var nodeIds = network.getConnectedNodes(nodeId);
-    var tmp = getPathToNode2(nodes.get(0), nodeId, nodes, network);
+    var tmp = getPathToNode(nodes.get(0), nodeId, nodes, network);
     nodes.update({id: nodeId, hidden: false});
     nodes.get(nodeIds).forEach(function(item) {
       nodes.update({id: item.id, hidden: false});
@@ -331,18 +328,14 @@
 
   function showNodesInit(nodes, edges, network) {
     var labelTarget = $("#personnage_appartenance_perso").attr("value");
-    console.log(labelTarget);
     if (labelTarget) {
       var items = nodes.get({
         filter: function (item) {
           return item.value == labelTarget;
         }
       });
-      console.log(items);
       var nodeTarger = items[0];
-      console.log(nodeTarger);
       var nodeIds = getPathToNode(nodes.get(0), nodeTarger.id, nodes, network);
-      console.log(nodeIds);
       nodes.get(nodeIds).forEach(function(item) {
         nodes.update({id: item.id, hidden: false});
       });
@@ -402,7 +395,7 @@
       $(idRacePerso).html(" "+value);
       $("#personnage_appartenance_perso").attr("value", value);
     }
-    if (id > 34) {
+    if (id > 33) {
       $("#personnage_clan").attr("value", value);
     }
     if (id > 15 && id < 26) {

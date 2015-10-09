@@ -100,7 +100,6 @@ class PersonnagesController < ApplicationController
     redirect_to personnage_path(@personnage)
   end
 
-
   def combinaison_edit
     @personnage = Personnage.find(params[:id])
     @combinaisons_personnages = CombinaisonsPersonnages.where("niveau > 5")
@@ -118,6 +117,38 @@ class PersonnagesController < ApplicationController
 
   def routine_update
     @personnage = Personnage.find(params[:id])
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
+  def background_edit
+    @personnage = Personnage.find(params[:id])
+  end
+
+  def background_update
+    @personnage = Personnage.find(params[:id])
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
+  def secret_update
+    @personnage = Personnage.find(params[:id])
+    if @personnage.secret
+      @personnage.secret = false 
+    else
+      @personnage.secret = true
+    end
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
+  def pnj_update
+    @personnage = Personnage.find(params[:id])
+    if @personnage.pnj
+      @personnage.pnj = false 
+    else
+      @personnage.pnj = true
+    end
     @personnage.update_attributes(params[:personnage])
     redirect_to personnage_path(@personnage)
   end
@@ -308,7 +339,9 @@ class PersonnagesController < ApplicationController
   end
 
   def add_sphere_tradition(tradition)
-    if Personnage::SPHERES_TRADITION[tradition] != "Aucun"
+    if Personnage::SPHERES_TRADITION[tradition] != "Aucun" || 
+      Personnage::SPHERES_TRADITION[tradition] != "Orphelins" || 
+      Personnage::SPHERES_TRADITION[tradition] != "Excavés"
       sph = Sphere.where(name: Personnage::SPHERES_TRADITION[tradition], personnage_id: @personnage.id).first
       if !sph
         Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_TRADITION[tradition], niveau: 1)

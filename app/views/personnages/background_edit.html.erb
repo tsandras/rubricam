@@ -1,0 +1,18 @@
+<%= simple_form_for(@personnage, url: background_update_personnage_path, method: :post) do |f| %>
+<div class="row background">
+  <p class="text-center"><b>Background</b></p>
+  <div class="col-md-4">
+    <%= f.input :background %>
+  </div>
+  <div class="col-md-4">
+    <%= f.input :paradygme %>
+  </div>
+  <div class="col-md-4">
+    <%= f.input :description %>
+  </div>
+</div>
+<p class="text-center">
+  <%= link_to 'Retour', personnage_path(@personnage), class: 'btn btn-warning btn-sm' %>
+  <%= f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %>
+</p>
+<% end %>
