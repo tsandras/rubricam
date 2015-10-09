@@ -18,4 +18,6 @@ class Relation < ActiveRecord::Base
 
   belongs_to :personnage, :class_name => 'Personnage', :foreign_key => 'to_personnage_id'
   belongs_to :personnage, :class_name => 'Personnage', :foreign_key => 'from_personnage_id'
+
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
 end

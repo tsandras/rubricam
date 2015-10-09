@@ -13,3 +13,7 @@ en:
               blank: "Vous devez remplir ce champs"
             bonus:
               blank: "Vous devez remplir ce champs"
+  will_paginate:
+    previous_label: "Précédent"
+    page_gap: "..."
+    next_label: "Suivant"

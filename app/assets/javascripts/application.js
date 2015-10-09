@@ -126,7 +126,7 @@ function zoom(svg) {
   var panZoomTiger = svgPanZoom(svg, {minZoom: 1});
 
   $('#world-map-svg').css({
-    'height':'750px',
+    'height':'510px',
     'width':'750px'
   });
 }

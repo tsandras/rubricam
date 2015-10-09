@@ -1,15 +1,15 @@
 class RoutinesController < ApplicationController
 
   before_filter :redirect_unauthorized_to_show, :only=> [:show]
-  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
+before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
 
   # GET /routines
   # GET /routines.json
   def index
     if @user.role == User::ROLE_ADMIN
-      @routines = Routine.all
+      @routines = Routine.paginate(page: params[:page], per_page: 20)
     else
-      @routines = Routine.none_secret_or_own_routines(@user.id)
+      @routines = Routine.none_secret_or_own_routines(@user.id).paginate(page: params[:page], per_page: 20)
     end
 
     respond_to do |format|

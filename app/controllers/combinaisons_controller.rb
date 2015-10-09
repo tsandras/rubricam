@@ -7,9 +7,9 @@ class CombinaisonsController < ApplicationController
   # GET /combinaisons.json
   def index
     if @user.role == User::ROLE_ADMIN
-      @combinaisons = Combinaison.all
+      @combinaisons = Combinaison.paginate(page: params[:page], per_page: 20)
     else
-      @combinaisons = Combinaison.none_secret_or_own_routines(@user.id)
+      @combinaisons = Combinaison.none_secret_or_own_routines(@user.id).paginate(page: params[:page], per_page: 20)
     end
 
     respond_to do |format|

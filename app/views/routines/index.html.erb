@@ -1,5 +1,7 @@
-<h1>Listes des routines</h1>
-<div class="col-md-10">
+<%= link_to 'Nouvelle routine', new_routine_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des routines</h1>
+<div class="col-md-12">
 <table>
   <tr>
     <th>Name</th>
@@ -22,13 +24,11 @@
 <% end %>
 </table>
 
-<br />
+<%= will_paginate @routines %>
 
 <!-- <div class="wod">abcdefghi<br/>jklmnopkrstuvwxyz</div>
 
 <div class="wod">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
 
 <div class="wod"><br/>0123456789,;<br/>?!$-=()@-_+/<br/>~`\{}[]#%^&<>|</div> -->
-<%= link_to 'Nouvelle routine', new_routine_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
 </div>

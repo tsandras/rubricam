@@ -269,7 +269,7 @@
     var network = new vis.Network(container, data, options);
     hideNodesInit(nodes, edges);
     showNodesInit(nodes, edges, network);
-    network.on("doubleClick", function (params) {
+    network.on("click", function (params) {
       var nodeId = params["nodes"][0];
       if (nodeId) {
         hideAllNodes(nodes, edges);

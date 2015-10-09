@@ -90,8 +90,13 @@ class RelationsController < ApplicationController
   end
 
   def visuel
-    @relations = Relation.all
-    @personnages = Personnage.all
+    if @user.role == User::ROLE_ADMIN
+      @relations = Relation.all
+      @personnages = Personnage.all
+    else
+      @relations = Relation.none_secret
+      @personnages = Personnage.none_secret
+    end
   end
 
   private

@@ -7,7 +7,7 @@ class DisciplinesController < ApplicationController
   # GET /disciplines.json
   def index
     # raise params.inspect
-    @disciplines = Discipline.all
+    @disciplines = Discipline.paginate(page: params[:page], per_page: 20)
 
     respond_to do |format|
       format.html # index.html.erb

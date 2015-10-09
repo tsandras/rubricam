@@ -6,9 +6,9 @@ class PersonnagesController < ApplicationController
     # raise "foo"
     # @user = User.find(session["warden.user.user.key"][0].first)
     if @user.role == User::ROLE_ADMIN
-      @personnages = Personnage.all
+      @personnages = Personnage.paginate(page: params[:page], per_page: 10)
     else
-      @personnages = Personnage.where(user_id: @user.id)
+      @personnages = Personnage.where(user_id: @user.id).paginate(page: params[:page], per_page: 10)
     end
     respond_to do |format|
       format.html # index.html.erb

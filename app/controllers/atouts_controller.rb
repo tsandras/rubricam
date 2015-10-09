@@ -5,7 +5,7 @@ class AtoutsController < ApplicationController
   # GET /atouts
   # GET /atouts.json
   def index
-    @atouts = Atout.all
+    @atouts = Atout.paginate(page: params[:page], per_page: 25)
 
     respond_to do |format|
       format.html # index.html.erb

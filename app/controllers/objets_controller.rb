@@ -6,7 +6,11 @@ class ObjetsController < ApplicationController
   before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
 
   def index
-    @objets = Objet.none_secret_and_own_objets(@user.id)
+    if @user.role == User::ROLE_ADMIN
+      @objets = Objet.paginate(page: params[:page], per_page: 20)
+    else
+      @objets = Objet.none_secret_and_own_objets(@user.id).paginate(page: params[:page], per_page: 20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

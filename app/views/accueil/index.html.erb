@@ -9,17 +9,17 @@
       <% if @personnages != nil %>
         <table>
           <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
+            <th>Personnage</th>
+            <th>Appartenance</th>
+            <th>Rang</th>
             <th>Voir</th>
-            <th>Editer</th>
           </tr>
           <% @personnages.each do |p| %>
             <tr>
-              <td><%= p.nom %></td>
-              <td><%= p.prenom %></td>
+              <td><%= "#{p.prenom} #{p.nom}" %></td>
+              <td style="text-align: center;"><span class="wod"><%= Personnage::FONT_WOD[p.appartenance_perso] %></span></td>
+              <td><%= label_rang(p) %></td>
               <td><%= link_to "Profil", p, class: 'btn btn-success btn-xs' %></td>
-              <td><%= link_to 'Editer', edit_personnage_path(p), class: 'btn btn-warning btn-xs' %></td>
             </tr>
           <% end %>
         </table>

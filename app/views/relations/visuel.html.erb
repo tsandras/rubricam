@@ -1,18 +1,24 @@
-<h2>Visuel des relations</h2>
-<div class="col-md-12">
+<h2></h2>
+<div style="text-align: center;"><span class="h2-perso">Visuel des relations </span><span class='label label-warning'>Beta</span></div>
+<div class="col-md-10">
 	<div id="relations"></div>
 </div>
-
+<div class="col-md-2" id="description-publique-corps">
+	<div style="text-align: center;">Description publique</div><br/>
+	<div class="partie-personnage small-font">
+     Cliquez sur un personnage pour voir sa description publique.
+   </div><br />
+	<div id="description-publique"></div>
+</div>
 <script type="text/javascript">
 	var relations = <%= raw @relations.to_json %>
 	var personnages = <%= raw @personnages.to_json %>
-	console.log(relations);
-	console.log(personnages);
+	// console.log(relations);
+	// console.log(personnages);
 
 	var tmpNodes = [];
 	for (var j in personnages) {
-		console.log(personnages[j].id);
-		tmpNodes.push({id: personnages[j].id, label: personnages[j].prenom});
+		tmpNodes.push({id: personnages[j].id, label: personnages[j].prenom + " " + personnages[j].nom, value: personnages[j].description_publique});
 	}
 	var tmpEdges = []
 	var i = 0
@@ -29,4 +35,13 @@
   };
   var options = {};
   var network = new vis.Network(container, data, options);
+
+	network.on("click", function (params) {
+	  var nodeId = params["nodes"][0];
+	  if (nodeId && nodes.get(nodeId).value) {
+	    $("#description-publique").html(nodes.get(nodeId).value);
+	  } else {
+	  	$("#description-publique").html("");
+	  }
+	});
 </script>

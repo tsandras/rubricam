@@ -25,6 +25,8 @@ gem "devise", '2.1.0'
 
 gem 'simple_form'
 
+gem "will_paginate", ">= 3.0.3"
+
 gem 'rails_12factor'
 
 gem 'gon'

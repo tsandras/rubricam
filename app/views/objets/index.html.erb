@@ -1,5 +1,7 @@
-<h1>Listes des objets</h1>
-<div class="col-md-10">
+<%= link_to 'Nouvelle Objet', new_objet_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des objets</h1>
+<div class="col-md-12">
 <table>
   <tr>
     <th>Name</th>
@@ -21,9 +23,5 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'Nouvelle Objet', new_objet_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
+<%= will_paginate @objets %>
 </div>

@@ -5,7 +5,7 @@ class HistoriquesController < ApplicationController
   before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy, :new, :create]
 
   def index
-    @historiques = Historique.all
+    @historiques = Historique.paginate(page: params[:page], per_page: 20)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @historiques }

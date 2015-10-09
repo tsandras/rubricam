@@ -1,4 +1,6 @@
-<h1>Listes des atouts</h1>
+<%= link_to 'Nouvel atout', new_atout_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des atouts</h1>
 
 <div class="col-md-10">
 <table>
@@ -20,9 +22,5 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'Nouvel atout', new_atout_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
+<%= will_paginate @atouts %>
 </div>

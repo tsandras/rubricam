@@ -1,5 +1,5 @@
+<%= link_to 'Nouveau personnage', new_personnage_path, class: 'btn btn-success btn-sm create-float' %>
 <h1>Listes de vos personnages</h1>
-<%= link_to 'Nouveau personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
 <div class="col-md-12">
   <table class="table">
     <tr>
@@ -22,4 +22,5 @@
     </tr>
   <% end %>
   </table>
+  <%= will_paginate @personnages %>
 </div>

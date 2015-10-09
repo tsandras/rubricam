@@ -1,6 +1,7 @@
-<h1>listes des capacités</h1>
-
-<div class="col-md-10">
+<%= link_to 'Nouvelle capacité', new_capacite_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des capacités</h1>
+<div class="col-md-12">
 <table>
   <tr>
     <th>Nom</th>
@@ -22,9 +23,5 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'Nouvelle capacité', new_capacite_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
+<%= will_paginate @capacites %>
 </div>
