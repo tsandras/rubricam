@@ -22,7 +22,7 @@ module PersonnagesHelper
     out = "<div class=\"capacite\">".html_safe
     out << "<label for=\"search_capacite\"> Rechercher Capacite :</label>".html_safe
     out << " <input id=\"search_capacite\" type=\"text\" onkeypress=\"filter(this, '.capacite .checkbox .check_boxes')\" onkeyup=\" epurationCheckBox(this, '.capacite .checkbox .check_boxes')\" />".html_safe
-    out << f.association(:capacites, as: :check_boxes, :collection => Capacite.all.map {|c| ["#{c.nom} - <i>#{c.type_cap}</i>".html_safe, c.id]}.uniq, wrapper_html: { class: 'col-md-12' })
+    out << f.association(:capacites, as: :check_boxes, label: "&nbsp;".html_safe, :collection => Capacite.all.map {|c| ["#{c.nom} - <i>#{c.type_cap}</i>".html_safe, c.id]}.uniq, wrapper_html: { class: 'col-md-12' })
     out << "</div>".html_safe
     out
   end
@@ -31,7 +31,7 @@ module PersonnagesHelper
     out = "<div class=\"historique\">".html_safe
     out << "<label for=\"search_historique\"> Rechercher Historique :</label>".html_safe
     out << "<input id=\"search_historique\" type=\"text\" onkeypress=\"filter(this, '.historique .checkbox .check_boxes')\" onkeyup=\" epurationCheckBox(this, '.historique .checkbox .check_boxes')\" />".html_safe
-    out << f.association(:historiques, as: :check_boxes, :collection => Historique.all.map {|c| [c.nom, c.id]}.uniq,   wrapper_html: { class: 'col-md-12' })
+    out << f.association(:historiques, as: :check_boxes, label: "&nbsp;".html_safe, :collection => Historique.all.map {|c| [c.nom, c.id]}.uniq,   wrapper_html: { class: 'col-md-12' })
     out << "</div>".html_safe
     out
   end
@@ -40,7 +40,7 @@ module PersonnagesHelper
     out = "<div class=\"atout\">".html_safe
     out << "<label for=\"search_atout\"> Rechercher Atout :</label>".html_safe
     out << "<input id=\"search_atout\" type=\"text\" onkeypress=\"filter(this, '.atout .checkbox .check_boxes')\" onkeyup=\" epurationCheckBox(this, '.atout .checkbox .check_boxes')\" />".html_safe
-    out << f.association(:atouts, as: :check_boxes, :collection => Atout.all.map {|c| ["#{c.nom} (#{c.cout})", c.id]}.uniq, wrapper_html: { class: 'col-md-12' })
+    out << f.association(:atouts, as: :check_boxes, label: "&nbsp;".html_safe, :collection => Atout.all.map {|c| ["#{c.nom} (#{c.cout})", c.id]}.uniq, wrapper_html: { class: 'col-md-12' })
     out << "</div>".html_safe
     out
   end
@@ -56,23 +56,23 @@ module PersonnagesHelper
     out
   end
 
-  def input_modal_objet(f, type, nom)
-    out = "<div id=\"openModal#{type}\" class=\"modalDialog\">".html_safe
-      out << "<div><a href=\"#close\" title=\"Close\" class=\"close2\">X</a>".html_safe
-          out << "<h2>#{nom}</h2>".html_safe
-          if type == "discipline"
-            out << recherche_discipline(f)
-          elsif type == "atout"
-            out << recherche_atout(f)
-          elsif type == "historique"
-            out << recherche_historique(f)
-          else
-            out << recherche_capacite(f)
-          end
-      out << "</div>".html_safe
-    out << "</div>".html_safe
-    out
-  end
+  # def input_modal_objet(f, type, nom)
+  #   out = "<div id=\"openModal#{type}\" class=\"modalDialog\">".html_safe
+  #     out << "<div><a href=\"#close\" title=\"Close\" class=\"close2\">X</a>".html_safe
+  #         out << "<h2>#{nom}</h2>".html_safe
+  #         if type == "discipline"
+  #           out << recherche_discipline(f)
+  #         elsif type == "atout"
+  #           out << recherche_atout(f)
+  #         elsif type == "historique"
+  #           out << recherche_historique(f)
+  #         else
+  #           out << recherche_capacite(f)
+  #         end
+  #     out << "</div>".html_safe
+  #   out << "</div>".html_safe
+  #   out
+  # end
 
   def format_name(name)
     name.split(' ').join().split("'").join()

@@ -1,9 +1,9 @@
 <h1>Accueil</h1>
-<div class="col-md-5">
-  <p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
+<div class="col-md-6">
   <div id="menu-personnages" class="menu-accueil">
     <div class="menu-accueil-head">
-      Vos personnages
+      Vos 10 derniers personnages
     </div>
     <div class="menu-accueil-body">
       <% if @personnages != nil %>
@@ -28,7 +28,7 @@
       <% end %>
     </div>
     <div class="menu-accueil-action">
-      <%= link_to 'Détail listing', personnages_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Tous vos personnages', personnages_path, class: 'btn btn-primary btn-sm' %>
       <%= link_to 'Créer un personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
     </div>
   </div>
@@ -36,7 +36,7 @@
   <%= menu_accueil(["nom"], "historiques", @historiques, "historiques") %>
 </div>
 
-<div class="col-md-5">
+<div class="col-md-6">
   <%= menu_accueil(["nom_publique"], "personnages", @pnjs, "pnjs") %>
   <%= menu_accueil(["nom", "cout"], "atouts", @atouts, "atouts") %>
   <%= menu_accueil(["nom"], "disciplines", @disciplines, "disciplines") %>

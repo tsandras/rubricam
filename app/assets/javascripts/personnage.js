@@ -130,7 +130,7 @@
 
   function listenerPhysiqueForBase(min, max) {
     liste_attributs = ["#personnage_force", "#personnage_dexterite", "#personnage_vigueur"];
-    if (!gon.base) {
+    // if (!gon.base) {
       $.each(liste_attributs, function(key, val) {
         tmp = val.split("_");
         $("#plus-"+tmp[1]).click(function() {
@@ -148,12 +148,12 @@
           }
         });
       });
-    }
+    // }
   }
 
   function listenerMentalForBase(min, max) {
     liste_attributs = ["#personnage_intelligence", "#personnage_perception", "#personnage_astuce"];
-    if (!gon.base) {
+    // if (!gon.base) {
       $.each(liste_attributs, function(key, val) {
         tmp = val.split("_");
         $("#plus-"+tmp[1]).click(function() {
@@ -171,12 +171,12 @@
           }
         });
       });
-    }
+    // }
   }
 
   function listenerSocialForBase(min, max) {
     liste_attributs = ["#personnage_apparence", "#personnage_manipulation", "#personnage_charisme"];
-    if (!gon.base) {
+    // if (!gon.base) {
       $.each(liste_attributs, function(key, val) {
         tmp = val.split("_");
         $("#plus-"+tmp[1]).click(function() {
@@ -194,12 +194,12 @@
           }
         });
       });
-    }
+    // }
   }
 
   // ClassType = Talent, idOutput = #nbs_talent
   function listenerTypeCapacitesForBase(ClassType, idOutput, min, max) {
-    if (!gon.base) {
+    // if (!gon.base) {
       $.each($(".cap"), function(key, val) {
         if ($(this).parent().hasClass(ClassType)) {
           var tmp = $(this).attr("id").split("_");
@@ -220,7 +220,7 @@
           });
         }
       });
-    }
+    // }
   }
 
   function listenerHistoriquesForBase(min) {
@@ -280,7 +280,7 @@
 
   function listenerVertuesForBase() {
     var liste_vertues = ["#personnage_points_conscience", "#personnage_points_maitrise", "#personnage_points_courage"];
-    if (!gon.base) {
+    // if (!gon.base) {
       var max = parseInt($("#max_vertues").html());
       $.each(liste_vertues, function(key, val) {
         var tmp = val.split("_");
@@ -295,7 +295,7 @@
           }
         });
       });
-    }
+    // }
   }
 
   function listenerDisciplinesForBase() {
@@ -458,59 +458,17 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
   }
 
 function getHTMLInputDiscipline(name, id, id_jointure, nbs) {
-  // var id_j = parseInt(id_jointure) + 1;
-  // out = "<div class=\"dis\" id=\"t_"+name+"\">";
-  // out += "<div class=\"col-md-6\">";
-  // out += "<b>"+name+"</b>"
-  // out += "</div>"
-  // out += "<div class=\"control-group integer optional disciplines_personnages_niveau col-md-6\">";
-  // out += "<label class=\"integer optional control-label\" for=\"disciplines_personnages_niveau\"></label>";
-  // out += "<div class=\"controls\">";
-  // out += "<input class=\"numeric integer optional\" id=\"disciplines_personnages_niveau\" name=\"disciplines_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"\" /></div>";
-  // out += "<span class=\"hidden\" id=\""+id+"\">"+id+"</span>";
-  // out += "</div>"
   out = getHTMLInputData(id, "discipline", "dis", name, format_name(name), nbs + 1, "", null, null);
   return out;
 }
 
 function getHTMLInputCapacite(name, id) {
-  // tmp = name.split("-");
-  // out = "<div class=\"row cap\" id=\"t_"+tmp[0].trim()+"\">";
-  // out += "<div class=\"col-md-4\">";
-  // out += "<b>"+tmp[0].trim()+"</b>";
-  // out += "</div>";
-  // out += "<button type=\"button\" class=\"moins_cap\" id=\"minus-"+tmp[0].trim()+"\" name=\"button\"></button>";
-  // out += "<button type=\"button\" class=\"plus_cap\" id=\"plus-"+tmp[0].trim()+"\" name=\"button\"></button>";
-  // out += "<div class=\"control-group integer optional capacites_personnages_niveau col-md-2\">";
-  // out += "<label class=\"integer optional control-label\" for=\"capacites_personnages_niveau\"> </label>"
-  // out += "<div class=\"controls\"><input class=\"numeric integer optional inpt_number\" id=\"capacites_personnages_niveau\" name=\"capacites_personnages["+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\"/></div></div>";
-  // out += "<div class=\"control-group string optional capacites_personnage s_specialite col-md-6 hidden reajuste-spe\" id=\"specialite-"+tmp[0].trim()+"\">";
-  // out += "<label class=\"string optional control-label\" for=\"capacites_personnages_specialite\">Specialite</label>";
-  // out += "<div class=\"controls\"><input class=\"string optional inpt_string\" id=\"capacites_personnages_specialite\" name=\"capacites_personnages["+id+"][specialite]\" size=\"50\" type=\"text\" value=\"\" /></div></div>";
-  // out += "<span class=\"hidden\" id=\""+id+"\">"+id+":"+tmp[1].trim()+"</span>";
-  // out += "</div>"
   var nbs = $(".cap").length;
   out = getHTMLInputData(id, "capacite", "cap", name, format_name(name.split("-")[0].trim()), nbs + 1, "", null, null);
   return out;
 }
 
 function getHTMLInputHistorique(name, id, id_jointure) {
-  // var id_j = parseInt(id_jointure) + 1;
-  // var id_lol = "t_" + id;
-  // out = "<div class=\"row his\" id=\"t_"+name+"\">";
-  // out += "<div class=\"col-md-4\">";
-  // out += "<b>"+name+"</b>"
-  // out += "</div>"
-  // out += "<button type=\"button\" class=\"moins_cap\" id=\"minus-"+name+"\" name=\"button\"></button>";
-  // out += "<button type=\"button\" class=\"plus_cap\" id=\"plus-"+name+"\" name=\"button\"></button>";
-  // out += "<div class=\"control-group integer optional historiques_personnages_niveau col-md-2\">";
-  // out += "<label class=\"integer optional control-label\" for=\"historiques_personnages_niveau\"></label>";
-  // out += "<div class=\"controls\">";
-  // out += "<input class=\"numeric integer optional inpt_number\" id=\"historiques_personnages_niveau\" name=\"historiques_personnages["+id_lol+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\" /></div>";
-  // out += "<span class=\"hidden\" id=\""+id+"\">"+id+"</span>";
-  // // put id="id_generate_al"
-  // out += "</div>"
-  // out += "<div class=\"col-md-6\"></div>"
   var nbs = $(".his").length;
   out = getHTMLInputData(id, "historique", "his", name, format_name(name), nbs + 1, "", null, null);
   return out;

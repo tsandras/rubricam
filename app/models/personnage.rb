@@ -94,12 +94,14 @@ class Personnage < ActiveRecord::Base
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
-  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso
+  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock
 
   mount_uploader :avatar, AvatarUploader
 
-  validates_presence_of :type_perso, :appartenance_perso, :bonus, :prenom
+  validates_presence_of :type_perso, :appartenance_perso, :bonus, :prenom, :nom
+  validates_uniqueness_of :nom, conditions: -> { where(prenom: prenom) }
   validate :validity_of_perso
+  validate :unlock
 
   has_and_belongs_to_many :capacites, class_name: 'Capacite'
   has_and_belongs_to_many :atouts, class_name: 'Atout'
@@ -129,6 +131,10 @@ class Personnage < ActiveRecord::Base
     return false if !Personnage::TYPE.include?(type_perso)
     return false if !appartenance_perso.blank? && !Personnage::APPARTENANCE.include?(appartenance_perso) 
     true
+  end
+
+  def unlock
+    errors.add(:base, "toto") if lock
   end
 
   def has_resonnances
@@ -249,10 +255,10 @@ class Personnage < ActiveRecord::Base
         historique = historique + c[:niveau].to_i
       end
     end
-    # raise ok_base_surnaturel(personnage, spheres, disciplines).inspect
     # puts "physique : #{physique}, social : #{social}, mental : #{mental}"
     # puts "talent : #{talent}, competence : #{competence}, connaissance : #{connaissance}"
     # puts "historique : #{historique}, surnaturel : #{ok_base_surnaturel(personnage, spheres, disciplines)}"
+    # raise ok_base_surnaturel(personnage, spheres, disciplines).inspect
     return false unless ok_base_surnaturel(personnage, spheres, disciplines)
     return false if !ok_base_attribut(physique, social, mental)
     return false if !ok_base_capacites(competence, talent, connaissance)
@@ -261,7 +267,7 @@ class Personnage < ActiveRecord::Base
   end
 
   def ok_base_attribut(physique, social, mental)
-    if vampire? || mage?
+    if !humain?
       return false unless physique != 10 || physique != 8 || physique != 6
       return false unless social != 10 || social != 8 || social != 6
       return false unless mental != 10 || mental != 8 || mental != 6
@@ -275,7 +281,7 @@ class Personnage < ActiveRecord::Base
   end
 
   def ok_base_capacites(competence, talent, connaissance)
-    if vampire? || mage?
+    if !humain?
       return false unless talent != 13 || talent != 9 || talent != 5
       return false unless competence != 13 || competence != 9 || competence != 5
       return false unless connaissance != 13 || connaissance != 9 || connaissance != 5
@@ -289,7 +295,7 @@ class Personnage < ActiveRecord::Base
   end
 
   def ok_base_historique(historique)
-    if vampire? || mage?
+    if !humain?
       return false if historique != 7
     else
       return false if historique != 5

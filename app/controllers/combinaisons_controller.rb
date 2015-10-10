@@ -34,7 +34,7 @@ class CombinaisonsController < ApplicationController
   # GET /combinaisons/new.json
   def new
     @combinaison = Combinaison.new
-
+    @combinaisons_disciplines = CombinaisonsDisciplines.where(combinaison_id: @combinaison.id)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @combinaison }
@@ -62,6 +62,7 @@ class CombinaisonsController < ApplicationController
         format.html { redirect_to @combinaison, notice: 'Combinaison a été crée avec succès.' }
         format.json { render json: @combinaison, status: :created, location: @combinaison }
       else
+        @combinaisons_disciplines = CombinaisonsDisciplines.where(combinaison_id: @combinaison.id)
         format.html { render action: "new" }
         format.json { render json: @combinaison.errors, status: :unprocessable_entity }
       end
@@ -79,6 +80,7 @@ class CombinaisonsController < ApplicationController
         format.html { redirect_to @combinaison, notice: 'Combinaison a été édité avec succès.' }
         format.json { head :no_content }
       else
+        @combinaisons_disciplines = CombinaisonsDisciplines.where(combinaison_id: @combinaison.id)
         format.html { render action: "edit" }
         format.json { render json: @combinaison.errors, status: :unprocessable_entity }
       end

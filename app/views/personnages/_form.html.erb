@@ -1,19 +1,10 @@
 <h2></h2>
+<%#= raise @personnage.inspect %>
 <%= simple_form_for(@personnage) do |p| %>
-  <% if @personnage.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@personnage.errors.count, "error") %> prohibited this personnage from being saved:</h2>
-      <ul>
-      <% @personnage.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div id="personnage">
     <div class="row">
       <p class="text-center"><%= show_partie(@personnage) %></p>
+      <p class="bg-danger"><%= notice %></p>
     </div>
     <div class="row info-general">
       <p class="text-center"><b>Générale</b></p>
@@ -21,14 +12,15 @@
     </div>
     <div class="row attributs">
       <%= image_tag("barre_fiche.png", class: 'barre') %>
-      <!-- <p class="titre"><b>Attributs</b></p> -->
-      <p><%= show_nbs_attributs(@personnage) %></p>
+      <div style="text-align: center;"><b>Attributs</b></div>
       <%= input_attributs(p, @personnage) %>
     </div>
     <div class="row capacites">
       <%= image_tag("barre_fiche.png", class: 'barre') %>
-      <!-- <p class="titre2"><b>Capacités</b></p> -->
-      <p><%= show_nbs_capacites(@personnage) %></p>
+      <div style="text-align: center;">
+        <b>Capacités</b>
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-capacites">Ajouter des capacités</button>
+      </div>
       <%= input_capacite(@capacites_personnages, @personnage) %>
       <%= image_tag("barre_fiche.png", class: 'barre') %>
     </div>
@@ -38,8 +30,12 @@
         <%= input_spheres(@personnage) %>
       </div>
     <% end %>
+    <br/>
     <div class="row disciplines">
-      <p class="text-center"><a href="#openModaldiscipline" class="plus-link"></a><b>Disciplines</b><%= show_disciplines(@personnage) %></p>
+      <p class="text-center">
+        <b>Disciplines</b><%= show_disciplines(@personnage) %>
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-disciplines">Ajouter des disciplines</button>
+      </p>
       <%= input_discipline(@disciplines_personnages) %>
     </div>
     <div class="row autre">
@@ -69,15 +65,16 @@
       <%= p.input :reste_xps, as: :hidden %>
       <p class="text-center"><%= show_sauvegarder(p, @personnage) %></p>
     </div>
-    <%= input_modal_objet(p, "discipline", "Disciplines") %>
-    <%= input_modal_objet(p, "historique", "Historiques") %>
-    <%= input_modal_objet(p, "capacite", "Capacités") %>
-    <%= input_modal_objet(p, "atout", "Atouts") %>
+    <%= render 'modal', f: p, type: "discipline", title: "Disciplines", id: "modal-disciplines" %>
+    <%= render 'modal', f: p, type: "historique", title: "Historiques", id: "modal-historiques" %>
+    <%= render 'modal', f: p, type: "atout", title: "Atouts", id: "modal-atouts" %>
+    <%= render 'modal', f: p, type: "capacite", title: "Capacités", id: "modal-capacites" %>
   </div>
 <% end %>
 <script type="text/javascript">
   $(document).ready(function() {
     $('.datepicker').datepicker();
+    $(".popover-perso").popover();
     manageCheckBox("#search_capacite", ".capacite .checkbox .check_boxes");
     manageCheckBox("#search_historique", ".historique .checkbox .check_boxes");
     manageCheckBox("#search_atout", ".atout .checkbox .check_boxes");

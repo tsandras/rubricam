@@ -6,7 +6,7 @@ class PersonnagesController < ApplicationController
     # raise "foo"
     # @user = User.find(session["warden.user.user.key"][0].first)
     if @user.role == User::ROLE_ADMIN
-      @personnages = Personnage.paginate(page: params[:page], per_page: 10)
+      @personnages = Personnage.order("created_at desc").paginate(page: params[:page], per_page: 10)
     else
       @personnages = Personnage.where(user_id: @user.id).paginate(page: params[:page], per_page: 10)
     end
@@ -61,16 +61,13 @@ class PersonnagesController < ApplicationController
 
   def edit
     @personnage = Personnage.find(params[:id])
-    # raise session["warden.user.user.key"][0].inspect
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user)
-    gon.bonus = @personnage.has_bonus
-    gon.base = @personnage.has_base
     @capacites_personnages = CapacitesPersonnages.where(personnage_id: params[:id])
     @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
     @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
     @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id])
     add_discipline_clan(@personnage.clan) if @personnage.vampire?
-    add_sphere_tradition(@personnage.tradition) if @personnage.mage?
+    add_sphere_tradition(@personnage.appartenance_perso) if @personnage.mage?
     add_historique
     add_capacite
   end
@@ -155,9 +152,9 @@ class PersonnagesController < ApplicationController
 
   def create
     # @user = User.find(session["warden.user.user.key"][0].first)
-    params[:personnage].delete("capacite_ids")
-    params[:personnage].delete("historique_ids")
-    params[:personnage].delete("discipline_ids")
+    # params[:personnage].delete("capacite_ids")
+    # params[:personnage].delete("historique_ids")
+    # params[:personnage].delete("discipline_ids")
     @personnage = Personnage.new(params[:personnage])
     @personnage.user = @user
     @personnage.entelechie = 1 if @personnage.mage?
@@ -176,24 +173,21 @@ class PersonnagesController < ApplicationController
 
   def update
     puts "on entre dans le update"
-    params[:personnage].delete("capacite_ids")
-    params[:personnage].delete("historique_ids")
-    params[:personnage].delete("discipline_ids")
     # params[:personnage].delete("atout_ids")
     @personnage = Personnage.find(params[:id])
     # return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(User.find(session["warden.user.user.key"][0].first))
     # update_atouts(params[:atouts_personnages])
     ok = false
     unless @personnage.has_base
-        puts "Le personnage n'a pas de base"
-        if @personnage.ok_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
-          params[:personnage][:has_base] = true
-          params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
-          ok = true
-        else
-          puts "Le personnage n'est pas ok pour sa base"
-          params[:personnage][:has_base] = false
-        end
+      ok_base = @personnage.ok_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+      if ok_base
+        params[:personnage][:has_base] = true
+        params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+        ok = true
+      else
+        puts "Le personnage n'est pas ok pour sa base"
+        params[:personnage][:has_base] = false
+      end
     else
       unless @personnage.has_bonus
         puts "Le personnage n'a pas de bonus mais une base"
@@ -212,6 +206,10 @@ class PersonnagesController < ApplicationController
     puts "On est a la fin ok = #{ok} et valid ? = #{@personnage.valid?}"
     respond_to do |format|
       if ok && @personnage.valid?
+        params[:personnage].delete("capacite_ids")
+        params[:personnage].delete("historique_ids")
+        params[:personnage].delete("discipline_ids")
+        @personnage.lock = false
         @personnage.calcule_rang
         @personnage.calcule_graph
         # raise params[:personnage].inspect
@@ -224,7 +222,16 @@ class PersonnagesController < ApplicationController
         format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to edit_personnage_path(@personnage) }
+        flash[:notice] = "totototo"
+        @personnage.lock = true
+        @personnage.update_attributes(params[:personnage])
+        @capacites_personnages = CapacitesPersonnages.where(personnage_id: params[:id])
+        @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
+        @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
+        @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id])
+        @values_capacites = recover_values_capacites(params[:capacites_personnages])
+        format.html { render action: "edit" }
+        format.json { head :no_content }
       end
     end
   end
@@ -267,6 +274,18 @@ class PersonnagesController < ApplicationController
   end
 
   private
+
+  def recover_values_capacites(capacites_personnages)
+    out = {}
+    if capacites_personnages != nil
+      capacites_personnages.each do |i, cp|
+        ii = i
+        ii = Capacite.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
+        out[ii.to_i] = cp[:niveau].to_i
+      end
+    end
+    out
+  end
 
   def permition?(user)
     return true if user.role != User::ROLE_NORMA
@@ -320,7 +339,7 @@ class PersonnagesController < ApplicationController
   end
 
   def add_discipline_clan(clan)
-    if clan != "Caïtiff"
+    if clan != "Caïtiff" && Personnage::DISCIPLINES_CLAN[clan].present?
       (0..2).each do |i|
         dis = Discipline.where(nom: Personnage::DISCIPLINES_CLAN[clan][i]).first
         # raise dis.id.inspect
@@ -339,12 +358,10 @@ class PersonnagesController < ApplicationController
   end
 
   def add_sphere_tradition(tradition)
-    if Personnage::SPHERES_TRADITION[tradition] != "Aucun" || 
-      Personnage::SPHERES_TRADITION[tradition] != "Orphelins" || 
-      Personnage::SPHERES_TRADITION[tradition] != "Excavés"
-      sph = Sphere.where(name: Personnage::SPHERES_TRADITION[tradition], personnage_id: @personnage.id).first
+    if Personnage::SPHERES_MAGE[tradition] != "Aucun"
+      sph = Sphere.where(name: Personnage::SPHERES_MAGE[tradition], personnage_id: @personnage.id).first
       if !sph
-        Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_TRADITION[tradition], niveau: 1)
+        Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_MAGE[tradition], niveau: 1)
       end
     end
   end

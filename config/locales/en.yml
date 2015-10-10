@@ -11,6 +11,9 @@ en:
           attributes:
             prenom:
               blank: "Vous devez remplir ce champs"
+            nom:
+              blank: "Vous devez remplir ce champs"
+              taken: "Contrainte double Nom/Prénom"
             bonus:
               blank: "Vous devez remplir ce champs"
   will_paginate:

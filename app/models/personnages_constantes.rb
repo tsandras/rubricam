@@ -6,7 +6,12 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                       "Mage" => "Les mages ont toujours été des êtres humains exceptionnels. Ils ont la volonté, l'illummation l'imagination pour saisir ce qui ne se voit pas, rechercher I'inconnu et illuminer ce qui sera demain. Ces gardiens de la sagessc livrent leur propre guerre, ou ils determinent le futur de l'humanité (esperent-ils) et combattent pour le droit de garder leurs croyances malgré la montée d'un conformisme stérile. Pendant ce temps, ils doivent équilibrer les exigences de la magie avec la panoplie terrible d'un monde fou et pourrissant. Ils peuvent être les dernières étincelles contre l'histoire, tant qu'ils survivent à leur propre Eveil dans ces froides nuits magiques.",
                       "Vampire" => "Les vampires sont des cadavres suceurs de sang, sortant de leur tombe pour festoyer du sang des vivants. des monstres damne2s qui échappent à l'Enfer en volant la vie. Des prédateurs sensuels dérobant leur pitance en s'attaquant à d'innocentes - ou peut-être consentantes ? - victimes. Depuis toujours, l'humanité parle des vampires, des non-morts, des esprits démoniaque vivants dans des corps humains, des cadavres sortis de la tombe avec une soif dévorante de sang chaud. Les vampires sont parmi nous depuis les temps préhistoriques. Ils sont toujours là. Ils mènent une guerre secrète et snas merci depuis les premières nuits de l'humanité. Et le résultat de cette lutte éternelle pourrant déterminer le futur de l'humanité, ou sa condamnation finale."}
 
-  BASE_BY_TYPE = {"Mage" => "7/5/3;13/9/5;7", "Vampire" => "7/5/3;13/9/5;7", "Mortel" => "6/4/2;11/7/3;5"}
+  BASE_BY_TYPE = {"Mage" => "7/5/3;13/9/5;7", 
+                  "Vampire" => "7/5/3;13/9/5;7", 
+                  "Mortel" => "6/4/2;11/7/3;5",
+                  "Changelin" => "7/5/3;13/9/5;7", 
+                  "Métamorphe" => "7/5/3;13/9/5;7", 
+                  "Ombre" => "7/5/3;13/9/5;7"}
 
   TRADITION = ["Verbena", "Ordre d'Hermès", "Choeur Céleste", "Adepte du virtuel",
                "Fraternité Akashite", "Euthanatos", "Onirologues", "Fils de l'Ether",
@@ -14,12 +19,12 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
 
   TECHNOCRATIE = ["Ingénieur du vide", "Progéniteur", "Nouvel ordre mondial", "Itération X", "Syndicat"]
 
-  AUTRE_MAGE = ["Ahl'I'Batin", "Taftani", "Solificati"]
+  DISPARATE = ["Ahl'I'Batin", "Taftani", "Solificati", "Kopa Loei"]
 
   MAGE_BY_TYPE = {
     "Tradition" => TRADITION,
     "Technocratie" => TECHNOCRATIE,
-    "Autre mages" => AUTRE_MAGE,
+    "Autre mages" => DISPARATE,
     "Maraudeur" => ["Maraudeur"],
     "Nefandi" => ["Nefendi"]
   }
@@ -36,10 +41,13 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                            "Excavés" => "Les gens se meurent, de même que les idéaux, la magie et le monde. Les Excavés le savent depuis un certain temps et l'ont accepté. Maintenant, ils savent que le monde s'écroule, mais il veulent profiter de la décadence. Se réjouissant du nihilisme et du refus des moeurs sociales, les Excavés s'abandonnent avec délices à l'élégance gothique et à un langueur décandente et romantique.\nSphère de spécialisation : Aucune.",
                            "Orphelins" => "Ceux qui s'Éveillent seuls sont de plus en plus nombreux en débit des difficultés causées par le Pogrom de la Technocratie et les politiques musclées de recrutement des Traditions. Actuellement, de plus en plus de gens s'Éveillent spontanément sans mentor. Ils sont obligés de trouver leur propre voie.\nSphère de spécialisation : Aucune."}
 
-  SPHERES_TRADITION = {"Verbena" => "Vie", "Ordre d'Hermès" => "Forces", "Choeur Céleste" => "Prime",
-                       "Adepte du virtuel" => "Correspondance", "Fraternité Akashite" => "Psyche",
-                       "Euthanatos" => "Entropie", "Onirologues" => "Esprit", "Fils de l'Ether" => "Matiere",
-                       "Culte de l'Extase" => "Temps", "Excavés" => "Aucun", "Orphelins" => "Aucun"}
+  SPHERES_MAGE = {"Verbena" => "Vie", "Ordre d'Hermès" => "Forces", "Choeur Céleste" => "Prime",
+                  "Adepte du virtuel" => "Correspondance", "Fraternité Akashite" => "Psyche",
+                  "Euthanatos" => "Entropie", "Onirologues" => "Esprit", "Fils de l'Ether" => "Matiere",
+                  "Culte de l'Extase" => "Temps", "Excavés" => "Aucun", "Orphelins" => "Aucun", "Nefendi" => "Aucun", 
+                  "Maraudeur" => "Aucun", "Ingénieur du vide" => "Matiere", "Progéniteur" => "Vie", "Nouvel ordre mondial" => "Psyche", 
+                  "Itération X" => "Correspondance", "Syndicat" => "Entropie", "Ahl'I'Batin" => "Correspondance", 
+                  "Taftani" => "Esprit", "Solificati" => "Forces", "Kopa Loei" => "Forces"}
 
   CLAN = ["Assamites", "Brujah", "Cappadocian", "Setite", "Gangrel", "Giovanni",
           "Lasombra", "Malkavian", "Nosferatu", "Ravnos", "Salubrien", "Toreador",
@@ -47,7 +55,7 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
           "Kiasyd", "Lhiannan", "Nagaraja", "Samedi",
           "Vrai Brujah", "Andas", "Noiad", "Agarash", "Disciple de Kali"]
 
-  APPARTENANCE = TRADITION + TECHNOCRATIE + AUTRE_MAGE + ["Maraudeur"] + ["Nefendi"] + CLAN
+  APPARTENANCE = TRADITION + TECHNOCRATIE + DISPARATE + ["Maraudeur"] + ["Nefendi"] + CLAN
 
   CLAN_BY_TYPE = {
     "Camarilla" => ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue", "Gargouilles"],
@@ -150,7 +158,7 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
     "psyche" => 'g',
     "temps" => 'h',
     "vie" => 'i',
-    "Ahl'i'batin" => 'j',
+    "Ahl'i'batin2" => 'j',
     "Maraudeur" => 'k',
     "Solificati" => 'l',
     "Nefendi" => 'm',
@@ -173,14 +181,14 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
     "autre" => 'D',
     "Cappadocian" => 'E',
     "Giovanni" => 'F',
-    "Gangrel" => 'G',
+    "Ahrimane" => 'G',
     "Lamia" => 'H',
-    "Gangrel2" => 'I',
+    "Gangrel" => 'I',
     "Gargouille" => 'J',
     "Brujah" => 'K',
     "Frere de sang" => 'L',
     "Enfants d'Osiris" => 'M',
-    "autre" => 'N',
+    "Baali" => 'N',
     "Kiasyd" => 'O',
     "Anda" => 'P',
     "Caïtiff" => 'Q',
@@ -209,12 +217,14 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
     "Indépendant" => '?',
     "Autre" => '!',
     "Changelin" => '$',
-    "Ocean" => '-',
+    "Kopa Loei" => '-',
     "Ombre" => '=',
     "Orphelins" => ')',
     "Vampire" => '@',
-    "Ocean" => '-',
+    "Kopa Loei" => '-',
     "Humain" => '_',
-    "Personnage" => '/'
+    "Personnage" => '/',
+    "Métamorphe" => '*',
+    "Ahl'i'batin" => '§'
   }
 end

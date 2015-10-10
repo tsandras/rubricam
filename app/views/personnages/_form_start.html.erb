@@ -1,16 +1,5 @@
 <h2></h2>
 <%= simple_form_for(@personnage) do |f| %>
-<!--   <%# if @personnage.errors.any? %>
-    <div id="error_explanation">
-      <h2><%#= pluralize(@personnage.errors.count, "error") %> prohibited this personnage from being saved:</h2>
-      <ul>
-      <%# @personnage.errors.full_messages.each do |msg| %>
-        <li><%#= msg %></li>
-      <%# end %>
-      </ul>
-    </div>
-  <%# end %> -->
-
   <div class="col-md-6">
     <div id="choixtype"></div>
   </div>
@@ -22,6 +11,7 @@
       Vous devez double cliquer sur un type de personnage.<br/>
       Puis choisir une appartenance.<br/>
       Enfin choisissez vos points bonus de départ et votre expérience.<br/>
+      Les personnages autre que les mortels ont 15 points bonus.<br/>
     </div>
     <br />
     <%= f.input :nom, label: 'Nom :', input_html: {class: 'inpt_string'}, wrapper_html:{ class: 'inline'} %>
@@ -32,10 +22,10 @@
     <%= f.input :clan, wrapper_html: { class: 'hidden'} %>
     <%= f.input :tradition, wrapper_html: { class: 'hidden'} %>
     <div><label class="string required control-label">Appartenance :</label><span id="appartenance-perso"></span></div>
-    <%= f.input :bonus, label: "Points bonus :", collection: [["10 pts", 10], ["15 pts", 15], ["21 pts", 21], ["42 pts", 42]], wrapper_html: {class: 'inline'} %>
     <div class="partie-personnage small-font">
       Si vous choississez 42 points bonus vous pourrez répartir un nombre variable de point bonus jusqu'à 42 points. Pour les autres vous devrez exactement dépenser le nombre de point bonus indiqué.
     </div>
+    <%= f.input :bonus, label: "Points bonus :", collection: [["10 pts", 10], ["15 pts", 15], ["21 pts", 21], ["42 pts", 42]], wrapper_html: {class: 'inline'} %>
     <%= f.input :xps, label: "Ajouter de l'Xps :", wrapper_html: {class: 'inline'}, input_html: {class: 'spe-xps'} %>
     <br />
     <p class="text-center">
@@ -47,9 +37,6 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    //////////////////
-    // New Code
-    //////////////////
     var types = [
       {id: 0, label: "Personnage", group: 0, shape: 'image', image: '/assets/wod/personnage.png', shapeProperties: {useImageSize: true}},
       {id: 1, label: "Vampire", group: 1, value: "Vampire", shape: 'image', image: '/assets/wod/vampire.png', shapeProperties: {useImageSize: true}},
@@ -63,54 +50,56 @@
       {id: 9, label: "Indépendant", group: 2, value: "Indépendant", shape: 'image', image: '/assets/wod/independant.png', shapeProperties: {useImageSize: true}},
       {id: 10, label: "Disparue", group: 2, value: "Disparue", shape: 'image', image: '/assets/wod/disparue.png', shapeProperties: {useImageSize: true}},
       {id: 11, label: "Traditions", group: 3, value: "Traditions", shape: 'image', image: '/assets/wod/neuf_traditions.png', shapeProperties: {useImageSize: true}},
-      {id: 12, label: "Autre", group: 3, value: "Autre", shape: 'image', image: '/assets/wod/autre.png', shapeProperties: {useImageSize: true}},
+      {id: 12, label: "Disparate", group: 3, value: "Disparate", shape: 'image', image: '/assets/wod/disparate.png', shapeProperties: {useImageSize: true}},
       {id: 13, label: "Technocratie", group: 3, value: "Technocratie", shape: 'image', image: '/assets/wod/technocratie.png', shapeProperties: {useImageSize: true}},
       {id: 14, label: "Maraudeur", group: 3, value: "Maraudeur", shape: 'image', image: '/assets/wod/maraudeur.png', shapeProperties: {useImageSize: true}},
       {id: 15, label: "Nefandi", group: 3, value: "Nefandi", shape: 'image', image: '/assets/wod/nefandi.png', shapeProperties: {useImageSize: true}},
-      {id: 16, label: "Verbena", group: 4, value: "Verbena", shape: 'image', image: '/assets/wod/verbena.png', shapeProperties: {useImageSize: true}},
-      {id: 17, label: "Euthanatos", group: 4, value: "Euthanatos", shape: 'image', image: '/assets/wod/euthanatos.png', shapeProperties: {useImageSize: true}},
-      {id: 18, label: "Ordre d'Hermès", group: 4, value: "Ordre d'Hermès", shape: 'image', image: '/assets/wod/ordre_dhermes.png', shapeProperties: {useImageSize: true}},
-      {id: 19, label: "Choeur Céleste", group: 4, value: "Choeur Céleste", shape: 'image', image: '/assets/wod/choeur_celeste.png', shapeProperties: {useImageSize: true}},
-      {id: 20, label: "Adepte du virtuel", group: 4, value: "Adepte du virtuel", shape: 'image', image: '/assets/wod/adepte_du_virtuel.png', shapeProperties: {useImageSize: true}},
-      {id: 21, label: "Culte de l'Extase", group: 4, value: "Culte de l'Extase", shape: 'image', image: '/assets/wod/culte_de_lextase.png', shapeProperties: {useImageSize: true}},
-      {id: 22, label: "Excavés", group: 4, value: "Excavés", shape: 'image', image: '/assets/wod/excaves.png', shapeProperties: {useImageSize: true}},
-      {id: 23, label: "Fraternité Akashite", group: 4, value: "Fraternité Akashite", shape: 'image', image: '/assets/wod/fraternite_akashite.png', shapeProperties: {useImageSize: true}},
-      {id: 24, label: "Onirologues", group: 4, value: "Onirologues", shape: 'image', image: '/assets/wod/onirologues.png', shapeProperties: {useImageSize: true}},
-      {id: 25, label: "Fils de l'Ether", group: 4, value: "Fils de l'Ether", shape: 'image', image: '/assets/wod/fils_de_lether.png', shapeProperties: {useImageSize: true}},
-      {id: 26, label: "Ingénieur du vide", group: 5, value: "Ingénieur du vide", shape: 'image', image: '/assets/wod/ingenieur_du_vide.png', shapeProperties: {useImageSize: true}},
-      {id: 27, label: "Progéniteur", group: 5, value: "Progéniteur", shape: 'image', image: '/assets/wod/progeniteur.png', shapeProperties: {useImageSize: true}},
-      {id: 28, label: "Nouvel ordre mondial", group: 5, value: "Nouvel ordre mondial", shape: 'image', image: '/assets/wod/nouvel_ordre_mondial.png', shapeProperties: {useImageSize: true}},
-      {id: 29, label: "Itération X", group: 5, value: "Itération X", shape: 'image', image: '/assets/wod/iteration_x.png', shapeProperties: {useImageSize: true}},
-      {id: 30, label: "Syndicat", group: 5, value: "Syndicat", shape: 'image', image: '/assets/wod/syndicat.png', shapeProperties: {useImageSize: true}},
-      {id: 31, label: "Ahl'I'Batin", group: 6, value: "Ahl'I'Batin", shape: 'image', image: '/assets/wod/ahl_i_batin.png', shapeProperties: {useImageSize: true}},
-      {id: 32, label: "Taftani", group: 6, value: "Taftani", shape: 'image', image: '/assets/wod/taftani.png', shapeProperties: {useImageSize: true}},
-      {id: 33, label: "Solificati", group: 6, value: "Solificati", shape: 'image', image: '/assets/wod/solificati.png', shapeProperties: {useImageSize: true}},
-      {id: 34, label: "Brujah", group: 7, value: "Brujah", shape: 'image', image: '/assets/wod/brujah.png', shapeProperties: {useImageSize: true}, x: 250, y: 150},
-      {id: 35, label: "Gangrel", group: 7, value: "Gangrel", shape: 'image', image: '/assets/wod/gangrel.png', shapeProperties: {useImageSize: true}},
-      {id: 36, label: "Malkavian", group: 7, value: "Malkavian", shape: 'image', image: '/assets/wod/malkavian.png', shapeProperties: {useImageSize: true}},
-      {id: 37, label: "Nosferatu", group: 7, value: "Nosferatu", shape: 'image', image: '/assets/wod/nosferatu.png', shapeProperties: {useImageSize: true}},
-      {id: 38, label: "Toreador", group: 7, value: "Toreador", shape: 'image', image: '/assets/wod/toreador.png', shapeProperties: {useImageSize: true}},
-      {id: 39, label: "Tremere", group: 7, value: "Tremere", shape: 'image', image: '/assets/wod/tremere.png', shapeProperties: {useImageSize: true}},
-      {id: 40, label: "Ventrue", group: 7, value: "Ventrue", shape: 'image', image: '/assets/wod/ventrue.png', shapeProperties: {useImageSize: true}},
-      {id: 41, label: "Gargouilles", group: 7, value: "Gargouilles", shape: 'image', image: '/assets/wod/gargouilles.png', shapeProperties: {useImageSize: true}},
-      {id: 42, label: "Lasombra", group: 8, value: "Lasombra", shape: 'image', image: '/assets/wod/lasombra.png', shapeProperties: {useImageSize: true}},
-      {id: 43, label: "Tzimisce", group: 8, value: "Tzimisce", shape: 'image', image: '/assets/wod/tzimisce.png', shapeProperties: {useImageSize: true}},
-      {id: 44, label: "Kiasyd", group: 8, value: "Kiasyd", shape: 'image', image: '/assets/wod/kiasyd.png', shapeProperties: {useImageSize: true}},
-      {id: 45, label: "Samedi", group: 8, value: "Samedi", shape: 'image', image: '/assets/wod/samedi.png', shapeProperties: {useImageSize: true}},
-      {id: 46, label: "Assamites", group: 9, value: "Assamites", shape: 'image', image: '/assets/wod/assamite.png', shapeProperties: {useImageSize: true}},
-      {id: 47, label: "Cappadocian", group: 9, value: "Cappadocian", shape: 'image', image: '/assets/wod/cappadocian.png', shapeProperties: {useImageSize: true}},
-      {id: 48, label: "Setite", group: 9, value: "Setite", shape: 'image', image: '/assets/wod/setites.png', shapeProperties: {useImageSize: true}},
-      {id: 49, label: "Giovanni", group: 9, value: "Giovanni", shape: 'image', image: '/assets/wod/giovanni.png', shapeProperties: {useImageSize: true}},
-      {id: 50, label: "Ravnos", group: 9, value: "Ravnos", shape: 'image', image: '/assets/wod/ravnos.png', shapeProperties: {useImageSize: true}},
-      {id: 51, label: "Lhiannan", group: 10, value: "Lhiannan", shape: 'image', image: '/assets/wod/lhiannan.png', shapeProperties: {useImageSize: true}},
-      {id: 52, label: "Salubrien", group: 10, value: "Salubrien", shape: 'image', image: '/assets/wod/salubri.png', shapeProperties: {useImageSize: true}},
-      {id: 53, label: "Baali", group: 10, value: "Baali", shape: 'image', image: '/assets/wod/baali.png', shapeProperties: {useImageSize: true}},
-      {id: 54, label: "Nagaraja", group: 10, value: "Nagaraja", shape: 'image', image: '/assets/wod/nagaraja.png', shapeProperties: {useImageSize: true}},
-      {id: 55, label: "Vrai Brujah", group: 10, value: "Vrai Brujah", shape: 'image', image: '/assets/wod/vrai_brujah.png', shapeProperties: {useImageSize: true}},
-      {id: 56, label: "Andas", group: 10, value: "Andas", shape: 'image', image: '/assets/wod/anda.png', shapeProperties: {useImageSize: true}},
-      {id: 57, label: "Noiad", group: 10, value: "Noiad", shape: 'image', image: '/assets/wod/noad.png', shapeProperties: {useImageSize: true}},
-      {id: 58, label: "Agarash", group: 10, value: "Agarash", shape: 'image', image: '/assets/wod/agarash.png', shapeProperties: {useImageSize: true}},
-      {id: 59, label: "Disciple de Kali", group: 10, value: "Disciple de Kali", shape: 'image', image: '/assets/wod/disciple_de_kali.png', shapeProperties: {useImageSize: true}},
+      {id: 16, label: "Orphelins", group: 3, value: "Orphelins", shape: 'image', image: '/assets/wod/orphelins.png', shapeProperties: {useImageSize: true}},
+      {id: 17, label: "Verbena", group: 4, value: "Verbena", shape: 'image', image: '/assets/wod/verbena.png', shapeProperties: {useImageSize: true}},
+      {id: 18, label: "Euthanatos", group: 4, value: "Euthanatos", shape: 'image', image: '/assets/wod/euthanatos.png', shapeProperties: {useImageSize: true}},
+      {id: 19, label: "Ordre d'Hermès", group: 4, value: "Ordre d'Hermès", shape: 'image', image: '/assets/wod/ordre_dhermes.png', shapeProperties: {useImageSize: true}},
+      {id: 20, label: "Choeur Céleste", group: 4, value: "Choeur Céleste", shape: 'image', image: '/assets/wod/choeur_celeste.png', shapeProperties: {useImageSize: true}},
+      {id: 21, label: "Adepte du virtuel", group: 4, value: "Adepte du virtuel", shape: 'image', image: '/assets/wod/adepte_du_virtuel.png', shapeProperties: {useImageSize: true}},
+      {id: 22, label: "Culte de l'Extase", group: 4, value: "Culte de l'Extase", shape: 'image', image: '/assets/wod/culte_de_lextase.png', shapeProperties: {useImageSize: true}},
+      {id: 23, label: "Excavés", group: 4, value: "Excavés", shape: 'image', image: '/assets/wod/excaves.png', shapeProperties: {useImageSize: true}},
+      {id: 24, label: "Fraternité Akashite", group: 4, value: "Fraternité Akashite", shape: 'image', image: '/assets/wod/fraternite_akashite.png', shapeProperties: {useImageSize: true}},
+      {id: 25, label: "Onirologues", group: 4, value: "Onirologues", shape: 'image', image: '/assets/wod/onirologues.png', shapeProperties: {useImageSize: true}},
+      {id: 26, label: "Fils de l'Ether", group: 4, value: "Fils de l'Ether", shape: 'image', image: '/assets/wod/fils_de_lether.png', shapeProperties: {useImageSize: true}},
+      {id: 27, label: "Ingénieur du vide", group: 5, value: "Ingénieur du vide", shape: 'image', image: '/assets/wod/ingenieur_du_vide.png', shapeProperties: {useImageSize: true}},
+      {id: 28, label: "Progéniteur", group: 5, value: "Progéniteur", shape: 'image', image: '/assets/wod/progeniteur.png', shapeProperties: {useImageSize: true}},
+      {id: 29, label: "Nouvel ordre mondial", group: 5, value: "Nouvel ordre mondial", shape: 'image', image: '/assets/wod/nouvel_ordre_mondial.png', shapeProperties: {useImageSize: true}},
+      {id: 30, label: "Itération X", group: 5, value: "Itération X", shape: 'image', image: '/assets/wod/iteration_x.png', shapeProperties: {useImageSize: true}},
+      {id: 31, label: "Syndicat", group: 5, value: "Syndicat", shape: 'image', image: '/assets/wod/syndicat.png', shapeProperties: {useImageSize: true}},
+      {id: 32, label: "Ahl'I'Batin", group: 6, value: "Ahl'I'Batin", shape: 'image', image: '/assets/wod/ahl_i_batin2.png', shapeProperties: {useImageSize: true}},
+      {id: 33, label: "Taftani", group: 6, value: "Taftani", shape: 'image', image: '/assets/wod/taftani.png', shapeProperties: {useImageSize: true}},
+      {id: 34, label: "Solificati", group: 6, value: "Solificati", shape: 'image', image: '/assets/wod/solificati.png', shapeProperties: {useImageSize: true}},
+      {id: 35, label: "Kopa Loei", group: 6, value: "Kopa Loei", shape: 'image', image: '/assets/wod/kopa_loei.png', shapeProperties: {useImageSize: true}},
+      {id: 36, label: "Brujah", group: 7, value: "Brujah", shape: 'image', image: '/assets/wod/brujah.png', shapeProperties: {useImageSize: true}, x: 250, y: 150},
+      {id: 37, label: "Gangrel", group: 7, value: "Gangrel", shape: 'image', image: '/assets/wod/gangrel.png', shapeProperties: {useImageSize: true}},
+      {id: 38, label: "Malkavian", group: 7, value: "Malkavian", shape: 'image', image: '/assets/wod/malkavian.png', shapeProperties: {useImageSize: true}},
+      {id: 39, label: "Nosferatu", group: 7, value: "Nosferatu", shape: 'image', image: '/assets/wod/nosferatu.png', shapeProperties: {useImageSize: true}},
+      {id: 40, label: "Toreador", group: 7, value: "Toreador", shape: 'image', image: '/assets/wod/toreador.png', shapeProperties: {useImageSize: true}},
+      {id: 41, label: "Tremere", group: 7, value: "Tremere", shape: 'image', image: '/assets/wod/tremere.png', shapeProperties: {useImageSize: true}},
+      {id: 42, label: "Ventrue", group: 7, value: "Ventrue", shape: 'image', image: '/assets/wod/ventrue.png', shapeProperties: {useImageSize: true}},
+      {id: 43, label: "Gargouilles", group: 7, value: "Gargouilles", shape: 'image', image: '/assets/wod/gargouilles.png', shapeProperties: {useImageSize: true}},
+      {id: 44, label: "Lasombra", group: 8, value: "Lasombra", shape: 'image', image: '/assets/wod/lasombra.png', shapeProperties: {useImageSize: true}},
+      {id: 45, label: "Tzimisce", group: 8, value: "Tzimisce", shape: 'image', image: '/assets/wod/tzimisce.png', shapeProperties: {useImageSize: true}},
+      {id: 46, label: "Kiasyd", group: 8, value: "Kiasyd", shape: 'image', image: '/assets/wod/kiasyd.png', shapeProperties: {useImageSize: true}},
+      {id: 47, label: "Samedi", group: 8, value: "Samedi", shape: 'image', image: '/assets/wod/samedi.png', shapeProperties: {useImageSize: true}},
+      {id: 48, label: "Assamites", group: 9, value: "Assamites", shape: 'image', image: '/assets/wod/assamite.png', shapeProperties: {useImageSize: true}},
+      {id: 49, label: "Cappadocian", group: 9, value: "Cappadocian", shape: 'image', image: '/assets/wod/cappadocian.png', shapeProperties: {useImageSize: true}},
+      {id: 50, label: "Setite", group: 9, value: "Setite", shape: 'image', image: '/assets/wod/setites.png', shapeProperties: {useImageSize: true}},
+      {id: 51, label: "Giovanni", group: 9, value: "Giovanni", shape: 'image', image: '/assets/wod/giovanni.png', shapeProperties: {useImageSize: true}},
+      {id: 52, label: "Ravnos", group: 9, value: "Ravnos", shape: 'image', image: '/assets/wod/ravnos.png', shapeProperties: {useImageSize: true}},
+      {id: 53, label: "Lhiannan", group: 10, value: "Lhiannan", shape: 'image', image: '/assets/wod/lhiannan.png', shapeProperties: {useImageSize: true}},
+      {id: 54, label: "Salubrien", group: 10, value: "Salubrien", shape: 'image', image: '/assets/wod/salubri.png', shapeProperties: {useImageSize: true}},
+      {id: 55, label: "Baali", group: 10, value: "Baali", shape: 'image', image: '/assets/wod/baali.png', shapeProperties: {useImageSize: true}},
+      {id: 56, label: "Nagaraja", group: 10, value: "Nagaraja", shape: 'image', image: '/assets/wod/nagaraja.png', shapeProperties: {useImageSize: true}},
+      {id: 57, label: "Vrai Brujah", group: 10, value: "Vrai Brujah", shape: 'image', image: '/assets/wod/vrai_brujah.png', shapeProperties: {useImageSize: true}},
+      {id: 58, label: "Andas", group: 10, value: "Andas", shape: 'image', image: '/assets/wod/anda.png', shapeProperties: {useImageSize: true}},
+      {id: 59, label: "Noiad", group: 10, value: "Noiad", shape: 'image', image: '/assets/wod/noad.png', shapeProperties: {useImageSize: true}},
+      {id: 60, label: "Agarash", group: 10, value: "Agarash", shape: 'image', image: '/assets/wod/agarash.png', shapeProperties: {useImageSize: true}},
+      {id: 61, label: "Disciple de Kali", group: 10, value: "Disciple de Kali", shape: 'image', image: '/assets/wod/disciple_de_kali.png', shapeProperties: {useImageSize: true}},
     ]
 
     var nodes = new vis.DataSet(types);
@@ -131,7 +120,7 @@
       {id: 12, from: 2, to: 13},
       {id: 13, from: 2, to: 14},
       {id: 14, from: 2, to: 15},
-      {id: 15, from: 11, to: 16},
+      {id: 15, from: 2, to: 16},
       {id: 16, from: 11, to: 17},
       {id: 17, from: 11, to: 18},
       {id: 18, from: 11, to: 19},
@@ -141,33 +130,33 @@
       {id: 22, from: 11, to: 23},
       {id: 23, from: 11, to: 24},
       {id: 24, from: 11, to: 25},
-      {id: 25, from: 13, to: 26},
+      {id: 25, from: 11, to: 26},
       {id: 26, from: 13, to: 27},
       {id: 27, from: 13, to: 28},
       {id: 28, from: 13, to: 29},
       {id: 29, from: 13, to: 30},
-      {id: 30, from: 12, to: 31},
+      {id: 30, from: 13, to: 31},
       {id: 31, from: 12, to: 32},
       {id: 32, from: 12, to: 33},
-      {id: 33, from: 7, to: 34},
-      {id: 34, from: 7, to: 35},
+      {id: 33, from: 12, to: 34},
+      {id: 34, from: 12, to: 35},
       {id: 35, from: 7, to: 36},
       {id: 36, from: 7, to: 37},
       {id: 37, from: 7, to: 38},
       {id: 38, from: 7, to: 39},
       {id: 39, from: 7, to: 40},
       {id: 40, from: 7, to: 41},
-      {id: 41, from: 8, to: 42},
-      {id: 42, from: 8, to: 43},
+      {id: 41, from: 7, to: 42},
+      {id: 42, from: 7, to: 43},
       {id: 43, from: 8, to: 44},
       {id: 44, from: 8, to: 45},
-      {id: 45, from: 9, to: 46},
-      {id: 46, from: 9, to: 47},
+      {id: 45, from: 8, to: 46},
+      {id: 46, from: 8, to: 47},
       {id: 47, from: 9, to: 48},
       {id: 48, from: 9, to: 49},
       {id: 49, from: 9, to: 50},
-      {id: 50, from: 10, to: 51},
-      {id: 51, from: 10, to: 52},
+      {id: 50, from: 9, to: 51},
+      {id: 51, from: 9, to: 52},
       {id: 52, from: 10, to: 53},
       {id: 53, from: 10, to: 54},
       {id: 54, from: 10, to: 55},
@@ -175,6 +164,8 @@
       {id: 56, from: 10, to: 57},
       {id: 57, from: 10, to: 58},
       {id: 58, from: 10, to: 59},
+      {id: 59, from: 10, to: 60},
+      {id: 60, from: 10, to: 61},
     ]);
 
     // create a network
@@ -221,50 +212,52 @@
     nodes.update({id: 13, x: -400, y: 0});
     nodes.update({id: 14, x: -200, y: -400});
     nodes.update({id: 15, x: -400, y: -200});
-    nodes.update({id: 16, x: 0, y: -600});
-    nodes.update({id: 17, x: 200, y: -400});
-    nodes.update({id: 18, x: 0, y: -200});
-    nodes.update({id: 19, x: -200, y: -400});
-    nodes.update({id: 20, x: 100, y: -600});
-    nodes.update({id: 21, x: 200, y: -500});
-    nodes.update({id: 22, x: 200, y: -300});
-    nodes.update({id: 23, x: 100, y: -200});
-    nodes.update({id: 24, x: -200, y: -500});
-    nodes.update({id: 25, x: -100, y: -600});
-    nodes.update({id: 26, x: -400, y: 200});
-    nodes.update({id: 27, x: -600, y: 0});
-    nodes.update({id: 28, x: -400, y: -200});
-    nodes.update({id: 29, x: -600, y: 200});
-    nodes.update({id: 30, x: -600, y: -200});
-    nodes.update({id: 31, x: -600, y: -600});
-    nodes.update({id: 32, x: -600, y: -400});
-    nodes.update({id: 33, x: -400, y: -600});
-    nodes.update({id: 34, x: 600, y: 600});
-    nodes.update({id: 35, x: 600, y: 500});
-    nodes.update({id: 36, x: 600, y: 400});
-    nodes.update({id: 37, x: 500, y: 600});
-    nodes.update({id: 38, x: 400, y: 600});
-    nodes.update({id: 39, x: 600, y: 300});
-    nodes.update({id: 40, x: 500, y: 200});
-    nodes.update({id: 41, x: 200, y: 500});
-    nodes.update({id: 42, x: 400, y: 300});
-    nodes.update({id: 43, x: 600, y: 100});
-    nodes.update({id: 44, x: 400, y: -100});
-    nodes.update({id: 45, x: 200, y: -100});
-    nodes.update({id: 46, x: 100, y: 600});
-    nodes.update({id: 47, x: 300, y: 600});
-    nodes.update({id: 48, x: 300, y: 400});
-    nodes.update({id: 49, x: -100, y: 600});
-    nodes.update({id: 50, x: -100, y: 400});
-    nodes.update({id: 51, x: 400, y: 0});
-    nodes.update({id: 52, x: 200, y: -200});
-    nodes.update({id: 53, x: 400, y: -100});
-    nodes.update({id: 54, x: 400, y: 100});
-    nodes.update({id: 55, x: 300, y: -200});
-    nodes.update({id: 56, x: 100, y: -200});
-    nodes.update({id: 57, x: 400, y: 200});
-    nodes.update({id: 58, x: 300, y: 200});
-    nodes.update({id: 59, x: 0, y: -200});
+    nodes.update({id: 16, x: -200, y: 0});
+    nodes.update({id: 17, x: 0, y: -600});
+    nodes.update({id: 18, x: 200, y: -400});
+    nodes.update({id: 19, x: 0, y: -200});
+    nodes.update({id: 20, x: -200, y: -400});
+    nodes.update({id: 21, x: 100, y: -600});
+    nodes.update({id: 22, x: 200, y: -500});
+    nodes.update({id: 23, x: 200, y: -300});
+    nodes.update({id: 24, x: 100, y: -200});
+    nodes.update({id: 25, x: -200, y: -500});
+    nodes.update({id: 26, x: -100, y: -600});
+    nodes.update({id: 27, x: -400, y: 200});
+    nodes.update({id: 28, x: -600, y: 0});
+    nodes.update({id: 29, x: -400, y: -200});
+    nodes.update({id: 30, x: -600, y: 200});
+    nodes.update({id: 31, x: -600, y: -200});
+    nodes.update({id: 32, x: -600, y: -600});
+    nodes.update({id: 33, x: -600, y: -400});
+    nodes.update({id: 34, x: -400, y: -600});
+    nodes.update({id: 35, x: -200, y: -600});
+    nodes.update({id: 36, x: 600, y: 600});
+    nodes.update({id: 37, x: 600, y: 500});
+    nodes.update({id: 38, x: 600, y: 400});
+    nodes.update({id: 39, x: 500, y: 600});
+    nodes.update({id: 40, x: 400, y: 600});
+    nodes.update({id: 41, x: 600, y: 300});
+    nodes.update({id: 42, x: 500, y: 200});
+    nodes.update({id: 43, x: 200, y: 500});
+    nodes.update({id: 44, x: 400, y: 300});
+    nodes.update({id: 45, x: 600, y: 100});
+    nodes.update({id: 46, x: 400, y: -100});
+    nodes.update({id: 47, x: 200, y: -100});
+    nodes.update({id: 48, x: 100, y: 600});
+    nodes.update({id: 49, x: 300, y: 600});
+    nodes.update({id: 50, x: 300, y: 400});
+    nodes.update({id: 51, x: -100, y: 600});
+    nodes.update({id: 52, x: -100, y: 400});
+    nodes.update({id: 53, x: 400, y: 0});
+    nodes.update({id: 54, x: 200, y: -200});
+    nodes.update({id: 55, x: 400, y: -100});
+    nodes.update({id: 56, x: 400, y: 100});
+    nodes.update({id: 57, x: 300, y: -200});
+    nodes.update({id: 58, x: 100, y: -200});
+    nodes.update({id: 59, x: 400, y: 200});
+    nodes.update({id: 60, x: 300, y: 200});
+    nodes.update({id: 61, x: 0, y: -200});
 
     var network = new vis.Network(container, data, options);
     hideNodesInit(nodes, edges);
@@ -288,6 +281,7 @@
     nodes.get(nodeIds).forEach(function(item) {
       nodes.update({id: item.id, hidden: false});
     });
+    console.log(":"+tmp);
     nodes.get(tmp).forEach(function(item) {
       nodes.update({id: item.id, hidden: false});
     });
@@ -303,10 +297,16 @@
 
   function getPathToNode(racine, nodeId, nodes, network) {
     out = []
-    if (nodeId < 7) {
-      return [];
-    }
     filsId = network.getConnectedNodes(racine.id);
+    nodes.get(filsId).forEach(function(fils) {
+      if (fils.id == nodeId) {
+        out = [fils.id];
+        return;
+      }
+    });
+    if (out[0] == nodeId) {
+      return out;
+    }
     nodes.get(filsId).forEach(function(fils) {
       petitFilsId = network.getConnectedNodes(fils.id);
       nodes.get(petitFilsId).forEach(function(petitFils) {
@@ -387,15 +387,17 @@
     if (id > 0 && id < 7) {
       $(idRacePerso).html(" "+value);
       $("#personnage_type_perso").attr("value", value);
+      $("#personnage_appartenance_perso").attr("value", "");
+      $("#appartenance-perso").html("-");
     }
   }
 
   function showAppartenancePerso(idRacePerso, id, value) {
-    if (id > 10) {
+    if (id > 13 || (id > 3 && id < 7)) {
       $(idRacePerso).html(" "+value);
       $("#personnage_appartenance_perso").attr("value", value);
     }
-    if (id > 33) {
+    if (id > 35) {
       $("#personnage_clan").attr("value", value);
     }
     if (id > 15 && id < 26) {

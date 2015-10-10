@@ -1,7 +1,5 @@
 <%= simple_form_for(@routine) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="col-md-5">
+  <div class="col-md-6">
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.input :foci %>
@@ -10,7 +8,7 @@
     <%= link_to "Retour", routines_path, class: "btn btn-warning btn-sm" %>
     <%= link_to 'Show', @routine, class: "btn btn-primary btn-sm" %>
   </div>
-  <div class="col-md-5">
+  <div class="col-md-6">
     <%#= f.input :combinaison %>
     <%= input_spheres_for_routines(f, @routine) %>
     <%= f.input :type_routine, collection: Routine::TYPE_ROUTINE %>

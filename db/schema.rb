@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151006182952) do
+ActiveRecord::Schema.define(:version => 20151010154633) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -305,6 +305,7 @@ ActiveRecord::Schema.define(:version => 20151006182952) do
     t.string   "detail_entropique"
     t.string   "avatar"
     t.string   "appartenance_perso"
+    t.boolean  "lock"
   end
 
   create_table "personnages_routines", :force => true do |t|

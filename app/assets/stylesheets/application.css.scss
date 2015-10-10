@@ -327,86 +327,6 @@ li.active a, li.active a:hover {
     display:block;
 }
 
-// End tabl links
-
-
-// Start infobulle code
-.infobulle {
-  position: relative;
-  cursor: pointer;
-  // font: normal normal 85% sans-serif;
-  text-shadow: #090A0B 0 -1px;
-  display: inline-block;
-
-}
-
-.infobulle > i {
-  text-align: center;
-  font: italic normal 90% Georgia, serif;
-  line-height: 150%;
-  color: black;
-  text-shadow: white 0 1px;
-  background: #DDD;
-  background-clip: padding-box;
-  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.5);
-  border: 3px solid #111;
-  border-radius: 3px;
-  position: absolute;
-  width: 250px;
-  left: 110%;
-  margin-left:5px;
-  padding: 10px 0;
-  bottom:0%;
-  margin-bottom: -25px;
-  visibility:hidden;
-  opacity:0;
-  -webkit-transition: opacity 0.5s linear;
-  -moz-transition: opacity 0.5s linear;
-  -ms-transition: opacity 0.5s linear;
-  -o-transition: opacity 0.5s linear;
-  transition: opacity 0.5s linear;
-  z-index: 42;
-}
-
-.infobulle > i:before, .infobulle > i:after {
-  content: "";
-  position: absolute;
-  border-bottom: 10px solid transparent;
-    border-right:10px solid transparent;
-  top: 80%;
-  left: 0%;
-  margin-left: -10px;
-}
-
-.infobulle > i:before {
-  border-top: 13px solid #111;
-  border-bottom: 13px solid #111;
-  border-right:9px solid #111;
-  border-top: 10px solid transparent;
-  border-left: 10px solid transparent;
-  border-bottom:10px solid transparent;
-  margin-left: -22px;
-  z-index: 1;
-}
-
-.infobulle > i:after{
-
-  border-top: 10px solid #DDD;
-  border-bottom: 10px solid #DDD;
-  border-right:10px solid #DDD;
-  border-top: 10px solid transparent;
-  border-left: 10px solid transparent;
-  border-bottom:10px solid transparent;
-  margin-left: -18px;
-  z-index: 1;
-}
-
-.infobulle:hover > i {
-  visibility: visible;
-  opacity: 1;
-}
-// endinfobulle code
-
 .question {
   width: 90%;
 }
@@ -810,4 +730,32 @@ input[type=number] {
     height: 1%; }
   *:first-child + html .pagination {
     overflow: hidden; 
+}
+
+.popover-perso {
+
+}
+
+.popover {
+  width: 300px;
+}
+
+.xxs {
+  font-size: 10px;
+  line-height: 1;
+  border-radius: 10px
+}
+
+/*#personnage {
+  .col-md-4 {
+    padding-left: 10px;
+    padding-right: 10px
+  }
+}*/
+
+#personnage {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
+    padding-left: 1px;
+    padding-right: 1px
+  }
 }

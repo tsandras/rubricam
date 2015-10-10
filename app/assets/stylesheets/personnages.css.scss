@@ -46,7 +46,7 @@ td {
     outline: none;
     background: #fff;
     border: 1px solid #fff;
-    //text-align: center;
+    width: 33px;
 }
 
 .inpt_number_big {
@@ -146,29 +146,8 @@ td {
   margin: 1px;
 }
 
-.attribut .string {
-  position: relative;
-  top: -10px;
-}
-
-.attributs {
-  // height: 320px;
-}
-
 .description-attribut {
   font-size: 8px;
-}
-
-.attribut {
-  // height: 95px;
-}
-
-.reajuste-spe {
-  top: -20px;
-}
-
-.reajuste {
-  top: -22px;
 }
 
 /* We need to put inline class in wrapper_html if you want to have label and stuff in the same line */
@@ -378,4 +357,20 @@ td {
 
 .spe-xps {
   width: 40px;
+  margin: 0px;
+}
+
+#personnage {
+  .spe {
+    width: 112px;
+    margin: 0px;
+    padding: 0px;
+  }
+}
+
+#personnage {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
+    padding-left: 1px;
+    padding-right: 1px
+  }
 }

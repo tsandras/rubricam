@@ -1,7 +1,7 @@
 class AccueilController < ApplicationController
 
   def index
-    @personnages = Personnage.own_personnages(@user.id)
+    @personnages = Personnage.own_personnages(@user.id).order("created_at desc").limit(10)
     @pnjs = Personnage.none_secret_and_pnjs.limit(10)
     @historiques = Historique.order('created_at DESC').limit(10)
     @atouts = Atout.order('created_at DESC').limit(10)

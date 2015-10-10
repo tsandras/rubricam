@@ -175,9 +175,10 @@
     //String - A legend template
     legendTemplate : "test"
     };
-    var ctx = $("#myChart").get(0).getContext("2d");
-    var myRadarChart = new Chart(ctx).Radar(data, options);
-
+    if ($("#myChart").length > 0) {
+      var ctx = $("#myChart").get(0).getContext("2d");
+      var myRadarChart = new Chart(ctx).Radar(data, options);
+    }
   function create_dataset_personnage(points) {
     return {
       label: "Personnage",

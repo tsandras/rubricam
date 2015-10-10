@@ -82,9 +82,11 @@ module PersonnagesShow
 
   def show_points_sang(personnage)
     if personnage.type_perso == "Vampire"
-      niveau_gen = HistoriquesPersonnages.where(personnage_id: personnage.id, historique_id: Historique.where(nom: "Génération").first.id).first.niveau
-      generation = 13 - niveau_gen
-      "<b>Points de sang</b> : #{Personnage::POINTS_SANG[generation.to_s]}<br />".html_safe
+      hps = HistoriquesPersonnages.where(personnage_id: personnage.id, historique_id: Historique.where(nom: "Génération").first.id)
+      if hps.count > 0
+        generation = 13 - hps.first.niveau
+        "<b>Points de sang</b> : #{Personnage::POINTS_SANG[generation.to_s]}<br />".html_safe
+      end
     end
   end
 
@@ -131,18 +133,20 @@ module PersonnagesShow
     out = "".html_safe
     out << "<div class=\"partie-personnage\">".html_safe
     if !personnage.has_base
-      out << "<b>ETAPE 1 : Répartition des points de départ</b><br/>".html_safe
+      out << "<h4>ETAPE 1 : Répartition des points de départ</h4>".html_safe
       # out << "Vous jouez un #{personnage.type_perso} #{personnage.vampire? ? personnage.clan : personnage.tradition}.</br>".html_safe
       out << "Vous devez répartir #{infos[0]} points dans les Attributs.<br/>".html_safe
       out << "Vous devez répartir #{infos[1]} dans les Capacités.<br/>".html_safe
       out << "Vous devez répartir #{infos[2]} points dans les Historiques.<br/>".html_safe
-      out << "Vous devez répartir 5 points dans les vertues ainsi que 4 points dans les Disciplines" if personnage.vampire?
-      out << "Vous devez répartir #{personnage.tradition == 'Orphelins' ? '5' : '6'} points dans les Sphères." if personnage.mage?
+      out << "Vous devez répartir 5 points dans les vertues ainsi que 4 points dans les Disciplines.<br/>".html_safe if personnage.vampire?
+      out << "Vous devez répartir #{personnage.tradition == 'Orphelins' ? '5' : '6'} points dans les Sphères.<br/>".html_safe if personnage.mage?
+      out << "Puis valider en cliquant sur sauvegarder base.<br/>".html_safe
     elsif !personnage.has_bonus
-      out << "<b>ETAPE 2 : Répartition des points bonus</b>#{show_pts_bonus(personnage)}<br/>".html_safe
+      out << "<h4>ETAPE 2 : Répartition des points bonus</b>#{show_pts_bonus(personnage)}</h4>".html_safe
       out << "Vous devez répartir #{personnage.bonus} points.".html_safe
+      out << "Puis valider en cliquant sur sauvegarder base<br/>".html_safe
     else
-      out << "<b>ETAPE 3 : Répartition des points d'expériences (ou pas)</b><br/>".html_safe
+      out << "<h4>ETAPE 3 : Répartition des points d'expériences (ou pas)</b></h4>".html_safe
       out << "Ce personnage à un total de #{personnage.xps.to_i} dont <span id=\"reste_xps\">#{personnage.reste_xps.to_i}</span> non dépensés.".html_safe
     end
     out << "</div>".html_safe
@@ -379,19 +383,9 @@ module PersonnagesShow
   end
 
   def show_image_type(personnage)
-    # if personnage.mage?
-    #   name = I18n.transliterate(personnage.tradition.split(" ").join("_").split("'").join("")).downcase
-    #   if name != "orphelins"
-    #     image_tag("traditions/#{name}.jpg", class: "image-tradition")
-    #   end
-    # elsif personnage.vampire?
-    #   name = I18n.transliterate(personnage.clan.split(" ").join("_").split("'").join("")).downcase
-    #   image_tag("clans/#{name}.png", class: "image-clan")
-    # end
-    type = personnage.mage? ? personnage.tradition : personnage.clan
-    name = I18n.transliterate(type.split(" ").join("_").split("'").join("")).downcase
-    if name != "orphelins"
-      image_tag("wod/#{name}.png", class: "image-clan")
+    if personnage.appartenance_perso.present?
+      name = I18n.transliterate(personnage.appartenance_perso.split(" ").join("_").split("'").join("")).downcase
+      image_tag("wod/#{name}.png", class: "image-clan") if Rails.application.assets.find_asset("wod/#{name}.png").present?
     end
   end
 
