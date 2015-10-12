@@ -224,6 +224,6 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
     "Mortel" => '_',
     "Personnage" => '/',
     "Métamorphe" => '*',
-    "Ahl'I'batin" => '§'
+    "Ahl'I'Batin" => '§'
   }
 end
