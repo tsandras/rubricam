@@ -4,7 +4,7 @@
   <div id="personnage">
     <div class="row">
       <p class="text-center"><%= show_partie(@personnage) %></p>
-      <p class="bg-danger"><%= notice.html_safe %></p>
+      <p class="bg-danger"><%= notice.html_safe if notice.present? %></p>
     </div>
     <div class="row info-general">
       <p class="text-center"><b>Générale</b></p>

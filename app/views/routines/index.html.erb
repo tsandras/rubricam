@@ -2,21 +2,19 @@
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
 <h1>Liste des routines</h1>
 <div class="col-md-12">
-<table>
+<table class="table">
   <tr>
     <th>Name</th>
-    <th>Type</th>
+    <th>Etiquettes</th>
     <th>Sphères</th>
     <th>Voir</th>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <th>Editer</th>
-    <% end %>
+    <th>Editer</th>
   </tr>
 
 <% @routines.each do |routine| %>
   <tr>
     <td><%= routine.name %></td>
-    <td><%= routine.type_routine %></td>
+    <td><%= label_secret(routine)%><%= content_tag :span, routine.type_routine, class: 'label label-default' %></td>
     <td><%= display_spheres(routine) %></td>
     <td><%= link_to 'Voir', routine_path(routine), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_routine_path(routine), class: 'btn btn-warning btn-xs') %></td>

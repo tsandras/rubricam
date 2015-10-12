@@ -12,4 +12,22 @@ module CombinaisonsHelper
       out.html_safe
     end
   end
+
+  def label_disciplines(disciplines)
+    out = "".html_safe
+    disciplines.each_with_index do |discipline, i|
+      color = ""
+      if i == 0
+        color = "label-danger"
+      elsif i == 1
+        color = "label-warning"
+      elsif i == 2
+        color = "label-success"
+      else
+        color = "label-default"
+      end
+      out << content_tag(:span, discipline.nom, class: "label #{color}").html_safe
+    end
+    out
+  end
 end

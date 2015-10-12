@@ -2,22 +2,20 @@
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
 <h1>Liste des objets</h1>
 <div class="col-md-12">
-<table>
+<table class="table">
   <tr>
     <th>Name</th>
     <th>Niveau</th>
-    <th>Type</th>
+    <th>Etiquettes</th>
     <th>Voir</th>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <th>Editer</th>
-    <% end %>
+    <th>Editer</th>
   </tr>
 
 <% @objets.each do |objet| %>
   <tr>
     <td><%= objet.name %></td>
-    <td><%= objet.niveau %></td>
-    <td><%= objet.type_objet %></td>
+    <td><%= label_niveau(objet.niveau) %></td>
+    <td><%= label_secret(objet)%><%= content_tag :span, objet.type_objet, class: 'label label-default' %></td>
     <td><%= link_to 'Voir', objet_path(objet), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_objet_path(objet), class: 'btn btn-warning btn-xs') %></td>
   </tr>

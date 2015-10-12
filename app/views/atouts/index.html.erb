@@ -2,21 +2,23 @@
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
 <h1>Liste des atouts</h1>
 
-<div class="col-md-10">
-<table>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
     <th>Cout</th>
+    <th>Etiquettes</th>
     <th>Voir</th>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <th>Editer</th>
-    <% end %>
+    <th>Editer</th>
   </tr>
 
 <% @atouts.each do |atout| %>
   <tr>
     <td><%= atout.nom %></td>
     <td><%= atout.cout %></td>
+    <td>
+      <%= content_tag :span, atout.source, class: "label label-danger" %><%= content_tag :span, 'Détail', class: 'label label-info' if atout.has_detail %><%= content_tag :span, atout.type_atout, class: 'label label-default' %><%= content_tag :span, atout.cout > 0 ? 'Avantage' : 'Handicap', class: 'label label-warning' %>
+    </td>
     <td><%= link_to 'Voir', atout_path(atout), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_atout_path(atout), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>

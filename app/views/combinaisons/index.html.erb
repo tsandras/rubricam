@@ -1,22 +1,24 @@
 <%= link_to 'Nouvelle combinaison', new_combinaison_path, class: 'btn btn-success btn-sm create-float' %>
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
 <h1>Liste des combinaisons de disciplines</h1>
-<div class="col-md-10">
-<table>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
     <th>Cout</th>
+    <th>Etiquettes</th>
+    <th>Disciplines</th>
     <th>Voir</th>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <th>Editer</th>
-      <th>Supprimer</th>
-    <% end %>
+    <th>Editer</th>
+    <th>Supprimer</th>
   </tr>
 
 <% @combinaisons.each do |combinaison| %>
   <tr>
     <td><%= combinaison.nom %></td>
     <td><%= combinaison.cout %></td>
+    <td><%= label_secret(combinaison) %></td>
+    <td><%= label_disciplines(combinaison.disciplines) %></td>
     <td><%= link_to 'Voir', combinaison, class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to 'Editer', edit_combinaison_path(combinaison), class: 'btn btn-warning btn-xs' %></td>
     <td><%= link_to 'Supprimer', combinaison, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' %></td>

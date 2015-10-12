@@ -2,18 +2,20 @@
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
 <h1>Liste des historiques</h1>
 <div class="col-md-12">
-<table>
+<table class="table">
   <tr>
     <th>Nom</th>
+    <th>Etiquettes</th>
     <th>Voir</th>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <th>Editer</th>
-    <% end %>
+    <th>Editer</th>
   </tr>
 
 <% @historiques.each do |historique| %>
   <tr>
     <td><%= historique.nom %></td>
+    <td>
+      <%= content_tag :span, historique.source, class: "label label-danger" %><%= content_tag :span, 'Détail', class: 'label label-info' if historique.has_detail %>
+    </td>
     <td><%= link_to 'Voir', historique_path(historique), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_historique_path(historique), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
   </tr>

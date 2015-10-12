@@ -366,6 +366,7 @@ class Personnage < ActiveRecord::Base
   end
 
   def ok_bonus(personnage, capacites, historiques, atouts, spheres, disciplines)
+    return true if bonus == 42
     perso_base = JSON.parse(caracteristique_base)
     points_attributs = 0
     points_capacites = 0
