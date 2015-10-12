@@ -217,7 +217,6 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
     "Indépendant" => '?',
     "Autre" => '!',
     "Changelin" => '$',
-    "Kopa Loei" => '-',
     "Ombre" => '=',
     "Orphelins" => ')',
     "Vampire" => '@',

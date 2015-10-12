@@ -94,7 +94,7 @@ class Personnage < ActiveRecord::Base
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
-  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock
+  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock, :trace
 
   mount_uploader :avatar, AvatarUploader
 
@@ -231,7 +231,6 @@ class Personnage < ActiveRecord::Base
     historique = 0
     if capacites != nil
       capacites.each do |key, c|
-        # raise key.inspect if key == nil
         if is_cp(key)
           capper = CapacitesPersonnages.find(key)
           cap = capper.capacite
@@ -259,10 +258,22 @@ class Personnage < ActiveRecord::Base
     # puts "talent : #{talent}, competence : #{competence}, connaissance : #{connaissance}"
     # puts "historique : #{historique}, surnaturel : #{ok_base_surnaturel(personnage, spheres, disciplines)}"
     # raise ok_base_surnaturel(personnage, spheres, disciplines).inspect
-    return false unless ok_base_surnaturel(personnage, spheres, disciplines)
-    return false if !ok_base_attribut(physique, social, mental)
-    return false if !ok_base_capacites(competence, talent, connaissance)
-    return false if !ok_base_historique(historique)
+    ok_surnaturel = ok_attribut = ok_capacites = ok_historique = ok_vertues = true
+    ok_vertue = false if !ok_base_vertue(personnage)
+    ok_surnaturel = false if !ok_base_surnaturel(personnage, spheres, disciplines)
+    ok_attribut = false if !ok_base_attribut(physique, social, mental)
+    ok_capacites = false if !ok_base_capacites(competence, talent, connaissance)
+    ok_historique = false if !ok_base_historique(historique)
+    return false if ok_surnaturel == false || ok_attribut == false || ok_capacites == false || ok_historique == false || ok_vertue == false
+    true
+  end
+
+  def ok_base_vertue(personnage)
+    return true if !self.vampire?
+    if personnage[:points_conscience].to_i + personnage[:points_courage].to_i + personnage[:points_maitrise].to_i != 8
+      self.trace += "Vous n'avez pas répartie le bon nombre de point dans les vertues.<br/>"
+      false
+    end
     true
   end
 
@@ -276,7 +287,10 @@ class Personnage < ActiveRecord::Base
       return false unless social != 9 || social != 7 || social != 5
       return false unless mental != 9 || mental != 7 || mental != 5
     end
-    return false if physique == mental || physique == social || social == mental
+    if physique == mental || physique == social || social == mental
+      self.trace += "Vous n'avez pas répartie le bon nombre de point dans les attributs.<br/>"
+      return false
+    end
     true
   end
 
@@ -290,15 +304,24 @@ class Personnage < ActiveRecord::Base
       return false unless competence != 11 || competence != 7 || competence != 3
       return false unless connaissance != 11 || connaissance != 7 || connaissance != 3
     end
-    return false if talent == competence || talent == connaissance || competence == connaissance
+    if talent == competence || talent == connaissance || competence == connaissance
+      self.trace += "Vous n'avez pas répartie le bon nombre de point dans les capacités.<br/>"
+      return false
+    end
     true
   end
 
   def ok_base_historique(historique)
     if !humain?
-      return false if historique != 7
+      if historique != 7
+        self.trace += "Vous n'avez pas répartie le bon nombre de point dans les historiques.<br/>"
+        return false
+      end
     else
-      return false if historique != 5
+      if historique != 5
+        self.trace += "Vous n'avez pas répartie le bon nombre de point dans les historiques.<br/>"
+        return false
+      end
     end
     true
   end
@@ -310,7 +333,10 @@ class Personnage < ActiveRecord::Base
         disciplines.each do |key, c|
           dis = dis + c[:niveau].to_i
         end
-        return false if dis != 4
+        if dis != 4
+          self.trace += "Vous n'avez pas répartie le bon nombre de point dans les disciplines.<br/>"
+          return false
+        end
         return true
       else
         return false
@@ -322,8 +348,14 @@ class Personnage < ActiveRecord::Base
           sph = sph + c[:niveau].to_i
         end
         # raise (sph != 6 || (sph != 5 && tradition == "Orphelins")).inspect
-        return false if sph != 6 && tradition != "Orphelins"
-        return false if sph != 5 && tradition == "Orphelins"
+        if sph != 6 && (tradition != "Orphelins" && tradition != "Excavés")
+          self.trace += "Vous n'avez pas répartie le bon nombre de point dans les spheres.<br/>"
+          return false
+        end
+        if sph != 5 && (tradition == "Orphelins" || tradition == "Excavés")
+          self.trace += "Vous n'avez pas répartie le bon nombre de point dans les spheres.<br/>"
+          return false
+        end
         return true
       else
         return false
@@ -477,11 +509,12 @@ class Personnage < ActiveRecord::Base
     if disciplines != nil
       perso_bonus["Disciplines"] = {}
       disciplines.each do |key, c|
-        if is_dp(key)
+        if key.split("_")[0] == "t"
+          key_batard = key.split("_")[1].to_i
+          hiss = Discipline.find(key_batard)
+        else
           hisper = DisciplinesPersonnages.find(key)
           hiss = hisper.discipline
-        else
-          hiss = Discipline.find(key)
         end
         perso_bonus["Disciplines"][hiss.id] = c[:niveau].to_i - perso_base["Disciplines"][hiss.id.to_s].to_i
       end

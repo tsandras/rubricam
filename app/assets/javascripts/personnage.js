@@ -98,145 +98,90 @@
     listenerNumber(tmp[1], idVolonte, 1, 10);
   }
 
-  // function listenerNumber(name, idInput, min, max) {
-  //   listenerUp("#plus-"+name, idInput, max);
-  //   listenerDown("#minus-"+name, idInput, min);
-  // }
-
-  // function listenerUp(idButton, idInput, max) {
-  //   $(idButton).click(function() {
-  //     if (parseInt($(idInput).val()) < max) {
-  //       console.log("coucou ?");
-  //       manageShowSpecialite(parseInt($(idInput).val()) + 1, idButton);
-  //       $(idInput).val(parseInt($(idInput).val()) + 1);
-  //       manageNiveauVoie(idButton, 1);
-  //       manageCalculeXps($("#personnage_type_perso").val());
-  //       manageCalculeBonus();
-  //     }
-  //   });
-  // }
-
-  // function listenerDown(idButton, idInput, min) {
-  //   $(idButton).click(function() {
-  //     if (parseInt($(idInput).val()) > min) {
-  //       manageShowSpecialite(parseInt($(idInput).val()) - 1, idButton);
-  //       $(idInput).val(parseInt($(idInput).val()) - 1);
-  //       manageNiveauVoie(idButton, -1);
-  //       manageCalculeXps($("#personnage_type_perso").val());
-  //       manageCalculeBonus();
-  //     }
-  //   });
-  // }
-
   function listenerPhysiqueForBase(min, max) {
     liste_attributs = ["#personnage_force", "#personnage_dexterite", "#personnage_vigueur"];
-    // if (!gon.base) {
-      $.each(liste_attributs, function(key, val) {
-        tmp = val.split("_");
-        $("#plus-"+tmp[1]).click(function() {
-          if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) + 1 < max) {
-            if (parseInt($("#nbs_physique").html().trim()) < 7) {
-              $("#nbs_physique").html(" "+(parseInt($("#nbs_physique").html()) + 1));
-            }
-          }
-        });
-        $("#minus-"+tmp[1]).click(function() {
-          if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) >= min) {
-            if (parseInt($("#nbs_physique").html().trim()) > 0) {
-              $("#nbs_physique").html(" "+(parseInt($("#nbs_physique").html()) -1));
-            }
-          }
-        });
+    var sum = sumValuesOfList($("#personnage_force, #personnage_dexterite, #personnage_vigueur"))
+    $("#nbs_physique").html(" "+ (sum-3));
+    $.each(liste_attributs, function(key, val) {
+      tmp = val.split("_");
+      $("#plus-"+tmp[1]).click(function() {
+        var sum = sumValuesOfList($("#personnage_force, #personnage_dexterite, #personnage_vigueur"))
+        $("#nbs_physique").html(" "+ (sum-3));
       });
-    // }
+      $("#minus-"+tmp[1]).click(function() {
+        var sum = sumValuesOfList($("#personnage_force, #personnage_dexterite, #personnage_vigueur"))
+        $("#nbs_physique").html(" "+ (sum-3));
+      });
+    });
   }
 
   function listenerMentalForBase(min, max) {
     liste_attributs = ["#personnage_intelligence", "#personnage_perception", "#personnage_astuce"];
-    // if (!gon.base) {
-      $.each(liste_attributs, function(key, val) {
-        tmp = val.split("_");
-        $("#plus-"+tmp[1]).click(function() {
-          if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) + 1 < max) {
-            if (parseInt($("#nbs_mental").html().trim()) < 7) {
-              $("#nbs_mental").html(" "+(parseInt($("#nbs_mental").html()) + 1));
-            }
-          }
-        });
-        $("#minus-"+tmp[1]).click(function() {
-          if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) >= min) {
-            if (parseInt($("#nbs_mental").html().trim()) > 0) {
-              $("#nbs_mental").html(" "+(parseInt($("#nbs_mental").html()) -1));
-            }
-          }
-        });
+    var sum = sumValuesOfList($("#personnage_intelligence, #personnage_perception, #personnage_astuce"))
+    $("#nbs_mental").html(" "+ (sum-3));
+    $.each(liste_attributs, function(key, val) {
+      tmp = val.split("_");
+      $("#plus-"+tmp[1]).click(function() {
+        var sum = sumValuesOfList($("#personnage_intelligence, #personnage_perception, #personnage_astuce"))
+        $("#nbs_mental").html(" "+ (sum-3));
       });
-    // }
+      $("#minus-"+tmp[1]).click(function() {
+        var sum = sumValuesOfList($("#personnage_intelligence, #personnage_perception, #personnage_astuce"))
+        $("#nbs_mental").html(" "+ (sum-3));
+      });
+    });
   }
 
   function listenerSocialForBase(min, max) {
     liste_attributs = ["#personnage_apparence", "#personnage_manipulation", "#personnage_charisme"];
-    // if (!gon.base) {
-      $.each(liste_attributs, function(key, val) {
-        tmp = val.split("_");
-        $("#plus-"+tmp[1]).click(function() {
-          if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) + 1 < max) {
-            if (parseInt($("#nbs_social").html().trim()) < 7) {
-              $("#nbs_social").html(" "+(parseInt($("#nbs_social").html()) + 1));
-            }
-          }
-        });
-        $("#minus-"+tmp[1]).click(function() {
-          if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) >= min) {
-            if (parseInt($("#nbs_social").html().trim()) > 0) {
-              $("#nbs_social").html(" "+(parseInt($("#nbs_social").html()) -1));
-            }
-          }
-        });
+    var sum = sumValuesOfList($("#personnage_apparence, #personnage_manipulation, #personnage_charisme"))
+    $("#nbs_social").html(" "+ (sum-3));
+    $.each(liste_attributs, function(key, val) {
+      tmp = val.split("_");
+      $("#plus-"+tmp[1]).click(function() {
+        var sum = sumValuesOfList($("#personnage_apparence, #personnage_manipulation, #personnage_charisme"))
+        $("#nbs_social").html(" "+ (sum-3));
       });
-    // }
+      $("#minus-"+tmp[1]).click(function() {
+        var sum = sumValuesOfList($("#personnage_apparence, #personnage_manipulation, #personnage_charisme"))
+        $("#nbs_social").html(" "+ (sum-3));
+      });
+    });
   }
 
   // ClassType = Talent, idOutput = #nbs_talent
   function listenerTypeCapacitesForBase(ClassType, idOutput, min, max) {
-    // if (!gon.base) {
-      $.each($(".cap"), function(key, val) {
-        if ($(this).parent().hasClass(ClassType)) {
-          var tmp = $(this).attr("id").split("_");
-          // listenerNumber(tmp[1], "#" + $(this).attr("id") + " #capacites_personnages_niveau", 0, 10);
-          $("#plus-"+tmp[1]).click(function() {
-            if ((parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) + 1) < max) {
-              if (parseInt($(idOutput).html().trim()) < 13) {
-                $(idOutput).html(" "+(parseInt($(idOutput).html()) + 1));
-              }
-            }
-          });
-          $("#minus-"+tmp[1]).click(function() {
-            if (parseInt($(this).parent().parent().children(".control-group").children(".controls").children("input").val()) >= min) {
-              if (parseInt($(idOutput).html().trim()) > 0) {
-                $(idOutput).html(" "+(parseInt($(idOutput).html()) - 1));
-              }
-            }
-          });
-        }
-      });
-    // }
+    var sum = sumValuesOfList($("."+ClassType).find("input[name*='capacites_personnages'].integer"))
+    $(idOutput).html(" "+sum);
+    $.each($(".cap"), function(key, val) {
+      if ($(this).parent().hasClass(ClassType)) {
+        var tmp = $(this).attr("id").split("_");
+        $("#plus-"+tmp[1]).click(function() {
+          var sum = sumValuesOfList($("."+ClassType).find("input[name*='capacites_personnages'].integer"))
+          $(idOutput).html(" "+sum);
+        });
+        $("#minus-"+tmp[1]).click(function() {
+          var sum = sumValuesOfList($("."+ClassType).find("input[name*='capacites_personnages'].integer"))
+          $(idOutput).html(" "+sum);
+        });
+      }
+    });
   }
 
   function listenerHistoriquesForBase(min) {
     var max = parseInt($("#max_historiques").html());
+    var sum = sumValuesOfList($("input[name*='historiques_personnages'].integer"))
+    $("#nbs_historiques").html(" "+ sum);
     $.each($(".his"), function(key, val) {
       if ($(this).attr("id")) {
         var tmp = $(this).attr("id").split("_");
         $("#plus-"+tmp[1]).click(function() {
-          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) < max) {
-            $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) + 1));
-          }
+          var sum = sumValuesOfList($("input[name*='historiques_personnages'].integer"))
+          $("#nbs_historiques").html(" " + sum);
         });
         $("#minus-"+tmp[1]).click(function() {
-          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) > min) {
-            $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) - 1));
-          }
+          var sum = sumValuesOfList($("input[name*='historiques_personnages'].integer"))
+          $("#nbs_historiques").html(" "+ sum);
         });
       }
     });
@@ -247,72 +192,76 @@
     if ($(idWrapper).attr("id")) {
       var tmp = $(idWrapper).attr("id").split("_");
       $("#plus-"+tmp[1]).click(function() {
-        if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) < max) {
-          $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) + 1));
-        }
+        var sum = sumValuesOfList($("input[name*='historiques_personnages'].integer"))
+        $("#nbs_historiques").html(" "+ sum);
       });
       $("#minus-"+tmp[1]).click(function() {
-        if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_historiques").html().trim()) > min) {
-          $("#nbs_historiques").html(" "+(parseInt($("#nbs_historiques").html()) - 1));
-        }
+        var sum = sumValuesOfList($("input[name*='historiques_personnages'].integer"))
+        $("#nbs_historiques").html(" "+ sum);
       });
     }
   }
 
   function listenerSpheresForBase() {
     var max = parseInt($("#max_spheres").html());
+    var sum = sumValuesOfList($("input[name*='spheres_personnages'].integer"))
+    $("#nbs_spheres").html(" "+ sum);
     $.each($(".sph"), function(key, val) {
       if ($(this).attr("id")) {
         var name = $(this).attr("id");
         $("#plus-"+name).click(function() {
-          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_spheres").html().trim()) < max) {
-            $("#nbs_spheres").html(" "+(parseInt($("#nbs_spheres").html()) + 1));
-          }
+          var sum = sumValuesOfList($("input[name*='spheres_personnages'].integer"))
+          $("#nbs_spheres").html(" "+ sum);
         });
         $("#minus-"+name).click(function() {
-          if ($("#nbs_historiques").length == 0 || parseInt($("#nbs_spheres").html().trim()) > min) {
-            $("#nbs_spheres").html(" "+(parseInt($("#nbs_spheres").html()) - 1));
-          }
+          var sum = sumValuesOfList($("input[name*='spheres_personnages'].integer"))
+          $("#nbs_spheres").html(" "+ sum);
         });
       }
     });
   }
 
+  function sumValuesOfList(list) {
+    out = 0
+    $(list).each(function(index, el) {
+      out += parseInt(el.value)
+    })
+    return out;
+  }
+
   function listenerVertuesForBase() {
     var liste_vertues = ["#personnage_points_conscience", "#personnage_points_maitrise", "#personnage_points_courage"];
-    // if (!gon.base) {
-      var max = parseInt($("#max_vertues").html());
-      $.each(liste_vertues, function(key, val) {
-        var tmp = val.split("_");
-        $("#plus-"+tmp[2]).click(function() {
-          if (parseInt($("#nbs_vertues").html().trim()) < max) {
-            $("#nbs_vertues").html(" "+(parseInt($("#nbs_vertues").html()) + 1));
-          }
-        });
-        $("#minus-"+tmp[2]).click(function() {
-          if (parseInt($("#nbs_vertues").html().trim()) > 0) {
-            $("#nbs_vertues").html(" "+(parseInt($("#nbs_vertues").html()) - 1));
-          }
-        });
+    var max = parseInt($("#max_vertues").html());
+    var sum = sumValuesOfList($("#personnage_points_conscience, #personnage_points_maitrise, #personnage_points_courage"))
+    $("#nbs_vertues").html(" "+ (sum -3));
+    $.each(liste_vertues, function(key, val) {
+      var tmp = val.split("_");
+      $("#plus-"+tmp[2]).click(function() {
+        var sum = sumValuesOfList($("#personnage_points_conscience, #personnage_points_maitrise, #personnage_points_courage"))
+        $("#nbs_vertues").html(" "+ (sum -3));
       });
-    // }
+      $("#minus-"+tmp[2]).click(function() {
+        var sum = sumValuesOfList($("#personnage_points_conscience, #personnage_points_maitrise, #personnage_points_courage"))
+        $("#nbs_vertues").html(" "+ (sum -3));
+      });
+    });
   }
 
   function listenerDisciplinesForBase() {
     if ($("#nbs_disciplines").val() != null) {
+      var sum = sumValuesOfList($("input[name*='disciplines_personnages'].integer"))
+      $("#nbs_disciplines").html(" "+ sum);
       $.each($(".dis"), function(key, val) {
         if ($(this).attr("id")) {
           var tmp = $(this).attr("id").split("_");
           name = tmp[1].split(" ").join("").split("'").join("");
           $("#plus-"+name).click(function() {
-            if (parseInt($("#nbs_disciplines").html().trim()) < 4) {
-              $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) + 1));
-            }
+            var sum = sumValuesOfList($("input[name*='disciplines_personnages'].integer"))
+            $("#nbs_disciplines").html(" "+ sum);
           });
           $("#minus-"+name).click(function() {
-            if (parseInt($("#nbs_disciplines").html().trim()) > 0) {
-              $("#nbs_disciplines").html(" "+(parseInt($("#nbs_disciplines").html()) - 1));
-            }
+            var sum = sumValuesOfList($("input[name*='disciplines_personnages'].integer"))
+            $("#nbs_disciplines").html(" "+ sum);
           });
         }
       });
@@ -355,12 +304,14 @@ function manageCapacites(listToListening, NameClassOfInput) {
 
 function manageHistoriques(listToListening, NameClassOfInput) {
   $(listToListening).change(function() {
+    console.log("coucou")
     var tmp = $(this).parent().text();
     if(this.checked) {
       if (! $("#f_"+tmp).length) {
         var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]
         $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value, id_jointure));
         listenerHistorique("#t_"+tmp.trim());
+        console.log("coucou")
         listenerHistoriqueForBase("#t_"+tmp.trim());
       }
     } else {
@@ -375,7 +326,9 @@ function manageAtouts(listToListening, NameClassOfInput) {
     var cout = tmp[1].split(")");
     if(this.checked) {
       if (! $("#f_"+tmp[0]).length) {
-        $(NameClassOfInput).last().parent().append(getHTMLInputAtout(tmp[0], this.value, cout[0].trim()));
+        console.log($(NameClassOfInput));
+        // $(NameClassOfInput).last().parent().append(getHTMLInputAtout(tmp[0], this.value, cout[0].trim()));
+        $("#table-atout tr:last").after(getHTMLInputAtout(tmp[0], this.value, cout[0].trim()));
       }
     } else {
       $("#t_"+tmp).remove();
@@ -416,7 +369,7 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
     nom = nom.split("-")[0].trim();
   }
   out = "<div class=\"row "+class_type+" "+gris+"\" id=\"t_"+format_nom+"\">";
-    out += "<div class=\"col-md-4\">";
+    out += "<div class=\"col-md-5\">";
       out += "<b> "+nom+" </b>";
       if (info_bulle) {
         out += "<span class=\"infobulle\"><img src=\"/assets/question_icon.jpg\" class=\"question\"><i>"+info_bulle+"</i></span>";
@@ -426,24 +379,15 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
       out += "<button type=\"button\" class=\"moins_new\" id=\"minus-"+format_nom+"\" name=\"button\"></button>";
       out += "<button type=\"button\" class=\"plus_new\" id=\"plus-"+format_nom+"\" name=\"button\"></button>";
     out += "</div>";
-    // simple_fields_for(objet) do |o|
-      // out += o.input(:niveau, label: "&nbsp;";,
-      //         input_html: {name: "#{type}s_personnages[#{objet.id}][niveau]", class: "inpt_number #{num % 2 == 0 ? 'gris' : ''}", readonly: 'true' },
-      //         wrapper_html: { class: "col-md-1 reajuste" })
-      out += "<div class=\"control-group integer optional "+type+"s_personnages_niveau col-md-1 reajuste\">";
-      out += "<label class=\"integer optional control-label\" for=\""+type+"s_personnages_niveau\">&nbsp;</label>"
-      out += "<div class=\"controls\"><input class=\"numeric integer optional inpt_number "+gris+"\" id=\""+type+"s_personnages_niveau\" name=\""+type+"s_personnages[t_"+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\"/></div></div>";
-      if (cols_sup) {
-        out += "<div class=\"control-group string optional capacites_personnage s_specialite col-md-6 hidden reajuste-spe\" id=\"specialite-"+nom+"\">";
-        out += "<label class=\"string optional control-label\" for=\""+type+"s_personnages_specialite\">Specialite</label>";
-        out += "<div class=\"controls\"><input class=\"string optional inpt_string\" id=\""+type+"s_personnages_specialite\" name=\""+type+"s_personnages["+id+"]["+cols_sup+"]\" size=\"50\" type=\"text\" value=\"\" /></div></div>";
-        // out += o.input(cols_sup, label: "&nbsp";,
-        //         input_html: {class: "inpt_string", name: "#{type}s_personnages[#{objet.id}][#{cols_sup}]"},
-        //         wrapper_html: { class: "col-md-5 reajuste #{specialite_affichage(objet, cols_sup)}", id: "#{cols_sup}-#{format_nom}" })
-      } else {
-        out += "<div class=\"col-md-5\"></div>";
-      }
-    // end
+    out += "<div class=\"control-group integer optional "+type+"s_personnages_niveau col-md-1\">";
+    out += "<div class=\"controls\"><input class=\"numeric integer optional inpt_number "+gris+"\" id=\""+type+"s_personnages_niveau\" name=\""+type+"s_personnages[t_"+id+"][niveau]\" step=\"1\" type=\"number\" value=\"0\" readonly=\"true\"/></div></div>";
+    if (cols_sup) {
+      out += "<div class=\"control-group string optional capacites_personnage s_specialite col-md-4 hidden\" id=\"specialite-"+nom+"\">";
+      out += "<label class=\"string optional control-label\" for=\""+type+"s_personnages_specialite\">Specialite</label>";
+      out += "<div class=\"controls\"><input class=\"string optional\" id=\""+type+"s_personnages_specialite\" name=\""+type+"s_personnages["+id+"]["+cols_sup+"]\" size=\"50\" type=\"text\" value=\"\" /></div></div>";
+    } else {
+      out += "<div class=\"col-md-5\"></div>";
+    }
     if (type == "capacite") {
       out += "<span class=\"hidden\" id=\""+id+"\"> "+id+":"+type_cap+"</span>"; //TODO FIX type_cap
     } else {
@@ -475,16 +419,22 @@ function getHTMLInputHistorique(name, id, id_jointure) {
 }
 
 function getHTMLInputAtout(name, id, cout) {
-  out = "<div class=\"row ato\" id=\"t_"+name+"\">";
-  out += "<div class=\"col-md-4\">";
-  out += "<b>"+name+"</b>";
-  out += "</div>";
-  out += "<div class=\"col-md-2\">";
-  out += ""+cout+"";
-  out += "</div>";
-  out += "<div class=\"col-md-6\">";
-  out += "</div>";
-  out += "</div>";
+  // out = "<div class=\"row ato\" id=\"t_"+name+"\">";
+  // out += "<div class=\"col-md-4\">";
+  // out += "<b>"+name+"</b>";
+  // out += "</div>";
+  // out += "<div class=\"col-md-2\">";
+  // out += ""+cout+"";
+  // out += "</div>";
+  // out += "<div class=\"col-md-6\">";
+  // out += "</div>";
+  // out += "</div>";
+  // return out;
+  out = "<tr id=\"t_"+name+"\">"
+    out += "<td>"+name+"</td>"
+    out += "<td>"+cout+"</td>"
+    out += "<td></td>"
+  out += "</tr>"
   return out;
 }
 

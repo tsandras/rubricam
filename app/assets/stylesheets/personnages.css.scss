@@ -374,3 +374,19 @@ td {
     padding-right: 1px
   }
 }
+
+#table-atout td {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+#table-atout td:nth-child(1) {
+  width: 55%;
+}
+
+#table-atout td:nth-child(2) {
+  width: 15%;
+  text-align: center;
+}

@@ -177,6 +177,7 @@ class PersonnagesController < ApplicationController
     @personnage = Personnage.find(params[:id])
     # return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(User.find(session["warden.user.user.key"][0].first))
     # update_atouts(params[:atouts_personnages])
+    @personnage.trace = ""
     ok = false
     unless @personnage.has_base
       ok_base = @personnage.ok_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
@@ -185,6 +186,7 @@ class PersonnagesController < ApplicationController
         params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
         ok = true
       else
+        # raise "wefwef" +  @personnage.inspect
         puts "Le personnage n'est pas ok pour sa base"
         params[:personnage][:has_base] = false
       end
@@ -212,7 +214,6 @@ class PersonnagesController < ApplicationController
         @personnage.lock = false
         @personnage.calcule_rang
         @personnage.calcule_graph
-        # raise params[:personnage].inspect
         @personnage.update_attributes(params[:personnage])
         update_capacites(params[:capacites_personnages])
         update_historiques(params[:historiques_personnages])
@@ -222,14 +223,17 @@ class PersonnagesController < ApplicationController
         format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
-        flash[:notice] = "totototo"
+        flash[:notice] = @personnage.trace if @personnage.trace.present?
         @personnage.lock = true
         @personnage.update_attributes(params[:personnage])
         @capacites_personnages = CapacitesPersonnages.where(personnage_id: params[:id])
         @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
         @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
-        @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id])
+        @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id]) + recover_values_atouts(params[:personnage][:atout_ids])
         @values_capacites = recover_values_capacites(params[:capacites_personnages])
+        @values_historiques = recover_values_historiques(params[:historiques_personnages])
+        @values_spheres = recover_values_spheres(params[:spheres_personnages])
+        @values_disciplines = recover_values_disciplines(params[:disciplines_personnages])
         format.html { render action: "edit" }
         format.json { head :no_content }
       end
@@ -282,6 +286,53 @@ class PersonnagesController < ApplicationController
         ii = i
         ii = Capacite.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
         out[ii.to_i] = cp[:niveau].to_i
+      end
+    end
+    out
+  end
+
+  def recover_values_disciplines(disciplines_personnages)
+    out = {}
+    if disciplines_personnages != nil
+      disciplines_personnages.each do |i, cp|
+        ii = i
+        ii = Discipline.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
+        out[ii.to_i] = cp[:niveau].to_i
+      end
+    end
+    out
+  end
+
+  def recover_values_historiques(historiques_personnages)
+    out = {}
+    if historiques_personnages != nil
+      historiques_personnages.each do |i, cp|
+        ii = i
+        ii = Historique.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
+        out[ii.to_i] = cp[:niveau].to_i
+      end
+    end
+    out
+  end
+
+  def recover_values_atouts(atout_ids)
+    out = []
+    if atout_ids != nil
+      atout_ids.each do |i|
+        out.push(AtoutsPersonnages.new(atout_id: i.to_i, personnage_id: @personnage.id)) if i.present?
+      end
+    end
+    out
+  end
+
+  def recover_values_spheres(spheres_personnages)
+    out = {}
+    if spheres_personnages != nil
+      spheres_personnages.each do |i, s|
+        sphere = Sphere.find i.to_i if i.present?
+        sphere.niveau = s["niveau"]
+        sphere.specialite = s["specialite"]
+        out[sphere.name] = sphere
       end
     end
     out
@@ -375,7 +426,7 @@ class PersonnagesController < ApplicationController
           cap = CapacitesPersonnages.where(id: i, personnage_id: @personnage.id)
           cap.first.update_attributes(cp)
         else
-          CapacitesPersonnages.create(personnage_id: @personnage.id, capacite_id: ii.id, niveau: cp[:niveau], specialite: cp[:specialite])
+          CapacitesPersonnages.create(personnage_id: @personnage.id, capacite_id: ii, niveau: cp[:niveau], specialite: cp[:specialite])
         end
       end
     end

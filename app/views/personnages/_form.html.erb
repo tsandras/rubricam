@@ -4,7 +4,7 @@
   <div id="personnage">
     <div class="row">
       <p class="text-center"><%= show_partie(@personnage) %></p>
-      <p class="bg-danger"><%= notice %></p>
+      <p class="bg-danger"><%= notice.html_safe %></p>
     </div>
     <div class="row info-general">
       <p class="text-center"><b>Générale</b></p>
@@ -29,8 +29,8 @@
         <p class="text-center"><b>Sphères</b><%= show_spheres_for_base(@personnage) %></p>
         <%= input_spheres(@personnage) %>
       </div>
+      <br/>
     <% end %>
-    <br/>
     <div class="row disciplines">
       <p class="text-center">
         <b>Disciplines</b><%= show_disciplines(@personnage) %>
@@ -40,18 +40,23 @@
     </div>
     <div class="row autre">
       <p class="text-center"><b>Autres</b></p>
+      <div class="col-md-1"></div>
       <div class="col-md-4">
         <%= input_historique(@historiques_personnages, @personnage) %>
-        <%= input_atout(@atouts_personnages) %>
+        <% if @personnage.has_base %>
+          <br />
+          <%= input_atout(@atouts_personnages) %>
+        <% end %>
       </div>
+      <div class="col-md-2"></div>
       <div class="col-md-4">
-        <p class="text-center"><b>Important</b></p>
-        <%= input_voie(p, @personnage) %>
-        <%= input_entelechie(p, @personnage) %>
-        <%= input_volonte(p) %>
-      </div>
-      <div class="col-md-4">
-        <p class="text-center"><b>Vertues/Résonnances</b><%= show_nbs_vertues(@personnage) %></p>
+        <% if @personnage.has_base %>
+          <p class="text-center"><b>Important</b></p>
+          <%= input_volonte(p) %>
+          <%= input_voie(p, @personnage) %>
+          <%= input_entelechie(p, @personnage) %>
+        <% end %>
+        <p class="text-center"><b><%= @personnage.mage? ? 'Résonnances' : 'Vertues' %></b><%= show_nbs_vertues(@personnage) %></p>
         <%= input_vertue(p, @personnage) %>
         <%= input_resonnance(p, @personnage) %>
       </div>
