@@ -1,14 +1,12 @@
-<h1>Listes des relations</h1>
+<h1>Liste des relations</h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Name</th>
     <th>To</th>
     <th>From</th>
     <th>Voir</th>
-    <% if @user.role == User::ROLE_ADMIN %>
-      <th>Editer</th>
-    <% end %>
+    <th>Editer</th>
   </tr>
 
 <% @relations.each do |relation| %>

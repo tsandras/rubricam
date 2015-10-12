@@ -1,9 +1,9 @@
-<h1>Listes des organisations</h1>
-<div class="col-md-10">
-<table>
+<h1>Liste des organisations</h1>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
-    <th>Type</th>
+    <th>Etiquettes</th>
     <th>Voir</th>
     <th>Editer</th>
   </tr>
@@ -11,7 +11,7 @@
 <% @organisations.each do |organisation| %>
   <tr>
     <td><%= organisation.nom %></td>
-    <td><%= organisation.type_organisation %></td>
+    <td><%= content_tag :span, organisation.type_organisation, class: "label label-danger" %><%= label_secret(organisation) %></td>
     <td><%= link_to 'Voir', organisation_path(organisation), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_organisation_path(organisation), class: 'btn btn-warning btn-xs') %></td>
   </tr>

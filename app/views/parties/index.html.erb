@@ -1,17 +1,19 @@
-<h1>Listes des parties</h1>
-<div class="col-md-10">
-<table>
+<h1>Liste des parties</h1>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
     <th>Date</th>
-    <th></th>
-    <th></th>
+    <th>Etiquettes</th>
+    <th>Voir</th>
+    <th>Editer</th>
   </tr>
 
 <% @parties.each do |party| %>
   <tr>
     <td><%= party.nom %></td>
-    <td><%= party.date %></td>
+    <td><%= party.date.strftime("%F") %></td>
+    <td><%= label_duree(party.duree) %><%= label_secret(party) %></td>
     <td><%= link_to 'Voir', party_path(party), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_party_path(party), class: 'btn btn-warning btn-xs') %></td>
   </tr>

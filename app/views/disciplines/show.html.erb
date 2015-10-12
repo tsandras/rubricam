@@ -1,6 +1,6 @@
 <h2><%= @discipline.nom %></h2>
 <p id="notice"><%= notice %></p>
-<div class="col-md-10">
+<div class="col-md-12">
 
 <p>
   <b>Description:</b>
@@ -10,15 +10,19 @@
 <p>
   <% if !@nivdisciplines.nil? %>
     <div>Les niveaux de <%= @discipline.nom %> :</div>
-    <table>
+    <table class="table">
       <tr>
         <th>Nom</th>
         <th>Niveau</th>
+        <th>Etiquettes</th>
+        <th>Voir</th>
       </tr>
     <% @nivdisciplines.each do |nivdiscipline| %>
       <tr>
         <td><%= link_to nivdiscipline.nom, nivdiscipline_path(nivdiscipline) %></td>
-        <td><%= nivdiscipline.niveau %></td>
+        <td><%= label_niveau(nivdiscipline.niveau) %></td>
+        <td><%= content_tag :span, nivdiscipline.source, class: "label label-danger" %><%= label_secret(nivdiscipline) %></td>
+        <td><%= link_to 'Voir', nivdiscipline_path(nivdiscipline), class: 'btn btn-success btn-xs' %></td>
       </tr>
     <% end %>
     </table>

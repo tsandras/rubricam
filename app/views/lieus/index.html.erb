@@ -1,9 +1,9 @@
-<h1>Listes des lieux</h1>
-<div class="col-md-10">
-<table>
+<h1>Liste des lieux</h1>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
-    <th>Type</th>
+    <th>Etiquettes</th>
     <th>Voir</th>
     <th>Editer</th>
   </tr>
@@ -11,7 +11,7 @@
 <% @lieus.each do |lieu| %>
   <tr>
     <td><%= lieu.nom %></td>
-    <td><%= lieu.type_lieu %></td>
+    <td><%= content_tag :span, lieu.type_lieu, class: "label label-danger" %><%= label_secret(lieu) %></td>
     <td><%= link_to 'Voir', lieu, class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to 'Editer', edit_lieu_path(lieu), class: 'btn btn-warning btn-xs' %></td>
   </tr>
