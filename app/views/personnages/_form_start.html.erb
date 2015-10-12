@@ -41,7 +41,7 @@
       {id: 0, label: "Personnage", group: 0, shape: 'image', image: '/assets/wod/personnage.png', shapeProperties: {useImageSize: true}},
       {id: 1, label: "Vampire", group: 1, value: "Vampire", shape: 'image', image: '/assets/wod/vampire.png', shapeProperties: {useImageSize: true}},
       {id: 2, label: "Mage", group: 1, value: "Mage", shape: 'image', image: '/assets/wod/mage.png', shapeProperties: {useImageSize: true}},
-      {id: 3, label: "Mortel", group: 1, value: "Mortel", shape: 'image', image: '/assets/wod/humain.png', shapeProperties: {useImageSize: true}},
+      {id: 3, label: "Mortel", group: 1, value: "Mortel", shape: 'image', image: '/assets/wod/mortel.png', shapeProperties: {useImageSize: true}},
       {id: 4, label: "Métamorphe", group: 1, value: "Métamorphe", shape: 'image', image: '/assets/wod/metamorphe.png', shapeProperties: {useImageSize: true}},
       {id: 5, label: "Changelin", group: 1, value: "Changelin", shape: 'image', image: '/assets/wod/changelin.png', shapeProperties: {useImageSize: true}},
       {id: 6, label: "Ombre", group: 1, value: "Ombre", shape: 'image', image: '/assets/wod/ombre.png', shapeProperties: {useImageSize: true}},
@@ -81,14 +81,14 @@
       {id: 40, label: "Toreador", group: 7, value: "Toreador", shape: 'image', image: '/assets/wod/toreador.png', shapeProperties: {useImageSize: true}},
       {id: 41, label: "Tremere", group: 7, value: "Tremere", shape: 'image', image: '/assets/wod/tremere.png', shapeProperties: {useImageSize: true}},
       {id: 42, label: "Ventrue", group: 7, value: "Ventrue", shape: 'image', image: '/assets/wod/ventrue.png', shapeProperties: {useImageSize: true}},
-      {id: 43, label: "Gargouilles", group: 7, value: "Gargouilles", shape: 'image', image: '/assets/wod/gargouilles.png', shapeProperties: {useImageSize: true}},
+      {id: 43, label: "Gargouilles", group: 7, value: "Gargouilles", shape: 'image', image: '/assets/wod/gargouille.png', shapeProperties: {useImageSize: true}},
       {id: 44, label: "Lasombra", group: 8, value: "Lasombra", shape: 'image', image: '/assets/wod/lasombra.png', shapeProperties: {useImageSize: true}},
       {id: 45, label: "Tzimisce", group: 8, value: "Tzimisce", shape: 'image', image: '/assets/wod/tzimisce.png', shapeProperties: {useImageSize: true}},
       {id: 46, label: "Kiasyd", group: 8, value: "Kiasyd", shape: 'image', image: '/assets/wod/kiasyd.png', shapeProperties: {useImageSize: true}},
       {id: 47, label: "Samedi", group: 8, value: "Samedi", shape: 'image', image: '/assets/wod/samedi.png', shapeProperties: {useImageSize: true}},
       {id: 48, label: "Assamites", group: 9, value: "Assamites", shape: 'image', image: '/assets/wod/assamite.png', shapeProperties: {useImageSize: true}},
       {id: 49, label: "Cappadocian", group: 9, value: "Cappadocian", shape: 'image', image: '/assets/wod/cappadocian.png', shapeProperties: {useImageSize: true}},
-      {id: 50, label: "Setite", group: 9, value: "Setite", shape: 'image', image: '/assets/wod/setites.png', shapeProperties: {useImageSize: true}},
+      {id: 50, label: "Setite", group: 9, value: "Setite", shape: 'image', image: '/assets/wod/setite.png', shapeProperties: {useImageSize: true}},
       {id: 51, label: "Giovanni", group: 9, value: "Giovanni", shape: 'image', image: '/assets/wod/giovanni.png', shapeProperties: {useImageSize: true}},
       {id: 52, label: "Ravnos", group: 9, value: "Ravnos", shape: 'image', image: '/assets/wod/ravnos.png', shapeProperties: {useImageSize: true}},
       {id: 53, label: "Lhiannan", group: 10, value: "Lhiannan", shape: 'image', image: '/assets/wod/lhiannan.png', shapeProperties: {useImageSize: true}},
@@ -393,7 +393,8 @@
   }
 
   function showAppartenancePerso(idRacePerso, id, value) {
-    if (id > 13 || (id > 3 && id < 7)) {
+    console.log(id)
+    if (id > 13 || (id > 2 && id < 7)) {
       $(idRacePerso).html(" "+value);
       $("#personnage_appartenance_perso").attr("value", value);
     }
