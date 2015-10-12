@@ -49,22 +49,22 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                   "Itération X" => "Correspondance", "Syndicat" => "Entropie", "Ahl'I'Batin" => "Correspondance", 
                   "Taftani" => "Esprit", "Solificati" => "Forces", "Kopa Loei" => "Forces"}
 
-  CLAN = ["Assamites", "Brujah", "Cappadocian", "Setite", "Gangrel", "Giovanni",
-          "Lasombra", "Malkavian", "Nosferatu", "Ravnos", "Salubrien", "Toreador",
-          "Tremere", "Tzimisce", "Ventrue", "Baali", "Caïtiff", "Gargouilles",
+  CLAN = ["Assamite", "Brujah", "Cappadocian", "Setite", "Gangrel", "Giovanni",
+          "Lasombra", "Malkavian", "Nosferatu", "Ravnos", "Salubri", "Toreador",
+          "Tremere", "Tzimisce", "Ventrue", "Baali", "Caïtiff", "Gargouille",
           "Kiasyd", "Lhiannan", "Nagaraja", "Samedi",
-          "Vrai Brujah", "Andas", "Noiad", "Agarash", "Disciple de Kali"]
+          "Vrai Brujah", "Anda", "Noad", "Agarash", "Disciple de Kali"]
 
   APPARTENANCE = TRADITION + TECHNOCRATIE + DISPARATE + ["Maraudeur"] + ["Nefendi"] + CLAN
 
   CLAN_BY_TYPE = {
-    "Camarilla" => ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue", "Gargouilles"],
+    "Camarilla" => ["Brujah", "Gangrel", "Malkavian", "Nosferatu", "Toreador", "Tremere", "Ventrue", "Gargouille"],
     "Sabbat" => ["Lasombra", "Tzimisce", "Kiasyd", "Samedi"],
-    "Indépendant" => ["Assamites", "Cappadocian", "Setite", "Giovanni", "Ravnos"],
-    "Autre" => ["Lhiannan", "Salubrien", "Baali", "Nagaraja", "Vrai Brujah", "Andas", "Noiad", "Agarash", "Disciple de Kali"]
+    "Indépendant" => ["Assamite", "Cappadocian", "Setite", "Giovanni", "Ravnos"],
+    "Autre" => ["Lhiannan", "Salubri", "Baali", "Nagaraja", "Vrai Brujah", "Anda", "Noad", "Agarash", "Disciple de Kali"]
   }
 
-  CLAN_DESCRIPTION = {"Assamites" => "Les Assamites sont arrivés des étendues désertiques de l'Orient. Ils sont connus des vampires comme étant des assassins, travaillant pour ceux qui y mettent le prix. Le prix qu'ils demandent est de la vitae d'autres vampires. Pour eux la diablerie est le plus grand des sacrements et aucun autre clan n'a acquis une telle réputation en ce qui concerne ce sujet. Discipline de Clan : Célérité, Occultation, Quietus.",
+  CLAN_DESCRIPTION = {"Assamite" => "Les Assamites sont arrivés des étendues désertiques de l'Orient. Ils sont connus des vampires comme étant des assassins, travaillant pour ceux qui y mettent le prix. Le prix qu'ils demandent est de la vitae d'autres vampires. Pour eux la diablerie est le plus grand des sacrements et aucun autre clan n'a acquis une telle réputation en ce qui concerne ce sujet. Discipline de Clan : Célérité, Occultation, Quietus.",
                       "Brujah" => "Les Brujahs étaient autrefois les rois philosophes de la Mésopotamie, de la Perse et de Babylone. Ils contrôlaient un empire s'étendant du berceau de la civilisation au nord de l'Afrique, et accumulèrent des connaissances du monde entier. Cependant, il est dit que dans leur recherche de liberté et d'illumination, ils tuèrent leur fondateur. Discipline de Clan : Célérité, Puissance, Présence.",
                       "Cappadocian" => "Connus depuis des millénaires, parmi les Caïnites, comme le «clan de la mort», les Cappadocians sont rejetés même par leurs frères à cause de leurs intérêts macabres. Cappadocius lui même était un prêtre iconoclaste de son vivant, et après son Passage il poursuivit ses recherches sur les secrets de la vie, de la mort et de ce qu'il deviendrait. Discipline de Clan : Auspex, Force d'âme, Nécromancie.",
                       "Setite" => "Les Setites sont considérés avec plus de méfiance que tous les autres clans. Leurs liens avec le Serpent mythologique sont bien connus, et soutenus par d'étranges pouvoirs. Si un Setite pénètre dans une ville, le pouvoir Caïnite en place s'effrite inévitablement. Discipline de Clan : Occultation, Présence, Serpentis.",
@@ -74,38 +74,38 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
                       "Malkavian" => "Tous les autres clans craignent les Malkavian à cause de leur folie, qui peut prendre n'importe quelle forme, de la rage aveugle à la catatonie. Mais la plupart du temps, il est difficile de distinguer un Malkavian d'un être 'sain d'esprit'. Ceux dont la folie est apparente sont certainement les plus dangereux. Ils ne sont que les esclaves de leurs propres lubies. Discipline de Clan : Auspex, Aliénation, Occultation.",
                       "Nosferatu" => "Les Nosferatu souffrent de la malédiction la plus visible : ils ont été déformés par leur malédiction du sang. Après l'Etreinte, le jeune vampire subit des déformations pour finalement, au bout d'une semaine, finir en un monstre hideux. La psychologie du jeune en prend souvent un coup, de plus, il devient incapable de marcher parmi les autres avec sa nouvelle apparence. Il rejoint alors ses frères qui sont généralement dans les égouts ou les catacombes. Discipline de Clan : Animaliste, Occultation, Puissance.",
                       "Ravnos" => "Les Ravnos sont célèbres pour leur sens de l'humour noir très particulier. Ils sont des mystificateurs de premier ordre, tissant illusions et mensonges par leur fantaisie. Les Ravnos respectent scrupuleusement les marchés qu'ils passent, autant avec les mortels qu'avec les vampires, dignes des pactes avec le diable. Ils s'abattent donc sans pitié sur ceux qui sont incapables d'en payer les termes cachés. Discipline de Clan : Animaliste, Chimérie, Force d'âme.",
-                      "Salubrien" => "Jadis cités parmi les plus estimés des guérisseurs et professeurs, les Salubrien sont désormais traqués et méprisés. La mort de Saulot au 12e siècle a dramatiquement modifié leur destin ; ils doivent désormais survivre nuit après nuit. Discipline de Clan : Auspex, Force d'âme, Obéah.",
+                      "Salubri" => "Jadis cités parmi les plus estimés des guérisseurs et professeurs, les Salubrien sont désormais traqués et méprisés. La mort de Saulot au 12e siècle a dramatiquement modifié leur destin ; ils doivent désormais survivre nuit après nuit. Discipline de Clan : Auspex, Force d'âme, Obéah.",
                       "Toreador" => "Les Toreadors représentent le clan de la haute société. Ils sont élégants, brillants, et quoi qu'ils fassent, c'est toujours avec passion. Ils savourent leur vie éternelle et sont les plus prodigues des vampires, aimant l'excès et la décadence, tout en affirmant être les protecteurs de l'art. Discipline de Clan : Auspex, Célérité, Présence.",
                       "Tremere" => "Les Tremeres sont les magiciens des vampires et aucun clan n'est entouré d'autant de secrets qu'eux. Avec leurs propres artifices, ils ont développé leur propre magie vampirique liée au sang. Les Tremeres possèdent également une hiérarchie hyper structurée (voir organisation), et ne supportent aucun écart (voir factions internes). Discipline de Clan : Domination, Auspex, Thaumaturgie.",
                       "Tzimisce" => "Dans un premier temps, les Tzimisces sont des personnes réservées et perspicaces, loin des meutes hurlantes du Sabbat. Ils paraissent rationnels, supérieurement intelligents, possédant un esprit scientifique et pénétrant. Ensuite, on réalise ce que sont réellement les Tzimisces : depuis des millénaires, les Démons explorent et affinent leur compréhension de la nature vampirique, transformant leur corps et leur esprit vers des formes nouvelles et étrangères. Les victimes subissent aussi souvent ce genre de 'changements'. Discipline de Clan : Animalisme, Auspex, Vicissitude.",
                       "Ventrue" => "Les Ventrues ont toujours été considérés (et se sont toujours considérés) comme l'élite de la race vampirique. Le Livre de Nod nous dit que Caïn avait fait de Veddartha, fondateur de la lignée Ventrue, son confident, et le dernier des Antédiluviens auquel il aurait parlé. Discipline de Clan : Force d'âme, Présence, Domination.",
                       "Baali" => "La lignée est apparue dans les temps anciens. Le plus Vieil infant né d'un Antédiluvien coureur, esclave de basse extraction d'un peuple proto-mésopotamien, s'est élevé contre les treize Antédiluviens. Ce traître démoniaque a forgé une alliance avec les ombres qui vivaient à la périphérie de ce monde. Discipline de Clan : Daimonon, Occultation, Présence.",
-                      "Caïtiffs" => "Les sans clans",
-                      "Gargouilles" => " Leur histoire est étroitement liée à celle des Tremere, et notament à Goratrix, et à la Fondation de Ceoris. En 1230, il existe des rumeurs sur une colonie libre de gargouilles... alors même qu'elles ne sont pas censées pouvoir donner le Baiser. Discipline de Clan : Force d'âme, Puissance, Visceratika, Vol.",
+                      "Caïtiff" => "Les sans clans",
+                      "Gargouille" => " Leur histoire est étroitement liée à celle des Tremere, et notament à Goratrix, et à la Fondation de Ceoris. En 1230, il existe des rumeurs sur une colonie libre de gargouilles... alors même qu'elles ne sont pas censées pouvoir donner le Baiser. Discipline de Clan : Force d'âme, Puissance, Visceratika, Vol.",
                       "Kiasyd" => "Les Kiasyds sont apparus sous le règne de Julien l'Apostat (vers 360). Cette lignée est la création de 3 Lasombras qui opéraient à découvrir la propre nature de leur discipline, Obtenebration. Discipline de Clan : Domination, Mytherceria, Obténébration.",
                       "Lhiannan" => "Les Lhiannans sont largement matriarcales, au point même de repousser le mythe de Caïn. Elles prétendent qu'un personnage obscur féminin, appelée la Vieille, aurait parcouru le monde antique et créé les Lhiannans des gouttes de son sang. Discipline de Clan : Animalisme, Ogham, Présence.",
                       "Nagaraja" => "Les Nagarajas sont des sorcières cannibales provennant, selon certains érudits caïnites, d'un culte de la mort du Moyen-Orient. D'autres ajoutent qu'elles ont également des relations ésotériques avec d'autres sorciers. Très peu nombreuses et en plus chassées et traquées depuis la destruction d'Enoch, elles parlent peu et se cachent. Discipline de Clan : Auspex, Domination, Nécromancie.",
                       "Samedi" => "  La lignée existe depuis quelques centaines d'années et est apparue en Italie et aux Caraïbes. Elle pourrait descendre des clans Nosferatu ou Giovanni mais aucun des deux ne s'en attribue le mérite ou le blâme. Très peu de Samedi se sont répandus aux Etats-Unis. Par contre la lignée s'est largement répandu au cours des 200 dernières années. Il semble que la lignée soit originaire des Caraïbes et qu'elle est un fort héritage vaudou. Discipline de Clan : Force d'ame, Occultation, Thanatosis.",
                       "Vrai Brujah" => "Les Vrai Brujahs sont les descendants directs de Brujah lui-même et non de l'usurpateur qui a engendré le clan Brujah. De ce fait, ils éprouvent un certain dédain pour les Brujahs et leur héritage continuel de diablerie. Ce sont des chroniqueurs et des chercheurs qui voient le monde sans aucune passion. Discipline de Clan : Puissance, Présence, Temporis.",
-                      "Andas" => "Ce sont des Mongols Gangrel. Leurs légendes disent que les bandits démons Xia ont combattu les enfants de la Terre Itürgen. Discipline de Clan : Animalisme, Force d'ame, Protéisme.",
-                      "Noiad" => "Ces Gangrel viennent de Scandinavie. Ils se disent serviteurs des Sami (peuple finlandais). Ils protègent ce peuple, et interprètent les messages des Dieux. Durant les 3 mois d'été, chaque tribu réveille son Noaid protecteur et lui donne du Sang, ce qui demande une confiance réciproque énorme. Ils pensent ne rien avoir à faire avec les autres vampires, et défendent leur culture déjà déclinante au Moyen-Age. Discipline de Clan : Animalisme, Auspex, Protéisme.",
+                      "Anda" => "Ce sont des Mongols Gangrel. Leurs légendes disent que les bandits démons Xia ont combattu les enfants de la Terre Itürgen. Discipline de Clan : Animalisme, Force d'ame, Protéisme.",
+                      "Noad" => "Ces Gangrel viennent de Scandinavie. Ils se disent serviteurs des Sami (peuple finlandais). Ils protègent ce peuple, et interprètent les messages des Dieux. Durant les 3 mois d'été, chaque tribu réveille son Noaid protecteur et lui donne du Sang, ce qui demande une confiance réciproque énorme. Ils pensent ne rien avoir à faire avec les autres vampires, et défendent leur culture déjà déclinante au Moyen-Age. Discipline de Clan : Animalisme, Auspex, Protéisme.",
                       "Agarash" => "Secret",
                       "Disciple de Kali" => "Secret"}
 
-  DISCIPLINES_CLAN = {"Assamites" => ["Célérité", "Occultation", "Quietus"], "Brujah" => ["Célérité", "Puissance", "Présence"],
+  DISCIPLINES_CLAN = {"Assamite" => ["Célérité", "Occultation", "Quietus"], "Brujah" => ["Célérité", "Puissance", "Présence"],
                       "Cappadocian" => ["Auspex", "Force d'âme", "Nécromancie"], "Setite" => ["Occultation", "Présence", "Serpentis"],
                       "Gangrel" => ["Animalisme", "Force d'âme", "Protéisme"], "Giovanni" => ["Domination", "Nécromancie", "Puissance"],
                       "Lasombra" => ["Puissance", "Obténébration", "Domination"], "Malkavian" => ["Auspex", "Aliénation", "Occultation"],
                       "Nosferatu" => ["Animalisme", "Occultation", "Puissance"], "Ravnos" => ["Animalisme", "Chimérie", "Force d'âme"],
-                      "Salubrien" => ["Obéah", "Force d'âme", "Auspex"], "Toreador" => ["Auspex", "Célérité", "Présence"],
+                      "Salubri" => ["Obéah", "Force d'âme", "Auspex"], "Toreador" => ["Auspex", "Célérité", "Présence"],
                       "Tremere" => ["Domination", "Auspex", "Thaumaturgie"], "Tzimisce" => ["Animalisme", "Auspex", "Vicissitude"],
                       "Ventrue" => ["Force d'âme", "Domination", "Présence"],
-                      "Baali" => ["Daimonon", "Occultation", "Présence"], "Caïtiffs" => ["Puissance", "Célérite", "Force d'âme"],
-                      "Gargouilles" => ["Force d'âme", "Puissance", "Visceratika", "Vol"], "Kiasyd" => ["Domination", "Mytherceria", "Obténébration"],
+                      "Baali" => ["Daimonon", "Occultation", "Présence"], "Caïtiff" => ["Puissance", "Célérite", "Force d'âme"],
+                      "Gargouille" => ["Force d'âme", "Puissance", "Visceratika", "Vol"], "Kiasyd" => ["Domination", "Mytherceria", "Obténébration"],
                       "Lhiannan" => ["Animalisme", "Ogham", "Présence"], "Nagaraja" => ["Auspex", "Domination", "Nécromancie"],
                       "Samedi" => ["Force d'âme", "Occultation", "Thanatosis"],
-                      "Vrai Brujah" => ["Puissance", "Présence", "Temporis"], "Andas" => ["Animalisme", "Force d'âme", "Protéisme"],
-                      "Noiad" => ["Animalisme", "Auspex", "Protéisme"], "Agarash" => ["Nécromancie", "Protéisme", "Domination"],
+                      "Vrai Brujah" => ["Puissance", "Présence", "Temporis"], "Anda" => ["Animalisme", "Force d'âme", "Protéisme"],
+                      "Noad" => ["Animalisme", "Auspex", "Protéisme"], "Agarash" => ["Nécromancie", "Protéisme", "Domination"],
                       "Diciple de Kali" => ["Puissance", "Obténébration", "Présence"]}
 
   VOIE = ["La Voie de l'Humanité", "La Voie de la Bête", "La Voie de la Chevalerie", "La Voie des Coeurs Ecorchés",

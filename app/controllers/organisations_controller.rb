@@ -7,9 +7,9 @@ class OrganisationsController < ApplicationController
   # GET /organisations.json
   def index
     if @user.role == User::ROLE_ADMIN
-      @organisations = Organisation.all
+      @organisations = Organisation.paginate(page: params[:page], per_page: 20)
     else
-      @organisations = Organisation.none_secret
+      @organisations = Organisation.none_secret.paginate(page: params[:page], per_page: 20)
     end
 
     respond_to do |format|

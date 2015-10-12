@@ -74,6 +74,10 @@
 #  detail_entropique     :string(255)
 #  avatar                :string(255)
 #  appartenance_perso    :string(255)
+#  lock                  :boolean
+#  trace                 :text
+#  appartenance_publique :string(255)
+#  rang_publique         :string(255)
 #
 
 require 'test_helper'

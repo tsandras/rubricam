@@ -17,7 +17,7 @@
       <%= content_tag :span, capacite.source, class: "label label-danger" %><%= content_tag :span, capacite.type_cap, class: 'label label-info' %><%= content_tag :span, capacite.primaire ? 'Primaire' : 'Secondaire', class: 'label label-default' %>
     </td>
     <td><%= link_to 'Voir', capacite_path(capacite), class: 'btn btn-success btn-xs' %></td>
-    <td><%= link_to('Editer', edit_capacite_path(capacite), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
+    <td><%= link_to('Editer', edit_capacite_path(capacite), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>

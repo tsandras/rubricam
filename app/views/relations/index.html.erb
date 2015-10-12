@@ -1,3 +1,4 @@
+<%= link_to 'Nouvelle relation', new_relation_path, class: 'btn btn-success btn-sm create-float' %>
 <h1>Liste des relations</h1>
 
 <table class="table">
@@ -20,6 +21,4 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'Nouvelle relation', new_relation_path, class: 'btn btn-success btn-sm' %>
+<%= will_paginate @relations %>

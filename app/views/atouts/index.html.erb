@@ -20,7 +20,7 @@
       <%= content_tag :span, atout.source, class: "label label-danger" %><%= content_tag :span, 'Détail', class: 'label label-info' if atout.has_detail %><%= content_tag :span, atout.type_atout, class: 'label label-default' %><%= content_tag :span, atout.cout > 0 ? 'Avantage' : 'Handicap', class: 'label label-warning' %>
     </td>
     <td><%= link_to 'Voir', atout_path(atout), class: 'btn btn-success btn-xs' %></td>
-    <td><%= link_to('Editer', edit_atout_path(atout), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
+    <td><%= link_to('Editer', edit_atout_path(atout), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>

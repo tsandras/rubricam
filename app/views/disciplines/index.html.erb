@@ -1,7 +1,7 @@
 <%= link_to 'Nouvelle Discipline', new_discipline_path, class: 'btn btn-success btn-sm create-float' %>
 <%= link_to 'Nouveau niveau discipline', new_nivdiscipline_path, class: 'btn btn-info btn-sm create-float' %>
 <%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
-<h1>Listes des disciplines</h1>
+<h1>Liste des disciplines</h1>
 <div class="col-md-12">
 <table class="table">
   <tr>
@@ -16,7 +16,7 @@
     <td><%= discipline.nom %></td>
     <td><%= content_tag :span, discipline.source, class: "label label-danger" %><%= label_secret(discipline) %></td>
     <td><%= link_to 'Voir', discipline_path(discipline), class: 'btn btn-success btn-xs' %></td>
-    <td><%= link_to('Editer', edit_discipline_path(discipline), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
+    <td><%= link_to('Editer', edit_discipline_path(discipline), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>

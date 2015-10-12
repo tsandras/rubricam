@@ -127,4 +127,20 @@ module PersonnagesHelper
     end
     content_tag :span, personnage.name_rang, class: "label #{color}"
   end
+
+  def label_rang_publique(personnage)
+    color = ""
+    if personnage.rang_publique == 'S'
+      color = "label-danger"
+    elsif personnage.rang_publique == 'A'
+      color = "label-warning"
+    elsif personnage.rang_publique == 'B'
+      color = "label-success"
+    elsif personnage.rang_publique == 'C'  
+      color = "label-info"
+    else
+      color = "label-default"
+    end
+    content_tag :span, personnage.rang_publique, class: "label #{color}"
+  end
 end

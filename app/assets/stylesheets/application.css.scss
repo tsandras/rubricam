@@ -610,6 +610,10 @@ input[type=number] {
   width: 50%;
 }
 
+.image-appartenance {
+  width: 25%;
+}
+
 .image-perso {
   width: 200px;
   height: 200px;
@@ -744,18 +748,4 @@ input[type=number] {
   font-size: 10px;
   line-height: 1;
   border-radius: 10px
-}
-
-/*#personnage {
-  .col-md-4 {
-    padding-left: 10px;
-    padding-right: 10px
-  }
-}*/
-
-#personnage {
-  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
-    padding-left: 1px;
-    padding-right: 1px
-  }
 }

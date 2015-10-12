@@ -1,18 +1,20 @@
-<h1>Listes des Pjs</h1>
+<h1>Liste des Pjs</h1>
+<div class="col-md-12">
+  <table class="table">
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Image</th>
+    </tr>
 
-<div class="col-md-8">
   <% @pjs.each do |personnage| %>
-    <div class="row">
-      <div class="col-md-2">
-        <%= "<p><b>#{personnage.nom_publique}</b></p>".html_safe %>
-      </div>
-      <div class="col-md-6">
-        <%= simple_format personnage.description_publique %>
-      </div>
-      <div class="col-md-4">
-        <%= image_tag("#{personnage.image_lien}", class: 'image-perso') if personnage.image_lien.present? %>
-      </div>
-    </div>
-    <br/>
+    <% url = Rails.env.development? ? personnage.avatar_url : personnage.avatar_url_perso if personnage.avatar? %>
+    <tr>
+      <td><%= "<p><b>#{personnage.nom_publique}</b></p>".html_safe %></td>
+      <td><%= simple_format personnage.description_publique %></td>
+      <td><%= image_tag(url, class: "avatar") if personnage.avatar? %></td>
+    </tr>
   <% end %>
+  </table>
+  <%= will_paginate @pjs %>
 </div>

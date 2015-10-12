@@ -5,7 +5,7 @@ class PartiesController < ApplicationController
   # GET /parties
   # GET /parties.json
   def index
-    @parties = Partie.order(:date)
+    @parties = Partie.order(:date).paginate(page: params[:page], per_page: 15)
 
     respond_to do |format|
       format.html # index.html.erb

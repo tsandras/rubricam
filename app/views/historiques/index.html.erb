@@ -17,7 +17,7 @@
       <%= content_tag :span, historique.source, class: "label label-danger" %><%= content_tag :span, 'Détail', class: 'label label-info' if historique.has_detail %>
     </td>
     <td><%= link_to 'Voir', historique_path(historique), class: 'btn btn-success btn-xs' %></td>
-    <td><%= link_to('Editer', edit_historique_path(historique), class: 'btn btn-warning btn-xs') if @user.role == User::ROLE_ADMIN %></td>
+    <td><%= link_to('Editer', edit_historique_path(historique), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>

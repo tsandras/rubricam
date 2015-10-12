@@ -1,0 +1,54 @@
+<%= render template: 'accueil/prime' %>
+<div id="log_in" class="tabs col-md-3">
+  <div id="menu-login" class="box">
+    <ul class="tab-links">
+      <li class="active"><a href="#tab1">Se connecter</a></li>
+      <li><a href="#tab2">S'inscrire</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="tab1" class="tab active">
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-inputs box-part1">
+            <%= f.input :email, label: "Courriel", required: false, autofocus: true %>
+            <%= f.input :password, label: "Mot de passe", required: false %>
+            <%= f.input :remember_me, as: :boolean, label: "<div class=\"title-custom-checkbox\">Resté connecté</div><div class=\"custom-checkbox\"><input type=\"checkbox\" name=\"\" id=\"custom-checkbox-connecte\"><label for=\"custom-checkbox-connecte\"></label></div>".html_safe, wrapper_html: {class: 'inline'}, input_html: {class: 'hidden inpt_number_big'} if devise_mapping.rememberable? %>
+          </div>
+          <div class="form-actions box-part2">
+            <%= f.button :submit, "Se connecter", class: 'btn btn-primary btn-sm submit-login' %>
+            <%= link_to "Mot de passe oublié ?", new_password_path(resource_name), class: 'btn btn-warning btn-sm' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div id="tab2" class="tab">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
+          <div class="form-inputs box-part1">
+            <%= f.input :email, label: "Courriel", required: true, autofocus: true %>
+            <%= f.input :password, label: "Mot de passe", required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable) %>
+            <%= f.input :password_confirmation, label: "Mot de passe confirmation", required: true %>
+          </div>
+          <div class="form-actions box-part2">
+            <%= f.button :submit, "S'inscrire", class: 'btn btn-primary btn-sm submit-login-single' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.custom_checkbox').on('mouseup', function() {
+      $(this).children('.ic-checkbox-design').toggleClass('active');
+    });
+
+    $('.tabs .tab-links a').on('click', function(e) {
+      var currentAttrValue = jQuery(this).attr('href');
+      jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+      jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+      e.preventDefault();
+    });
+  });
+</script>

@@ -3,9 +3,9 @@ class RelationsController < ApplicationController
   # GET /relations.json
   def index
     if @user.role == User::ROLE_ADMIN
-      @relations = Relation.all
+      @relations = Relation.paginate(page: params[:page], per_page: 20)
     else
-      @relations = Relation.where(secret: false)
+      @relations = Relation.where(secret: false).paginate(page: params[:page], per_page: 20)
     end
 
     respond_to do |format|

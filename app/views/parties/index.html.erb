@@ -1,3 +1,5 @@
+<%= link_to 'Nouvelle partie', new_party_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Retour', root_path, class: 'btn btn-warning btn-sm create-float' %>
 <h1>Liste des parties</h1>
 <div class="col-md-12">
 <table class="table">
@@ -20,8 +22,5 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'Nouvelle partie', new_party_path, class: 'btn btn-success btn-sm' %>
-<%= link_to 'Retour', root_path, class: 'btn btn-warning btn-sm' %>
+<%= will_paginate @parties %>
 </div>

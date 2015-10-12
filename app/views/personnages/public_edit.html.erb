@@ -2,7 +2,9 @@
 <%= simple_form_for(@personnage, url: public_update_personnage_path, method: :post) do |f| %>
   <div class="col-md-6">
     <%= f.input :nom_publique, label: 'Nom publique :' %>
+    <%= f.input :appartenance_publique, collection: Personnage::APPARTENANCE, label: 'Appartenance publique :' %>
     <%= f.input :description_publique, label: 'Description publique :' %>
+    <%= f.input :rang_publique, collection: ['S', 'A', 'B', 'C', 'D'], label: 'Rang publique' if @user.role == User::ROLE_ADMIN %>
     <br />
     <p><%= f.button :submit, "Sauvegarder profil publique", class: 'btn btn-primary btn-sm' %></p>
   </div>

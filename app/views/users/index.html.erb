@@ -1,10 +1,11 @@
-<h1>Listes des utilisateurs</h1>
-<div class="col-md-10">
-<table>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des utilisateurs</h1>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Email</th>
-    <th></th>
-    <th></th>
+    <th>Voir</th>
+    <th>Editer</th>
   </tr>
 
 <% @users.each do |user| %>
@@ -15,9 +16,5 @@
   </tr>
 <% end %>
 </table>
-
 <br />
-
-<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm' %>
-
 </div>

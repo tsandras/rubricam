@@ -307,6 +307,8 @@ ActiveRecord::Schema.define(:version => 20151010154633) do
     t.string   "appartenance_perso"
     t.boolean  "lock"
     t.text     "trace"
+    t.string   "appartenance_publique"
+    t.string   "rang_publique"
   end
 
   create_table "personnages_routines", :force => true do |t|

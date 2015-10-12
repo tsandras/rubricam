@@ -1,4 +1,4 @@
-<h1>Accueil</h1>
+<h1></h1>
 <p id="notice"><%= notice %></p>
 <div class="col-md-6">
   <div id="menu-personnages" class="menu-accueil">
@@ -32,12 +32,155 @@
       <%= link_to 'Créer un personnage', new_personnage_path, class: 'btn btn-success btn-sm' %>
     </div>
   </div>
-  <%= menu_accueil(["nom", "type_cap"], "capacites", @capacites, "capacités") %>
-  <%= menu_accueil(["nom"], "historiques", @historiques, "historiques") %>
+  <div id="menu-personnages" class="menu-accueil">
+    <div class="menu-accueil-head">
+      10 dernières capacités
+    </div>
+    <div class="menu-accueil-body">
+      <% if @capacites != nil %>
+        <table>
+          <tr>
+            <th>Nom</th>
+            <th>Etiquettes</th>
+            <th>Voir</th>
+          </tr>
+          <% @capacites.each do |capacite| %>
+            <tr>
+              <td><%= link_to capacite.nom, capacite %></td>
+              <td>
+                <%= content_tag :span, capacite.source, class: "label label-danger" %><%= content_tag :span, capacite.type_cap, class: 'label label-info' %><%= content_tag :span, capacite.primaire ? 'Primaire' : 'Secondaire', class: 'label label-default' %>
+              </td>
+              <td><%= link_to 'Voir', capacite_path(capacite), class: 'btn btn-success btn-xs' %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        Il n'y a pas de capacités.
+      <% end %>
+    </div>
+    <div class="menu-accueil-action">
+      <%= link_to 'Toutes les capacités', capacites_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+  <div id="menu-personnages" class="menu-accueil">
+    <div class="menu-accueil-head">
+      10 derniers historiques
+    </div>
+    <div class="menu-accueil-body">
+      <% if @historiques != nil %>
+        <table>
+          <tr>
+            <th>Nom</th>
+            <th>Etiquettes</th>
+            <th>Voir</th>
+          </tr>
+          <% @historiques.each do |historique| %>
+            <tr>
+              <td><%= link_to historique.nom, historique %></td>
+              <td>
+                <%= content_tag :span, historique.source, class: "label label-danger" %><%= content_tag :span, 'Détail', class: 'label label-info' if historique.has_detail %>
+              </td>
+              <td><%= link_to 'Voir', historique_path(historique), class: 'btn btn-success btn-xs' %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        Il n'y a d'historiques.
+      <% end %>
+    </div>
+    <div class="menu-accueil-action">
+      <%= link_to 'Toutes les capacités', historiques_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
 </div>
 
 <div class="col-md-6">
-  <%= menu_accueil(["nom_publique"], "personnages", @pnjs, "pnjs") %>
-  <%= menu_accueil(["nom", "cout"], "atouts", @atouts, "atouts") %>
-  <%= menu_accueil(["nom"], "disciplines", @disciplines, "disciplines") %>
+  <div id="menu-personnages" class="menu-accueil">
+    <div class="menu-accueil-head">
+      10 derniers Pnjs
+    </div>
+    <div class="menu-accueil-body">
+      <% if @pnjs != nil %>
+        <table>
+          <tr>
+            <th>Personnage</th>
+            <th>Appartenance</th>
+            <th>Rang</th>
+          </tr>
+          <% @pnjs.each do |p| %>
+            <tr>
+              <td><%= p.nom_publique ? p.nom_publique : "#{p.prenom} #{p.nom}" %></td>
+              <td style="text-align: center;"><span class="wod"><%= Personnage::FONT_WOD[p.appartenance_publique] %></span></td>
+              <td><%= label_rang_publique(p) %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        Il n'y a pas de Pnjs.
+      <% end %>
+    </div>
+    <div class="menu-accueil-action">
+      <%= link_to 'Tous les Pnjs', pnjs_personnages_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+  <div id="menu-personnages" class="menu-accueil">
+    <div class="menu-accueil-head">
+      10 derniers atouts
+    </div>
+    <div class="menu-accueil-body">
+      <% if @atouts != nil %>
+        <table>
+          <tr>
+            <th>Nom</th>
+            <th>Cout</th>
+            <th>Etiquettes</th>
+            <th>Voir</th>
+          </tr>
+          <% @atouts.each do |atout| %>
+            <tr>
+              <td><%= link_to atout.nom, atout %></td>
+              <td><%= atout.cout %></td>
+              <td>
+                <%= content_tag :span, atout.source, class: "label label-danger" %><%= content_tag :span, 'Détail', class: 'label label-info' if atout.has_detail %><%= content_tag :span, atout.type_atout, class: 'label label-default' %><%= content_tag :span, atout.cout > 0 ? 'Avantage' : 'Handicap', class: 'label label-warning' %>
+              </td>
+              <td><%= link_to 'Voir', atout_path(atout), class: 'btn btn-success btn-xs' %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        Il n'y a pas d'atouts.
+      <% end %>
+    </div>
+    <div class="menu-accueil-action">
+      <%= link_to 'Tous les atouts', atouts_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+  <div id="menu-personnages" class="menu-accueil">
+    <div class="menu-accueil-head">
+      10 dernières disciplines
+    </div>
+    <div class="menu-accueil-body">
+      <% if @disciplines != nil %>
+        <table>
+          <tr>
+            <th>Nom</th>
+            <th>Etiquettes</th>
+            <th>Voir</th>
+          </tr>
+          <% @disciplines.each do |discipline| %>
+            <tr>
+              <td><%= link_to discipline.nom, discipline %></td>
+              <td><%= content_tag :span, discipline.source, class: "label label-danger" %><%= label_secret(discipline) %></td>
+              <td><%= link_to 'Voir', discipline_path(discipline), class: 'btn btn-success btn-xs' %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        Il n'y a pas de disciplines.
+      <% end %>
+    </div>
+    <div class="menu-accueil-action">
+      <%= link_to 'Tous les disciplines', disciplines_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
 </div>

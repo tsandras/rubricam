@@ -74,6 +74,10 @@
 #  detail_entropique     :string(255)
 #  avatar                :string(255)
 #  appartenance_perso    :string(255)
+#  lock                  :boolean
+#  trace                 :text
+#  appartenance_publique :string(255)
+#  rang_publique         :string(255)
 #
 
 require 'carrierwave/orm/activerecord'
@@ -94,7 +98,8 @@ class Personnage < ActiveRecord::Base
   :banalite, :niveau_voie, :voie, :tradition, :clan,
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
-  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock, :trace
+  :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock, :trace,
+  :appartenance_publique, :rang_publique
 
   mount_uploader :avatar, AvatarUploader
 

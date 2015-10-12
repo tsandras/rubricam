@@ -1,7 +1,7 @@
 class RoutinesController < ApplicationController
 
   before_filter :redirect_unauthorized_to_show, :only=> [:show]
-before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
+  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
 
   # GET /routines
   # GET /routines.json
