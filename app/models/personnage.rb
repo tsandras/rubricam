@@ -199,7 +199,8 @@ class Personnage < ActiveRecord::Base
       p_disciplines = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
       p_autre = volonte.to_i * 4 + entelechie.to_i * 8 + spheres.sum(&:niveau).to_i * 8 + (points_conscience.to_i + points_maitrise.to_i + points_courage.to_i) * 3
       p_autre = p_autre + (points_statique.to_i + points_entropique.to_i + points_dynamique.to_i) * 2
-      self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre
+      p_combinaison = self.combinaisons.sum(&:cout)
+      self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre + p_combinaison
     else
       self.rang = 0
     end
@@ -615,6 +616,7 @@ class Personnage < ActiveRecord::Base
   def reset_xps
     perso = fusion
     reset_at(perso)
+    CombinaisonsPersonnages.where(personnage_id: self.id).each{|cp| cp.destroy}
     self.reste_xps = self.xps
     self.save
   end
@@ -732,15 +734,27 @@ class Personnage < ActiveRecord::Base
     end
     self.volonte = perso["Volonte"];
     if perso["Spheres"] != nil
+      sphere_ids = []
       perso["Spheres"].each do |key, pb|
         sphere = Sphere.where(personnage_id: id, id: key).first
+        sphere_ids << key
         sphere.update_attributes(niveau: pb.to_i)
+      end
+      other_spheres = Sphere.where(personnage_id: id).where("id not in (?)", sphere_ids)
+      other_spheres.each do |sphere|
+        sphere.destroy
       end
     end
     if perso["Disciplines"] != nil
+      discipline_ids = []
       perso["Disciplines"].each do |key, pb|
         disper = DisciplinesPersonnages.where(personnage_id: id, discipline_id: key).first
+        discipline_ids << key
         disper.update_attributes(niveau: pb.to_i)
+      end
+      other_dis = DisciplinesPersonnages.where(personnage_id: id).where("discipline_id not in (?)", discipline_ids)
+      other_dis.each do |dis|
+        dis.destroy
       end
     end
     self.save

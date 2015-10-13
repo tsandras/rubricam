@@ -100,8 +100,11 @@ class PersonnagesController < ApplicationController
   end
 
   def combinaison_update
+    # TODO: Improve calcultion
     @personnage = Personnage.find(params[:id])
     @personnage.update_attributes(params[:personnage])
+    @personnage.reste_xps = @personnage.reste_xps - @personnage.combinaisons.sum(:cout)
+    @personnage.save
     redirect_to personnage_path(@personnage)
   end
 
