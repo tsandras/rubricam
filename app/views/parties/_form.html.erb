@@ -15,6 +15,7 @@
     <%= f.input :secret, label: "Voulez-vous que ce cette partie soit secrète ?", wrapper_html: {class: 'inline simple-checkbox'} %>
     <%= f.input :image_lien %>
     <%= f.input :xps %>
+    <%= f.input :campagne_id, collection: Campagne.all.map{|c| [c.nom, c.id]} %>
     <div class="personnage">
       <label for="search_personnage"> Rechercher personnage :</label>
       <input id="search_personnage" type="text" onkeypress="filter(this, '.personnage .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.personnage .checkbox .check_boxes')">

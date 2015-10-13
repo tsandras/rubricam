@@ -1,0 +1,24 @@
+<%= simple_form_for(@campagne) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="col-md-6">
+    <%= f.input :debut %>
+    <%= f.input :nom %>
+    <div class="user">
+      <label for="search_user"> Rechercher user :</label>
+      <input id="search_user" type="text" onkeypress="filter(this, '.user .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.user .checkbox .check_boxes')">
+      <%= f.association(:users, as: :check_boxes, :collection => User.all.map {|c| [c.email, c.id]}, label: false, wrapper_html: { class: 'col-md-12' }) %>
+    </div>
+    <%= f.input :description %>
+    <%= f.button :submit, "Créer/Editer une partie", class: 'btn btn-success btn-sm' %>
+    <%= link_to 'Retour', campagnes_path, class: 'btn btn-warning btn-sm' %>
+  </div>
+
+  <div class="col-md-6">
+    <%= f.input :description_publique %>
+    <%= f.input :note %>
+  </div>
+<% end %>
+<script type="text/javascript">
+  manageCheckBox("#search_user", ".user .checkbox .check_boxes");
+</script>

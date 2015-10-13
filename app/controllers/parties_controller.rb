@@ -1,12 +1,16 @@
 class PartiesController < ApplicationController
 
   before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
+  after_filter :redirect_unauthorized_to_read, :only=> [:show]
 
   # GET /parties
   # GET /parties.json
   def index
-    @parties = Partie.order(:date).paginate(page: params[:page], per_page: 15)
-
+    if @user.role == User::ROLE_ADMIN
+      @parties = Partie.order(:date).paginate(page: params[:page], per_page: 15)
+    else
+      @parties = Partie.played_by(@user).paginate(page: params[:page], per_page: 15)
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @parties }
@@ -94,6 +98,16 @@ class PartiesController < ApplicationController
 
   def redirect_unauthorized_to_write
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
+  end
+
+  def redirect_unauthorized_to_read
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_read?(@user)
+  end
+
+  def permition_read?(user)
+    return true if @party.campagne.present? && @party.campagne.users.map{|u| u.id}.include?(user.id)
+    return true if user.role == User::ROLE_ADMIN
+    false
   end
 
   def permition_write?(user)

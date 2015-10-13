@@ -1,0 +1,38 @@
+<h2><%= @campagne.nom %></h2>
+<p id="notice"><%= notice %></p>
+
+<div class="col-md-12">
+
+<p>
+  <b>Debut:</b>
+  <%= @campagne.debut %>
+</p>
+
+<% if @user.role == User::ROLE_ADMIN %>
+<p>
+  <b>Description:</b>
+  <%= simple_format @campagne.description %>
+</p>
+<% end %>
+
+<p>
+  <b>Description publique:</b>
+  <%= simple_format @campagne.description_publique %>
+</p>
+
+<p>
+  <b>Joueurs :</b>
+  <%= @campagne.users.map{|user| user.email}.join(", ") %>
+</p>
+
+<% if @user.role == User::ROLE_ADMIN %>
+<p>
+  <b>Notes:</b>
+  <%= simple_format @campagne.note %>
+</p>
+<% end %>
+
+<%= link_to 'Editer', edit_campagne_path(@campagne), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', campagnes_path, class: 'btn btn-warning btn-sm' %>
+
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151010154633) do
+ActiveRecord::Schema.define(:version => 20151013165416) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -41,6 +41,21 @@ ActiveRecord::Schema.define(:version => 20151010154633) do
     t.integer "personnage_id"
     t.integer "atout_id"
     t.string  "detail"
+  end
+
+  create_table "campagnes", :force => true do |t|
+    t.string   "nom"
+    t.text     "description"
+    t.datetime "debut"
+    t.text     "description_publique"
+    t.text     "note"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  create_table "campagnes_users", :force => true do |t|
+    t.integer "campagne_id"
+    t.integer "user_id"
   end
 
   create_table "capacites", :force => true do |t|
@@ -226,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20151010154633) do
     t.text     "notes"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.integer  "campagne_id"
   end
 
   create_table "parties_personnages", :force => true do |t|

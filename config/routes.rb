@@ -2,6 +2,8 @@ Rubricam::Application.routes.draw do
 
   resources :parties
 
+  resources :campagnes
+
   devise_for :users, controllers: { sessions: "users/sessions" }
 
   resources :users
