@@ -104,7 +104,7 @@ class Personnage < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
 
   validates_presence_of :type_perso, :appartenance_perso, :bonus, :prenom, :nom
-  validates_uniqueness_of :nom, conditions: -> { where(prenom: prenom) }
+  validate :uniqueness_of_nom_with_prenom
   validate :validity_of_perso
   validate :unlock
 
@@ -140,6 +140,14 @@ class Personnage < ActiveRecord::Base
 
   def unlock
     errors.add(:base, "toto") if lock
+  end
+
+  def uniqueness_of_nom_with_prenom
+    if Personnage.where(nom: nom).where(prenom: prenom).count > 0
+      errors.add(:base, "Ce nom avec ce prénom existe déjà.")
+      false
+    end
+    true
   end
 
   def has_resonnances
