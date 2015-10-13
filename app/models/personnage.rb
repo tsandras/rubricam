@@ -143,9 +143,12 @@ class Personnage < ActiveRecord::Base
   end
 
   def uniqueness_of_nom_with_prenom
-    if Personnage.where(nom: nom).where(prenom: prenom).count > 0
+    personnages = Personnage.where("nom = ? and prenom == ?", self.nom, self.prenom)
+    personnage = personnages.first if personnages.count == 1
+    return true if personnage.present? && self.id.present? && self.id == personnage.id
+    if personnages.count > 0
       errors.add(:base, "Ce nom avec ce prénom existe déjà.")
-      false
+      return false
     end
     true
   end
