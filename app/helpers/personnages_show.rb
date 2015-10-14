@@ -340,7 +340,9 @@ module PersonnagesShow
             out += "<tr>"
           end
           tmp = tmp + 1
-          out += "<td> #{com.nom} (#{com.cout})</td>"
+          out += "<td>"
+          out += link_to("#{com.nom} (#{com.cout})", combinaison_path(com))
+          out += "</td>"
           if tmp % 3 == 0
             out += "</tr>"
           end
@@ -371,7 +373,10 @@ module PersonnagesShow
           out += "<tr>"
         end
         tmp = tmp + 1
-        out += "<td> #{nivdiscipline.nom} (#{nivdiscipline.discipline_nom} #{nivdiscipline.niveau})</td>"
+        out += "<td>"
+        out += link_to("#{nivdiscipline.nom} (#{nivdiscipline.discipline_nom} #{nivdiscipline.niveau})", nivdiscipline_path(nivdiscipline))
+        # out += "<td> #{nivdiscipline.nom} (#{nivdiscipline.discipline_nom} #{nivdiscipline.niveau})</td>"
+        out += "</td>"
         if tmp % 3 == 0
           out += "</tr>"
         end
