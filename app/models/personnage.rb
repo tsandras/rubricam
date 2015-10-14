@@ -103,7 +103,9 @@ class Personnage < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
-  validates_presence_of :type_perso, :appartenance_perso, :bonus, :prenom, :nom
+  validates_presence_of :type_perso, :appartenance_perso, :bonus
+  validates_presence_of :prenom, if: ->(p) { p.nom.blank? }
+  validates_presence_of :nom, if: ->(p) { p.prenom.blank? }
   validate :uniqueness_of_nom_with_prenom
   validate :validity_of_perso
   validate :unlock
