@@ -131,7 +131,7 @@ function zoom(svg) {
   });
 }
 
-function addPoints(lieux, svg) {
+function addPoints(lieux, svg, user) {
   // Ajout des points
   // var map = $('#layer1');
   for (i in lieux) {
@@ -150,30 +150,34 @@ function addPoints(lieux, svg) {
       // newElement.style.stroke = "#000"; //Set stroke colour
       // newElement.style.strokeWidth = "1px"; //Set stroke width
       svg.appendChild(newElement);
-      setDataLieu(lieux[i]);
+      setDataLieu(lieux[i], user);
     }
   }
 }
 
-function init_map(lieux_villes) {
+function init_map(lieux_villes, user) {
   var lieux = lieux_villes;
   var svg = document.querySelector('svg');
 
   ManageCursorPoint(svg);
-  addPoints(lieux, svg);
+  addPoints(lieux, svg, user);
   zoom(svg);
 }
 
-function setDataLieu(lieu) {
+function setDataLieu(lieu, user) {
   out = "";
   out += "<b>"+lieu.nom+"</b><br/>";
   lieu.organisations.forEach(function(organisation) {
-    out += "["+organisation.type_organisation+"] ";
-    out += "<a href='/organisations/"+organisation.id+"'>"+organisation.nom+"</a><br/>";
-    out += ""+organisation.description_publique+"<br/>";
+    if (!organisation.secret || user.role == 2) {
+      out += "["+organisation.type_organisation+"] ";
+      out += "<a href='/organisations/"+organisation.id+"'>"+organisation.nom+"</a><br/>";
+      out += ""+organisation.description_publique+"<br/>";
+    }
   });
   lieu.personnages.forEach(function(personnage) {
-    out += "<a href='/personnages/"+personnage.id+"/public_show'>"+personnage.nom+" "+personnage.prenom+"</a><br/>";
+    if (!personnage.secret || user.role == 2) {
+      out += "<a href='/personnages/"+personnage.id+"/public_show'>"+personnage.nom+" "+personnage.prenom+"</a><br/>";
+    }
   });
   $("#list-data-lieux").append("<div id='uid"+lieu.id+"' class='data-lieu'>"+out+"</div>");
 }

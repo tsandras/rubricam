@@ -10,7 +10,6 @@ class AccueilController < ApplicationController
   end
 
   def carte
-    @user = User.first
     @lieux_villes = Lieu
       .includes(:organisations, :personnages)
       .locatable
