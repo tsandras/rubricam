@@ -143,7 +143,7 @@ class Personnage < ActiveRecord::Base
   end
 
   def uniqueness_of_nom_with_prenom
-    personnages = Personnage.where("nom = ? and prenom == ?", self.nom, self.prenom)
+    personnages = Personnage.where("nom = ? and prenom = ?", self.nom, self.prenom)
     personnage = personnages.first if personnages.count == 1
     return true if personnage.present? && self.id.present? && self.id == personnage.id
     if personnages.count > 0
