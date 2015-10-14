@@ -1,12 +1,14 @@
 <%= simple_form_for(@historique) do |f| %>
   <%= f.error_notification %>
 
-  <div class="col-md-5">
+  <div class="col-md-6">
     <%= f.input :nom %>
     <%= f.input :description %>
   </div>
 
-  <div class="col-md-5">
+  <div class="col-md-6">
+    <%= f.input :source, collection: Historique::SOURCE %>
+    <%= f.input :has_detail, label: "Ajouter un champs pour précision ?", wrapper_html: {class: 'inline simple-checkbox'} %>
     <%= f.button :submit, "Créer/Editer l'historique", class: "btn btn-success btn-sm" %>
     <%= link_to 'Retour', historiques_path, class: "btn btn-warning btn-sm" %>
   </div>

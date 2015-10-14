@@ -18,4 +18,6 @@ class Historique < ActiveRecord::Base
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
   has_and_belongs_to_many :lieus, class_name: 'Lieu'
+
+  SOURCE = ["V20", "M20", "Personnelle", "Autre"]
 end
