@@ -96,14 +96,15 @@ class PersonnagesController < ApplicationController
 
   def combinaison_edit
     @personnage = Personnage.find(params[:id])
-    @combinaisons_personnages = CombinaisonsPersonnages.where("niveau > 5")
+    # @combinaisons_personnages = CombinaisonsPersonnages.where("niveau > 5")
   end
 
   def combinaison_update
     # TODO: Improve calcultion
     @personnage = Personnage.find(params[:id])
+    combinaisons_before = @personnage.combinaisons.sum(:cout)
     @personnage.update_attributes(params[:personnage])
-    @personnage.reste_xps = @personnage.reste_xps - @personnage.combinaisons.sum(:cout)
+    @personnage.reste_xps = @personnage.reste_xps + (combinaisons_before - @personnage.combinaisons.sum(:cout))
     @personnage.save
     redirect_to personnage_path(@personnage)
   end
