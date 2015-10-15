@@ -723,16 +723,36 @@ class Personnage < ActiveRecord::Base
       capper = CapacitesPersonnages.where(capacite_id: key, personnage_id: id).first
       capper.update_attributes(niveau: pb.to_i)
     end
+    histo_ids = []
     perso["Historiques"].each do |key, pb|
       key = key.split("_")[1].to_i if key.split("_")[0] == "t"
-      hisper = HistoriquesPersonnages.where(historique_id: key, personnage_id: id).first
+      hisper = HistoriquesPersonnages.where(historique_id: key.to_i, personnage_id: id).first
+      histo_ids << key.to_i
       hisper.update_attributes(niveau: pb.to_i)
     end
+    if histo_ids.count > 0
+      other_histos = HistoriquesPersonnages.where(personnage_id: self.id).where("historique_id not in (?)", histo_ids)
+    else
+      other_histos = HistoriquesPersonnages.where(personnage_id: self.id)
+    end
+    other_histos.each do |histo|
+      histo.destroy
+    end
+    atout_ids = []
     if perso["Atouts"] != nil
       perso["Atouts"].each do |key, pb|
-        atper = AtoutsPersonnage.where(atout_id: key, personnage_id: id).first
+        atper = AtoutsPersonnages.where(atout_id: key, personnage_id: id).first
+        atout_ids << key
         atper.update_attributes(niveau: pb.to_i)
       end
+    end
+    if atout_ids.count > 0
+      other_atouts = AtoutsPersonnages.where(personnage_id: self.id).where("atout_id not in (?)", atout_ids)
+    else
+      other_atouts = AtoutsPersonnages.where(personnage_id: self.id)
+    end
+    other_atouts.each do |atout|
+      atout.destroy
     end
     self.volonte = perso["Volonte"];
     if perso["Spheres"] != nil
@@ -747,17 +767,24 @@ class Personnage < ActiveRecord::Base
         sphere.destroy
       end
     end
+    discipline_ids = []
     if perso["Disciplines"] != nil
-      discipline_ids = []
       perso["Disciplines"].each do |key, pb|
         disper = DisciplinesPersonnages.where(personnage_id: id, discipline_id: key).first
         discipline_ids << key
         disper.update_attributes(niveau: pb.to_i)
       end
+    end
+    if discipline_ids.count > 0
       other_dis = DisciplinesPersonnages.where(personnage_id: id).where("discipline_id not in (?)", discipline_ids)
-      other_dis.each do |dis|
-        dis.destroy
-      end
+    else
+      other_dis = DisciplinesPersonnages.where(personnage_id: id)
+    end
+    other_dis.each do |dis|
+      dis.destroy
+    end
+    if perso["Entelechie"] != nil
+      self.entelechie = perso["Entelechie"]
     end
     self.save
   end
