@@ -96,11 +96,9 @@ class PersonnagesController < ApplicationController
 
   def combinaison_edit
     @personnage = Personnage.find(params[:id])
-    # @combinaisons_personnages = CombinaisonsPersonnages.where("niveau > 5")
   end
 
   def combinaison_update
-    # TODO: Improve calcultion
     @personnage = Personnage.find(params[:id])
     combinaisons_before = @personnage.combinaisons.sum(:cout)
     @personnage.update_attributes(params[:personnage])

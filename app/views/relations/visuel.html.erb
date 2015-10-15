@@ -23,7 +23,7 @@
 	var tmpEdges = []
 	var i = 0
 	for (var j in relations) {
-		tmpEdges.push({id: i, from: relations[j].from_personnage_id, to: relations[j].to_personnage_id, label: relations[j].name});
+		tmpEdges.push({id: i, from: relations[j].from_personnage_id, to: relations[j].to_personnage_id, arrows: 'from', label: relations[j].name});
 		i++;
 	}
 	var nodes = new vis.DataSet(tmpNodes);
