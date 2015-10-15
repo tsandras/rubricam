@@ -308,8 +308,8 @@ function manageHistoriques(listToListening, NameClassOfInput) {
     var tmp = $(this).parent().text();
     if(this.checked) {
       if (! $("#f_"+tmp).length) {
-        var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]
-        $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value, id_jointure));
+        // var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1]
+        $(NameClassOfInput).last().parent().append(getHTMLInputHistorique($(this).parent().text(), this.value));
         listenerHistorique("#t_"+tmp.trim());
         console.log("coucou")
         listenerHistoriqueForBase("#t_"+tmp.trim());
@@ -343,13 +343,13 @@ function manageDisciplines(listToListening, NameClassOfInput) {
       if (! $("#f_"+format_name(tmp)).length) {
         var nbs = $(".dis").length;
         // En fonction du nombre de discipline que possède le personnage, faire poper la discipline sur la bonne colone
-        var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1];
+        // var id_jointure = $(NameClassOfInput).last().children(".hidden").attr("id").split("_")[1];
         if (nbs == 0 || nbs == 3 || nbs == 6 || nbs == 9 || nbs == 12 || nbs == 15) {
-          $(".col-dis-0").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure, nbs));
+          $(".col-dis-0").append(getHTMLInputDiscipline($(this).parent().text(), this.value, nbs));
         } else if (nbs == 1 || nbs == 4 || nbs == 7 || nbs == 10 || nbs == 13 || nbs == 16) {
-          $(".col-dis-1").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure, nbs));
+          $(".col-dis-1").append(getHTMLInputDiscipline($(this).parent().text(), this.value, nbs));
         } else {
-          $(".col-dis-2").append(getHTMLInputDiscipline($(this).parent().text(), this.value, id_jointure, nbs));
+          $(".col-dis-2").append(getHTMLInputDiscipline($(this).parent().text(), this.value, nbs));
         }
         listenerDiscipline("#t_"+format_name(tmp));
       }
@@ -401,7 +401,7 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
     return name.split(' ').join("").split("'").join("");
   }
 
-function getHTMLInputDiscipline(name, id, id_jointure, nbs) {
+function getHTMLInputDiscipline(name, id, nbs) {
   out = getHTMLInputData(id, "discipline", "dis", name, format_name(name), nbs + 1, "", null, null);
   return out;
 }
