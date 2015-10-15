@@ -17,12 +17,8 @@ class NivdisciplinesController < ApplicationController
   # GET /disciplines/1
   # GET /disciplines/1.json
   def show
-    # raise params.inspect
     @nivdiscipline = Nivdiscipline.find(params[:id])
-    @discipline = @nivdiscipline.discipline
-    @nivdiscipline = @nivdiscipline
-    # raise @nivdiscipline.inspect
-    # @nivdisciplines = Nivdiscipline.where(discipline_id: @discipline.id)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @nivdiscipline }
@@ -52,7 +48,6 @@ class NivdisciplinesController < ApplicationController
   def create
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_to_write?(@user)
     @nivdiscipline = Nivdiscipline.new(params[:nivdiscipline])
-    # raise @nivdiscipline.inspect
     respond_to do |format|
       if @nivdiscipline.save
         format.html { redirect_to @nivdiscipline, notice: 'Niveau discipline a été crée avec succès.' }
