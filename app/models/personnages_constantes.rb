@@ -146,7 +146,7 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
   CAP_MENTAL = ["Conscience", "Artisanats", "Méditation", "Droit", "Érudition", "Finances", "Informatique", "Investigation", "Médecine", "Occultisme", "Politique", "Sciences", "Technologie"]
   CAP_SOCIAL = ["Commandement", "Empathie", "Expérience de la rue", "Expression", "Intimidation", "Intuition", "Subterfuge", "Animaux", "Étiquette", "Représentation"]
 
-  POINTS_SANG = {"13" => 10, "12" => 11, "11" => 12, "10" => 13, "9" => 14, "8" => 15, "7" => 20, "6" => 30, "5" => 40, "4" => 50}
+  POINTS_SANG = {"13" => 10, "12" => 11, "11" => 12, "10" => 13, "9" => 14, "8" => 15, "7" => 20, "6" => 30, "5" => 40, "4" => 50, "3" => 100}
 
   FONT_WOD = {
     "correspondance" => 'a',

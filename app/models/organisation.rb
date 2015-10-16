@@ -30,7 +30,7 @@ class Organisation < ActiveRecord::Base
 
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
 
-  TYPE_ORGANISATION = ["Tradition", "Fondation", "Corporation", "Cabale", "Clan", "Lignée", "Secte", "Coterie"]
+  TYPE_ORGANISATION = ["Tradition", "Fondation", "Corporation", "Cabale", "Clan", "Lignée", "Secte", "Coterie", "Autre"]
 
   def avatar_url_perso
     out = avatar_url.split("/")

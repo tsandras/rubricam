@@ -82,6 +82,16 @@ module PersonnagesShow
     "<b>#{personnage.prenom} #{personnage.nom}</b>".html_safe
   end
 
+  def show_generation(personnage)
+    if personnage.type_perso == "Vampire"
+      hps = HistoriquesPersonnages.where(personnage_id: personnage.id, historique_id: Historique.where(nom: "Génération").first.id)
+      if hps.count > 0
+        generation = 13 - hps.first.niveau
+        "<b>Génération</b> : #{generation}e<br />".html_safe
+      end
+    end
+  end
+
   def show_points_sang(personnage)
     if personnage.type_perso == "Vampire"
       hps = HistoriquesPersonnages.where(personnage_id: personnage.id, historique_id: Historique.where(nom: "Génération").first.id)

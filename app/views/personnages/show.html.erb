@@ -6,6 +6,7 @@
     <div class="col-md-8">
       <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
       <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
+      <%= show_generation(@personnage) %>
       Attitude : <%= @personnage.attitude %><br />
       Nature : <%= @personnage.nature %><br/>
     </div>
