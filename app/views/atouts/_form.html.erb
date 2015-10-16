@@ -12,6 +12,7 @@
     <%= f.input :cout %>
     <%= f.input :type_atout, collection: Atout::TYPE_ATOUT %>
     <%= f.input :source, collection: Atout::SOURCE %>
+    <%= f.input :secret, label: "Voulez-vous que cet atout soit secrète ?", wrapper_html: {class: 'inline simple-checkbox'} %>
     <%= f.input :has_detail, label: "Ajouter un champs pour précision ?", wrapper_html: {class: 'inline simple-checkbox'} %>
   </div>
 <% end %>

@@ -1,11 +1,16 @@
 class AtoutsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:index, :show]
-  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy, :new, :create]
+  before_filter :redirect_unauthorized_to_show, only: [:show]
+  before_filter :redirect_unauthorized_to_write, only: [:edit, :update, :destroy, :new, :create]
 
   # GET /atouts
   # GET /atouts.json
   def index
-    @atouts = Atout.paginate(page: params[:page], per_page: 25)
+    if @user.role == User::ROLE_ADMIN 
+      @atouts = Atout.paginate(page: params[:page], per_page: 25)
+    else
+      @atouts = Atout.none_secret.paginate(page: params[:page], per_page: 25)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -91,12 +96,23 @@ class AtoutsController < ApplicationController
 
   private
 
+  def redirect_unauthorized_to_show
+    @atout = Atout.find(params[:id])
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_show?(@user)
+  end
+
   def redirect_unauthorized_to_write
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
   end
 
   def permition_write?(user)
     return true if user.role == User::ROLE_ADMIN || user.role == User::ROLE_MODER
+    false
+  end
+
+  def permition_show?(user)
+    return true if user.role != User::ROLE_NORMA
+    return true if !@atout.secret
     false
   end
 end

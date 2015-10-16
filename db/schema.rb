@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151013165416) do
+ActiveRecord::Schema.define(:version => 20151016102427) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20151013165416) do
     t.boolean  "has_detail"
     t.string   "source"
     t.string   "type_atout"
+    t.boolean  "secret"
   end
 
   create_table "atouts_personnages", :force => true do |t|

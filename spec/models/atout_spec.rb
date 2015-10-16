@@ -11,6 +11,7 @@
 #  has_detail  :boolean
 #  source      :string(255)
 #  type_atout  :string(255)
+#  secret      :boolean
 #
 
 require 'rails_helper'
