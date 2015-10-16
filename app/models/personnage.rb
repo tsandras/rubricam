@@ -460,7 +460,11 @@ class Personnage < ActiveRecord::Base
         else
           dis_id = key
         end
-        out = out + (discipline[:niveau].to_i - perso_base["Disciplines"][dis_id.to_s].to_i) * 7
+        if perso_base["Disciplines"].present?
+          out = out + (discipline[:niveau].to_i - perso_base["Disciplines"][dis_id.to_s].to_i) * 7
+        else
+          out = out + (discipline[:niveau].to_i * 7)
+        end
       end
     end
     out
@@ -536,7 +540,11 @@ class Personnage < ActiveRecord::Base
           hisper = DisciplinesPersonnages.find(key)
           hiss = hisper.discipline
         end
-        perso_bonus["Disciplines"][hiss.id] = c[:niveau].to_i - perso_base["Disciplines"][hiss.id.to_s].to_i
+        if perso_base["Disciplines"].present?
+          perso_bonus["Disciplines"][hiss.id] = c[:niveau].to_i - perso_base["Disciplines"][hiss.id.to_s].to_i
+        else
+          perso_bonus["Disciplines"][hiss.id] = c[:niveau].to_i
+        end
       end
     end
     perso_bonus.to_json
