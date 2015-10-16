@@ -166,7 +166,7 @@ function init_map(lieux_villes, user) {
 
 function setDataLieu(lieu, user) {
   out = "";
-  out += "<b>"+lieu.nom+"</b><br/>";
+  out += "<a href='/lieus/"+lieu.id+"'><b>"+lieu.nom+"</b></a><br/>";
   lieu.organisations.forEach(function(organisation) {
     if (!organisation.secret || user.role == 2) {
       out += "["+organisation.type_organisation+"] ";
