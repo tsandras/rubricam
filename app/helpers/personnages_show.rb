@@ -200,9 +200,9 @@ module PersonnagesShow
           end
           tmp = tmp + 1
           if !c.historique.has_detail
-            out += "<td> #{c.historique.nom} #{c.niveau}</td>"
+            out += "<td>".html_safe + link_to("#{c.historique.nom} #{c.niveau}", c.historique) + "</td>".html_safe
           else
-            out += "<td> #{c.historique.nom} #{c.niveau} <i>(#{c.detail})</i></td>"
+            out += "<td>".html_safe + link_to("#{c.historique.nom} #{c.niveau} <i>(#{c.detail})</i>".html_safe, c.historique) + "</td>".html_safe
           end
           if tmp % 3 == 0
             out += "</tr>"
@@ -226,9 +226,9 @@ module PersonnagesShow
           end
           tmp = tmp + 1
           if !c.atout.has_detail
-            out += "<td> #{c.atout.nom} (#{c.atout.cout})</td>"
+            out += "<td>".html_safe + link_to("#{c.atout.nom} (#{c.atout.cout})", c.atout) + "</td>".html_safe
           else
-            out += "<td> #{c.atout.nom} (#{c.atout.cout}) <i>[#{c.detail}]</i></td>"
+            out += "<td>".html_safe + link_to("#{c.atout.nom} (#{c.atout.cout}) <i>(#{c.detail})</i>".html_safe, c.atout) + "</td>".html_safe
           end
           if tmp % 3 == 0
             out += "</tr>"
