@@ -95,6 +95,7 @@ function calcule_xps_capacite(personnage, type_perso, type) {
 function calcule_xps_historique(personnage, type_perso, type) {
   var out = 0;
   $("#historiques_personnages_niveau[name^=historiques_personnages]").each(function() {
+    // console.log($(this))
     var idd = $("#h_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
     // console.log(personnage.Historiques)
@@ -103,11 +104,16 @@ function calcule_xps_historique(personnage, type_perso, type) {
       va_avant = 0;
     }
     if (type == "base") {
+      // console.log(va_avant)
+      // console.log(parseInt(va_actuel))
+      // console.log("managage:")
+      // console.log(manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "historique"))
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "historique");
     } else {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "historique");
     }
   });
+  // console.log(out)
   return out;
 }
 
@@ -223,6 +229,7 @@ function serie_nx_precedant(i, n, x, base) {
 }
 
 function serie_nx_suivant(i, n, x, base) {
+  // console.log(i, n, x, base)
   if (i > n) {
     return 0;
   }
@@ -241,12 +248,16 @@ function serie_nx_suivant(i, n, x, base) {
 // Mages avec l'Entelechie et les Spheres.
 function manage_serie_nx(i, n, type_perso, pouvoir) {
   var base = get_base(pouvoir);
+  // console.log("base:"+base)
   var cout = get_cout(pouvoir, type_perso);
+  // console.log("cout:"+cout)
   if (n < 6 && pouvoir != "entelechie" && pouvoir != "sphere") {
     return serie_nx_precedant(i, n, cout, base);
   } else if (pouvoir == "entelechie" || pouvoir == "sphere") {
     return serie_nx_suivant(i, n, cout, base);
-  } else if (n >= 6) {
+  } else if (n >= 6 && i >= 6) {
+    return serie_nx_suivant(i, n, cout, base);
+  } else if (n >= 6 && i < 6) {
     return serie_nx_precedant(i, 5, cout, base) + serie_nx_suivant(5, n, cout, base);
   } else {
     return serie_nx_precedant(i, n, cout, base);
