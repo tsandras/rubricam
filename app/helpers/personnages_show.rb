@@ -69,7 +69,9 @@ module PersonnagesShow
   end
 
   def show_spheres_for_base(personnage)
-    " <span id=\"nbs_spheres\">#{personnage.tradition == 'orphelins' || 'Excavés' ? '0' : '1'}</span>/<span id=\"max_spheres\">#{personnage.tradition == 'orphelins' || 'Excavés' ? '5' : '6'}</span>".html_safe if !personnage.has_base && personnage.mage?
+    already = (personnage.tradition == 'orphelins' || personnage.tradition == 'Excavés') ? '0' : '1'
+    max = (personnage.tradition == 'orphelins' || personnage.tradition == 'Excavés') ? '5' : '6'
+    " <span id=\"nbs_spheres\">#{already}</span>/<span id=\"max_spheres\">#{max}</span>".html_safe if !personnage.has_base && personnage.mage?
   end
 
   def show_pts_bonus(personnage)
@@ -130,6 +132,7 @@ module PersonnagesShow
 
   def show_partie(personnage)
     infos = Personnage::BASE_BY_TYPE[personnage.type_perso].split(";")
+    max = (personnage.tradition == 'Orphelins' || personnage.tradition == 'Excavés') ? '5' : '6'
     out = "".html_safe
     out << "<div class=\"partie-personnage\">".html_safe
     if !personnage.has_base
@@ -139,7 +142,7 @@ module PersonnagesShow
       out << "Vous devez répartir #{infos[1]} dans les Capacités.<br/>".html_safe
       out << "Vous devez répartir #{infos[2]} points dans les Historiques.<br/>".html_safe
       out << "Vous devez répartir 5 points dans les vertues ainsi que 4 points dans les Disciplines.<br/>".html_safe if personnage.vampire?
-      out << "Vous devez répartir #{personnage.tradition == 'Orphelins' || 'Excavés' ? '5' : '6'} points dans les Sphères.<br/>".html_safe if personnage.mage?
+      out << "Vous devez répartir #{max} points dans les Sphères.<br/>".html_safe if personnage.mage?
       out << "Puis valider en cliquant sur sauvegarder base.<br/>".html_safe
     elsif !personnage.has_bonus
       out << "<h4>ETAPE 2 : Répartition des points bonus</b>#{show_pts_bonus(personnage)}</h4>".html_safe
