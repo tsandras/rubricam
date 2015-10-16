@@ -64,6 +64,7 @@
     <p><b>Description:</b> <%= simple_format @personnage.description %></p>
     <p><b>Background:</b> <%= simple_format @personnage.background %></p>
     <p><b>Paradigme:</b> <%= simple_format @personnage.paradygme %></p>
+    <p><b>Description publique (<%= @personnage.nom_publique %>):</b> <%= simple_format @personnage.description_publique %></p>
     <% if @personnage.date_naissance.present? %>
       <p><b>Date naissance:</b> <%= @personnage.date_naissance %></p>
     <% end %>
