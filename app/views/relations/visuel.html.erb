@@ -18,7 +18,11 @@
 
 	var tmpNodes = [];
 	for (var j in personnages) {
-		tmpNodes.push({id: personnages[j].id, label: personnages[j].prenom + " " + personnages[j].nom, value: personnages[j].description_publique});
+		if (personnages[j].nom_publique) {
+			tmpNodes.push({id: personnages[j].id, label: personnages[j].nom_publique, value: personnages[j].description_publique});
+		} else {
+			tmpNodes.push({id: personnages[j].id, label: personnages[j].prenom + " " + personnages[j].nom, value: personnages[j].description_publique});
+		}
 	}
 	var tmpEdges = []
 	var i = 0
