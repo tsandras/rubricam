@@ -69,8 +69,8 @@ module PersonnagesShow
   end
 
   def show_spheres_for_base(personnage)
-    already = (personnage.tradition == 'orphelins' || personnage.tradition == 'Excavés') ? '0' : '1'
-    max = (personnage.tradition == 'orphelins' || personnage.tradition == 'Excavés') ? '5' : '6'
+    already = (personnage.tradition == 'Orphelins' || personnage.tradition == 'Excavés') ? '0' : '1'
+    max = (personnage.tradition == 'Orphelins' || personnage.tradition == 'Excavés') ? '5' : '6'
     " <span id=\"nbs_spheres\">#{already}</span>/<span id=\"max_spheres\">#{max}</span>".html_safe if !personnage.has_base && personnage.mage?
   end
 

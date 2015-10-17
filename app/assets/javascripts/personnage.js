@@ -20,7 +20,7 @@
   function listenerAllSpheres() {
     $.each($(".sph"), function(key, val) {
       if ($(this).attr("id")) {
-        listenerNumber($(this).attr("id"), "#" + $(this).attr("id") + " #spheres_personnages_niveau", 0, 5);
+        listenerNumber($(this).attr("id"), "#" + $(this).attr("id") + " #spheres_personnages_niveau", 0, 6);
       }
     });
   }
