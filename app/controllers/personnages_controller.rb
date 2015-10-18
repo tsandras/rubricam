@@ -85,7 +85,7 @@ class PersonnagesController < ApplicationController
 
   def discipline_edit
     @personnage = Personnage.find(params[:id])
-    @disciplines_personnages = DisciplinesPersonnages.where("niveau > 5")
+    @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: @personnage.id).where("niveau > 5")
   end
 
   def discipline_update
