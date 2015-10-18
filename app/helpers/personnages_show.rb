@@ -5,7 +5,7 @@ module PersonnagesShow
     relations.each do |r|
       p1 = get_personnage(r.to_personnage_id)
       p2 = get_personnage(r.from_personnage_id)
-      out = out + link_to("#{p1.prenom} #{p1.nom}", p1) + " #{r.name} " + link_to("#{p2.prenom} #{p2.nom}", p2)
+      out = out + link_to("#{p1.prenom} #{p1.nom}", p1) + " #{r.name} " + link_to("#{p2.prenom} #{p2.nom}", p2) + "<br />".html_safe
     end
     out.html_safe
   end
