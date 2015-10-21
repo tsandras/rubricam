@@ -119,7 +119,6 @@ function calcule_xps_historique(personnage, type_perso, type) {
 
 function calcule_xps_atout(personnage, type_perso, type) {
   var out = 0;
-  // console.log("Coucou les loulous ?");
   $("input[id^=personnage_atout_ids]").each(function() {
     if ($(this).attr("checked") == "checked") {
       var vala = parseInt(extract_val_atout($(this).parent().text()));
