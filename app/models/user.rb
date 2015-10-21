@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
   has_many :objets
   has_many :routines
   has_and_belongs_to_many :campagnes
+  has_and_belongs_to_many :parties, class_name: 'Partie'
 
   def role_name
     if role == ROLE_ADMIN

@@ -19,11 +19,12 @@
 
 class Partie < ActiveRecord::Base
   attr_accessible :date, :description, :description_publique, :duree, :image_lien,
-                  :nom, :notes, :secret, :xps, :personnage_ids, :campagne_id, :campagne
+                  :nom, :notes, :secret, :xps, :personnage_ids, :campagne_id, :campagne, :user_ids
 
   validates_presence_of :date, :nom
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
+  has_and_belongs_to_many :users, class_name: 'User'
   belongs_to :campagne
 
   def self.played_by(user)

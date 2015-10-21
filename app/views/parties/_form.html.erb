@@ -16,10 +16,10 @@
     <%= f.input :image_lien %>
     <%= f.input :xps %>
     <%= f.input :campagne_id, collection: Campagne.all.map{|c| [c.nom, c.id]} %>
-    <div class="personnage">
-      <label for="search_personnage"> Rechercher personnage :</label>
-      <input id="search_personnage" type="text" onkeypress="filter(this, '.personnage .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.personnage .checkbox .check_boxes')">
-      <%= f.association(:personnages, as: :check_boxes, :collection => Personnage.all.map {|c| [c.nom, c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
+    <div class="user">
+      <label for="search_user"> Rechercher user :</label>
+      <input id="search_user" type="text" onkeypress="filter(this, '.user .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.user .checkbox .check_boxes')">
+      <%= f.association(:users, as: :check_boxes, :collection => User.all.map {|c| [c.email, c.id]}.uniq, label: false, wrapper_html: { class: 'col-md-12' }) %>
     </div>
     <%= f.input :notes %>
   </div>
@@ -27,6 +27,6 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
+    manageCheckBox("#search_user", ".user .checkbox .check_boxes");
   });
 </script>
