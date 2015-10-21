@@ -254,7 +254,7 @@ class Personnage < ActiveRecord::Base
           capper = CapacitesPersonnages.find(key)
           cap = capper.capacite
         else
-          cap = Capacite.find(key)
+          cap = Capacite.find(key.split("_")[1].to_i)
         end
         add = 1 if cap.primaire
         add = 0.5 unless cap.primaire
