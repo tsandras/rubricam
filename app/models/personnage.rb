@@ -206,6 +206,7 @@ class Personnage < ActiveRecord::Base
     else
       self.rang = 0
     end
+    save
   end
 
   def calcule_graph
@@ -219,6 +220,7 @@ class Personnage < ActiveRecord::Base
       self.niveau_magdynamique = spheres.sum(&:niveau).to_i * 8
       self.niveau_magstatique = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
       self.niveau_ressources = HistoriquesPersonnages.where(personnage_id: id).sum(&:niveau) * 3
+      save
     end
   end
 
