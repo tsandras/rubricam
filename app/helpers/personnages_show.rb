@@ -61,7 +61,7 @@ module PersonnagesShow
   end
 
   def show_nbs_vertues(personnage)
-    " <span id=\"nbs_vertues\">0</span>/<span id=\"max_vertues\">5</span>".html_safe if !personnage.has_base && personnage.vampire?
+    " <span id=\"nbs_vertues\">0</span>/<span id=\"max_vertues\">7</span>".html_safe if !personnage.has_base && personnage.vampire?
   end
 
   def show_disciplines(personnage)
@@ -151,7 +151,7 @@ module PersonnagesShow
       out << "Vous devez répartir #{infos[0]} points dans les Attributs.<br/>".html_safe
       out << "Vous devez répartir #{infos[1]} dans les Capacités.<br/>".html_safe
       out << "Vous devez répartir #{infos[2]} points dans les Historiques.<br/>".html_safe
-      out << "Vous devez répartir 5 points dans les vertues ainsi que 4 points dans les Disciplines.<br/>".html_safe if personnage.vampire?
+      out << "Vous devez répartir 7 points dans les vertues ainsi que 4 points dans les Disciplines.<br/>".html_safe if personnage.vampire?
       out << "Vous devez répartir #{max} points dans les Sphères.<br/>".html_safe if personnage.mage?
       out << "Puis valider en cliquant sur sauvegarder base.<br/>".html_safe
     elsif !personnage.has_bonus

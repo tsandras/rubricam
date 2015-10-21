@@ -289,7 +289,7 @@ class Personnage < ActiveRecord::Base
 
   def ok_base_vertue(personnage)
     return true if !self.vampire?
-    if personnage[:points_conscience].to_i + personnage[:points_courage].to_i + personnage[:points_maitrise].to_i != 8
+    if personnage[:points_conscience].to_i + personnage[:points_courage].to_i + personnage[:points_maitrise].to_i != 10
       self.trace += "Vous n'avez pas répartie le bon nombre de point dans les vertues.<br/>"
       false
     end
