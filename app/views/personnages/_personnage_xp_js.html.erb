@@ -1,3 +1,4 @@
+<script type="text/javascript">
 function whenclickCalculeXpsDep(type_perso, idButton) {
   $(idButton).click(function() {
     manageCalculeXps(type_perso);
@@ -42,8 +43,8 @@ function manageCalculeBonus() {
     bonus_dep += calcule_xps_capacite(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_historique(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_atout(personnage, "necrodancer", "bonus");
-    bonus_dep += calcule_xps_sphere(personnage, "necrodancer", "bonus");
-    bonus_dep += calcule_xps_discipline(personnage, "necrodancer", "bonus");
+    bonus_dep += calcule_xps_sphere(personnage, "necrodancer", "bonus", null);
+    bonus_dep += calcule_xps_discipline(personnage, "necrodancer", "bonus", null);
     bonus_dep += calcule_xps_volonte(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_entelechie(personnage, "necrodancer", "bonus");
     $("#nbs_bonus").html(bonus_dep);
@@ -59,7 +60,7 @@ function calcule_xps_attribut(personnage, type_perso, type) {
     attr_actuet = $("#"+val).val();
     tmp = val.split("_");
     if (type == "base") {
-      out = out + manage_serie_nx(personnage.Personnage[tmp[1]], attr_actuet, type_perso, "attribut");
+      out = out + manage_serie_nx(personnage.Personnage[tmp[1]], attr_actuet, type_perso, "attribut", null);
     } else {
 
       out = out + manage_bonus(personnage.Personnage[tmp[1]], parseInt(attr_actuet), "attribut");
@@ -84,7 +85,7 @@ function calcule_xps_capacite(personnage, type_perso, type) {
       va_avant = personnage.Capacites.Connaissance[idd];
     }
     if (type == "base") {
-      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "capacite");
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "capacite", null);
     } else  {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "capacite");
     }
@@ -108,7 +109,7 @@ function calcule_xps_historique(personnage, type_perso, type) {
       // console.log(parseInt(va_actuel))
       // console.log("managage:")
       // console.log(manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "historique"))
-      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "historique");
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "historique", null);
     } else {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "historique");
     }
@@ -135,15 +136,16 @@ function calcule_xps_atout(personnage, type_perso, type) {
   return out;
 }
 
-function calcule_xps_sphere(personnage, type_perso, type) {
+function calcule_xps_sphere(personnage, type_perso, type, appartenance) {
   var out = 0;
   $("input[id^=spheres_personnages_niveau]").each(function() {
     var valeur_act = $(this).val()
     var idsph = parseInt(extract_id_cp($(this).attr("name")));
     var valeur_av = personnage.Spheres[idsph.toString()];
     // console.log("La valeur avant =>"+valeur_av)
+    var nomSphere = $(this).parents(".row .sph").children(".col-md-5").text().replace('?','').trim()
     if (type == "base") {
-      out = out + manage_serie_nx(valeur_av, parseInt(valeur_act), type_perso, "sphere");
+      out = out + manage_serie_nx(valeur_av, parseInt(valeur_act), type_perso, "sphere", nomSphere);
     } else {
       out = out + manage_bonus(valeur_av, parseInt(valeur_act), "sphere");
     }
@@ -157,12 +159,13 @@ function calcule_xps_discipline(personnage, type_perso, type) {
     var idd = $("#d_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
     var va_avant = personnage.Disciplines[idd.toString()];
+    var nom_discipline = $(this).parents(".row .dis").children(".col-md-5").text().replace('?','').trim()
     if (! va_avant) {
       va_avant = 0;
     }
     if (type == "base") {
       // console.log("id=>"+ idd +"val=>"+manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline"));
-      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline");
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline",nom_discipline);
     } else {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "discipline");
     }
@@ -176,7 +179,7 @@ function calcule_xps_entelechie(personnage, type_perso, type) {
   var va_avant = personnage.Entelechie;
   // console.log(personnage);
   if (type == "base") {
-    out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "entelechie");
+    out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "entelechie", null);
   } else {
     out = out + manage_bonus(va_avant, parseInt(va_actuel), "entelechie");
   }
@@ -188,7 +191,7 @@ function calcule_xps_volonte(personnage, type_perso, type) {
   var va_actuel = $("#personnage_volonte").val();
   var va_avant = personnage.Volonte;
   if (type == "base") {
-    out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "volonte");
+    out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "volonte", null);
   } else {
     out = out + manage_bonus(va_avant, parseInt(va_actuel), "volonte");
   }
@@ -245,10 +248,10 @@ function serie_nx_suivant(i, n, x, base) {
 
 // Tous les personnages dépensent l'expérieure de la même manière sauf les
 // Mages avec l'Entelechie et les Spheres.
-function manage_serie_nx(i, n, type_perso, pouvoir) {
+function manage_serie_nx(i, n, type_perso, pouvoir, nom) {
   var base = get_base(pouvoir);
   // console.log("base:"+base)
-  var cout = get_cout(pouvoir, type_perso);
+  var cout = get_cout(pouvoir, type_perso, nom);
   // console.log("cout:"+cout)
   if (n < 6 && pouvoir != "entelechie" && pouvoir != "sphere") {
     return serie_nx_precedant(i, n, cout, base);
@@ -333,18 +336,29 @@ function get_cout_bonus(pouvoir) {
   return out;
 }
 
-function get_cout(pouvoir, type_perso) {
+function get_cout(pouvoir, type_perso, nom) {
   var out = 0;
   switch (pouvoir) {
     case "discipline":
       if (type_perso = "Vampire") {
-        out = 5;
+        disPredilec = <%= raw Personnage::DISCIPLINES_CLAN[@personnage.appartenance_perso].to_json %>
+        if ($.inArray(nom, disPredilec) != -1) {
+          out = 5;
+        } else {
+          out = 7;
+        }
+        
       } else {
         out = 15;
       }
       break;
     case "sphere":
-      out = 8;
+      sphPredilec = "<%= raw Personnage::SPHERES_MAGE[@personnage.appartenance_perso] %>"
+      if (nom == sphPredilec) {
+        out = 7;
+      } else {
+        out = 8;
+      }
       break;
     case "entelechie":
       out = 8;
@@ -364,3 +378,4 @@ function get_cout(pouvoir, type_perso) {
   }
   return out;
 }
+</script>

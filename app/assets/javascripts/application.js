@@ -18,7 +18,6 @@
 //= require jquery-cbtoggle
 //= require core
 //= require personnage
-//= require personnage_xp
 //= require select2
 //= require_tree .
 
