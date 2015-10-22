@@ -78,6 +78,8 @@
 #  trace                 :text
 #  appartenance_publique :string(255)
 #  rang_publique         :string(255)
+#  none_validation       :boolean
+#  resonnances_publique  :boolean
 #
 
 require 'carrierwave/orm/activerecord'
@@ -99,7 +101,7 @@ class Personnage < ActiveRecord::Base
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
   :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock, :trace,
-  :appartenance_publique, :rang_publique
+  :appartenance_publique, :rang_publique, :none_validation, :resonnances_publique
 
   mount_uploader :avatar, AvatarUploader
 

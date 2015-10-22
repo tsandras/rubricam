@@ -187,7 +187,7 @@ class PersonnagesController < ApplicationController
       else
         # raise "wefwef" +  @personnage.inspect
         puts "Le personnage n'est pas ok pour sa base"
-        if @user.role == User::ROLE_ADMIN
+        if @personnage.none_validation
           params[:personnage][:has_base] = true
           params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
         else
@@ -202,7 +202,7 @@ class PersonnagesController < ApplicationController
           params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
           ok = true
         else
-          if @user.role == User::ROLE_ADMIN
+          if @personnage.none_validation
             params[:personnage][:has_bonus] = true
             params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
           else
@@ -216,7 +216,7 @@ class PersonnagesController < ApplicationController
     end
     puts "On est a la fin ok = #{ok} et valid ? = #{@personnage.valid?}"
     respond_to do |format|
-      if (ok || @user.role == User::ROLE_ADMIN) && @personnage.valid?
+      if (ok || @personnage.none_validation) && @personnage.valid?
         params[:personnage].delete("capacite_ids")
         params[:personnage].delete("historique_ids")
         params[:personnage].delete("discipline_ids")

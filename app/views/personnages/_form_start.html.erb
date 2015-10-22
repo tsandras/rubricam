@@ -27,6 +27,7 @@
     </div>
     <%= f.input :bonus, label: "Points bonus :", collection: [["10 pts", 10], ["15 pts", 15], ["21 pts", 21], ["42 pts", 42]], wrapper_html: {class: 'inline'} %>
     <%= f.input :xps, label: "Ajouter de l'Xps :", wrapper_html: {class: 'inline'}, input_html: {class: 'spe-xps'} %>
+    <%= f.input :none_validation, label: "Ne pas respecter les règles de création ?", wrapper_html: {class: 'inline simple-checkbox'} %>
     <br />
     <p class="text-center">
       <%= f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %>

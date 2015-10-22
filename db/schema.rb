@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151021170923) do
+ActiveRecord::Schema.define(:version => 20151022075756) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -331,6 +331,8 @@ ActiveRecord::Schema.define(:version => 20151021170923) do
     t.text     "trace"
     t.string   "appartenance_publique"
     t.string   "rang_publique"
+    t.boolean  "none_validation"
+    t.boolean  "resonnances_publique"
   end
 
   create_table "personnages_routines", :force => true do |t|
