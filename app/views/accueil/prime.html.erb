@@ -1,35 +1,47 @@
 <h2></h2>
+<p id="notice"><%= notice %></p>
 <div id="prime" class="col-md-4">
-  <p id="notice"><%= notice %></p>
-  <p class="bg-info">Rubricam vd1.0</p>
-  <div class="info-accueil">
-    <div style="text-align: center;"><b>Avancement du Wiki</b></div>
-    <div class="progress">
-	    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-	    	V20
-	  	</div>
-  	</div>
-  	<div class="progress">
-	  	<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-	    	M20
-	  	</div>
-  	</div>
-    <div class="progress">
-      <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-        W20
+  <div class="menu-accueil">
+    <div class="menu-accueil-head">
+      <div style="text-align: center;">
+        Rubricam v<%= @version.version %>.<%= @version.subversion %>
+        <%= link_to "(Détail)", version_comment_path(@version) %>
+      </div>
+      <%= simple_format @version.content %>
+    </div>
+    <div class="menu-accueil-body">
+      <div style="text-align: center;"><b>Avancement du Wiki</b></div>
+      <div class="progress">
+  	    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+  	    	V20
+  	  	</div>
+    	</div>
+    	<div class="progress">
+  	  	<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
+  	    	M20
+  	  	</div>
+    	</div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
+          W20
+        </div>
       </div>
     </div>
+    <div class="menu-accueil-action"></div>
   </div>
 </div>
 <div class="col-md-5">
-  <div style="text-align: center;"><b><%= @faction_name %></b></div>
-  <div class="row">
-    <div class="col-md-3">
-      <%= image_tag("wod/#{@image_link}.png", class: "") if Rails.application.assets.find_asset("wod/#{@image_link}.png").present? %>
+  <div class="menu-accueil">
+    <div class="menu-accueil-head" style="text-align: center;"><b><%= @faction_name %></b></div>
+    <div class="row menu-accueil-body">
+      <div class="col-md-3">
+        <%= image_tag("wod/#{@image_link}.png", class: "") if Rails.application.assets.find_asset("wod/#{@image_link}.png").present? %>
+      </div>
+      <div class="col-md-9">
+        <%= @faction %>
+      </div>
     </div>
-    <div class="col-md-9">
-      <%= @faction %>
-    </div>
+    <div class="menu-accueil-action"></div>
   </div>
 
 </div>

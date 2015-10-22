@@ -17,6 +17,7 @@ class Users::SessionsController < Devise::SessionsController
       end
     end
     @image_link = I18n.transliterate(@faction_name.split(" ").join("_").split("'").join("")).downcase
+    @version = VersionComment.last_version.first
     super
   end
 end

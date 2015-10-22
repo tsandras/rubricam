@@ -1,5 +1,7 @@
 class VersionCommentsController < ApplicationController
-  before_filter :redirect_unauthorized_to_write
+
+  skip_before_filter :authenticate_user!, only: [:index, :show]
+  before_filter :redirect_unauthorized_to_write, only: [:new, :edit, :create, :update, :destroy]
 
   # GET /version_comments
   # GET /version_comments.json
