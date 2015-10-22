@@ -1,0 +1,18 @@
+<%= simple_form_for(@version_comment) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="col-md-6">
+    <%= f.input :version %>
+    <%= f.input :subversion %>
+    <%= f.input :content %>
+  </div>
+
+  <div class="col-md-6">
+    <%= f.input :liberation %>
+    <%= f.input :details %>
+    <%= link_to 'Retour', version_comments_path, class: 'btn btn-warning btn-sm' %>
+    <%= f.button :submit, "Éditer/Créer", class: 'btn btn-success btn-sm' %>
+  </div>
+<% end %>
+
+<%#= link_to 'Voir', @version_comment, class: 'btn btn-success btn-sm' %>

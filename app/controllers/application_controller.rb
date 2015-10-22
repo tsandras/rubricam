@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
   before_filter :create_user
+  before_filter :set_version
 
   def permition_to_write?(user)
     return true if user.role != User::ROLE_NORMA
@@ -24,5 +25,9 @@ class ApplicationController < ActionController::Base
       per = nil
     end
     per
+  end
+
+  def set_version
+    @version = VersionComment.last_version.first
   end
 end

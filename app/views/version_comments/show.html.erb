@@ -1,0 +1,31 @@
+<h2>V<%= @version_comment.version %>.<%= @version_comment.subversion %></h2>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Version:</b>
+  <%= @version_comment.version %>
+</p>
+
+<p>
+  <b>Subversion:</b>
+  <%= @version_comment.subversion %>
+</p>
+
+<p>
+  <b>Libération:</b>
+  <%= @version_comment.liberation.strftime("%F") %>
+</p>
+
+<p>
+  <b>Contenu:</b>
+  <%= simple_format @version_comment.content %>
+</p>
+
+<p>
+  <b>Détails:</b>
+  <%= simple_format @version_comment.details %>
+</p>
+
+
+<%= link_to 'Editer', edit_version_comment_path(@version_comment), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', version_comments_path, class: 'btn btn-warning btn-sm' %>

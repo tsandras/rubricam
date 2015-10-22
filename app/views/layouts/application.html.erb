@@ -73,6 +73,8 @@
                   <li><%= link_to 'Personnages', personnages_path %></li>
                   <li><%= link_to 'Relations', relations_path %></li>
                   <li><%= link_to 'Campagnes', campagnes_path %></li>
+                  <li role="separator" class="divider"></li>
+                  <li><%= link_to 'Versions', version_comments_path %></li>
                 </ul>
               </li>
             <% end %>
@@ -96,7 +98,7 @@
     <%= yield %>
   </div>
   <footer>
-      www.rubricam.fr
+      www.rubricam.fr <span class="version-footer">(<%= link_to "V#{@version.version}.#{@version.subversion}", version_comments_path %>)</span>
   </footer>
 </body>
 </html>

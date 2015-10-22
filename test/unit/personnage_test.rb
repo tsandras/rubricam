@@ -78,6 +78,8 @@
 #  trace                 :text
 #  appartenance_publique :string(255)
 #  rang_publique         :string(255)
+#  none_validation       :boolean
+#  resonnances_publique  :boolean
 #
 
 require 'test_helper'

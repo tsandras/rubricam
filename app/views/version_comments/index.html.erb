@@ -1,0 +1,20 @@
+<%= link_to 'Nouvelle version', new_version_comment_path, class: 'btn btn-success btn-sm create-float' %>
+<h1>Liste des versions</h1>
+
+<table class="table">
+  <tr>
+    <th>Version</th>
+    <th>Libération</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @version_comments.each do |version_comment| %>
+  <tr>
+    <td><%= version_comment.version %>.<%= version_comment.subversion %></td>
+    <td><%= version_comment.liberation.strftime("%F") %></td>
+    <td><%= link_to 'Voir', version_comment, class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to 'Editer', edit_version_comment_path(version_comment), class: 'btn btn-warning btn-xs' %></td>
+  </tr>
+<% end %>
+</table>

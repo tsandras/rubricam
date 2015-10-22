@@ -1,5 +1,8 @@
 Rubricam::Application.routes.draw do
 
+  resources :version_comments
+
+
   resources :parties
 
   resources :campagnes
