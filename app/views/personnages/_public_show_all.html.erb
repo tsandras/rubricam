@@ -1,0 +1,19 @@
+<% if index % 3 == 0 %>
+  <div class="col-md-4">
+<% end %>
+<% url = Rails.env.development? ? personnage.avatar_url : personnage.avatar_url_perso if personnage.avatar? %>
+<div class="menu-accueil">
+  <div class="menu-accueil-head">
+    <span class="wod"><%= Personnage::FONT_WOD[personnage.appartenance_publique] %></span>
+    <%= link_to personnage.nom_publique, @user.role == User::ROLE_ADMIN ? personnage_path(personnage) : public_show_personnage_path(personnage) %>
+  </div>
+  <div class="menu-accueil-body">
+    <div style="text-align: center;"><%= image_tag(url, class: "avatar") if personnage.avatar? %></div>
+    <%= simple_format personnage.description_publique %>
+  </div>
+  <div class="menu-accueil-action">
+  </div>
+</div>
+<% if index % 3 == 2 %>
+  </div>
+<% end %>

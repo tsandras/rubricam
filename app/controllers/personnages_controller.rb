@@ -16,14 +16,14 @@ class PersonnagesController < ApplicationController
 
   def pnjs
     if @user.role == User::ROLE_ADMIN
-      @pnjs = Personnage.pnjs.where("description_publique is not null").paginate(page: params[:page], per_page: 10)
+      @pnjs = Personnage.pnjs.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
     else
-      @pnjs = Personnage.none_secret_and_pnjs.where("description_publique is not null").paginate(page: params[:page], per_page: 10)
+      @pnjs = Personnage.none_secret_and_pnjs.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
     end
   end
 
   def pjs
-    @pjs = Personnage.pjs.where("description_publique is not null").paginate(page: params[:page], per_page: 10)
+    @pjs = Personnage.pjs.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
   end
 
   def show

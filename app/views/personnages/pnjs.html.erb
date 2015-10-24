@@ -1,22 +1,10 @@
-<h1>Liste des Pnjs</h1>
+<h1></h1>
 <div class="col-md-12">
-  <table class="table">
-    <tr>
-      <th>Nom</th>
-      <th>Appartenance</th>
-      <th>Description</th>
-      <th>Image</th>
-    </tr>
-
-  <% @pnjs.each do |personnage| %>
-    <% url = Rails.env.development? ? personnage.avatar_url : personnage.avatar_url_perso if personnage.avatar? %>
-    <tr>
-      <td><%= "<p><b>#{personnage.nom_publique}</b></p>".html_safe %></td>
-      <td style="text-align: center;"><span class="wod"><%= Personnage::FONT_WOD[personnage.appartenance_publique] %></span></td>
-      <td><%= simple_format personnage.description_publique %></td>
-      <td><%= image_tag(url, class: "avatar") if personnage.avatar? %></td>
-    </tr>
+  <% @pnjs.each_with_index do |personnage, index| %>
+    <%= render 'public_show_all', personnage: personnage, index: index %>
   <% end %>
-  </table>
+  <% if @pnjs.count % 3 != 0 %>
+    </div>
+  <% end %> 
   <%= will_paginate @pnjs %>
 </div>
