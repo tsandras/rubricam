@@ -788,7 +788,7 @@ class Personnage < ActiveRecord::Base
     add_capacite
     add_historique
     add_discipline_clan if vampire?
-    entelechie = 1 if mage?
+    self.entelechie = 1 if mage?
     add_sphere_tradition if mage?
     save
   end
