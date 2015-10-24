@@ -251,6 +251,11 @@ class PersonnagesController < ApplicationController
   def destroy
     @personnage = Personnage.find(params[:id])
     redirect_to root_url if !permition?(@user)
+    CapacitesPersonnages.where(personnage_id: @personnage.id).destroy_all
+    HistoriquesPersonnages.where(personnage_id: @personnage.id).destroy_all
+    DisciplinesPersonnages.where(personnage_id: @personnage.id).destroy_all
+    AtoutsPersonnages.where(personnage_id: @personnage.id).destroy_all
+    Sphere.where(personnage_id: @personnage.id).destroy_all
     @personnage.destroy
 
     respond_to do |format|
