@@ -98,7 +98,10 @@
     <%= yield %>
   </div>
   <footer>
-      www.rubricam.fr <span class="version-footer">(<%= link_to "V#{@version.version}.#{@version.subversion}", version_comments_path %>)</span>
+      www.rubricam.fr 
+      <% if @version.present? %>
+        <span class="version-footer">(<%= link_to "V#{@version.version}.#{@version.subversion}", version_comments_path %>)</span>
+      <% end %>
   </footer>
 </body>
 </html>

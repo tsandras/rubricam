@@ -3,11 +3,13 @@
 <div id="prime" class="col-md-4">
   <div class="menu-accueil">
     <div class="menu-accueil-head">
-      <div style="text-align: center;">
-        Rubricam v<%= @version.version %>.<%= @version.subversion %>
-        <%= link_to "(Détail)", version_comment_path(@version) %>
-      </div>
-      <%= simple_format @version.content %>
+      <% if @version.present? %>
+        <div style="text-align: center;">
+          Rubricam v<%= @version.version %>.<%= @version.subversion %>
+          <%= link_to "(Détail)", version_comment_path(@version) %>
+        </div>
+        <%= simple_format @version.content %>
+      <% end %>
     </div>
     <div class="menu-accueil-body">
       <div style="text-align: center;"><b>Avancement du Wiki</b></div>
