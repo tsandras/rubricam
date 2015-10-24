@@ -711,6 +711,169 @@ class Personnage < ActiveRecord::Base
     out
   end
 
+  def random_base!
+    base_all
+    random_attributes
+    random_capacites
+    random_historiques
+    random_vertues if vampire?
+  end
+
+  def random_attributes
+    info = BASE_BY_TYPE[type_perso].split(";")
+    physique = ["force", "dexterite", "vigueur"]
+    mental = ["perception", "intelligence", "astuce"]
+    social = ["charisme", "manipulation", "apparence"]
+    attributs = [physique, mental, social]
+    info[0].split("/").each do |nombre|
+      index = Random.rand(attributs.length)
+      (1..nombre.to_i).each do |i|
+        attrr = attributs[index][Random.rand(3)]
+        write_attribute(attrr.to_s, self.send(attrr).to_i + 1)
+      end
+      attributs.delete_at(index)
+    end
+    save
+  end
+
+  def random_capacites
+    info = BASE_BY_TYPE[type_perso].split(";")
+    competences = Capacite.where(primaire: true).where(type_cap: 'Compétence').where("nom <> ? and nom <> ?", 'Méditation', 'Larcin').pluck(:id)
+    talents = Capacite.where(primaire: true).where(type_cap: 'Talent').where("nom <> ? and nom <> ?", 'Conscience', 'Intuition').pluck(:id)
+    connaissances = Capacite.where(primaire: true).where(type_cap: 'Connaissance').pluck(:id)
+    capacites = [competences, talents, connaissances]
+    info[1].split("/").each do |nombre|
+      index = Random.rand(capacites.length)
+      nbs = capacites[index].length
+      (1..nombre.to_i).each do |i|
+        cap_id = capacites[index][Random.rand(nbs)].to_i
+        cp = CapacitesPersonnages.where(personnage_id: id, capacite_id: cap_id).first
+        cp.niveau = cp.niveau + 1
+        cp.save
+      end
+      capacites.delete_at(index)
+    end
+  end
+
+  def random_historiques
+    info = BASE_BY_TYPE[type_perso].split(";")
+    all_historique_ids = Historique.pluck(:id)
+    historique_ids = HistoriquesPersonnages.where(personnage_id: id).pluck(:historique_id)
+    historique_ids.push(Historique.find(all_historique_ids[Random.rand(all_historique_ids.count)]).id)
+    historique_ids.push(Historique.find(all_historique_ids[Random.rand(all_historique_ids.count)]).id)
+    (1..info[2].to_i).each do |p|
+      his_id = historique_ids[Random.rand(historique_ids.count)].to_i
+      if is_hp_by_id_hp(his_id) 
+        hp = HistoriquesPersonnages.where(personnage_id: id, historique_id: his_id).first
+        hp.update_attributes(niveau: hp.niveau + 1)
+      else
+        HistoriquesPersonnages.create(personnage_id: id, historique_id: his_id, niveau: 1)
+      end
+    end
+  end
+
+  def random_vertues
+    vertues = ['points_conscience', 'points_maitrise', 'points_courage']
+    (1..7).each do |v|
+      r = Random.rand(3)
+      write_attribute(vertues[r], send(vertues[r]).to_i + 1)
+    end
+    save
+  end
+
+  def base_all
+    base_attributs
+    volonte_base
+    vertues_base
+    add_capacite
+    add_historique
+    add_discipline_clan if vampire?
+    entelechie = 1 if mage?
+    add_sphere_tradition if mage?
+    save
+  end
+
+  def volonte_base
+    if vampire?
+      self.volonte = 3
+    elsif mage?
+      self.volonte = 5
+    else
+      self.volonte = 1
+    end
+    self.save
+  end
+
+  def base_attributs
+    attributs = ['force', 'dexterite', 'vigueur', 'manipulation', 'charisme', 'apparence', 'intelligence', 'astuce', 'perception']
+    attributs.each{|a| write_attribute(a, 1)}
+    self.save
+  end
+
+  def vertues_base
+    if vampire?
+      self.points_conscience = 1
+      self.points_maitrise = 1
+      self.points_courage = 1
+      self.save
+    end
+  end
+
+  def add_capacite
+    caps = Capacite.where(primaire: true) # To do : uniq
+    caps.each do |c|
+      if !is_cp_by_id_cp(c.id)
+        unless (vampire? && c.nom == "Conscience") ||
+               (mage? && c.nom == "Intuition") ||
+               (vampire? && c.nom == "Méditation") ||
+               (mage? && c.nom == "Larcin")
+          CapacitesPersonnages.create(personnage_id: id, capacite_id: c.id, niveau: 0)
+        end
+      end
+    end
+  end
+
+  def add_historique
+    if vampire?
+      his = Historique.where(nom: "Génération").first
+    elsif mage?
+      his = Historique.where(nom: "Avatar").first
+    else
+      his = Historique.where(nom: "Alliés").first
+    end
+    if !is_hp_by_id_hp(his.id)
+      HistoriquesPersonnages.create(personnage_id: id, historique_id: his.id, niveau: 0)
+    end
+  end
+
+  def add_discipline_clan
+    if clan != "Caïtiff" && Personnage::DISCIPLINES_CLAN[clan].present?
+      (0..2).each do |i|
+        dis = Discipline.where(nom: Personnage::DISCIPLINES_CLAN[clan][i]).first
+        # raise dis.id.inspect
+        if !is_dp_by_id_dp(dis.id)
+          DisciplinesPersonnages.create(personnage_id: id, discipline_id: dis.id, niveau: 0)
+        end
+      end
+    else
+      dis = Discipline.where(nom: "Puissance").first
+      DisciplinesPersonnages.create(personnage_id: id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
+      dis = Discipline.where(nom: "Force d'âme").first
+      DisciplinesPersonnages.create(personnage_id: id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
+      dis = Discipline.where(nom: "Célérité").first
+      DisciplinesPersonnages.create(personnage_id: id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
+    end
+  end
+
+  def add_sphere_tradition
+    if Personnage::SPHERES_MAGE[tradition] != "Aucun"
+      sph = Sphere.where(name: Personnage::SPHERES_MAGE[tradition], personnage_id: id).first
+      if !sph
+        Sphere.create(personnage_id: id, name: Personnage::SPHERES_MAGE[tradition], niveau: 1)
+      end
+    end
+  end
+
   private
 
   def reset_at(perso)
@@ -831,4 +994,33 @@ class Personnage < ActiveRecord::Base
     false
   end
 
+  def is_cp_by_id_cp(key)
+    begin
+      cap = CapacitesPersonnages.where(capacite_id: key, personnage_id: id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
+
+  def is_hp_by_id_hp(key)
+    begin
+      cap = HistoriquesPersonnages.where(historique_id: key, personnage_id: id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
+
+  def is_dp_by_id_dp(key)
+    begin
+      cap = DisciplinesPersonnages.where(discipline_id: key, personnage_id: id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
 end

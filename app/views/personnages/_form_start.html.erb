@@ -30,7 +30,8 @@
     <%= f.input :none_validation, label: "Ne pas respecter les règles de création ?", wrapper_html: {class: 'inline simple-checkbox'} %>
     <br />
     <p class="text-center">
-      <%= f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %>
+      <%= f.button :submit, "Sauvegarder", class: 'btn btn-primary btn-sm' %><br/><br/>
+      <%= f.submit 'Sauvegarder et base aléatoire', name: 'random', class: 'btn btn-info btn-sm' %>
       <%= link_to 'Retour', personnages_path, class: 'btn btn-warning btn-sm' %>
     </p>
   </div>
@@ -282,7 +283,7 @@
     nodes.get(nodeIds).forEach(function(item) {
       nodes.update({id: item.id, hidden: false});
     });
-    console.log(":"+tmp);
+    // console.log(":"+tmp);
     nodes.get(tmp).forEach(function(item) {
       nodes.update({id: item.id, hidden: false});
     });
@@ -394,7 +395,7 @@
   }
 
   function showAppartenancePerso(idRacePerso, id, value) {
-    console.log(id)
+    // console.log(id)
     if (id > 13 || (id > 2 && id < 7)) {
       $(idRacePerso).html(" "+value);
       $("#personnage_appartenance_perso").attr("value", value);

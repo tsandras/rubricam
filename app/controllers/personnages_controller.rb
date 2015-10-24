@@ -63,10 +63,6 @@ class PersonnagesController < ApplicationController
     @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
     @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
     @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id])
-    add_discipline_clan(@personnage.clan) if @personnage.vampire?
-    add_sphere_tradition(@personnage.appartenance_perso) if @personnage.mage?
-    add_historique
-    add_capacite
   end
 
   def public_edit
@@ -150,17 +146,15 @@ class PersonnagesController < ApplicationController
   end
 
   def create
-    # @user = User.find(session["warden.user.user.key"][0].first)
-    # params[:personnage].delete("capacite_ids")
-    # params[:personnage].delete("historique_ids")
-    # params[:personnage].delete("discipline_ids")
     @personnage = Personnage.new(params[:personnage])
     @personnage.user = @user
-    @personnage.entelechie = 1 if @personnage.mage?
-    volonte_base
-    vertues_base
+    @personnage.base_all
     respond_to do |format|
-      if @personnage.save()
+      if @personnage.save
+        if params[:random].present?
+          @personnage.random_base!
+          return redirect_to personnage_path(@personnage)
+        end
         format.html { redirect_to edit_personnage_path(@personnage), notice: 'Personnage a été crée avec succès.' }
         format.json { render action: 'edit', status: :created, location: @personnage }
       else
@@ -171,50 +165,47 @@ class PersonnagesController < ApplicationController
   end
 
   def update
-    puts "on entre dans le update"
-    # params[:personnage].delete("atout_ids")
     @personnage = Personnage.find(params[:id])
-    # return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(User.find(session["warden.user.user.key"][0].first))
-    # update_atouts(params[:atouts_personnages])
+    pcapacites_p = params[:capacites_personnages]
+    phistoriques_p = params[:historiques_personnages]
+    pspheres_p = params[:spheres_personnages]
+    pdisciplines_p = params[:disciplines_personnages]
+    patouts_p = params[:atouts_personnages]
+    pp = params[:personnage]
     @personnage.trace = ""
     ok = false
     unless @personnage.has_base
-      ok_base = @personnage.ok_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+      ok_base = @personnage.ok_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p)
       if ok_base
         params[:personnage][:has_base] = true
-        params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+        params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p)
         ok = true
       else
-        # raise "wefwef" +  @personnage.inspect
-        puts "Le personnage n'est pas ok pour sa base"
         if @personnage.none_validation
           params[:personnage][:has_base] = true
-          params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+          params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p)
         else
           params[:personnage][:has_base] = false
         end
       end
     else
       unless @personnage.has_bonus
-        puts "Le personnage n'a pas de bonus mais une base"
-        if @personnage.ok_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+        if @personnage.ok_bonus(params[:personnage], pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
           params[:personnage][:has_bonus] = true
-          params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+          params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
           ok = true
         else
           if @personnage.none_validation
             params[:personnage][:has_bonus] = true
-            params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(params[:personnage], params[:capacites_personnages], params[:historiques_personnages], params[:atouts_personnages], params[:spheres_personnages], params[:disciplines_personnages])
+            params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
           else
             params[:personnage][:has_bonus] = false
           end
         end
       else
-        puts "Le personnage a une base et un bonus"
         ok = true
       end
     end
-    puts "On est a la fin ok = #{ok} et valid ? = #{@personnage.valid?}"
     respond_to do |format|
       if (ok || @personnage.none_validation) && @personnage.valid?
         params[:personnage].delete("capacite_ids")
@@ -224,11 +215,11 @@ class PersonnagesController < ApplicationController
         @personnage.calcule_rang
         @personnage.calcule_graph
         @personnage.update_attributes(params[:personnage])
-        update_capacites(params[:capacites_personnages])
-        update_historiques(params[:historiques_personnages])
-        update_spheres(params[:spheres_personnages])
-        update_disciplines(params[:disciplines_personnages])
-        update_atouts(params[:atouts_personnages])
+        update_capacites(pcapacites_p)
+        update_historiques(phistoriques_p)
+        update_spheres(pspheres_p)
+        update_disciplines(pdisciplines_p)
+        update_atouts(patouts_p)
         format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
@@ -239,10 +230,10 @@ class PersonnagesController < ApplicationController
         @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
         @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
         @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id]) + recover_values_atouts(params[:personnage][:atout_ids])
-        @values_capacites = recover_values_capacites(params[:capacites_personnages])
-        @values_historiques = recover_values_historiques(params[:historiques_personnages])
-        @values_spheres = recover_values_spheres(params[:spheres_personnages])
-        @values_disciplines = recover_values_disciplines(params[:disciplines_personnages])
+        @values_capacites = recover_values_capacites(pcapacites_p)
+        @values_historiques = recover_values_historiques(phistoriques_p)
+        @values_spheres = recover_values_spheres(pspheres_p)
+        @values_disciplines = recover_values_disciplines(pdisciplines_p)
         format.html { render action: "edit" }
         format.json { head :no_content }
       end
@@ -351,79 +342,6 @@ class PersonnagesController < ApplicationController
     return true if user.role != User::ROLE_NORMA
     return true if @personnage.user == user
     false
-  end
-
-  def volonte_base
-    if @personnage.vampire?
-      @personnage.volonte = 3
-    elsif @personnage.mage?
-      @personnage.volonte = 5
-    else
-      @personnage.volonte = 1
-    end
-  end
-
-  def vertues_base
-    if @personnage.vampire?
-      @personnage.points_conscience = 1
-      @personnage.points_maitrise = 1
-      @personnage.points_courage = 1
-    end
-  end
-
-  def add_capacite
-    caps = Capacite.where(primaire: true) # To do : uniq
-    caps.each do |c|
-      if !is_cp_by_id_cp(c.id)
-        unless (@personnage.vampire? && c.nom == "Conscience") ||
-               (@personnage.mage? && c.nom == "Intuition") ||
-               (@personnage.vampire? && c.nom == "Méditation") ||
-               (@personnage.mage? && c.nom == "Larcin")
-          CapacitesPersonnages.create(personnage_id: @personnage.id, capacite_id: c.id, niveau: 0)
-        end
-      end
-    end
-  end
-
-  def add_historique
-    if (@personnage.vampire?)
-      his = Historique.where(nom: "Génération").first
-    elsif (@personnage.mage?)
-      his = Historique.where(nom: "Avatar").first
-    else
-      his = Historique.where(nom: "Alliés").first
-    end
-    if !is_hp_by_id_hp(his.id)
-      HistoriquesPersonnages.create(personnage_id: @personnage.id, historique_id: his.id, niveau: 0)
-    end
-  end
-
-  def add_discipline_clan(clan)
-    if clan != "Caïtiff" && Personnage::DISCIPLINES_CLAN[clan].present?
-      (0..2).each do |i|
-        dis = Discipline.where(nom: Personnage::DISCIPLINES_CLAN[clan][i]).first
-        # raise dis.id.inspect
-        if !is_dp_by_id_dp(dis.id)
-          DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0)
-        end
-      end
-    else
-      dis = Discipline.where(nom: "Puissance").first
-      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
-      dis = Discipline.where(nom: "Force d'âme").first
-      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
-      dis = Discipline.where(nom: "Célérité").first
-      DisciplinesPersonnages.create(personnage_id: @personnage.id, discipline_id: dis.id, niveau: 0) if !is_dp_by_id_dp(dis.id)
-    end
-  end
-
-  def add_sphere_tradition(tradition)
-    if Personnage::SPHERES_MAGE[tradition] != "Aucun"
-      sph = Sphere.where(name: Personnage::SPHERES_MAGE[tradition], personnage_id: @personnage.id).first
-      if !sph
-        Sphere.create(personnage_id: @personnage.id, name: Personnage::SPHERES_MAGE[tradition], niveau: 1)
-      end
-    end
   end
 
   def update_capacites(capacites_personnages)
@@ -536,36 +454,6 @@ class PersonnagesController < ApplicationController
       ato = nil
     end
     return true if ato.count > 0
-    false
-  end
-
-  def is_dp_by_id_dp(key)
-    begin
-      cap = DisciplinesPersonnages.where(discipline_id: key, personnage_id: @personnage.id)
-    rescue ActiveRecord::RecordNotFound => e
-      cap = nil
-    end
-    return true if cap.count > 0
-    false
-  end
-
-  def is_hp_by_id_hp(key)
-    begin
-      cap = HistoriquesPersonnages.where(historique_id: key, personnage_id: @personnage.id)
-    rescue ActiveRecord::RecordNotFound => e
-      cap = nil
-    end
-    return true if cap.count > 0
-    false
-  end
-
-  def is_cp_by_id_cp(key)
-    begin
-      cap = CapacitesPersonnages.where(capacite_id: key, personnage_id: @personnage.id)
-    rescue ActiveRecord::RecordNotFound => e
-      cap = nil
-    end
-    return true if cap.count > 0
     false
   end
 
