@@ -33,6 +33,7 @@ class Lieu < ActiveRecord::Base
 
   scope :locatable, -> { where("svg_x is not null and svg_y is not null") }
   scope :lieu_ou_ville, -> { where("type_lieu = ? or type_lieu = ?", TYPE_LIEUX[3], TYPE_LIEUX[4]) }
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
 
   TYPE_LIEUX = ["Plan", "Planète", "Pays", "Ville", "Lieu"]
 

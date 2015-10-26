@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
       @user = User.find(session["warden.user.user.key"][1].first)
     else
       @user = User.new
-      @user.role = User::ROLE_NORMA
+      # @user.role = User::ROLE_NORMA
     end
   end
 

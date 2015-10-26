@@ -78,19 +78,24 @@
                 </ul>
               </li>
             <% end %>
-          </ul>
-          <% if @user.id.present? %>
-            <ul class="nav navbar-nav navbar-right">
+            <li><a>Recherche <input id="omni-search"></a></li>
+            <% if @user.id.present? %>
               <li><%= link_to "Carte <span class='label label-warning'>Beta</span>".html_safe, carte_path %></li>
-              <li><%= link_to 'Royaume', fan_art_path %></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Fan art<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Royaumes', fan_art_path %></li>
+                </ul>
+              </li>
               <li><%= link_to "Vue relations <span class='label label-warning'>Beta</span>".html_safe, visuel_relations_path %></li>
               <li><%= link_to 'Profil', user_path(@user) %></li>
-              <li><%= link_to 'Se déconnecter', destroy_user_session_path, :method => :delete %></li>
-            </ul>
+              <li><%= link_to 'Déconnection', destroy_user_session_path, :method => :delete %></li>
           <% end %>
+          </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    <%= render 'omni_search/omni_search' %>
     <script type="text/javascript">
       // TODO: add class active with rails
       // manageActiveDiv();

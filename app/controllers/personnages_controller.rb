@@ -28,7 +28,9 @@ class PersonnagesController < ApplicationController
 
   def show
     @personnage = Personnage.find(params[:id])
-    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user)
+    if !permition?(@user)
+      return redirect_to public_show_personnage_url(@personnage)
+    end
     @personnage.calcule_rang
     @personnage.calcule_graph
     @capacites = CapacitesPersonnages.where(personnage_id: params[:id])

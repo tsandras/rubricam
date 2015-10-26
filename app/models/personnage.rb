@@ -134,6 +134,7 @@ class Personnage < ActiveRecord::Base
   scope :pnjs, lambda { where("pnj = ?", true) }
   scope :pjs, lambda { where("pnj = ? or pnj is null", false) }
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
+  scope :secret, lambda { where("secret = ?", true) }
   scope :none_secret_and_pnjs, lambda { where("(secret = ? or secret is null) and pnj = ?", false, true) }
 
   def validity_of_perso

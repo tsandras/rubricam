@@ -1,0 +1,61 @@
+<script type="text/javascript">
+  $("#omni-search").select2({
+      minimumInputLength: 2,
+      formatInputTooShort: function () {
+        return "Entrer 2 caracteres ou plus";
+      },  
+      ajax: {
+        url: 'omni_search/search',
+        dataType: 'json',
+        type: "GET",
+        quietMillis: 50,
+        data: function (term) {
+          return {
+            query: term
+          };
+        },
+        results: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return {
+                text: text(item),
+                id: item.id,
+                type_object: type(item)
+              }
+            })
+          };
+        }
+      }
+  });
+
+  function type(item) {
+    if (item.appartenance_perso) {
+      return 'personnages'
+    } else if (item.type_organisation) {
+      return 'organisations'
+    } else if (item.nom_discipline) {
+      return 'disciplines'
+    } else if (item.type_atout) {
+      return 'atouts'
+    } else if (item.primaire) {
+      return 'capacites'
+    } else if (item.type_lieu) {
+      return 'lieus'
+    } else {
+      return 'historiques'
+    }
+  }
+
+  function text(item) {
+    if (item.appartenance_perso) {
+      return item.prenom + " " + item.nom
+    } else {
+      return item.nom
+    }
+  }
+
+  $('#omni-search').on("select2-selecting", function(e) { 
+    console.log(e.object)
+    window.location.href = $(location).attr('protocol')+"//"+$(location).attr('host')+"/"+e.object.type_object+"/"+e.object.id
+  });
+</script>
