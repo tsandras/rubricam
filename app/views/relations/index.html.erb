@@ -8,6 +8,7 @@
     <th>From</th>
     <th>Voir</th>
     <th>Editer</th>
+    <th>Supprimer</th>
   </tr>
 
 <% @relations.each do |relation| %>
@@ -17,6 +18,7 @@
     <td><% p2 = get_personnage(relation.from_personnage_id) %><%= p2 ? "#{p2.prenom} #{p2.nom}" : "" %></td>
     <td><%= link_to 'Voir', relation_path(relation), class: 'btn btn-success btn-xs' %></td>
     <td><%= link_to('Editer', edit_relation_path(relation), class: 'btn btn-warning btn-xs') %></td>
+    <td><%= link_to 'Supprimer', relation, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-xs' %></td>
   </tr>
 <% end %>
 </table>
