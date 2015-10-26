@@ -5,7 +5,7 @@
         return "Entrer 2 caracteres ou plus";
       },  
       ajax: {
-        url: 'omni_search/search',
+        url: document.location.origin + '/omni_search/search',
         dataType: 'json',
         type: "GET",
         quietMillis: 50,
