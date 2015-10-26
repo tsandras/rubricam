@@ -175,7 +175,7 @@ function setDataLieu(lieu, user) {
   });
   lieu.personnages.forEach(function(personnage) {
     if (!personnage.secret || user.role == 2) {
-      out += "<a href='/personnages/"+personnage.id+"/public_show'>"+personnage.prenom+" "+personnage.nom+"</a><br/>";
+      out += "<a href='/personnages/"+personnage.id+"'>"+personnage.prenom+" "+personnage.nom+"</a><br/>";
     }
   });
   $("#list-data-lieux").append("<div id='uid"+lieu.id+"' class='data-lieu'>"+out+"</div>");

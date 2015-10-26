@@ -7,27 +7,39 @@
 	<div style="text-align: center;">Description publique</div><br/>
 	<div class="partie-personnage small-font">
      Cliquez sur un personnage pour voir sa description publique.
-   </div><br />
-	<div id="description-publique"></div>
+  </div><br />
+  <div id="list-p-like"></div>
+  <div id="description-publique"></div>
 </div>
 <script type="text/javascript">
 	var relations = <%= raw @relations.to_json %>
 	var personnages = <%= raw @personnages.to_json %>
-	// console.log(relations);
-	// console.log(personnages);
+	var organisations = <%= raw @organisations.to_json %>
+	var relations_organisations = <%= raw @relations_organisations.to_json %>
 
 	var tmpNodes = [];
+	var out = "";
 	for (var j in personnages) {
 		if (personnages[j].nom_publique) {
 			tmpNodes.push({id: personnages[j].id, label: personnages[j].nom_publique, value: personnages[j].description_publique});
 		} else {
 			tmpNodes.push({id: personnages[j].id, label: personnages[j].prenom + " " + personnages[j].nom, value: personnages[j].description_publique});
 		}
+		out += "<a id='p_"+personnages[j].id+"' class='p-like' href='/personnages/"+personnages[j].id+"'>"+personnages[j].prenom+" "+personnages[j].nom+"</a>";
 	}
+	$("#list-p-like").append(out);
+	for (var j in organisations) {
+		tmpNodes.push({id: 'o_'+organisations[j].id, label: organisations[j].nom, value: organisations[j].description_publique, color: 'red', mass: 2});
+	}
+
 	var tmpEdges = []
 	var i = 0
 	for (var j in relations) {
-		tmpEdges.push({id: i, from: relations[j].from_personnage_id, to: relations[j].to_personnage_id, arrows: 'from', label: relations[j].name});
+		tmpEdges.push({id: i, from: relations[j].from_personnage_id, to: relations[j].to_personnage_id, arrows: 'from', label: relations[j].name, dashes: true});
+		i++;
+	}
+	for (var j in relations_organisations) {
+		tmpEdges.push({id: i, from: relations_organisations[j].personnage_id, to: 'o_'+relations_organisations[j].organisation_id});
 		i++;
 	}
 	var nodes = new vis.DataSet(tmpNodes);
@@ -39,12 +51,13 @@
   };
   var options = {};
   var network = new vis.Network(container, data, options);
-
 	network.on("click", function (params) {
 	  var nodeId = params["nodes"][0];
 	  if (nodeId && nodes.get(nodeId).value) {
 	    $("#description-publique").html(nodes.get(nodeId).value);
+	    $("#p_"+nodeId).show();
 	  } else {
+	  	$("#list-p-like .p-like").hide();
 	  	$("#description-publique").html("");
 	  }
 	});

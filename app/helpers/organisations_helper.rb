@@ -9,4 +9,13 @@ module OrganisationsHelper
       content_tag :span, 'Publique', class: 'label label-default'
     end
   end
+
+  def get_organisation(id)
+    begin
+      org = Organisation.find(id)
+    rescue ActiveRecord::RecordNotFound => e
+      org = nil
+    end
+    org
+  end
 end

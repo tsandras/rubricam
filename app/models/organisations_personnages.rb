@@ -17,4 +17,6 @@ class OrganisationsPersonnages < ActiveRecord::Base
 
   belongs_to :personnage
   belongs_to :organisation
+
+  scope :none_secret, lambda { where("secret = ? or secret is null", false) }
 end

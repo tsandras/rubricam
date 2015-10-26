@@ -14,6 +14,15 @@ module ApplicationHelper
     per
   end
 
+  def get_organisation(id)
+    begin
+      org = Organisation.find(id)
+    rescue ActiveRecord::RecordNotFound => e
+      org = nil
+    end
+    org
+  end
+
   def display_spheres(routine, perso=nil)
     list = ["correspondance", "entropie", "esprit", "forces", "matiere", "prime", "psyche", "temps", "vie"]
     out = ""

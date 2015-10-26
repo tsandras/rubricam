@@ -1,0 +1,27 @@
+<%= link_to 'Nouvelle relation org', new_relations_organisation_path, class: 'btn btn-success btn-sm create-float' %>
+<h1>Liste des relations</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>To</th>
+    <th>From</th>
+    <th>Voir</th>
+    <th>Editer</th>
+    <th>Supprimer</th>
+  </tr>
+
+<% @relations.each do |relation| %>
+  <tr>
+    <%#= raise relation.inspect %>
+    <td><%= relation.name %></td>
+    <td><% p1 = get_organisation(relation.to_organisation_id) %><%= p1 ? "#{p1.nom}" : "" %></td>
+    <td><% p2 = get_organisation(relation.from_organisation_id) %><%= p2 ? "#{p2.nom}" : "" %></td>
+    <td><%= link_to 'Voir', relations_organisation_path(relation), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_relations_organisation_path(relation), class: 'btn btn-warning btn-xs') %></td>
+    <td><%= link_to 'Supprimer', relation, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-xs' %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @relations %>

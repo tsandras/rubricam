@@ -1,11 +1,11 @@
-class RelationsController < ApplicationController
+class RelationsOrganisationsController < ApplicationController
   # GET /relations
   # GET /relations.json
   def index
     if @user.role == User::ROLE_ADMIN
-      @relations = Relation.paginate(page: params[:page], per_page: 20)
+      @relations = RelationsOrganisation.paginate(page: params[:page], per_page: 20)
     else
-      @relations = Relation.where(secret: false).paginate(page: params[:page], per_page: 20)
+      @relations = RelationsOrganisation.where(secret: false).paginate(page: params[:page], per_page: 20)
     end
 
     respond_to do |format|
@@ -17,7 +17,7 @@ class RelationsController < ApplicationController
   # GET /relations/1
   # GET /relations/1.json
   def show
-    @relation = Relation.find(params[:id])
+    @relation = RelationsOrganisation.find(params[:id])
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user, @relation)
     respond_to do |format|
       format.html # show.html.erb
@@ -28,8 +28,8 @@ class RelationsController < ApplicationController
   # GET /relations/new
   # GET /relations/new.json
   def new
-    @relation = Relation.new
-    @personnages = Personnage.all
+    @relation = RelationsOrganisation.new
+    @organisations = Organisation.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @relation }
@@ -38,17 +38,19 @@ class RelationsController < ApplicationController
 
   # GET /relations/1/edit
   def edit
-    @relation = Relation.find(params[:id])
+    @relation = RelationsOrganisation.find(params[:id])
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user, @relation)
-    @personnages = Personnage.all
-    @from_personnage = get_personnage(@relation.from_personnage_id)
-    @to_personnage = get_personnage(@relation.to_personnage_id)
+    @organisations = Organisation.all
+    @from_organisation = get_organisation(@relation.from_organisation_id)
+    @to_organisation = get_organisation(@relation.to_organisation_id)
   end
 
   # POST /relations
   # POST /relations.json
   def create
-    @relation = Relation.new(params[:relation])
+    # raise params.inspect
+    @relation = RelationsOrganisation.new(params[:relations_organisation])
+    # raise @relation.inspect
     @relation.secret = false if @user.role != User::ROLE_ADMIN
     respond_to do |format|
       if @relation.save
@@ -64,7 +66,7 @@ class RelationsController < ApplicationController
   # PUT /relations/1
   # PUT /relations/1.json
   def update
-    @relation = Relation.find(params[:id])
+    @relation = RelationsOrganisation.find(params[:id])
     params[:relation][:secret] = false if @user.role != User::ROLE_ADMIN
     respond_to do |format|
       if @relation.update_attributes(params[:relation])
@@ -80,7 +82,7 @@ class RelationsController < ApplicationController
   # DELETE /relations/1
   # DELETE /relations/1.json
   def destroy
-    @relation = Relation.find(params[:id])
+    @relation = RelationsOrganisation.find(params[:id])
     @relation.destroy
 
     respond_to do |format|
@@ -89,25 +91,21 @@ class RelationsController < ApplicationController
     end
   end
 
-  def visuel
-    if @user.role == User::ROLE_ADMIN
-      @relations = Relation.all
-      @personnages = Personnage.all
-      @organisations = Organisation.all
-      @relations_organisations = OrganisationsPersonnages.all
-    else
-      @relations = Relation.none_secret
-      @personnages = Personnage.none_secret
-      @organisations = Organisation.none_secret
-      @relations_organisations = OrganisationsPersonnages.none_secret
-    end
-  end
-
   private
 
-    def permition?(user, relation)
-      return true if user.role == User::ROLE_ADMIN
-      return true if relation.secret == false
-      false
+  def permition?(user, relation)
+    return true if user.role == User::ROLE_ADMIN
+    return true if relation.secret == false
+    false
+  end
+
+  def get_organisation(id)
+    begin
+      org = Organisation.find(id)
+    rescue ActiveRecord::RecordNotFound => e
+      org = nil
     end
+    org
+  end
+
 end

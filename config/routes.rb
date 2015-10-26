@@ -49,6 +49,8 @@ Rubricam::Application.routes.draw do
     get :visuel, on: :collection
   end
 
+  resources :relations_organisations
+
   resources :capacites
 
   resources :personnages do

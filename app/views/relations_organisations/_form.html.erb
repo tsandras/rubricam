@@ -1,0 +1,53 @@
+<%= simple_form_for(@relation) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="col-md-6">
+    <div class="form-inputs">
+      <%= f.input :name %>
+      <%= f.input :description %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner l'organisation de départ</label>
+      <div class="controls">
+        <select class="select optional" id="relations_organisation_to_organisation_id" name="relations_organisation[to_organisation_id]" value="<%= @relation.to_organisation_id %>">
+          <optgroup label="Organisations">
+          <option value="">Sélectionner une organisation</option>
+          <% @organisations.each do |per| %>
+              <option value="<%= per.id %>"<%= @to_organisation.id == per.id  ? 'selected' : nil %>><%= per.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <br/>
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner l'organisation d'arrivé</label>
+      <div class="controls">
+        <select class="select optional" id="relations_organisation_from_organisation_id" name="relations_organisation[from_organisation_id]" value="<%= @relation.from_organisation_id %>">
+          <optgroup label="Organisations">
+          <option value="">Sélectionner une organisation</option>
+          <% @organisations.each do |per| %>
+              <option value="<%= per.id %>"<%= @from_organisation.id == per.id  ? 'selected' : nil %>><%= per.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <br/>
+    <%#= f.input :date, as: :string, input_html: {value: local_date(@relation.date), class: 'datepicker inpt_string'}, wrapper_html: {class: 'inline'} %>
+    <%#= input_secret(f, "Relation secrète ?") %>
+    <%= f.input :secret, as: :boolean, label: "Relation secrète ?", input_html: {}, wrapper_html: {class: 'inline simple-checkbox'} %>
+    <%= f.button :submit, "Créer/Editer une relation", class: 'btn btn-success btn-sm' %>
+     <%= link_to 'Retour', relations_organisations_path, class: "btn btn-warning btn-sm" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+    $("#relations_organisation_to_organisation_id").select2();
+    $("#relations_organisation_from_organisation_id").select2();
+  });
+</script>
