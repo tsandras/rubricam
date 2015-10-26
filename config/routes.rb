@@ -37,7 +37,9 @@ Rubricam::Application.routes.draw do
 
   resources :lieus
 
-  resources :organisations
+  resources :organisations do
+    get :secret_update, on: :member
+  end
 
   resources :historiques
 

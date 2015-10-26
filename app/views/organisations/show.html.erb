@@ -24,13 +24,34 @@
 <p>
 <b>Membres:</b><br/>
 <% if !@membres.nil? %>
-  <% @membres.each do |membre| %>
+  <table class="table">
+  <tr>
+    <th>Nom</th>
     <% if @user.role == User::ROLE_ADMIN %>
-      <%= link_to "#{membre.prenom} #{membre.nom}", personnage_path(membre) %><br/>
-    <% else %>
-      <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>
+      <th>Changement</th>
+      <th>Etat</th>
     <% end %>
+  </tr>
+  <% @membres.each do |membre| %>
+    <tr>
+      <td>
+        <% if @user.role == User::ROLE_ADMIN %>
+          <%= link_to "#{membre.prenom} #{membre.nom}", personnage_path(membre) %><br/>
+        <% else %>
+          <%= link_to "#{membre.prenom} #{membre.nom}", public_show_personnage_path(membre) %><br/>
+        <% end %>
+      </td>
+      <% if @user.role == User::ROLE_ADMIN %>
+        <td>
+          <%= link_to 'Secret/Publique', secret_update_organisation_path(id: @organisation.id, personnage_id: membre.id), class: 'btn btn-primary btn-xs' %>
+        </td>
+        <td>
+          <%= secret_or_note_member(@organisation, membre) %>
+        </td>
+      <% end %>
+    </tr>
   <% end %>
+  </table>
 <% end %>
 </p>
 

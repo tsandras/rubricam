@@ -83,6 +83,20 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def secret_update
+    # raise params.inspect
+    @organisation = Organisation.find(params[:id])
+    @personnage = Personnage.find(params[:personnage_id])
+    @organisation_personnage = OrganisationsPersonnages.where(organisation_id: @organisation.id, personnage_id: @personnage.id).first
+    if @organisation_personnage.secret
+      @organisation_personnage.secret = false 
+    else
+      @organisation_personnage.secret = true
+    end
+    @organisation_personnage.save
+    redirect_to organisation_path(@organisation)
+  end
+
   # DELETE /organisations/1
   # DELETE /organisations/1.json
   def destroy
