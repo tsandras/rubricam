@@ -41,6 +41,12 @@
       return 'capacites'
     } else if (item.type_lieu) {
       return 'lieus'
+    } else if (item.type_routine) {
+      return 'routines'
+    } else if (item.type_objet) {
+      return 'objets'
+    } else if (item.cout) {
+      return 'combinaisons'
     } else {
       return 'historiques'
     }
@@ -49,8 +55,10 @@
   function text(item) {
     if (item.appartenance_perso) {
       return item.prenom + " " + item.nom
-    } else {
+    } else if (item.nom) {
       return item.nom
+    } else {
+      return item.name
     }
   }
 

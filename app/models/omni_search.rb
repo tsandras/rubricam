@@ -15,6 +15,9 @@ class OmniSearch
       search_personnages
       search_organisations
       search_lieus
+      search_routines
+      search_objets
+      search_combinaisons
     end
     search_disciplines
     search_atouts
@@ -89,6 +92,42 @@ class OmniSearch
       res = Lieu.none_secret.order("created_at desc")
     else
       res = Lieu.order("created_at desc")
+    end
+    res = res
+      .where("UPPER(nom) like (?)", @text_like.upcase)
+      .limit(15)
+    @results = @results + res
+  end
+
+  def search_routines
+    if @user.role != User::ROLE_ADMIN
+      res = Routine.none_secret.order("created_at desc")
+    else
+      res = Routine.order("created_at desc")
+    end
+    res = res
+      .where("UPPER(name) like (?)", @text_like.upcase)
+      .limit(15)
+    @results = @results + res
+  end
+
+  def search_objets
+    if @user.role != User::ROLE_ADMIN
+      res = Objet.none_secret.order("created_at desc")
+    else
+      res = Objet.order("created_at desc")
+    end
+    res = res
+      .where("UPPER(name) like (?)", @text_like.upcase)
+      .limit(15)
+    @results = @results + res
+  end
+
+  def search_combinaisons
+    if @user.role != User::ROLE_ADMIN
+      res = Combinaison.none_secret.order("created_at desc")
+    else
+      res = Combinaison.order("created_at desc")
     end
     res = res
       .where("UPPER(nom) like (?)", @text_like.upcase)
