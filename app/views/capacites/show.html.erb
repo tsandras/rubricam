@@ -13,4 +13,7 @@
 
 
 <%= link_to 'Editer', edit_capacite_path(@capacite), class: 'btn btn-warning btn-sm' %>
+<% if @user.admin? || @user.moder? %>
+<%= link_to 'Supprimer', @capacite, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-sm' %>
+<% end %>
 <%= link_to 'retour', capacites_path, class: 'btn btn-primary btn-sm' %>

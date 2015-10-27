@@ -68,4 +68,19 @@ class User < ActiveRecord::Base
     return true if role >= 0 && role <= 2
     false
   end
+
+  def admin?
+    return true if role == ROLE_ADMIN
+    false
+  end
+
+  def moder?
+    return true if role == ROLE_MODER
+    false
+  end
+
+  def norma?
+    return true if role == ROLE_NORMA
+    false
+  end
 end

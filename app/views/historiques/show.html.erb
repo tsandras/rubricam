@@ -7,5 +7,8 @@
 </p>
 
 <%= link_to 'Editer', edit_historique_path(@historique), class: "btn btn-success btn-sm" %>
+<% if @user.admin? || @user.moder? %>
+<%= link_to 'Supprimer', @historique, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-sm' %>
+<% end %>
 <%= link_to 'Retour', historiques_path, class: "btn btn-warning btn-sm" %>
 </div>
