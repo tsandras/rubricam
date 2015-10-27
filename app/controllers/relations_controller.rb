@@ -91,15 +91,39 @@ class RelationsController < ApplicationController
 
   def visuel
     if @user.role == User::ROLE_ADMIN
-      @relations = Relation.all
-      @personnages = Personnage.all
-      @organisations = Organisation.all
-      @relations_organisations = OrganisationsPersonnages.all
+      if (params[:commit] == "Filtrer" && params[:personnages].present?) || params[:commit] != "Filtrer"
+        @relations = Relation.all
+        @personnages = Personnage.all
+      else
+        @relations = []
+        @personnages = []
+      end
+      if (params[:commit] == "Filtrer" && params[:organisations].present?) || params[:commit] != "Filtrer"
+        @organisations = Organisation.all
+        @relations_organisations = OrganisationsPersonnages.all
+        @relations_organisations_organisations = RelationsOrganisation.all
+      else
+        @organisations = []
+        @relations_organisations = []
+        @relations_organisations_organisations = []
+      end
     else
-      @relations = Relation.none_secret
-      @personnages = Personnage.none_secret
-      @organisations = Organisation.none_secret
-      @relations_organisations = OrganisationsPersonnages.none_secret
+      if (params[:commit] == "Filtrer" && params[:personnages].present?) || params[:commit] != "Filtrer"
+        @relations = Relation.none_secret
+        @personnages = Personnage.none_secret
+      else
+        @relations = []
+        @personnages = []
+      end
+      if (params[:commit] == "Filtrer" && params[:personnages].present?) || params[:commit] != "Filtrer"
+        @organisations = Organisation.none_secret
+        @relations_organisations = OrganisationsPersonnages.none_secret
+        @relations_organisations_organisations = RelationsOrganisation.none_secret
+      else
+        @organisations = []
+        @relations_organisations = []
+        @relations_organisations_organisations = []
+      end
     end
   end
 

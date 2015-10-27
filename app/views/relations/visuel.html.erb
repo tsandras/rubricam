@@ -1,9 +1,26 @@
 <h2></h2>
 <div style="text-align: center;"><span class="h2-perso">Visuel des relations </span><span class='label label-warning'>Beta</span></div>
-<div class="col-md-10">
+<div class="col-md-8">
 	<div id="relations"></div>
 </div>
-<div class="col-md-2" id="description-publique-corps">
+<div class="col-md-4" id="description-publique-corps">
+	<div id="visuel-filter" class="row">
+			<%= form_tag('/relations/visuel', method: :get) do %>
+				<div class="col-md-6">
+					<div>
+						<label for="personnages"> Voir personnages</label>
+						<%= check_box_tag('personnages', '1', params[:personnages].present? || params[:commit] != "Filtrer" ? true : false) %>
+					</div>
+					<div>
+						<label for="organisations"> Voir organisations</label>
+						<%= check_box_tag('organisations', '1', params[:organisations].present? || params[:commit] != "Filtrer" ? true : false) %>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<%= submit_tag 'Filtrer', class: 'btn btn-success btn-xs' %>
+				</div>
+			<% end %>
+	</div>
 	<div style="text-align: center;">Description publique</div><br/>
 	<div class="partie-personnage small-font">
      Cliquez sur un personnage pour voir sa description publique.
@@ -16,6 +33,7 @@
 	var personnages = <%= raw @personnages.to_json %>
 	var organisations = <%= raw @organisations.to_json %>
 	var relations_organisations = <%= raw @relations_organisations.to_json %>
+	var relations_org_org = <%= raw @relations_organisations_organisations.to_json %>
 
 	var tmpNodes = [];
 	var out = "";
@@ -40,6 +58,10 @@
 	}
 	for (var j in relations_organisations) {
 		tmpEdges.push({id: i, from: relations_organisations[j].personnage_id, to: 'o_'+relations_organisations[j].organisation_id});
+		i++;
+	}
+	for (var j in relations_org_org) {
+		tmpEdges.push({id: i, from: 'o_'+relations_org_org[j].from_organisation_id, to: 'o_'+relations_org_org[j].to_organisation_id, arrows: 'from', label: relations_org_org[j].name})
 		i++;
 	}
 	var nodes = new vis.DataSet(tmpNodes);
