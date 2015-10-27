@@ -68,7 +68,7 @@ class ObjetsController < ApplicationController
   # PUT /objets/1.json
   def update
     @objet = Objet.find(params[:id])
-    @objet.user_id = @user.id
+    # @objet.user_id = @user.id
     load_ressources
     respond_to do |format|
       if @objet.update_attributes(params[:objet])
