@@ -6,7 +6,7 @@ class RoutinesController < ApplicationController
   # GET /routines
   # GET /routines.json
   def index
-    if @user.role == User::ROLE_ADMIN
+    if @user.admin?
       @routines = Routine.paginate(page: params[:page], per_page: 20)
     else
       @routines = Routine.none_secret_or_own_routines(@user.id).paginate(page: params[:page], per_page: 20)
