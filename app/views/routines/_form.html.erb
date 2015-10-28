@@ -4,6 +4,22 @@
     <%= f.input :description %>
     <%= f.input :foci %>
     <%= f.input :secret, label: "Voulez-vous que cette routine soit secrete ?", wrapper_html: {class: 'inline simple-checkbox'} %>
+    <% if @user.admin? %>
+      <div class="control-group optional">
+        <label class="select optional control-label">Sélectionner un utilisateur si cette routine est possédé par un utilisateur</label>
+        <div class="controls">
+          <select class="select optional" id="routine_user_id" name="routine[user_id]" value="<%= @routine.user_id %>">
+            <optgroup label="User">
+            <option value="">Sélectionner un utilisateur</option>
+            <% @users.each do |per| %>
+                <option value="<%= per.id %>"<%= @routine.user_id == per.id  ? 'selected' : nil %>><%= per.email %></option>
+            <% end %>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    <% end %>
+    <br/>
     <%= f.button :submit, "Créer/Editer la routine", class: "btn btn-success btn-sm" %>
     <%= link_to "Retour", routines_path, class: "btn btn-warning btn-sm" %>
     <%= link_to 'Show', @routine, class: "btn btn-primary btn-sm" %>
@@ -23,6 +39,8 @@
 <script type="text/javascript">
   $(document).ready(function() {
     listenerAllSpheresForRoutines();
+    manageCheckBox("#search_user", ".user .checkbox .check_boxes");
+    $("#routine_user_id").select2();
   });
 
   function listenerAllSpheresForRoutines() {

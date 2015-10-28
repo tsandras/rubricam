@@ -35,6 +35,7 @@ class CombinaisonsController < ApplicationController
   def new
     @combinaison = Combinaison.new
     @combinaisons_disciplines = CombinaisonsDisciplines.where(combinaison_id: @combinaison.id)
+    @users = User.all if @user.admin?
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @combinaison }
@@ -45,6 +46,7 @@ class CombinaisonsController < ApplicationController
   def edit
     @combinaison = Combinaison.find(params[:id])
     @combinaisons_disciplines = CombinaisonsDisciplines.where(combinaison_id: @combinaison.id)
+    @users = User.all if @user.admin?
   end
 
   # POST /combinaisons
@@ -52,7 +54,8 @@ class CombinaisonsController < ApplicationController
   def create
     # raise params.inspect
     @combinaison = Combinaison.new(params[:combinaison])
-    @combinaison.user_id = @user.id
+    @combinaison.user_id = @user.id if !@user.admin?
+    @users = User.all if @user.admin?
     # raise params.inspect
     # @combinaisons_disciplines = CombinaisonsDisciplines.new(params[:combinaisons_disciplines])
     respond_to do |format|
@@ -73,7 +76,7 @@ class CombinaisonsController < ApplicationController
   # PUT /combinaisons/1.json
   def update
     @combinaison = Combinaison.find(params[:id])
-
+    @users = User.all if @user.admin?
     respond_to do |format|
       if @combinaison.update_attributes(params[:combinaison])
         update_combinaisons_disciplines(params[:combinaisons_disciplines])

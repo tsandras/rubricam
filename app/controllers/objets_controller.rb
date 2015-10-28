@@ -51,7 +51,7 @@ class ObjetsController < ApplicationController
   # POST /objets.json
   def create
     @objet = Objet.new(params[:objet])
-    @objet.user_id = @user.id
+    @objet.user_id = @user.id if !@user.admin?
     load_ressources
     respond_to do |format|
       if @objet.save
@@ -99,6 +99,7 @@ class ObjetsController < ApplicationController
     if @user.role == User::ROLE_ADMIN
       @personnages = Personnage.all
       @routines = Routine.all
+      @users = User.all
     else
       @personnages = Personnage.own_personnages(@user)
       @routines = Routine.none_secret_or_own_routines(@user)

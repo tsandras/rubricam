@@ -14,6 +14,23 @@
       <input id="search_discipline" type="text" onkeypress="filter(this, '.disciplines .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.disciplines .checkbox .check_boxes')">
       <%= f.association(:disciplines, as: :check_boxes, :collection => Discipline.all.map {|c|[manage_niveau(c), c.id]}.uniq, wrapper_html: { class: 'col-md-12' }) %>
     </div>
+
+    <% if @user.admin? %>
+      <div class="control-group optional">
+        <label class="select optional control-label">Sélectionner un utilisateur si cette combinaison est possédé par un utilisateur</label>
+        <div class="controls">
+          <select class="select optional" id="combinaison_user_id" name="combinaison[user_id]" value="<%= @combinaison.user_id %>">
+            <optgroup label="User">
+            <option value="">Sélectionner un utilisateur</option>
+            <% @users.each do |per| %>
+                <option value="<%= per.id %>"<%= @combinaison.user_id == per.id  ? 'selected' : nil %>><%= per.email %></option>
+            <% end %>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    <% end %>
+    <br />
     <%= f.button :submit, "Créer/Editer la combinaison", class: "btn btn-success btn-sm" %>
     <%= link_to "Retour", combinaisons_path, class: "btn btn-warning btn-sm" %>
   </div>
@@ -21,7 +38,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		console.log("Coucou");
+		// console.log("Coucou");
 		manageCheckBox("#search_discipline", ".disciplines .checkbox .check_boxes");
+    $("#combinaison_user_id").select2();
 	});
 </script>

@@ -111,6 +111,22 @@
       </div>
     </div>
 
+    <% if @user.admin? %>
+      <div class="control-group optional">
+        <label class="select optional control-label">Sélectionner un utilisateur si cette objet est possédé par un utilisateur</label>
+        <div class="controls">
+          <select class="select optional" id="objet_user_id" name="objet[user_id]" value="<%= @objet.user_id %>">
+            <optgroup label="User">
+            <option value="">Sélectionner un utilisateur</option>
+            <% @users.each do |per| %>
+                <option value="<%= per.id %>"<%= @objet.user_id == per.id  ? 'selected' : nil %>><%= per.email %></option>
+            <% end %>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 <% end %>
 
@@ -118,6 +134,7 @@
   $(document).ready(function() {
     listenerAllIntegerForObjet();
     $("#objet_personnage_id").select2();
+    $("#objet_user_id").select2();
     // $("#objet_routine_id").select2();
     manageCheckBox("#search_routine", ".routine .checkbox .check_boxes");
   });

@@ -33,7 +33,7 @@ class RoutinesController < ApplicationController
   # GET /routines/new.json
   def new
     @routine = Routine.new
-
+    @users = User.all if @user.admin?
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @routine }
@@ -43,13 +43,15 @@ class RoutinesController < ApplicationController
   # GET /routines/1/edit
   def edit
     @routine = Routine.find(params[:id])
+    @users = User.all if @user.admin?
   end
 
   # POST /routines
   # POST /routines.json
   def create
     @routine = Routine.new(params[:routine])
-    @routine.user_id = @user.id
+    @routine.user_id = @user.id if !@user.admin?
+    @users = User.all if @user.admin?
     respond_to do |format|
       if @routine.save
         format.html { redirect_to @routine, notice: 'Routine a été crée avec succès.' }
@@ -65,7 +67,8 @@ class RoutinesController < ApplicationController
   # PUT /routines/1.json
   def update
     @routine = Routine.find(params[:id])
-    @routine.user_id = @user.id
+    # @routine.user_id = @user.id
+    @users = User.all if @user.admin?
     respond_to do |format|
       if @routine.update_attributes(params[:routine])
         format.html { redirect_to @routine, notice: 'Routine a été édité avec succès.' }
