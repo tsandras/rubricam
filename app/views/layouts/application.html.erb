@@ -79,7 +79,7 @@
                 </ul>
               </li>
             <% end %>
-            <li><a>Recherche <input id="omni-search"></a></li>
+            <li><a><input id="omni-search"></a></li>
             <% if @user.id.present? %>
               <li><%= link_to "Carte <span class='label label-warning'>Beta</span>".html_safe, carte_path %></li>
               <li class="dropdown">
