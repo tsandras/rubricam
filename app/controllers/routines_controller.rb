@@ -105,14 +105,14 @@ class RoutinesController < ApplicationController
   end
 
   def permition_show?(user)
-    return true if user.role != User::ROLE_NORMA
+    return true if !user.norma?
     return true if @routine.user_id == user.id
     return true if !@routine.secret
     false
   end
 
   def permition_write?(user)
-    return true if user.role == User::ROLE_ADMIN
+    return true if user.admin?
     return true if @routine.user_id == user.id
     false
   end

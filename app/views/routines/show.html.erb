@@ -19,6 +19,9 @@
 
   <%= link_to 'Editer', edit_routine_path(@routine), class: "btn btn-success btn-sm" %>
   <%= link_to 'Retour', routines_path, class: "btn btn-warning btn-sm" %>
+  <% if @user.admin? || @user.moder? %>
+  <%= link_to 'Supprimer', @routine, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-sm' %>
+  <% end %>
 </div>
 
 <div class="col-md-4">

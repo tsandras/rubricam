@@ -6,7 +6,7 @@ class AtoutsController < ApplicationController
   # GET /atouts
   # GET /atouts.json
   def index
-    if @user.role == User::ROLE_ADMIN 
+    if @user.admin?
       @atouts = Atout.paginate(page: params[:page], per_page: 25)
     else
       @atouts = Atout.none_secret.paginate(page: params[:page], per_page: 25)
@@ -106,12 +106,12 @@ class AtoutsController < ApplicationController
   end
 
   def permition_write?(user)
-    return true if user.role == User::ROLE_ADMIN || user.role == User::ROLE_MODER
+    return true if user.admin? || user.moder?
     false
   end
 
   def permition_show?(user)
-    return true if user.role != User::ROLE_NORMA
+    return true if !user.norma?
     return true if !@atout.secret
     false
   end

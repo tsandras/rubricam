@@ -24,3 +24,9 @@
 <p>
   <b>Secret ? <%= @atout.secret %></b>
 </p>
+
+<%= link_to 'Editer', edit_atout_path(@atout), class: 'btn btn-warning btn-sm' %>
+<%= link_to 'retour', atouts_path, class: 'btn btn-primary btn-sm' %>
+<% if @user.admin? || @user.moder? %>
+<%= link_to 'Supprimer', @atout, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-sm' %>
+<% end %>

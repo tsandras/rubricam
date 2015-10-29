@@ -6,7 +6,7 @@ class ObjetsController < ApplicationController
   before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy]
 
   def index
-    if @user.role == User::ROLE_ADMIN
+    if @user.admin?
       @objets = Objet.paginate(page: params[:page], per_page: 20)
     else
       @objets = Objet.none_secret_and_own_objets(@user.id).paginate(page: params[:page], per_page: 20)
@@ -117,14 +117,14 @@ class ObjetsController < ApplicationController
   end
 
   def permition_show?(user)
-    return true if user.role != User::ROLE_NORMA
+    return true if !user.norma?
     return true if @objet.user_id == user.id
     return true if !@objet.secret
     false
   end
 
   def permition_write?(user)
-    return true if user.role == User::ROLE_ADMIN
+    return true if user.admin?
     return true if @objet.user_id == user.id
     false
   end

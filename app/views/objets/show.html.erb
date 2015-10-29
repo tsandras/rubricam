@@ -27,3 +27,8 @@
   </p>
 <% end %>
 
+<%= link_to 'Editer', edit_objet_path(@objet), class: 'btn btn-warning btn-sm' %>
+<%= link_to 'retour', objets_path, class: 'btn btn-primary btn-sm' %>
+<% if @user.admin? || @user.moder? %>
+<%= link_to 'Supprimer', @objet, method: :delete, data: { confirm: 'Tu es sûr ?' }, class: 'btn btn-danger btn-sm' %>
+<% end %>
