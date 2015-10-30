@@ -1,25 +1,26 @@
-<h1>Listing royaumes</h1>
-
-<table>
+<%= link_to 'Nouveau royaume', new_royaume_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des royaumes</h1>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Etiquettes</th>
+    <th>Voir</th>
+    <th>Editer</th>
   </tr>
 
 <% @royaumes.each do |royaume| %>
   <tr>
     <td><%= royaume.nom %></td>
-    <td><%= royaume.description %></td>
-    <td><%= link_to 'Show', royaume %></td>
-    <td><%= link_to 'Edit', edit_royaume_path(royaume) %></td>
-    <td><%= link_to 'Destroy', royaume, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td>
+      <%= content_tag :span, royaume.source, class: "label label-danger" %>
+    </td>
+    <td><%= link_to 'Voir', royaume_path(royaume), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_royaume_path(royaume), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>
+<%= will_paginate @royaumes %>
+</div>
 
-<br />
-
-<%= link_to 'New Royaume', new_royaume_path %>

@@ -1,9 +1,11 @@
 class ArtsController < ApplicationController
+
+  skip_before_filter :authenticate_user!, only: [:index, :show]
+  before_filter :redirect_unauthorized_to_write, :only=> [:edit, :update, :destroy, :new, :create]
   # GET /arts
   # GET /arts.json
-
   def index
-    @arts = Art.all
+    @arts = Art.paginate(page: params[:page], per_page: 20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +17,7 @@ class ArtsController < ApplicationController
   # GET /arts/1.json
   def show
     @art = Art.find(params[:id])
-
+    @nivarts = Nivart.where(art_id: @art.id)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @art }
@@ -80,5 +82,16 @@ class ArtsController < ApplicationController
       format.html { redirect_to arts_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def redirect_unauthorized_to_write
+    return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition_write?(@user)
+  end
+
+  def permition_write?(user)
+    return true if user.admin?
+    false
   end
 end

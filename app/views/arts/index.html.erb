@@ -1,25 +1,24 @@
-<h1>Listing arts</h1>
-
-<table>
+<%= link_to 'Nouvel art', new_art_path, class: 'btn btn-success btn-sm create-float' %>
+<%= link_to 'Nouveau niveau art', new_nivart_path, class: 'btn btn-info btn-sm create-float' %>
+<%= link_to 'Retour', root_url, class: 'btn btn-warning btn-sm create-float' %>
+<h1>Liste des arts</h1>
+<div class="col-md-12">
+<table class="table">
   <tr>
     <th>Nom</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Etiquettes</th>
+    <th>Voir</th>
+    <th>Editer</th>
   </tr>
 
 <% @arts.each do |art| %>
   <tr>
     <td><%= art.nom %></td>
-    <td><%= art.description %></td>
-    <td><%= link_to 'Show', art %></td>
-    <td><%= link_to 'Edit', edit_art_path(art) %></td>
-    <td><%= link_to 'Destroy', art, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= content_tag :span, art.source, class: "label label-danger" %><%= label_secret(art) %></td>
+    <td><%= link_to 'Voir', art_path(art), class: 'btn btn-success btn-xs' %></td>
+    <td><%= link_to('Editer', edit_art_path(art), class: 'btn btn-warning btn-xs') %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Art', new_art_path %>
+<%= will_paginate @arts %>
+</div>

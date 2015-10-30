@@ -25,6 +25,8 @@ function manageCalculeXps(type_perso) {
     // console.log("Xps dépensé apres discipline :"+xps_dep);
     xps_dep += calcule_xps_volonte(personnage, type_perso, "base");
     xps_dep += calcule_xps_entelechie(personnage, type_perso, "base");
+    xps_dep += calcule_xps_art(personnage, type_perso, "base");
+    xps_dep += calcule_xps_glamour(personnage, type_perso, "base");
     var xps = $("#personnage_xps").val();
     // console.log(xps-xps_dep);
     $("#personnage_reste_xps").val(xps-xps_dep);
@@ -173,6 +175,40 @@ function calcule_xps_discipline(personnage, type_perso, type) {
   return out;
 }
 
+function calcule_xps_art(personnage, type_perso, type) {
+  var out = 0;
+  $("#arts_personnages_niveau[name^=arts_personnages]").each(function() {
+    // var idd = $(extract_id_cp($(this).attr("name"))).text();
+    // console.log(extract_id_cp($(this).attr("name")).text())
+    var va_actuel = $(this).val();
+    var va_avant = 0;
+    if (type == "base") {
+      console.log(va_actuel);
+      // console.log("id=>"+ idd +"val=>"+manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline"));
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "art", null);
+    } else {
+      out = out + manage_bonus(va_avant, parseInt(va_actuel), "art");
+    }
+  });
+  return out;
+}
+
+function calcule_xps_glamour(personnage, type_perso, type) {
+  var out = 0;
+  var out = 0;
+  var va_actuel = $("#personnage_glamour").val();
+  var va_avant = personnage.Glamour;
+  if (! va_avant) {
+      va_avant = 0;
+  }
+  if (type == "base") {
+    out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "glamour", null);
+  } else {
+    out = out + manage_bonus(va_avant, parseInt(va_actuel), "glamour");
+  }
+  return out;
+}
+
 function calcule_xps_entelechie(personnage, type_perso, type) {
   var out = 0;
   var va_actuel = $("#personnage_entelechie").val();
@@ -249,7 +285,7 @@ function serie_nx_suivant(i, n, x, base) {
 // Tous les personnages dépensent l'expérieure de la même manière sauf les
 // Mages avec l'Entelechie et les Spheres.
 function manage_serie_nx(i, n, type_perso, pouvoir, nom) {
-  var base = get_base(pouvoir);
+  var base = get_base(pouvoir, type_perso);
   // console.log("base:"+base)
   var cout = get_cout(pouvoir, type_perso, nom);
   // console.log("cout:"+cout)
@@ -284,11 +320,15 @@ function serie_bonus(i, n, cout) {
   return out;
 }
 
-function get_base(pouvoir) {
+function get_base(pouvoir, type_perso) {
   var out = 0;
   switch (pouvoir) {
     case "discipline":
-      out = 10;
+      if (type_perso == "Vampire") {
+        out = 10;
+      } else {
+        out = 21;
+      }
       break;
     case "sphere":
       out = 10;
@@ -304,6 +344,20 @@ function get_base(pouvoir) {
       break;
     case "volonte":
       out = 0;
+      break;
+    case "art":
+      if (type_perso == "Changelin") {
+        out = 7;
+      } else {
+        out = 21;
+      }
+      break;
+    case "royaume":
+      if (type_perso == "Changelin") {
+        out = 5;
+      } else {
+        out = 15;
+      }
       break;
   }
   return out;
@@ -332,6 +386,15 @@ function get_cout_bonus(pouvoir) {
     case "volonte":
       out = 1;
       break;
+    case "art":
+      out = 5;
+      break;
+    case "royaume":
+      out = 3;
+      break;
+    case "glamour":
+      out = 3;
+      break;
   }
   return out;
 }
@@ -340,14 +403,13 @@ function get_cout(pouvoir, type_perso, nom) {
   var out = 0;
   switch (pouvoir) {
     case "discipline":
-      if (type_perso = "Vampire") {
+      if (type_perso == "Vampire") {
         disPredilec = <%= raw Personnage::DISCIPLINES_CLAN[@personnage.appartenance_perso].to_json %>
         if ($.inArray(nom, disPredilec) != -1) {
           out = 5;
         } else {
           out = 7;
         }
-        
       } else {
         out = 15;
       }
@@ -373,6 +435,23 @@ function get_cout(pouvoir, type_perso, nom) {
       out = 3;
       break;
     case "volonte":
+      out = 2;
+      break;
+    case "art":
+      if (type_perso == "Changelin") {
+        out = 4;
+      } else {
+        out = 12;
+      }
+      break;
+    case "art":
+      if (type_perso == "Changelin") {
+        out = 3;
+      } else {
+        out = 9;
+      }
+      break;
+    case "glamour":
       out = 2;
       break;
   }

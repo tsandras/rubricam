@@ -7,6 +7,9 @@
 #  description :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  secret      :boolean
+#  source      :string(255)
+#  attribut    :string(255)
 #
 
 require 'rails_helper'

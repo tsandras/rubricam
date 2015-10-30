@@ -1,0 +1,19 @@
+<%= simple_form_for(@nivart) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="col-md-6">
+    <%= f.input :nom %>
+    <%= f.input :art_nom %>
+    <%= f.input :niveau %>
+    <%= f.input :description %>
+    <%= f.input :source %>
+    <%= f.input :secret, label: "Voulez-vous que ce niveau d'art soit secret ?", wrapper_html: {class: 'inline simple-checkbox'} %>
+  </div>
+
+  <div class="col-md-6">
+    <%= f.input :systeme %>
+    <%= f.input :tableau %>
+    <%= f.button :submit, "Créer/Editer le niveau", class: 'btn btn-success btn-sm' %>
+    <%= link_to 'Retour', root_path, class: 'btn btn-warning btn-sm' %>
+  </div>
+<% end %>

@@ -1,15 +1,35 @@
+<h2><%= @art.nom %></h2>
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Nom:</b>
-  <%= @art.nom %>
-</p>
+<div class="col-md-12">
 
 <p>
   <b>Description:</b>
   <%= @art.description %>
 </p>
 
+<p>
+  <% if !@nivarts.nil? %>
+    <div>Les niveaux de <%= @art.nom %> :</div>
+    <table class="table">
+      <tr>
+        <th>Nom</th>
+        <th>Niveau</th>
+        <th>Etiquettes</th>
+        <th>Voir</th>
+      </tr>
+    <% @nivarts.each do |nivart| %>
+      <tr>
+        <td><%= link_to nivart.nom, nivart_path(nivart) %></td>
+        <td><%= label_niveau(nivart.niveau) %></td>
+        <td><%= content_tag :span, nivart.source, class: "label label-danger" %><%= label_secret(nivart) %></td>
+        <td><%= link_to 'Voir', nivart_path(nivart), class: 'btn btn-success btn-xs' %></td>
+      </tr>
+    <% end %>
+    </table>
+  <% end %>
+</p>
 
-<%= link_to 'Edit', edit_art_path(@art) %> |
-<%= link_to 'Back', arts_path %>
+
+<%= link_to 'Editer', edit_art_path(@art), class: 'btn btn-success btn-sm' %>
+<%= link_to 'Retour', arts_path, class: 'btn btn-warning btn-sm' %>
+</div>

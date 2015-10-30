@@ -1,12 +1,25 @@
 <%= simple_form_for(@art) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="col-md-6">
     <%= f.input :nom %>
     <%= f.input :description %>
+    <%= f.input :source %>
+    <%= f.input :secret, label: "Voulez-vous que cet art soit secrete ?", wrapper_html: {class: 'inline simple-checkbox'} %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="col-md-6">
+    <div class="art">
+      <label for="search_art"> Rechercher niveau art :</label>
+      <input id="search_art" type="text" onkeypress="filter(this, '.art .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.art .checkbox .check_boxes')">
+      <%= f.association(:nivarts, as: :check_boxes, :collection => Nivart.all.map {|c| [c.nom, c.id]}.uniq, wrapper_html: { class: 'col-md-12' }, label: false) %>
+    </div>
+    <%= f.button :submit, "Créer/Editer l'art", class: 'btn btn-success btn-sm' %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    manageCheckBox("#search_art", ".art .checkbox .check_boxes");
+  });
+</script>

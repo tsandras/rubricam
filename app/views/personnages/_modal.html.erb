@@ -13,8 +13,10 @@
           <%= recherche_atout(f) %>
         <% elsif type == "historique" %>
           <%= recherche_historique(f) %>
-        <% else %>
+        <% elsif type == "capacite" %>
           <%= recherche_capacite(f) %>
+        <% else %>
+          <%= recherche_art(f) %>
         <% end %>
       </div>
       <div class="modal-footer">

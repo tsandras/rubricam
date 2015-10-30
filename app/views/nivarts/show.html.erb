@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Art:</b>
+  <%= @nivart.art_id %>
+</p>
+
+<p>
+  <b>Art nom:</b>
+  <%= @nivart.art_nom %>
+</p>
+
+<p>
+  <b>Nom:</b>
+  <%= @nivart.nom %>
+</p>
+
+<p>
+  <b>Niveau:</b>
+  <%= @nivart.niveau %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @nivart.description %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @nivart.source %>
+</p>
+
+<p>
+  <b>Systeme:</b>
+  <%= @nivart.systeme %>
+</p>
+
+<p>
+  <b>Tableau:</b>
+  <%= @nivart.tableau %>
+</p>
+
+<p>
+  <b>Secret:</b>
+  <%= @nivart.secret %>
+</p>
+
+
+<%= link_to 'Edit', edit_nivart_path(@nivart) %> |
+<%= link_to 'Back', nivarts_path %>

@@ -30,13 +30,25 @@
       </div>
       <br/>
     <% end %>
-    <div class="row disciplines">
-      <p class="text-center">
-        <b>Disciplines</b><%= show_disciplines(@personnage) %>
-        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-disciplines">Ajouter des disciplines</button>
-      </p>
-      <%= input_discipline(@disciplines_personnages) %>
-    </div>
+    <% if @personnage.goule? || @personnage.vampire? %>
+      <div class="row disciplines">
+        <p class="text-center">
+          <b>Disciplines</b><%= show_disciplines(@personnage) %>
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-disciplines">Ajouter des disciplines</button>
+        </p>
+        <%= input_discipline(@disciplines_personnages) %>
+      </div>
+      <br/>
+    <% end %>
+    <% if @personnage.changelin? || @personnage.kinain? %>
+      <div class="row arts">
+        <p class="text-center">
+          <b>Arts</b>
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-arts">Ajouter des arts</button>
+        </p>
+        <%= input_art(@arts_personnages) %>
+      </div>
+    <% end %>
     <div class="row autre">
       <p class="text-center"><b>Autres</b></p>
       <div class="col-md-1"></div>
@@ -51,13 +63,22 @@
       <div class="col-md-4">
         <% if @personnage.has_base %>
           <p class="text-center"><b>Important</b></p>
-          <%= input_volonte(p) %>
           <%= input_voie(p, @personnage) %>
           <%= input_entelechie(p, @personnage) %>
         <% end %>
-        <p class="text-center"><b><%= @personnage.mage? ? 'Résonnances' : 'Vertues' %></b><%= show_nbs_vertues(@personnage) %></p>
-        <%= input_vertue(p, @personnage) %>
+        <%= input_volonte(p) %>
+        <%= input_glamour(p, @personnage) %>
+        <%= input_banalite(p, @personnage) %>
+        <% if @personnage.vampire? %>
+          <p class="text-center"><b>Vertues</b><%= show_nbs_vertues(@personnage) %></p>
+          <%= input_vertue(p, @personnage) %>
+        <% end %>
+        <p class="text-center"><b>Résonnances</b></p>
         <%= input_resonnance(p, @personnage) %>
+        <% if @personnage.changelin? || @personnage.kinain? %>
+          <p class="text-center"><b>Royaumes</b></p>
+          <%= input_royaume(@royaumes_personnages) %>
+        <% end %>
       </div>
     </div>
     <div class="row background">
@@ -74,6 +95,7 @@
     <%= render 'modal', f: p, type: "historique", title: "Historiques", id: "modal-historiques" %>
     <%= render 'modal', f: p, type: "atout", title: "Atouts", id: "modal-atouts" %>
     <%= render 'modal', f: p, type: "capacite", title: "Capacités", id: "modal-capacites" %>
+    <%= render 'modal', f: p, type: "art", title: "Arts", id: "modal-arts" %>
   </div>
 <% end %>
 <%= render 'personnage_xp_js' %>
@@ -85,18 +107,24 @@
     manageCheckBox("#search_historique", ".historique .checkbox .check_boxes");
     manageCheckBox("#search_atout", ".atout .checkbox .check_boxes");
     manageCheckBox("#search_discipline", ".discipline .checkbox .check_boxes");
+    manageCheckBox("#search_art", ".artt .checkbox .check_boxes");
     manageCapacites(".capacite .checkbox .check_boxes", ".cap");
     manageHistoriques(".historique .checkbox .check_boxes", ".his");
     manageAtouts(".atout .checkbox .check_boxes", ".ato");
     manageDisciplines(".discipline .checkbox .check_boxes", ".dis");
+    manageArts(".artt .checkbox .check_boxes", ".art");
     whenclickCalculeXpsDep($("#personnage_type_perso").val(), "#calculer");
     listenerAllAttributs();
     listenerAllCapacites();
     listenerAllSpheres();
     listenerAllDisciplines();
     listenerAllHistoriques();
+    listenerAllArts();
+    listenerAllRoyaumes();
     listenerEntelechie("#personnage_entelechie");
     listenerVolonte("#personnage_volonte");
+    listenerGlamour("#personnage_glamour");
+    listenerGlamour("#personnage_banalite");
     listenerVertues();
     listenerResonnances();
     listenerPhysiqueForBase(1, 10);
@@ -109,6 +137,7 @@
     listenerDisciplinesForBase();
     listenerVertuesForBase();
     listenerSpheresForBase();
+    manageTypeChangelin();
     manageMenu();
     $(".close-modal").click(function() {
       manageCalculeBonus();

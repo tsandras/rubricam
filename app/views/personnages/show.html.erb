@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-md-8">
       <p><b><%= @personnage.prenom %> <%= @personnage.nom %></b></p>
-      <p><i><%= @personnage.type_perso %></i> <%= show_tradition(@personnage) %><%= show_clan(@personnage) %></p>
+      <p><i><%= @personnage.type_perso %></i> <%= @personnage.appartenance_perso %></p>
       <%= show_generation(@personnage) %>
       Attitude : <%= @personnage.attitude %><br />
       Nature : <%= @personnage.nature %><br/>
@@ -40,6 +40,8 @@
   <%= show_advanced_disciplines(@personnage) %>
   <%= show_combinaisons_disciplines(@personnage) %>
   <%= show_atout(@atouts) %>
+  <%= show_arts(@arts) %>
+  <%= show_royaumes(@royaumes) %>
   <%= show_vertue(@personnage) %>
   <%= show_resonnance(@personnage) %>
   <div>

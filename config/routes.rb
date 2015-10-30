@@ -1,5 +1,8 @@
 Rubricam::Application.routes.draw do
 
+  resources :nivarts
+
+
   resources :version_comments
 
 

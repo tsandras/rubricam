@@ -11,13 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151026182912) do
+ActiveRecord::Schema.define(:version => 20151029164601) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.boolean  "secret"
+    t.string   "source"
+    t.string   "attribut"
   end
 
   create_table "arts_personnages", :force => true do |t|
@@ -165,6 +168,20 @@ ActiveRecord::Schema.define(:version => 20151026182912) do
     t.integer "lieu_id"
     t.string  "nom"
     t.text    "description"
+  end
+
+  create_table "nivarts", :force => true do |t|
+    t.integer  "art_id"
+    t.string   "art_nom"
+    t.string   "nom"
+    t.integer  "niveau"
+    t.text     "description"
+    t.string   "source"
+    t.text     "systeme"
+    t.text     "tableau"
+    t.boolean  "secret"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "nivdisciplines", :force => true do |t|
@@ -334,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20151026182912) do
     t.string   "rang_publique"
     t.boolean  "none_validation"
     t.boolean  "resonnances_publique"
+    t.string   "type_changelin"
   end
 
   create_table "personnages_routines", :force => true do |t|
@@ -396,6 +414,8 @@ ActiveRecord::Schema.define(:version => 20151026182912) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "source"
+    t.string   "capacites"
   end
 
   create_table "spheres", :force => true do |t|

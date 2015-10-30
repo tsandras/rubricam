@@ -153,6 +153,8 @@ module PersonnagesShow
       out << "Vous devez répartir #{infos[2]} points dans les Historiques.<br/>".html_safe
       out << "Vous devez répartir 7 points dans les vertues ainsi que 4 points dans les Disciplines.<br/>".html_safe if personnage.vampire?
       out << "Vous devez répartir #{max} points dans les Sphères.<br/>".html_safe if personnage.mage?
+      out << "Vous devez répartir 3 points dans les Arts.<br/>".html_safe if personnage.changelin?
+      out << "Vous devez répartir 5 points dans les Royaumes.<br/>".html_safe if personnage.changelin?
       out << "Puis valider en cliquant sur sauvegarder base.<br/>".html_safe
     elsif !personnage.has_bonus
       out << "<h4>ETAPE 2 : Répartition des points bonus</b>#{show_pts_bonus(personnage)}</h4>".html_safe
@@ -243,6 +245,54 @@ module PersonnagesShow
           if tmp % 3 == 0
             out += "</tr>"
           end
+      end
+      out += "</table>"
+      out += "<br />"
+      out.html_safe
+    end
+  end
+
+  def show_arts(arts)
+    if arts != nil
+      out = ""
+      out += "<b>Arts</b>"
+      out += "<table>"
+      tmp = 0
+      arts.each do |c|
+        if c.niveau > 0
+          if tmp % 3 == 0
+            out += "<tr>"
+          end
+          tmp = tmp + 1
+          out += "<td>".html_safe + link_to("#{c.art.nom} #{c.niveau}", c.art) + "</td>".html_safe
+          if tmp % 3 == 0
+            out += "</tr>"
+          end
+        end
+      end
+      out += "</table>"
+      out += "<br />"
+      out.html_safe
+    end
+  end
+
+  def show_royaumes(royaumes)
+    if royaumes != nil
+      out = ""
+      out += "<b>Royaumes</b>"
+      out += "<table>"
+      tmp = 0
+      royaumes.each do |c|
+        if c.niveau > 0
+          if tmp % 3 == 0
+            out += "<tr>"
+          end
+          tmp = tmp + 1
+          out += "<td>".html_safe + link_to("#{c.royaume.nom} #{c.niveau}", c.royaume) + "</td>".html_safe
+          if tmp % 3 == 0
+            out += "</tr>"
+          end
+        end
       end
       out += "</table>"
       out += "<br />"

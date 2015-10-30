@@ -37,6 +37,8 @@ class PersonnagesController < ApplicationController
     @historiques = HistoriquesPersonnages.where(personnage_id: params[:id])
 
     @atouts = AtoutsPersonnages.where(personnage_id: params[:id])
+    @arts = ArtsPersonnages.where(personnage_id: params[:id])
+    @royaumes = PersonnagesRoyaumes.where(personnage_id: params[:id])
     @to_relations = Relation.where(to_personnage_id: params[:id])
     @from_relations = Relation.where(from_personnage_id: params[:id])
     @organisations = @personnage.organisations
@@ -65,6 +67,8 @@ class PersonnagesController < ApplicationController
     @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
     @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
     @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id])
+    @arts_personnages = ArtsPersonnages.where(personnage_id: params[:id])
+    @royaumes_personnages = PersonnagesRoyaumes.where(personnage_id: params[:id])
   end
 
   def public_edit
@@ -173,19 +177,21 @@ class PersonnagesController < ApplicationController
     pspheres_p = params[:spheres_personnages]
     pdisciplines_p = params[:disciplines_personnages]
     patouts_p = params[:atouts_personnages]
+    parts_p = params[:arts_personnages]
+    proyaumes_p = params[:royaumes_personnages]
     pp = params[:personnage]
     @personnage.trace = ""
     ok = false
     unless @personnage.has_base
-      ok_base = @personnage.ok_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p)
+      ok_base = @personnage.ok_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
       if ok_base
         params[:personnage][:has_base] = true
-        params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p)
+        params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
         ok = true
       else
         if @personnage.none_validation
           params[:personnage][:has_base] = true
-          params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p)
+          params[:personnage][:caracteristique_base] = @personnage.create_caracteristique_base(pp, pcapacites_p, phistoriques_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
         else
           params[:personnage][:has_base] = false
         end
@@ -194,12 +200,12 @@ class PersonnagesController < ApplicationController
       unless @personnage.has_bonus
         if @personnage.ok_bonus(params[:personnage], pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
           params[:personnage][:has_bonus] = true
-          params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
+          params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
           ok = true
         else
           if @personnage.none_validation
             params[:personnage][:has_bonus] = true
-            params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
+            params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
           else
             params[:personnage][:has_bonus] = false
           end
@@ -217,11 +223,14 @@ class PersonnagesController < ApplicationController
         @personnage.calcule_rang
         @personnage.calcule_graph
         @personnage.update_attributes(params[:personnage])
+        @personnage.check_and_add_if
         update_capacites(pcapacites_p)
         update_historiques(phistoriques_p)
         update_spheres(pspheres_p)
         update_disciplines(pdisciplines_p)
         update_atouts(patouts_p)
+        update_arts(parts_p)
+        update_royaumes(proyaumes_p)
         format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
@@ -231,6 +240,8 @@ class PersonnagesController < ApplicationController
         @capacites_personnages = CapacitesPersonnages.where(personnage_id: params[:id])
         @historiques_personnages = HistoriquesPersonnages.where(personnage_id: params[:id])
         @disciplines_personnages = DisciplinesPersonnages.where(personnage_id: params[:id])
+        @arts_personnages = ArtsPersonnages.where(personnage_id: params[:id])
+        @royaumes_personnages = PersonnagesRoyaumes.where(personnage_id: params[:id])
         @atouts_personnages = AtoutsPersonnages.where(personnage_id: params[:id]) + recover_values_atouts(params[:personnage][:atout_ids])
         @values_capacites = recover_values_capacites(pcapacites_p)
         @values_historiques = recover_values_historiques(phistoriques_p)
@@ -397,6 +408,36 @@ class PersonnagesController < ApplicationController
     end
   end
 
+  def update_arts(arts_personnages)
+    if arts_personnages != nil
+      arts_personnages.each do |i, ap|
+        ii = i
+        ii = Art.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
+        if is_arp(ii)
+          art = ArtsPersonnages.where(id: i, personnage_id: @personnage.id)
+          art.first.update_attributes(ap)
+        else
+          ArtsPersonnages.create(personnage_id: @personnage.id, art_id: ii.to_i, niveau: ap[:niveau])
+        end
+      end
+    end
+  end
+
+  def update_royaumes(royaumes_personnages)
+    if royaumes_personnages != nil
+      royaumes_personnages.each do |i, ap|
+        ii = i
+        ii = Royaume.find(i.split("_")[1].to_i).id if i.split("_")[0] == "t"
+        if is_rp(ii)
+          art = PersonnagesRoyaumes.where(id: i, personnage_id: @personnage.id)
+          art.first.update_attributes(ap)
+        else
+          PersonnagesRoyaumes.create(personnage_id: @personnage.id, art_id: ii.to_i, niveau: ap[:niveau])
+        end
+      end
+    end
+  end
+
   def update_spheres(spheres_personnages)
     if spheres_personnages != nil
       spheres_personnages.each do |i, cp|
@@ -464,9 +505,29 @@ class PersonnagesController < ApplicationController
     false
   end
 
+  def is_arp(key)
+    begin
+      ato = ArtsPersonnages.where(id: key, personnage_id: @personnage.id)
+    rescue ActiveRecord::RecordNotFound => e
+      ato = nil
+    end
+    return true if ato.count > 0
+    false
+  end
+
   def has_sp(key)
     begin
       cap = Sphere.where(id: key, personnage_id: @personnage.id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
+
+  def is_rp(key)
+    begin
+      cap = PersonnagesRoyaumes.where(id: key, personnage_id: @personnage.id)
     rescue ActiveRecord::RecordNotFound => e
       cap = nil
     end

@@ -397,8 +397,21 @@
   function showAppartenancePerso(idRacePerso, id, value) {
     // console.log(id)
     if (id > 13 || (id > 2 && id < 7)) {
-      $(idRacePerso).html(" "+value);
-      $("#personnage_appartenance_perso").attr("value", value);
+      if (id != 5) { //Si pas Changelin
+        $(idRacePerso).html(" "+value);
+        $("#personnage_appartenance_perso").attr("value", value);
+      } else {
+        var options = <%= raw Personnage::KITHS %>
+
+        var out = ""
+        out += "<select class=\"select required\" id=\"personnage_appartenance_perso\" name=\"personnage[appartenance_perso]\">"
+        out += "<option value=\"\"></option>"
+        for ( var i = 0; i < options.length; i++ ) {
+          out += "<option value=\""+options[i]+"\">"+options[i]+"</option>"
+        }
+        out += "</select>"
+        $(idRacePerso).html(out);
+      }
     }
     if (id > 35) {
       $("#personnage_clan").attr("value", value);

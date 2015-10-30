@@ -56,6 +56,17 @@ module PersonnagesHelper
     out
   end
 
+  def recherche_art(f)
+    out = "<div class=\"artt\">".html_safe
+    out << "<label for=\"search_art\"> Rechercher art :</label>".html_safe
+    out << "<input id=\"search_art\" type=\"text\" onkeypress=\"filter(this, '.artt .checkbox .check_boxes')\" onkeyup=\" epurationCheckBox(this, '.artt .checkbox .check_boxes')\" />".html_safe
+    out << f.association(:arts, as: :check_boxes, label: "&nbsp;".html_safe,
+                         :collection => Art.all.map {|c| [c.nom, c.id]}.uniq,
+                         wrapper_html: { class: 'col-md-12' })
+    out << "</div>".html_safe
+    out
+  end
+
   # def input_modal_objet(f, type, nom)
   #   out = "<div id=\"openModal#{type}\" class=\"modalDialog\">".html_safe
   #     out << "<div><a href=\"#close\" title=\"Close\" class=\"close2\">X</a>".html_safe

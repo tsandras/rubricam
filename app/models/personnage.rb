@@ -80,6 +80,7 @@
 #  rang_publique         :string(255)
 #  none_validation       :boolean
 #  resonnances_publique  :boolean
+#  type_changelin        :string(255)
 #
 
 require 'carrierwave/orm/activerecord'
@@ -101,7 +102,7 @@ class Personnage < ActiveRecord::Base
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
   :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock, :trace,
-  :appartenance_publique, :rang_publique, :none_validation, :resonnances_publique
+  :appartenance_publique, :rang_publique, :none_validation, :resonnances_publique, :art_ids, :type_changelin
 
   mount_uploader :avatar, AvatarUploader
 
@@ -190,6 +191,18 @@ class Personnage < ActiveRecord::Base
     type_perso == "Humain"
   end
 
+  def changelin?
+    type_perso == "Changelin"
+  end
+
+  def kinain?
+    atouts.select{|a| a.nom == "Sang de Faérie" || a.nom == "Glamour"}.count > 1
+  end
+
+  def goule?
+    atouts.select{|a| a.nom == "Goule"}.count > 0
+  end
+
   def avatar_url_perso
     out = avatar_url.split("/")
     "#{out[0..2].join("/")}/rubricam-avatars/#{out[3..-1].join("/")}"
@@ -245,7 +258,7 @@ class Personnage < ActiveRecord::Base
     end
   end
 
-  def ok_base(personnage, capacites, historiques, spheres, disciplines)
+  def ok_base(personnage, capacites, historiques, spheres, disciplines, arts, royaumes)
     physique = personnage[:force].to_i + personnage[:dexterite].to_i + personnage[:vigueur].to_i
     social = personnage[:charisme].to_i + personnage[:manipulation].to_i + personnage[:apparence].to_i
     mental = personnage[:perception].to_i + personnage[:intelligence].to_i + personnage[:astuce].to_i
@@ -283,8 +296,12 @@ class Personnage < ActiveRecord::Base
     # puts "historique : #{historique}, surnaturel : #{ok_base_surnaturel(personnage, spheres, disciplines)}"
     # raise ok_base_surnaturel(personnage, spheres, disciplines).inspect
     ok_surnaturel = ok_attribut = ok_capacites = ok_historique = ok_vertues = true
+    if changelin? && personnage[:type_changelin].nil?
+      self.trace += "Vous devez choisir un type de changelin.<br/>"
+      return false
+    end
     ok_vertue = false if !ok_base_vertue(personnage)
-    ok_surnaturel = false if !ok_base_surnaturel(personnage, spheres, disciplines)
+    ok_surnaturel = false if !ok_base_surnaturel(personnage, spheres, disciplines, arts, royaumes)
     ok_attribut = false if !ok_base_attribut(physique, social, mental)
     ok_capacites = false if !ok_base_capacites(competence, talent, connaissance)
     ok_historique = false if !ok_base_historique(historique)
@@ -350,7 +367,7 @@ class Personnage < ActiveRecord::Base
     true
   end
 
-  def ok_base_surnaturel(personnage, spheres, disciplines)
+  def ok_base_surnaturel(personnage, spheres, disciplines, arts, royaumes)
     if vampire?
       if disciplines != nil
         dis = 0
@@ -385,6 +402,27 @@ class Personnage < ActiveRecord::Base
         return false
       end
       return false if personage[:entelechie].to_i != 1
+    elsif changelin?
+      art = 0
+      if arts != nil
+        arts.each do |key, c|
+          art = art + c[:niveau].to_i
+        end
+      end
+      if art != 3
+        self.trace += "Vous n'avez pas répartie le bon nombre de point dans les arts.<br/>"
+        return false
+      end
+      roy = 0
+      if royaumes != nil
+        royaumes.each do |key, c|
+          roy = roy + c[:niveau].to_i
+        end
+      end
+      if roy != 5
+        self.trace += "Vous n'avez pas répartie le bon nombre de point dans les royaumes.<br/>"
+        return false
+      end
     end
     true
   end
@@ -475,7 +513,7 @@ class Personnage < ActiveRecord::Base
     out
   end
 
-  def create_caracteristique_bonus(personnage, capacites, historiques, atouts, spheres, disciplines)
+  def create_caracteristique_bonus(personnage, capacites, historiques, atouts, spheres, disciplines, arts, royaumes)
     perso_base = JSON.parse(caracteristique_base)
     perso_bonus = {}
     perso_bonus["Personnage"] = {}
@@ -535,6 +573,9 @@ class Personnage < ActiveRecord::Base
     if mage?
       perso_bonus["Entelechie"] = personnage[:entelechie].to_i - perso_base["Entelechie"].to_i
     end
+    if changelin?
+      perso_bonus["Glamour"] = personnage[:glamour].to_i - perso_base["Glamour"].to_i
+    end
     if disciplines != nil
       perso_bonus["Disciplines"] = {}
       disciplines.each do |key, c|
@@ -552,10 +593,42 @@ class Personnage < ActiveRecord::Base
         end
       end
     end
+    if arts != nil
+      perso_bonus["Arts"] = {}
+      arts.each do |key, c|
+        if key.split("_")[0] == "t"
+          artt = Art.find(key.split("_")[1].to_i)
+        else
+          hisper = ArtsPersonnages.find(key)
+          artt = hisper.art
+        end
+        if perso_base["Arts"].present?
+          perso_bonus["Arts"][artt.id] = c[:niveau].to_i - perso_base["Arts"][artt.id.to_s].to_i
+        else
+          perso_bonus["Arts"][artt.id] = c[:niveau].to_i
+        end
+      end
+    end
+    if royaumes != nil
+      perso_bonus["Royaumes"] = {}
+      royaumes.each do |key, c|
+        if key.split("_")[0] == "t"
+          artt = Royaume.find(key.split("_")[1].to_i)
+        else
+          hisper = PersonnagesRoyaumes.find(key)
+          artt = hisper.royaume
+        end
+        if perso_base["Royaumes"].present?
+          perso_bonus["Royaumes"][artt.id] = c[:niveau].to_i - perso_base["Royaumes"][artt.id.to_s].to_i
+        else
+          perso_bonus["Royaumes"][artt.id] = c[:niveau].to_i
+        end
+      end
+    end
     perso_bonus.to_json
   end
 
-  def create_caracteristique_base(personnage, capacites, historiques, spheres, disciplines)
+  def create_caracteristique_base(personnage, capacites, historiques, spheres, disciplines, arts, royaumes)
     per = "{\"force\": #{personnage[:force]}, \"dexterite\": #{personnage[:dexterite]}, \"vigueur\": #{personnage[:vigueur]},\"charisme\": #{personnage[:charisme]}, \"manipulation\": #{personnage[:manipulation]}, \"apparence\": #{personnage[:apparence]},\"perception\": #{personnage[:perception]}, \"intelligence\": #{personnage[:intelligence]}, \"astuce\": #{personnage[:astuce]}}"
     talent = {}
     competence = {}
@@ -622,8 +695,35 @@ class Personnage < ActiveRecord::Base
       end
       out += ", \"Disciplines\":"+dis.to_json
     end
+    if arts != nil
+      art = {}
+      arts.each do |key, c|
+        if key.split("_")[0] == "t"
+          artt = Art.find(key.split("_")[1].to_i)
+        else
+          hisper = ArtsPersonnages.find(key)
+          artt = hisper.art
+        end
+        art[artt.id] = c[:niveau].to_i
+      end
+      out += ", \"Arts\":"+art.to_json
+    end
+    if royaumes != nil
+      royaume = {}
+      royaumes.each do |key, c|
+        if key.split("_")[0] == "t"
+          artt = Royaume.find(key.split("_")[1].to_i)
+        else
+          hisper = PersonnagesRoyaumes.find(key)
+          artt = hisper.royaume
+        end
+        royaume[artt.id] = c[:niveau].to_i
+      end
+      out += ", \"Royaumes\":"+royaume.to_json
+    end
     out += ", \"Volonte\":"+volonte.to_json
     out += ", \"Entelechie\":1" if mage?
+    out += ", \"Glamour\":#{personnage[:glamour]}" if changelin?
     out += "}"
     out
   end
@@ -718,6 +818,9 @@ class Personnage < ActiveRecord::Base
     random_capacites
     random_historiques
     random_vertues if vampire?
+    self.has_base = true
+    self.has_bonus = true
+    save
   end
 
   def random_attributes
@@ -788,10 +891,22 @@ class Personnage < ActiveRecord::Base
     vertues_base
     add_capacite
     add_historique
+    add_art if changelin?
+    add_royaume if changelin?
     add_discipline_clan if vampire?
     self.entelechie = 1 if mage?
+    self.glamour = 0 if changelin?
+    self.banalite = 0 if changelin?
     add_sphere_tradition if mage?
     save
+  end
+
+  def check_and_add_if
+    if kinain?
+      add_royaume
+      self.glamour = 0
+      save
+    end
   end
 
   def volonte_base
@@ -844,6 +959,24 @@ class Personnage < ActiveRecord::Base
     end
     if !is_hp_by_id_hp(his.id)
       HistoriquesPersonnages.create(personnage_id: id, historique_id: his.id, niveau: 0)
+    end
+  end
+
+  def add_art
+    arts = Art.all
+    arts.each do |a|
+      if !is_arp_by_id_ar(a.id)
+        ArtsPersonnages.create(personnage_id: id, art_id: a.id, niveau: 0)
+      end
+    end
+  end
+
+  def add_royaume
+    royaumes = Royaume.all
+    royaumes.each do |a|
+      if !is_rp_by_id_r(a.id)
+        PersonnagesRoyaumes.create(personnage_id: id, royaume_id: a.id, niveau: 0)
+      end
     end
   end
 
@@ -995,6 +1128,16 @@ class Personnage < ActiveRecord::Base
     false
   end
 
+  def is_arp(key)
+    begin
+      cap = ArtsPersonnages.where(id: key, art_id: id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
+
   def is_cp_by_id_cp(key)
     begin
       cap = CapacitesPersonnages.where(capacite_id: key, personnage_id: id)
@@ -1018,6 +1161,26 @@ class Personnage < ActiveRecord::Base
   def is_dp_by_id_dp(key)
     begin
       cap = DisciplinesPersonnages.where(discipline_id: key, personnage_id: id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
+
+  def is_arp_by_id_ar(key)
+    begin
+      cap = ArtsPersonnages.where(art_id: key, personnage_id: id)
+    rescue ActiveRecord::RecordNotFound => e
+      cap = nil
+    end
+    return true if cap.count > 0
+    false
+  end
+
+  def is_rp_by_id_r(key)
+    begin
+      cap = PersonnagesRoyaumes.where(royaume_id: key, personnage_id: id)
     rescue ActiveRecord::RecordNotFound => e
       cap = nil
     end

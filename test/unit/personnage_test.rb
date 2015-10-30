@@ -80,6 +80,7 @@
 #  rang_publique         :string(255)
 #  none_validation       :boolean
 #  resonnances_publique  :boolean
+#  type_changelin        :string(255)
 #
 
 require 'test_helper'

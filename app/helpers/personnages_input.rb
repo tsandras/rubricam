@@ -89,38 +89,36 @@ module PersonnagesInput
   end
 
   def input_resonnance(f, personnage)
-    if personnage.mage? || personnage.has_resonnances
-      out = "<div class=\"row resonnance\">".html_safe
-      out << "<div class='col-md-5'><b>Dynamique</b></div>".html_safe
-      out << "<div class=\"col-md-2\">".html_safe
-        out << button_tag('', type: 'button', id: "minus-dynamique", class: 'moins_new')
-        out << button_tag('', type: 'button', id: "plus-dynamique", class: 'plus_new')
-      out << "</div>".html_safe
-      out << f.input(:points_dynamique, label: false, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_dynamique ? personnage.points_dynamique : 0}, wrapper_html: { class: 'col-md-1' })
-      out << f.input(:detail_dynamique, label: false, input_html: { class: 'spe' }, wrapper_html: { class: 'col-md-4' })
-      out << "</div>".html_safe
+    out = "<div class=\"row resonnance\">".html_safe
+    out << "<div class='col-md-5'><b>Dynamique</b></div>".html_safe
+    out << "<div class=\"col-md-2\">".html_safe
+      out << button_tag('', type: 'button', id: "minus-dynamique", class: 'moins_new')
+      out << button_tag('', type: 'button', id: "plus-dynamique", class: 'plus_new')
+    out << "</div>".html_safe
+    out << f.input(:points_dynamique, label: false, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_dynamique ? personnage.points_dynamique : 0}, wrapper_html: { class: 'col-md-1' })
+    out << f.input(:detail_dynamique, label: false, input_html: { class: 'spe' }, wrapper_html: { class: 'col-md-4' })
+    out << "</div>".html_safe
 
-      out <<"<div class=\"row resonnance\">".html_safe
-      out << "<div class='col-md-5'><b>Statique</b></div>".html_safe
-      out << "<div class=\"col-md-2\">".html_safe
-        out << button_tag('', type: 'button', id: "minus-statique", class: 'moins_new')
-        out << button_tag('', type: 'button', id: "plus-statique", class: 'plus_new')
-      out << "</div>".html_safe
-      out << f.input(:points_statique, label: false, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_statique ? personnage.points_statique : 0}, wrapper_html: { class: 'col-md-1' })
-      out << f.input(:detail_statique, label: false, input_html: { class: 'spe' }, wrapper_html: { class: 'col-md-4' })
-      out << "</div>".html_safe
+    out <<"<div class=\"row resonnance\">".html_safe
+    out << "<div class='col-md-5'><b>Statique</b></div>".html_safe
+    out << "<div class=\"col-md-2\">".html_safe
+      out << button_tag('', type: 'button', id: "minus-statique", class: 'moins_new')
+      out << button_tag('', type: 'button', id: "plus-statique", class: 'plus_new')
+    out << "</div>".html_safe
+    out << f.input(:points_statique, label: false, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_statique ? personnage.points_statique : 0}, wrapper_html: { class: 'col-md-1' })
+    out << f.input(:detail_statique, label: false, input_html: { class: 'spe' }, wrapper_html: { class: 'col-md-4' })
+    out << "</div>".html_safe
 
-      out <<"<div class=\"row resonnance\">".html_safe
-      out << "<div class='col-md-5'><b>Entropique</b></div>".html_safe
-      out << "<div class=\"col-md-2\">".html_safe
-        out << button_tag('', type: 'button', id: "minus-entropique", class: 'moins_new')
-        out << button_tag('', type: 'button', id: "plus-entropique", class: 'plus_new')
-      out << "</div>".html_safe
-      out << f.input(:points_entropique, label: false, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_entropique ? personnage.points_entropique : 0}, wrapper_html: { class: 'col-md-1' })
-      out << f.input(:detail_entropique, label: false, input_html: { class: 'spe' }, wrapper_html: { class: 'col-md-4' })
-      out << "</div>".html_safe
-      out
-    end
+    out <<"<div class=\"row resonnance\">".html_safe
+    out << "<div class='col-md-5'><b>Entropique</b></div>".html_safe
+    out << "<div class=\"col-md-2\">".html_safe
+      out << button_tag('', type: 'button', id: "minus-entropique", class: 'moins_new')
+      out << button_tag('', type: 'button', id: "plus-entropique", class: 'plus_new')
+    out << "</div>".html_safe
+    out << f.input(:points_entropique, label: false, input_html: {class: 'inpt_number', readonly: 'true', value: personnage.points_entropique ? personnage.points_entropique : 0}, wrapper_html: { class: 'col-md-1' })
+    out << f.input(:detail_entropique, label: false, input_html: { class: 'spe' }, wrapper_html: { class: 'col-md-4' })
+    out << "</div>".html_safe
+    out
   end
 
   def input_volonte(f)
@@ -364,6 +362,89 @@ module PersonnagesInput
     out_final
   end
 
+  def input_royaume(royaumes_personnages)
+    out = "".html_safe
+    royaumes_personnages.each_with_index do |rp, i|
+      out << input_data(rp, "royaume", "roy", rp.royaume.nom, format_name(rp.royaume.nom), i % 2)
+    end
+    out
+  end
+
+  def input_art(arts_personnages)
+    out_final = "".html_safe
+    out_col_un = "<div class=\"col-md-4 col-art-0\">".html_safe
+    out_col_deux = "<div class=\"col-md-4 col-art-1\">".html_safe
+    out_col_trois = "<div class=\"col-md-4 col-art-2\">".html_safe
+    i = 0
+    gris = 0
+    if arts_personnages != nil
+      arts_personnages.each do |cc|
+        cc.niveau = @values_disciplines[cc.id] if @values_disciplines.present? && @values_disciplines[cc.id].present?
+        out = input_data(cc, "art", "art", cc.art.nom, format_name(cc.art.nom), gris, cc.art.description)
+        if i % 3 == 0
+          out_col_un << out
+        elsif i % 3 == 1
+          out_col_deux << out
+        else
+          out_col_trois << out
+        end
+        i = i + 1
+        if i % 3 == 0
+          if gris == 0
+            gris = 1
+          else
+            gris = 0
+          end
+        end
+      end
+    end
+    out_final << out_col_un << "</div>".html_safe << out_col_deux << "</div>".html_safe << out_col_trois << "</div>".html_safe
+    out_final
+  end
+
+  def input_type_changelin(f, personnage)
+    if personnage.changelin? && !personnage.has_base
+      out = "<div class='type-changelin'>".html_safe
+      out += f.input :type_changelin,
+        as: :radio_buttons,
+        collection: Personnage::TYPE_CHANGELIN,
+        label: false,
+        item_wrapper_class: 'options-block'
+      out += "</div>".html_safe
+      out
+    end
+  end
+
+  def input_glamour(f, personnage)
+    if personnage.changelin? || personnage.kinain?
+      out = "<div class=\"row glamour\">".html_safe
+      out << "<div class='col-md-5'><b>Glamour</b></div>".html_safe
+      out << "<div class=\"col-md-2\">".html_safe
+        out << button_tag('', type: 'button', id: "minus-glamour", class: 'moins_new')
+        out << button_tag('', type: 'button', id: "plus-glamour", class: 'plus_new')
+      out << "</div>".html_safe
+      out << f.input(:glamour, label: false, input_html: {class: 'inpt_number', readonly: 'true'}, wrapper_html: {class: 'col-md-1'})
+      out << "<div class=\"col-md-4\"></div>".html_safe
+      out << "</div>".html_safe
+      out
+    end
+  end
+
+  def input_banalite(f, personnage)
+    if personnage.changelin?
+      out = "<div class=\"row banalite\">".html_safe
+      out << "<div class='col-md-5'><b>Banalité</b></div>".html_safe
+      out << "<div class=\"col-md-2\">".html_safe
+        out << button_tag('', type: 'button', id: "minus-banalite", class: 'moins_new')
+        out << button_tag('', type: 'button', id: "plus-banalite", class: 'plus_new')
+      out << "</div>".html_safe
+      out << f.input(:banalite, label: false, input_html: {class: 'inpt_number', readonly: 'true'}, wrapper_html: {class: 'col-md-1'})
+      out << "<div class=\"col-md-4\"></div>".html_safe
+      out << "</div>".html_safe
+      out
+    end
+  end
+
   def input_capacite(capacites_personnages, personnage)
     out = "".html_safe
     talent = "<div class=\"col-md-4 Talent\"><p class=\"text-center\"><b>Talents</b>#{show_nbs_talent(personnage)}</p>".html_safe
@@ -443,6 +524,7 @@ module PersonnagesInput
       out << "<div><b>#{personnage.type_perso}</b></div>".html_safe
       out << "<br />".html_safe
       out << "<div><b>#{personnage.appartenance_perso}</b></div>".html_safe
+      out << input_type_changelin(f, personnage)
     out << "</div>".html_safe
     out
   end

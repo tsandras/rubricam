@@ -1,0 +1,39 @@
+<h1>Listing nivarts</h1>
+
+<table>
+  <tr>
+    <th>Art</th>
+    <th>Art nom</th>
+    <th>Nom</th>
+    <th>Niveau</th>
+    <th>Description</th>
+    <th>Source</th>
+    <th>Systeme</th>
+    <th>Tableau</th>
+    <th>Secret</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @nivarts.each do |nivart| %>
+  <tr>
+    <td><%= nivart.art_id %></td>
+    <td><%= nivart.art_nom %></td>
+    <td><%= nivart.nom %></td>
+    <td><%= nivart.niveau %></td>
+    <td><%= nivart.description %></td>
+    <td><%= nivart.source %></td>
+    <td><%= nivart.systeme %></td>
+    <td><%= nivart.tableau %></td>
+    <td><%= nivart.secret %></td>
+    <td><%= link_to 'Show', nivart %></td>
+    <td><%= link_to 'Edit', edit_nivart_path(nivart) %></td>
+    <td><%= link_to 'Destroy', nivart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Nivart', new_nivart_path %>

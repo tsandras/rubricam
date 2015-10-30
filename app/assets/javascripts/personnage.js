@@ -44,6 +44,24 @@
     });
   }
 
+  function listenerAllArts() {
+    $.each($(".art"), function(key, val) {
+      if ($(this).attr("id")) {
+        var tmp = $(this).attr("id").split("_");
+        listenerNumber(tmp[1], "#" + $(this).attr("id") + " #arts_personnages_niveau", 0, 6);
+      }
+    });
+  }
+
+  function listenerAllRoyaumes() {
+    $.each($(".roy"), function(key, val) {
+      if ($(this).attr("id")) {
+        var tmp = $(this).attr("id").split("_");
+        listenerNumber(tmp[1], "#" + $(this).attr("id") + " #personnages_royaumes_niveau", 0, 5);
+      }
+    });
+  }
+
   function listenerCapacite(idCapacite) {
     var tmp = idCapacite.split("_");
     listenerNumber(tmp[1], idCapacite + " #capacites_personnages_niveau", 0, 10);
@@ -52,6 +70,11 @@
   function listenerDiscipline(idDiscipline) {
     var tmp = idDiscipline.split("_");
     listenerNumber(tmp[1], idDiscipline + " #disciplines_personnages_niveau", 0, 10);
+  }
+
+  function listenerArt(idArt) {
+    var tmp = idArt.split("_");
+    listenerNumber(tmp[1], idArt + " #arts_personnages_niveau", 0, 6);
   }
 
   function listenerHistorique(idHistorique) {
@@ -96,6 +119,16 @@
   function listenerVolonte(idVolonte) {
     var tmp = idVolonte.split("_");
     listenerNumber(tmp[1], idVolonte, 1, 10);
+  }
+
+  function listenerGlamour(idGlamour) {
+    var tmp = idGlamour.split("_");
+    listenerNumber(tmp[1], idGlamour, 0, 10);
+  }
+
+  function listenerGlamour(idBanalite) {
+    var tmp = idBanalite.split("_");
+    listenerNumber(tmp[1], idBanalite, 0, 10);
   }
 
   function listenerPhysiqueForBase(min, max) {
@@ -359,6 +392,46 @@ function manageDisciplines(listToListening, NameClassOfInput) {
   });
 }
 
+function manageArts(listToListening, NameClassOfInput) {
+  $(listToListening).change(function() {
+    var tmp = $(this).parent().text();
+    if(this.checked) {
+      console.log("wewefwef")
+      if (! $("#f_"+format_name(tmp)).length) {
+        var nbs = $(".art").length;
+        if (nbs == 0 || nbs == 3 || nbs == 6 || nbs == 9 || nbs == 12 || nbs == 15) {
+          $(".col-art-0").append(getHTMLInputArt($(this).parent().text(), this.value, nbs));
+        } else if (nbs == 1 || nbs == 4 || nbs == 7 || nbs == 10 || nbs == 13 || nbs == 16) {
+          $(".col-art-1").append(getHTMLInputArt($(this).parent().text(), this.value, nbs));
+        } else {
+          $(".col-art-2").append(getHTMLInputArt($(this).parent().text(), this.value, nbs));
+        }
+        listenerArt("#t_"+format_name(tmp));
+      }
+    } else {
+      $("#t_"+tmp).remove();
+    }
+  });
+}
+
+function manageTypeChangelin() {
+  $(".type-changelin input").change(function() {
+    if ($(this).val() == "Gamin") {
+      $("#personnage_volonte").val(1)
+      $("#personnage_glamour").val(5)
+      $("#personnage_banalite").val(1)
+    } else if ($(this).val() == "Vaurien") {
+      $("#personnage_volonte").val(2)
+      $("#personnage_glamour").val(4)
+      $("#personnage_banalite").val(3)
+    } else {
+      $("#personnage_volonte").val(5)
+      $("#personnage_glamour").val(3)
+      $("#personnage_banalite").val(5)
+    }
+  })
+}
+
 function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle, cols_sup, image) {
   var gris = '';
   if (num % 2 == 0) {
@@ -403,6 +476,11 @@ function getHTMLInputData(id, type, class_type, nom, format_nom, num, info_bulle
 
 function getHTMLInputDiscipline(name, id, nbs) {
   out = getHTMLInputData(id, "discipline", "dis", name, format_name(name), nbs + 1, "", null, null);
+  return out;
+}
+
+function getHTMLInputArt(name, id, nbs) {
+  out = getHTMLInputData(id, "art", "art", name, format_name(name), nbs + 1, "", null, null);
   return out;
 }
 

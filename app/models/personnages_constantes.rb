@@ -55,6 +55,8 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
           "Kiasyd", "Lhiannan", "Nagaraja", "Samedi",
           "Vrai Brujah", "Anda", "Noad", "Agarash", "Disciple de Kali"]
 
+  KITHS = ["Bansidhs", "Boggans", "Bonnets Rouges", "Eshus", "Nockers", "Pookahs", "Satyres", "Sidhes", "Trolls", "Dryades"]
+
   APPARTENANCE = TRADITION + TECHNOCRATIE + DISPARATE + ["Maraudeur"] + ["Nefendi"] + CLAN
 
   CLAN_BY_TYPE = {
@@ -147,6 +149,8 @@ TYPE = ["Mortel", "Mage", "Vampire"] #, "Goule", "Kinain", "Mage-Goule", "Mage-K
   CAP_SOCIAL = ["Commandement", "Empathie", "Expérience de la rue", "Expression", "Intimidation", "Intuition", "Subterfuge", "Animaux", "Étiquette", "Représentation"]
 
   POINTS_SANG = {"13" => 10, "12" => 11, "11" => 12, "10" => 13, "9" => 14, "8" => 15, "7" => 20, "6" => 30, "5" => 40, "4" => 50, "3" => 100}
+
+  TYPE_CHANGELIN = ["Gamin", "Vaurien", "Grincheux"]
 
   FONT_WOD = {
     "correspondance" => 'a',
