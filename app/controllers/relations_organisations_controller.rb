@@ -41,8 +41,8 @@ class RelationsOrganisationsController < ApplicationController
     @relation = RelationsOrganisation.find(params[:id])
     return redirect_to root_url, notice: "Vous n'avez pas accès à cette ressource." if !permition?(@user, @relation)
     @organisations = Organisation.all
-    @from_organisation = get_organisation(@relation.from_organisation_id)
-    @to_organisation = get_organisation(@relation.to_organisation_id)
+    # @from_organisation = get_organisation(@relation.from_organisation_id)
+    # @to_organisation = get_organisation(@relation.to_organisation_id)
   end
 
   # POST /relations
@@ -51,7 +51,7 @@ class RelationsOrganisationsController < ApplicationController
     # raise params.inspect
     @relation = RelationsOrganisation.new(params[:relations_organisation])
     # raise @relation.inspect
-    @relation.secret = false if @user.role != User::ROLE_ADMIN
+    @relation.secret = false if !@user.admin?
     respond_to do |format|
       if @relation.save
         format.html { redirect_to @relation, notice: 'Relation a été crée avec succès.' }
@@ -67,9 +67,9 @@ class RelationsOrganisationsController < ApplicationController
   # PUT /relations/1.json
   def update
     @relation = RelationsOrganisation.find(params[:id])
-    params[:relation][:secret] = false if @user.role != User::ROLE_ADMIN
+    params[:relation][:secret] = false if !@user.admin?
     respond_to do |format|
-      if @relation.update_attributes(params[:relation])
+      if @relation.update_attributes(params[:relations_organisation])
         format.html { redirect_to @relation, notice: 'Relation a été édité avec succès.' }
         format.json { head :no_content }
       else

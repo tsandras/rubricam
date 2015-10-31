@@ -15,7 +15,7 @@
           <optgroup label="Organisations">
           <option value="">Sélectionner une organisation</option>
           <% @organisations.each do |per| %>
-              <option value="<%= per.id %>"<%= @to_organisation.id == per.id  ? 'selected' : nil %>><%= per.nom %></option>
+              <option value="<%= per.id %>"<%= @relation.to_organisation_id == per.id ? 'selected' : nil %>><%= per.nom %></option>
           <% end %>
           </optgroup>
         </select>
@@ -29,7 +29,7 @@
           <optgroup label="Organisations">
           <option value="">Sélectionner une organisation</option>
           <% @organisations.each do |per| %>
-              <option value="<%= per.id %>"<%= @from_organisation.id == per.id  ? 'selected' : nil %>><%= per.nom %></option>
+              <option value="<%= per.id %>" <%= @relation.from_organisation_id == per.id ? 'selected' : nil %>><%= per.nom %></option>
           <% end %>
           </optgroup>
         </select>

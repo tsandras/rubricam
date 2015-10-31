@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151031072701) do
+ActiveRecord::Schema.define(:version => 20151031095342) do
 
   create_table "arts", :force => true do |t|
     t.string   "nom"
@@ -381,8 +381,8 @@ ActiveRecord::Schema.define(:version => 20151031072701) do
     t.string  "name"
     t.text    "description"
     t.boolean "secret"
-    t.string  "to_organisation_id"
-    t.string  "from_organisation_id"
+    t.integer "to_organisation_id",   :limit => 255
+    t.integer "from_organisation_id", :limit => 255
   end
 
   create_table "routines", :force => true do |t|

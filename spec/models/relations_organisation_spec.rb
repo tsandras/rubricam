@@ -6,8 +6,8 @@
 #  name                 :string(255)
 #  description          :text
 #  secret               :boolean
-#  to_organisation_id   :string(255)
-#  from_organisation_id :string(255)
+#  to_organisation_id   :integer
+#  from_organisation_id :integer
 #
 
 require 'rails_helper'

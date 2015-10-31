@@ -27,6 +27,8 @@ class Organisation < ActiveRecord::Base
 
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
   has_and_belongs_to_many :lieus, class_name: 'Lieu'
+  has_many :relations_organisation, :class_name => 'RelationsOrganisation', :foreign_key => 'to_organisation_id'
+  has_many :relations_organisation, :class_name => 'RelationsOrganisation', :foreign_key => 'from_organisation_id'
 
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
 
