@@ -151,6 +151,17 @@ class PersonnagesController < ApplicationController
     redirect_to personnage_path(@personnage)
   end
 
+  def test_update
+    @personnage = Personnage.find(params[:id])
+    if @personnage.test
+      @personnage.test = false 
+    else
+      @personnage.test = true
+    end
+    @personnage.update_attributes(params[:personnage])
+    redirect_to personnage_path(@personnage)
+  end
+
   def create
     @personnage = Personnage.new(params[:personnage])
     @personnage.user = @user

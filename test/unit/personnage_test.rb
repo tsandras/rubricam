@@ -81,6 +81,7 @@
 #  none_validation       :boolean
 #  resonnances_publique  :boolean
 #  type_changelin        :string(255)
+#  test                  :boolean
 #
 
 require 'test_helper'

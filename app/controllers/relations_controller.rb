@@ -2,7 +2,7 @@ class RelationsController < ApplicationController
   # GET /relations
   # GET /relations.json
   def index
-    if @user.role == User::ROLE_ADMIN
+    if @user.admin?
       @relations = Relation.paginate(page: params[:page], per_page: 20)
     else
       @relations = Relation.where(secret: false).paginate(page: params[:page], per_page: 20)
@@ -90,10 +90,10 @@ class RelationsController < ApplicationController
   end
 
   def visuel
-    if @user.role == User::ROLE_ADMIN
+    if @user.admin?
       if (params[:commit] == "Filtrer" && params[:personnages].present?) || params[:commit] != "Filtrer"
         @relations = Relation.all
-        @personnages = Personnage.all
+        @personnages = Personnage.none_test
       else
         @relations = []
         @personnages = []
@@ -110,12 +110,12 @@ class RelationsController < ApplicationController
     else
       if (params[:commit] == "Filtrer" && params[:personnages].present?) || params[:commit] != "Filtrer"
         @relations = Relation.none_secret
-        @personnages = Personnage.none_secret
+        @personnages = Personnage.none_secret.none_test
       else
         @relations = []
         @personnages = []
       end
-      if (params[:commit] == "Filtrer" && params[:personnages].present?) || params[:commit] != "Filtrer"
+      if (params[:commit] == "Filtrer" && params[:organisations].present?) || params[:commit] != "Filtrer"
         @organisations = Organisation.none_secret
         @relations_organisations = OrganisationsPersonnages.none_secret
         @relations_organisations_organisations = RelationsOrganisation.none_secret
@@ -129,9 +129,9 @@ class RelationsController < ApplicationController
 
   private
 
-    def permition?(user, relation)
-      return true if user.role == User::ROLE_ADMIN
-      return true if relation.secret == false
-      false
-    end
+  def permition?(user, relation)
+    return true if user.role == User::ROLE_ADMIN
+    return true if relation.secret == false
+    false
+  end
 end

@@ -76,6 +76,7 @@ Rubricam::Application.routes.draw do
     post :background_update, on: :member
     get :secret_update, on: :member
     get :pnj_update, on: :member
+    get :test_update, on: :member
   end
 
 end

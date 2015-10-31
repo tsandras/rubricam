@@ -81,6 +81,7 @@
 #  none_validation       :boolean
 #  resonnances_publique  :boolean
 #  type_changelin        :string(255)
+#  test                  :boolean
 #
 
 require 'carrierwave/orm/activerecord'
@@ -102,7 +103,7 @@ class Personnage < ActiveRecord::Base
   :caracteristique_base, :caracteristique_bonus, :has_base, :has_bonus, :user_id, :secret,
   :description_publique, :nom_publique, :image_lien, :routine_ids, :pnj, :detail_dynamique,
   :detail_statique, :detail_entropique, :avatar, :avatar_cache, :combinaison_ids, :appartenance_perso, :lock, :trace,
-  :appartenance_publique, :rang_publique, :none_validation, :resonnances_publique, :art_ids, :type_changelin
+  :appartenance_publique, :rang_publique, :none_validation, :resonnances_publique, :art_ids, :type_changelin, :test
 
   mount_uploader :avatar, AvatarUploader
 
@@ -136,6 +137,8 @@ class Personnage < ActiveRecord::Base
   scope :pjs, lambda { where("pnj = ? or pnj is null", false) }
   scope :none_secret, lambda { where("secret = ? or secret is null", false) }
   scope :secret, lambda { where("secret = ?", true) }
+  scope :test, lambda { where("test = ?", true) }
+  scope :none_test, lambda { where("test = ? or test is null", false) }
   scope :none_secret_and_pnjs, lambda { where("(secret = ? or secret is null) and pnj = ?", false, true) }
 
   def validity_of_perso
