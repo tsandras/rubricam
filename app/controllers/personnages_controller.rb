@@ -3,7 +3,7 @@ class PersonnagesController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:get_infos]
 
   def index
-    if @user.role == User::ROLE_ADMIN
+    if @user.admin?
       @personnages = Personnage.order("created_at desc").paginate(page: params[:page], per_page: 10)
     else
       @personnages = Personnage.where(user_id: @user.id).paginate(page: params[:page], per_page: 10)
@@ -15,15 +15,15 @@ class PersonnagesController < ApplicationController
   end
 
   def pnjs
-    if @user.role == User::ROLE_ADMIN
-      @pnjs = Personnage.pnjs.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
+    if @user.admin?
+      @pnjs = Personnage.pnjs.none_test.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
     else
-      @pnjs = Personnage.none_secret_and_pnjs.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
+      @pnjs = Personnage.none_secret_and_pnjs.none_test.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
     end
   end
 
   def pjs
-    @pjs = Personnage.pjs.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
+    @pjs = Personnage.pjs.none_test.where("description_publique is not null").paginate(page: params[:page], per_page: 9)
   end
 
   def show

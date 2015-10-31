@@ -14,7 +14,7 @@
   <% @personnages.each do |personnage| %>
     <tr>
       <td><%= link_to "#{personnage.prenom} #{personnage.nom}", personnage %></td>
-      <td style="text-align: center;"><span class="wod"><%= Personnage::FONT_WOD[personnage.appartenance_perso] %></span></td>
+      <td style="text-align: center;"><span class="wod"><%= personnage.symbole_appartenance %></span></td>
       <td><%= label_pnj(personnage) %><%= label_secret(personnage) %></td>
       <td><%= label_rang(personnage) %></td>
       <td><%= link_to 'Voir', personnage_path(personnage), class: 'btn btn-success btn-xs' %></td>

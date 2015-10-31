@@ -17,7 +17,7 @@
           <% @personnages.each do |p| %>
             <tr>
               <td><%= "#{p.prenom} #{p.nom}" %></td>
-              <td style="text-align: center;"><span class="wod"><%= Personnage::FONT_WOD[p.appartenance_perso] %></span></td>
+              <td style="text-align: center;"><span class="wod"><%= p.symbole_appartenance %></span></td>
               <td><%= label_rang(p) %></td>
               <td><%= link_to "Profil", p, class: 'btn btn-success btn-xs' %></td>
             </tr>
@@ -110,7 +110,7 @@
           <% @pnjs.each do |p| %>
             <tr>
               <td><%= p.nom_publique ? p.nom_publique : "#{p.prenom} #{p.nom}" %></td>
-              <td style="text-align: center;"><span class="wod"><%= Personnage::FONT_WOD[p.appartenance_publique] %></span></td>
+              <td style="text-align: center;"><span class="wod"><%= p.symbole_appartenance_publique %></span></td>
               <td><%= label_rang_publique(p) %></td>
             </tr>
           <% end %>

@@ -206,6 +206,22 @@ class Personnage < ActiveRecord::Base
     atouts.select{|a| a.nom == "Goule"}.count > 0
   end
 
+  def symbole_appartenance
+    if !changelin?
+      Personnage::FONT_WOD[appartenance_perso]
+    else
+      Personnage::FONT_WOD["Changelin"]
+    end
+  end
+
+  def symbole_appartenance_publique
+    if !changelin?
+      Personnage::FONT_WOD[appartenance_publique]
+    else
+      Personnage::FONT_WOD["Changelin"]
+    end
+  end
+
   def avatar_url_perso
     out = avatar_url.split("/")
     "#{out[0..2].join("/")}/rubricam-avatars/#{out[3..-1].join("/")}"
