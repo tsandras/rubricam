@@ -76,6 +76,7 @@
 	network.on("click", function (params) {
 	  var nodeId = params["nodes"][0];
 	  if (nodeId && nodes.get(nodeId).value) {
+	  	$("#list-p-like .p-like").hide();
 	    $("#description-publique").html(nodes.get(nodeId).value);
 	    $("#p_"+nodeId).show();
 	  } else {
