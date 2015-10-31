@@ -528,6 +528,8 @@ function fusionBaseBonus(base, bonus) {
   out.Historiques = {};
   out.Disciplines = {};
   out.Spheres = {};
+  out.Arts = {};
+  out.Royaumes = {};
   out.Capacites.Talent = {};
   out.Capacites.Competence = {};
   out.Capacites.Connaissance = {};
@@ -540,6 +542,8 @@ function fusionBaseBonus(base, bonus) {
   out.Personnage["perception"] = base.Personnage["perception"] + bonus.Personnage["perception"];
   out.Personnage["intelligence"] = base.Personnage["intelligence"] + bonus.Personnage["intelligence"];
   out.Personnage["astuce"] = base.Personnage["astuce"] + bonus.Personnage["astuce"];
+  out.Personnage["Volonte"] = base.Personnage["Volonte"] + bonus.Personnage["Volonte"];
+  out.Personnage["Glamour"] = base.Personnage["Glamour"] + bonus.Personnage["Glamour"];
   $.each(base.Capacites.Talent, function(key, val) {
     out.Capacites.Talent[key] = val + bonus.Capacites.Talent[key];
   });
@@ -566,6 +570,30 @@ function fusionBaseBonus(base, bonus) {
     $.each(bonus.Disciplines, function(key, val) {
       if (!out.Disciplines) {
         out.Disciplines[key] = val;
+      }
+    });
+  }
+  if (base.Arts) {
+    $.each(base.Arts, function(key, val) {
+      out.Arts[key] = val + bonus.Arts[key];
+    });
+  }
+  if (bonus.Arts) {
+    $.each(bonus.Arts, function(key, val) {
+      if (!out.Arts) {
+        out.Arts[key] = val;
+      }
+    });
+  }
+  if (base.Royaumes) {
+    $.each(base.Royaumes, function(key, val) {
+      out.Royaumes[key] = val + bonus.Royaumes[key];
+    });
+  }
+  if (bonus.Royaumes) {
+    $.each(bonus.Royaumes, function(key, val) {
+      if (!out.Royaumes) {
+        out.Royaumes[key] = val;
       }
     });
   }

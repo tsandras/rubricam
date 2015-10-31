@@ -26,6 +26,7 @@ function manageCalculeXps(type_perso) {
     xps_dep += calcule_xps_volonte(personnage, type_perso, "base");
     xps_dep += calcule_xps_entelechie(personnage, type_perso, "base");
     xps_dep += calcule_xps_art(personnage, type_perso, "base");
+    xps_dep += calcule_xps_royaume(personnage, type_perso, "base");
     xps_dep += calcule_xps_glamour(personnage, type_perso, "base");
     var xps = $("#personnage_xps").val();
     // console.log(xps-xps_dep);
@@ -44,11 +45,21 @@ function manageCalculeBonus() {
     bonus_dep += calcule_xps_attribut(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_capacite(personnage, "necrodancer", "bonus");
     bonus_dep += calcule_xps_historique(personnage, "necrodancer", "bonus");
+    // console.log("Xps dépensé apres hisotrique :"+bonus_dep);
     bonus_dep += calcule_xps_atout(personnage, "necrodancer", "bonus");
+    // console.log("Xps dépensé apres atpt :"+bonus_dep);
     bonus_dep += calcule_xps_sphere(personnage, "necrodancer", "bonus", null);
+    // console.log("Xps dépensé apres sphere :"+bonus_dep);
     bonus_dep += calcule_xps_discipline(personnage, "necrodancer", "bonus", null);
+    // console.log("Xps dépensé avant volonte :"+bonus_dep);
     bonus_dep += calcule_xps_volonte(personnage, "necrodancer", "bonus");
+    // console.log("Xps dépensé apres volonte :"+bonus_dep);
     bonus_dep += calcule_xps_entelechie(personnage, "necrodancer", "bonus");
+    // console.log("Xps dépensé apres discipline :"+bonus_dep);
+    bonus_dep += calcule_xps_art(personnage, "necrodancer", "bonus");
+    bonus_dep += calcule_xps_royaume(personnage, "necrodancer", "bonus");
+    bonus_dep += calcule_xps_glamour(personnage, "necrodancer", "bonus");
+    // console.log("Xps dépensé apres glamour :"+bonus_dep);
     $("#nbs_bonus").html(bonus_dep);
   }
 }
@@ -166,7 +177,6 @@ function calcule_xps_discipline(personnage, type_perso, type) {
       va_avant = 0;
     }
     if (type == "base") {
-      // console.log("id=>"+ idd +"val=>"+manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline"));
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline",nom_discipline);
     } else {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "discipline");
@@ -178,16 +188,28 @@ function calcule_xps_discipline(personnage, type_perso, type) {
 function calcule_xps_art(personnage, type_perso, type) {
   var out = 0;
   $("#arts_personnages_niveau[name^=arts_personnages]").each(function() {
-    // var idd = $(extract_id_cp($(this).attr("name"))).text();
-    // console.log(extract_id_cp($(this).attr("name")).text())
+    var idd = $("#a_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
-    var va_avant = 0;
+    var va_avant = personnage.Arts[idd.toString()];
     if (type == "base") {
-      console.log(va_actuel);
-      // console.log("id=>"+ idd +"val=>"+manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "discipline"));
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "art", null);
     } else {
       out = out + manage_bonus(va_avant, parseInt(va_actuel), "art");
+    }
+  });
+  return out;
+}
+
+function calcule_xps_royaume(personnage, type_perso, type) {
+  var out = 0;
+  $("#personnages_royaumes_niveau[name^=royaumes_personnages]").each(function() {
+    var idd = $("#r_"+extract_id_cp($(this).attr("name"))).text();
+    var va_actuel = $(this).val();
+    var va_avant = personnage.Royaumes[idd.toString()];
+    if (type == "base") {
+      out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "royaume", null);
+    } else {
+      out = out + manage_bonus(va_avant, parseInt(va_actuel), "royaume");
     }
   });
   return out;
@@ -444,7 +466,7 @@ function get_cout(pouvoir, type_perso, nom) {
         out = 12;
       }
       break;
-    case "art":
+    case "royaume":
       if (type_perso == "Changelin") {
         out = 3;
       } else {

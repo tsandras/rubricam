@@ -237,7 +237,8 @@ class Personnage < ActiveRecord::Base
       p_autre = volonte.to_i * 4 + entelechie.to_i * 8 + spheres.sum(&:niveau).to_i * 8 + (points_conscience.to_i + points_maitrise.to_i + points_courage.to_i) * 3
       p_autre = p_autre + (points_statique.to_i + points_entropique.to_i + points_dynamique.to_i) * 2
       p_combinaison = self.combinaisons.sum(&:cout)
-      self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre + p_combinaison
+      p_fae = glamour.to_i * 4 + ArtsPersonnages.where(personnage_id: id).sum(&:niveau) * 5 + PersonnagesRoyaumes.where(personnage_id: id).sum(&:niveau) * 2
+      self.rang = p_attribus + p_capacites + p_historiques + p_atout + p_disciplines + p_autre + p_combinaison + p_fae
     else
       self.rang = 0
     end
@@ -252,8 +253,10 @@ class Personnage < ActiveRecord::Base
       self.niveau_physique = (force + dexterite + vigueur) * 4 + CapacitesPersonnages.where(capacite_id: cap_phy_id, personnage_id: id).sum(&:niveau)
       self.niveau_social = (charisme + manipulation + apparence) * 4 + CapacitesPersonnages.where(capacite_id: cap_phy_id, personnage_id: id).sum(&:niveau)
       self.niveau_mental = (perception + intelligence + astuce) * 4 + CapacitesPersonnages.where(capacite_id: cap_phy_id, personnage_id: id).sum(&:niveau)
-      self.niveau_magdynamique = spheres.sum(&:niveau).to_i * 8
+      self.niveau_magdynamique = spheres.sum(&:niveau).to_i * 8 + entelechie.to_i * 8
       self.niveau_magstatique = DisciplinesPersonnages.where(personnage_id: id).sum(&:niveau) * 5
+      self.niveau_magstatique += glamour.to_i * 4 + ArtsPersonnages.where(personnage_id: id).sum(&:niveau) * 5
+      self.niveau_magstatique += PersonnagesRoyaumes.where(personnage_id: id).sum(&:niveau) * 2
       self.niveau_ressources = HistoriquesPersonnages.where(personnage_id: id).sum(&:niveau) * 3
       save
     end
@@ -446,7 +449,7 @@ class Personnage < ActiveRecord::Base
     true
   end
 
-  def ok_bonus(personnage, capacites, historiques, atouts, spheres, disciplines)
+  def ok_bonus(personnage, capacites, historiques, atouts, spheres, disciplines, arts, royaumes)
     return true if bonus == 42
     perso_base = JSON.parse(caracteristique_base)
     points_attributs = 0
@@ -496,7 +499,7 @@ class Personnage < ActiveRecord::Base
       end
     end
     points_volonte = (personnage[:volonte].to_i - perso_base["Volonte"]);
-    points_surnaturels = ok_bonus_surnaturel(perso_base, spheres, disciplines)
+    points_surnaturels = ok_bonus_surnaturel(perso_base, spheres, disciplines, arts, royaumes)
     # raise perso_base["Entelechie"].inspect
     ent = 0
     ent = (personnage[:entelechie].to_i - perso_base["Entelechie"].to_i) * 4 if mage?
@@ -506,7 +509,7 @@ class Personnage < ActiveRecord::Base
     true
   end
 
-  def ok_bonus_surnaturel(perso_base, spheres, disciplines)
+  def ok_bonus_surnaturel(perso_base, spheres, disciplines, arts, royaumes)
     out = 0
     if spheres != nil
       spheres.each do |key, sphere|
@@ -527,6 +530,16 @@ class Personnage < ActiveRecord::Base
         else
           out = out + (discipline[:niveau].to_i * 7)
         end
+      end
+    end
+    if arts != nil
+      arts.each do |key, c|
+        out = out + c[:niveau].to_i
+      end
+    end
+    if royaumes != nil
+      royaumes.each do |key, c|
+        out = out + c[:niveau].to_i
       end
     end
     out
@@ -595,6 +608,7 @@ class Personnage < ActiveRecord::Base
     if changelin?
       perso_bonus["Glamour"] = personnage[:glamour].to_i - perso_base["Glamour"].to_i
     end
+    perso_bonus["Volonte"] = personnage[:volonte].to_i - perso_base["Volonte"].to_i
     if disciplines != nil
       perso_bonus["Disciplines"] = {}
       disciplines.each do |key, c|
@@ -743,7 +757,7 @@ class Personnage < ActiveRecord::Base
       end
       out += ", \"Royaumes\":"+royaume.to_json
     end
-    out += ", \"Volonte\":"+volonte.to_json
+    out += ", \"Volonte\":"+personnage[:volonte]
     out += ", \"Entelechie\":1" if mage?
     out += ", \"Glamour\":#{personnage[:glamour]}" if changelin?
     out += "}"
@@ -826,10 +840,29 @@ class Personnage < ActiveRecord::Base
     out["Historiques"] = bonus["Historiques"].merge(base["Historiques"]){|k, a, b| a+b}
     out["Disciplines"] = bonus["Disciplines"].merge(base["Disciplines"]){|k, a, b| a+b} if bonus["Disciplines"].present? && base["Disciplines"].present?
     out["Spheres"] = bonus["Spheres"].merge(base["Spheres"]){|k, a, b| a+b} if bonus["Spheres"].present? && base["Spheres"].present?
+    if bonus["Arts"].present? && base["Arts"].present?
+      out["Arts"] = bonus["Arts"].merge(base["Arts"]){|k, a, b| a+b}
+    elsif base["Arts"].present?
+      out["Arts"] = base["Arts"]
+    elsif bonus["Arts"].present?
+      out["Arts"] = bonus["Arts"]
+    end
+    if bonus["Royaumes"].present? && base["Royaumes"].present?
+      out["Royaumes"] = bonus["Royaumes"].merge(base["Royaumes"]){|k, a, b| a+b}
+    elsif base["Royaumes"].present?
+      out["Royaumes"] = base["Royaumes"]
+    elsif bonus["Royaumes"].present?
+      out["Royaumes"] = bonus["Royaumes"]
+    end
     if bonus["Volonte"].present?
-      out["Volonte"] = bonus["Volonte"].merge(base["Volonte"]){|k, a, b| a+b}
+      out["Volonte"] = bonus["Volonte"] + base["Volonte"]
     else
       out["Volonte"] = base["Volonte"]
+    end
+    if bonus["Glamour"].present?
+      out["Glamour"] = bonus["Glamour"] + base["Glamour"]
+    else
+      out["Glamour"] = base["Glamour"]
     end
     out
   end

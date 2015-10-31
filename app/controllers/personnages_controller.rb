@@ -209,7 +209,7 @@ class PersonnagesController < ApplicationController
       end
     else
       unless @personnage.has_bonus
-        if @personnage.ok_bonus(params[:personnage], pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p)
+        if @personnage.ok_bonus(params[:personnage], pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
           params[:personnage][:has_bonus] = true
           params[:personnage][:caracteristique_bonus] = @personnage.create_caracteristique_bonus(pp, pcapacites_p, phistoriques_p, patouts_p, pspheres_p, pdisciplines_p, parts_p, proyaumes_p)
           ok = true

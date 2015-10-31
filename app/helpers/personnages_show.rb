@@ -172,8 +172,8 @@ module PersonnagesShow
 
   def show_kinain(personnage)
     if personnage.glamour.present?
-      out = "Glamour : #{personnage.glamour}<br />"
-      out += "Banalité : #{personnage.banalite}<br />"
+      out = "<b>Glamour</b> : #{personnage.glamour}<br />"
+      out += "<b>Banalité</b> : #{personnage.banalite}<br />"
       out.html_safe
     end
   end

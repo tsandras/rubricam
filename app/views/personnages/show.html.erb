@@ -40,8 +40,8 @@
   <%= show_advanced_disciplines(@personnage) %>
   <%= show_combinaisons_disciplines(@personnage) %>
   <%= show_atout(@atouts) %>
-  <%= show_arts(@arts) %>
-  <%= show_royaumes(@royaumes) %>
+  <%= show_arts(@arts) if @personnage.changelin? || @personnage.kinain? %>
+  <%= show_royaumes(@royaumes) if @personnage.changelin? || @personnage.kinain? %>
   <%= show_vertue(@personnage) %>
   <%= show_resonnance(@personnage) %>
   <div>
