@@ -126,9 +126,14 @@
     listenerNumber(tmp[1], idGlamour, 0, 10);
   }
 
-  function listenerGlamour(idBanalite) {
+  function listenerBanalite(idBanalite) {
     var tmp = idBanalite.split("_");
     listenerNumber(tmp[1], idBanalite, 0, 10);
+  }
+
+  function listenerSang(idSang) {
+    var tmp = idSang.split("_");
+    listenerNumber(tmp[1]+"_"+tmp[2], idSang, 0, 100);
   }
 
   function listenerPhysiqueForBase(min, max) {

@@ -907,7 +907,11 @@ class Personnage < ActiveRecord::Base
   def check_and_add_if
     if kinain?
       add_royaume
-      self.glamour = 0
+      self.glamour = 0 if self.glamour.nil?
+      save
+    end
+    if goule?
+      self.points_sang = vigueur + 2 if self.points_sang.nil?
       save
     end
   end

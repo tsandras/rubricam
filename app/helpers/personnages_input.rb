@@ -1,11 +1,5 @@
 module PersonnagesInput
 
-  def input_points_sang(f, perso)
-    if perso.vampire? || perso.type_perso == nil
-      f.input :points_sang
-    end
-  end
-
   def input_tradition(f)
     out = "<div class=\"ss-type-reel\">".html_safe
     out << f.input(:tradition, collection: Personnage::TRADITION)
@@ -18,13 +12,6 @@ module PersonnagesInput
     out << f.input(:clan, collection: Personnage::CLAN)
     out << "</div>".html_safe
     out
-  end
-
-  def input_kinain(f, personnage)
-    if personnage.type_perso =~ /Kinain/i
-      f.input(:glamour) <<
-      f.input(:banalite)
-    end
   end
 
   def input_voie(f, personnage)
@@ -47,6 +34,21 @@ module PersonnagesInput
         out << button_tag('', type: 'button', id: "plus-entelechie", class: 'plus_new')
       out << "</div>".html_safe
       out << f.input(:entelechie, label: false, input_html: {class: 'inpt_number', readonly: 'true'}, wrapper_html: {class: 'col-md-1'})
+      out << "<div class=\"col-md-4\"></div>".html_safe
+      out << "</div>".html_safe
+      out
+    end
+  end
+
+  def input_points_sang(f, personnage)
+    if personnage.goule?
+      out = "<div class=\"row points_sang\">".html_safe
+      out << "<div class='col-md-5'><b>Points de sang</b></div>".html_safe
+      out << "<div class='col-md-2'>".html_safe
+        out << button_tag('', type: 'button', id: "minus-points_sang", class: 'moins_new')
+        out << button_tag('', type: 'button', id: "plus-points_sang", class: 'plus_new')
+      out << "</div>".html_safe
+      out << f.input(:points_sang, label: false, input_html: {class: 'inpt_number', readonly: 'true'}, wrapper_html: {class: 'col-md-1'})
       out << "<div class=\"col-md-4\"></div>".html_safe
       out << "</div>".html_safe
       out

@@ -93,12 +93,14 @@ module PersonnagesShow
   end
 
   def show_points_sang(personnage)
-    if personnage.type_perso == "Vampire"
+    if personnage.vampire?
       hps = HistoriquesPersonnages.where(personnage_id: personnage.id, historique_id: Historique.where(nom: "Génération").first.id)
       if hps.count > 0
         generation = 13 - hps.first.niveau
         "<b>Points de sang</b> : #{Personnage::POINTS_SANG[generation.to_s]}<br />".html_safe
       end
+    elsif personnage.goule?
+      "<b>Points de sang</b> : #{personnage.points_sang}<br />".html_safe
     end
   end
 

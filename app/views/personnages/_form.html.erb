@@ -67,6 +67,7 @@
           <%= input_entelechie(p, @personnage) %>
         <% end %>
         <%= input_volonte(p) %>
+        <%= input_points_sang(p, @personnage) %>
         <%= input_glamour(p, @personnage) %>
         <%= input_banalite(p, @personnage) %>
         <% if @personnage.vampire? %>
@@ -124,7 +125,8 @@
     listenerEntelechie("#personnage_entelechie");
     listenerVolonte("#personnage_volonte");
     listenerGlamour("#personnage_glamour");
-    listenerGlamour("#personnage_banalite");
+    listenerBanalite("#personnage_banalite");
+    listenerSang("#personnage_points_sang");
     listenerVertues();
     listenerResonnances();
     listenerPhysiqueForBase(1, 10);
