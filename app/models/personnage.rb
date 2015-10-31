@@ -262,7 +262,7 @@ class Personnage < ActiveRecord::Base
   def name_rang
     if has_base && !rang.nil?
       if rang < SEUIL_C
-          "D"
+        "D"
       elsif rang < SEUIL_B
         "C"
       elsif rang < SEUIL_A
@@ -648,6 +648,7 @@ class Personnage < ActiveRecord::Base
   end
 
   def create_caracteristique_base(personnage, capacites, historiques, spheres, disciplines, arts, royaumes)
+    # raise spheres.inspect
     per = "{\"force\": #{personnage[:force]}, \"dexterite\": #{personnage[:dexterite]}, \"vigueur\": #{personnage[:vigueur]},\"charisme\": #{personnage[:charisme]}, \"manipulation\": #{personnage[:manipulation]}, \"apparence\": #{personnage[:apparence]},\"perception\": #{personnage[:perception]}, \"intelligence\": #{personnage[:intelligence]}, \"astuce\": #{personnage[:astuce]}}"
     talent = {}
     competence = {}
@@ -690,9 +691,11 @@ class Personnage < ActiveRecord::Base
       his[hiss.id] = c[:niveau].to_i
     end
     out = "{\"Personnage\":"+per+",\"Capacites\":"+cap.to_json+", \"Historiques\":"+his.to_json
+
     if spheres != nil
       sph = {}
       spheres.each do |key, c|
+        # raise c["niveau"].inspect
         sph[key] = c[:niveau].to_i
       end
       out += ", \"Spheres\":"+sph.to_json
@@ -836,9 +839,16 @@ class Personnage < ActiveRecord::Base
     random_attributes
     random_capacites
     random_historiques
+    random_spheres if mage?
     random_vertues if vampire?
     self.has_base = true
-    self.has_bonus = true
+    capacites = Hash[CapacitesPersonnages.where(personnage_id: id).map{|c| [c.id.to_s, c.attributes]}.map{|key, value| [key, JSON.parse(value.to_json, :symbolize_names => true)]}]
+    historiques = Hash[HistoriquesPersonnages.where(personnage_id: id).map{|c| [c.id.to_s, c.attributes]}.map{|key, value| [key, JSON.parse(value.to_json, :symbolize_names => true)]}]
+    spheres = Hash[Sphere.where(personnage_id: id).map{|c| [c.id.to_s, c.attributes]}.map{|key, value| [key, JSON.parse(value.to_json, :symbolize_names => true)]}]
+    disciplines = Hash[DisciplinesPersonnages.where(personnage_id: id).map{|c| [c.id.to_s, c.attributes]}.map{|key, value| [key, JSON.parse(value.to_json, :symbolize_names => true)]}]
+    arts = Hash[ArtsPersonnages.where(personnage_id: id).map{|c| [c.id.to_s, c.attributes]}.map{|key, value| [key, JSON.parse(value.to_json, :symbolize_names => true)]}]
+    royaumes = Hash[PersonnagesRoyaumes.where(personnage_id: id).map{|c| [c.id.to_s, c.attributes]}.map{|key, value| [key, JSON.parse(value.to_json, :symbolize_names => true)]}]
+    self.caracteristique_base = create_caracteristique_base(JSON.parse(self.to_json, :symbolize_names => true), capacites, historiques, spheres, disciplines, arts, royaumes)
     save
   end
 
@@ -902,6 +912,22 @@ class Personnage < ActiveRecord::Base
       write_attribute(vertues[r], send(vertues[r]).to_i + 1)
     end
     save
+  end
+
+  def random_spheres
+    (0..8).each do |i|
+      nom = Sphere::SPHERE[i]
+      sphere = Sphere.create(name: nom, personnage_id: id, niveau: 0)
+    end
+    all_spheres_ids = Sphere.where(personnage_id: id).pluck(:id)
+    # historique_ids = HistoriquesPersonnages.where(personnage_id: id).pluck(:historique_id)
+    # historique_ids.push(Historique.find(all_historique_ids[Random.rand(all_historique_ids.count)]).id)
+    # historique_ids.push(Historique.find(all_historique_ids[Random.rand(all_historique_ids.count)]).id)
+    (1..6).each do |p|
+      sph_id = all_spheres_ids[Random.rand(all_spheres_ids.count)].to_i
+      hp = Sphere.find sph_id
+      hp.update_attributes(niveau: hp.niveau + 1)
+    end
   end
 
   def base_all
