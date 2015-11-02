@@ -230,6 +230,8 @@ class PersonnagesController < ApplicationController
         params[:personnage].delete("capacite_ids")
         params[:personnage].delete("historique_ids")
         params[:personnage].delete("discipline_ids")
+        params[:personnage].delete("art_ids")
+        params[:personnage].delete("royaume_ids")
         @personnage.lock = false
         @personnage.update_attributes(params[:personnage])
         @personnage.check_and_add_if
