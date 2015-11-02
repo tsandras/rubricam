@@ -111,6 +111,11 @@ class PersonnagesController < ApplicationController
 
   def routine_edit
     @personnage = Personnage.find(params[:id])
+    if @user.admin?
+      @routines = Routine.all
+    else
+      @routines = Routine.none_secret_or_own_routines(@user.id)
+    end
   end
 
   def routine_update

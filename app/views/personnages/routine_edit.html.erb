@@ -7,7 +7,7 @@
     <label for="search_routine">Rechercher une routine :</label>
     <input id="search_routine" type="text" onkeypress="filter(this, '.routine .checkbox .check_boxes')" onkeyup="epurationCheckBox(this, '.routine .checkbox .check_boxes')" />
     <div class="routine">
-      <%= f.association :routines, as: :check_boxes, :collection => Routine.none_secret_or_own_routines(@user.id).map {|c| [c.name, c.id]}.uniq %>
+      <%= f.association :routines, as: :check_boxes, :collection => @routines.map {|c| [c.name, c.id]}.uniq %>
     </div>
   </div>
 <% end %>
