@@ -191,6 +191,9 @@ function calcule_xps_art(personnage, type_perso, type) {
     var idd = $("#a_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
     var va_avant = personnage.Arts[idd.toString()];
+    if (! va_avant) {
+      va_avant = 0;
+    }
     if (type == "base") {
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "art", null);
     } else {
@@ -206,6 +209,9 @@ function calcule_xps_royaume(personnage, type_perso, type) {
     var idd = $("#r_"+extract_id_cp($(this).attr("name"))).text();
     var va_actuel = $(this).val();
     var va_avant = personnage.Royaumes[idd.toString()];
+    if (! va_avant) {
+      va_avant = 0;
+    }
     if (type == "base") {
       out = out + manage_serie_nx(va_avant, parseInt(va_actuel), type_perso, "royaume", null);
     } else {
