@@ -231,8 +231,6 @@ class PersonnagesController < ApplicationController
         params[:personnage].delete("historique_ids")
         params[:personnage].delete("discipline_ids")
         @personnage.lock = false
-        @personnage.calcule_rang
-        @personnage.calcule_graph
         @personnage.update_attributes(params[:personnage])
         @personnage.check_and_add_if
         update_capacites(pcapacites_p)
@@ -242,6 +240,8 @@ class PersonnagesController < ApplicationController
         update_atouts(patouts_p)
         update_arts(parts_p)
         update_royaumes(proyaumes_p)
+        @personnage.calcule_rang
+        @personnage.calcule_graph
         format.html { redirect_to @personnage, notice: 'Personnage a été édité avec succès.' }
         format.json { head :no_content }
       else
@@ -428,7 +428,7 @@ class PersonnagesController < ApplicationController
           art = ArtsPersonnages.where(id: i, personnage_id: @personnage.id)
           art.first.update_attributes(ap)
         else
-          ArtsPersonnages.create(personnage_id: @personnage.id, art_id: ii.to_i, niveau: ap[:niveau])
+          ArtsPersonnages.create(personnage_id: @personnage.id, art_id: ii.to_i, niveau: ap[:niveau].to_i)
         end
       end
     end
@@ -443,7 +443,7 @@ class PersonnagesController < ApplicationController
           art = PersonnagesRoyaumes.where(id: i, personnage_id: @personnage.id)
           art.first.update_attributes(ap)
         else
-          PersonnagesRoyaumes.create(personnage_id: @personnage.id, art_id: ii.to_i, niveau: ap[:niveau])
+          PersonnagesRoyaumes.create(personnage_id: @personnage.id, art_id: ii.to_i, niveau: ap[:niveau].to_i)
         end
       end
     end
