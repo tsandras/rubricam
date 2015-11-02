@@ -757,7 +757,7 @@ class Personnage < ActiveRecord::Base
       end
       out += ", \"Royaumes\":"+royaume.to_json
     end
-    out += ", \"Volonte\":"+personnage[:volonte]
+    out += ", \"Volonte\":"+personnage[:volonte].to_s
     out += ", \"Entelechie\":1" if mage?
     out += ", \"Glamour\":#{personnage[:glamour]}" if changelin?
     out += "}"
