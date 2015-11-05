@@ -399,8 +399,8 @@ ActiveRecord::Schema.define(:version => 20151103174312) do
     t.string  "name"
     t.text    "description"
     t.boolean "secret"
-    t.integer "to_organisation_id",   :limit => 255
-    t.integer "from_organisation_id", :limit => 255
+    t.integer "to_organisation_id"
+    t.integer "from_organisation_id"
   end
 
   create_table "routines", :force => true do |t|
