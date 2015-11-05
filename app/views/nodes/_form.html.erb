@@ -1,0 +1,95 @@
+<%= simple_form_for(@node) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="col-md-6">
+    <%= f.input :nom %>
+    <%= f.input :description %>
+    <%= f.input :sup %>
+  </div>
+
+  <div class="col-md-6">
+    <%= input_niveau(f, @node) %>
+    <%= input_resonnance_for_nodes(f, @node) %>
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner le lieu</label>
+      <div class="controls">
+        <select class="select optional" id="node_l_id" name="node[lieu_id]" value="<%= @node.lieu_id %>">
+          <optgroup label="Personnages">
+          <option value="">Sélectionner un lieu</option>
+          <% @lieus.each do |lieu| %>
+              <option value="<%= lieu.id %>"<%= @node.lieu_id == lieu.id  ? 'selected' : nil %>><%= lieu.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <div class="control-group optional">
+      <label class="select optional control-label">Sélectionner le personnage de départ</label>
+      <div class="controls">
+        <select class="select optional" id="node_personnage_id" name="node[personnage_id]" value="<%= @node.personnage_id %>">
+          <optgroup label="Personnages">
+          <option value="">Sélectionner un personnage</option>
+          <% @personnages.each do |per| %>
+              <option value="<%= per.id %>"<%= @node.personnage_id == per.id  ? 'selected' : nil %>><%= per.prenom %> <%= per.nom %></option>
+          <% end %>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <%= f.input :secret, as: :boolean, label: "Node secret ?", input_html: {}, wrapper_html: {class: 'inline simple-checkbox'} %>
+    <%= f.button :submit, "Créer/Editer un Node", class: 'btn btn-success btn-sm' %>
+    <%= link_to 'Retour', nodes_path, class: 'btn btn-warning btn-sm' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#node_l_id").select2();
+    $("#node_personnage_id").select2();
+    listenerResonnancesForNodes();
+    listenerNiveau("#node_niveau");
+  });
+
+  function listenerResonnancesForNodes() {
+    var idDynamique = "#node_dynamique";
+    var idStatique = "#node_statique";
+    var idEntropique = "#node_entropique";
+
+    var tmp = idDynamique.split("_");
+    listenerNumber(tmp[1], idDynamique, 0, 10);
+
+    var tmp = idStatique.split("_");
+    listenerNumber(tmp[1], idStatique, 0, 10);
+
+    var tmp = idEntropique.split("_");
+    listenerNumber(tmp[1], idEntropique, 0, 10);
+  }
+
+  function listenerNumber(name, idInput, min, max) {
+    listenerUp("#plus-"+name, idInput, max);
+    listenerDown("#minus-"+name, idInput, min);
+  }
+
+  function listenerUp(idButton, idInput, max) {
+    $(idButton).click(function() {
+      if (parseInt($(idInput).val()) < max) {
+        manageShowSpecialite(parseInt($(idInput).val()) + 1, idButton);
+        $(idInput).val(parseInt($(idInput).val()) + 1);
+      }
+    });
+  }
+
+  function listenerDown(idButton, idInput, min) {
+    $(idButton).click(function() {
+      if (parseInt($(idInput).val()) > min) {
+        manageShowSpecialite(parseInt($(idInput).val()) - 1, idButton);
+        $(idInput).val(parseInt($(idInput).val()) - 1);
+      }
+    });
+  }
+
+  function listenerNiveau(idNiveau) {
+    var tmp = idNiveau.split("_");
+    listenerNumber(tmp[1], idNiveau, 0, 10);
+  }
+</script>

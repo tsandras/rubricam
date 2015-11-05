@@ -14,7 +14,7 @@ module RoutinesHelper
           out << button_tag('', type: 'button', id: "minus-#{sphere}", class: 'moins_new')
           out << button_tag('', type: 'button', id: "plus-#{sphere}", class: 'plus_new')
         out << "</div>".html_safe
-        out << f.input(list[i], label: "&nbsp;".html_safe,
+        out << f.input(list[i], label: false,
                         input_html: { class: "inpt_number #{i % 2 == 0 ? 'gris' : ''}", readonly: 'true', value: routine.send(list[i]).present? ? routine.send(list[i]) : 0 },
                         wrapper_html: { class: 'col-md-1 reajuste' })
         # out << "<div class=\"col-md-5\"></div>".html_safe

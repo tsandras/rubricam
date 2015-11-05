@@ -1,0 +1,66 @@
+<h2><%= @node.nom %></h2>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @node.description %>
+</p>
+
+<p>
+  <b>Sup:</b>
+  <%= @node.sup %>
+</p>
+
+<p>
+  <b>Niveau:</b>
+  <%= @node.niveau %>
+</p>
+
+<p>
+  <b>Dynamique:</b>
+  <%= @node.dynamique %>
+</p>
+
+<p>
+  <b>Statique:</b>
+  <%= @node.statique %>
+</p>
+
+<p>
+  <b>Entropique:</b>
+  <%= @node.entropique %>
+</p>
+
+<p>
+  <b>Spec dynamique:</b>
+  <%= @node.spec_dynamique %>
+</p>
+
+<p>
+  <b>Spec statique:</b>
+  <%= @node.spec_statique %>
+</p>
+
+<p>
+  <b>Spec entropique:</b>
+  <%= @node.spec_entropique %>
+</p>
+
+<p>
+  <b>Lieu:</b>
+  <%= @node.lieu.nom if @node.lieu.present? %>
+</p>
+
+<p>
+  <b>Personnage:</b>
+  <%= @node.personnage.prenom + " " + @node.personnage.nom if @node.personnage.present? %>
+</p>
+
+<p>
+  <b>Secret:</b>
+  <%= @node.secret %>
+</p>
+
+
+<%= link_to 'Editer', edit_node_path(@node), class: "btn btn-success btn-sm" %>
+<%= link_to 'Retour', nodes_path, class: "btn btn-warning btn-sm" %>

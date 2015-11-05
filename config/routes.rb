@@ -1,10 +1,10 @@
 Rubricam::Application.routes.draw do
 
+  resources :nodes
+
   resources :nivarts
 
-
   resources :version_comments
-
 
   resources :parties
 

@@ -11,7 +11,7 @@ class AccueilController < ApplicationController
 
   def carte
     @lieux_villes = Lieu
-      .includes(:organisations, :personnages)
+      .includes(:organisations, :personnages, :nodes)
       .locatable
       .lieu_ou_ville
   end

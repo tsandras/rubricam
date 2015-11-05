@@ -114,13 +114,13 @@ class LieusController < ApplicationController
   end
 
   def permition_show?(user)
-    return true if user.role != User::ROLE_NORMA
+    return true if !user.norma?
     return true if !@lieu.secret
     false
   end
 
   def permition_write?(user)
-    return true if user.role == User::ROLE_ADMIN
+    return true if user.admin?
     false
   end
 end

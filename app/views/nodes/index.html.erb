@@ -1,0 +1,33 @@
+<%= link_to 'Nouveau Node', new_node_path, class: 'btn btn-success btn-sm create-float' %>
+<h1>Liste des Nodes</h1>
+<div class="col-md-12">
+<table class="table">
+  <tr>
+    <th>Nom</th>
+    <th>Niveau</th>
+    <th>Dynamique</th>
+    <th>Statique</th>
+    <th>Entropique</th>
+    <th>Lieu</th>
+    <th>Secret</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @nodes.each do |node| %>
+  <tr>
+    <td><%= node.nom %></td>
+    <td><%= node.niveau %></td>
+    <td><%= node.dynamique %></td>
+    <td><%= node.statique %></td>
+    <td><%= node.entropique %></td>
+    <td><%= node.lieu.nom if node.lieu.present? %></td>
+    <td><%= node.secret %></td>
+    <td><%= link_to 'Show', node %></td>
+    <td><%= link_to 'Edit', edit_node_path(node) %></td>
+    <td><%= link_to 'Destroy', node, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+</div>

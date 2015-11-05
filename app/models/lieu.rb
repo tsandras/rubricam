@@ -30,6 +30,7 @@ class Lieu < ActiveRecord::Base
   has_and_belongs_to_many :personnages, class_name: 'Personnage'
   has_and_belongs_to_many :organisations, class_name: 'Organisation'
   has_and_belongs_to_many :historiques, class_name: 'Historique'
+  has_many :nodes, class_name: 'Node'
 
   scope :locatable, -> { where("svg_x is not null and svg_y is not null") }
   scope :lieu_ou_ville, -> { where("type_lieu = ? or type_lieu = ?", TYPE_LIEUX[3], TYPE_LIEUX[4]) }

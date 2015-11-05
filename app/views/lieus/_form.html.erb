@@ -42,6 +42,6 @@
   $(document).ready(function() {
     manageCheckBox("#search_personnage", ".personnage .checkbox .check_boxes");
     manageCheckBox("#search_organisation", ".organisation .checkbox .check_boxes");
-    init_map_admin(<%= raw @lieux_villes.to_json(include: [:organisations, :personnages]) %>);
+    init_map_admin(<%= raw @lieux_villes.to_json(include: [:organisations, :personnages, :nodes]) %>);
   });
 </script>

@@ -173,6 +173,12 @@ function setDataLieu(lieu, user) {
       out += ""+organisation.description_publique+"<br/>";
     }
   });
+  lieu.nodes.forEach(function(node) {
+    if (!node.secret || user.role == 2) {
+      out += "[Node] ";
+      out += "<a href='/nodes/"+node.id+"'>"+node.nom+"</a><br/>";
+    }
+  });
   lieu.personnages.forEach(function(personnage) {
     if (!personnage.secret || user.role == 2) {
       out += "<a href='/personnages/"+personnage.id+"'>"+personnage.prenom+" "+personnage.nom+"</a><br/>";
