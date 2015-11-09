@@ -47,6 +47,7 @@
 	}
 	$("#list-p-like").append(out);
 	for (var j in organisations) {
+		console.log("id = "+ 'o_'+organisations[j].id + " value = " + organisations[j].description_publique);
 		tmpNodes.push({id: 'o_'+organisations[j].id, label: organisations[j].nom, value: organisations[j].description_publique, color: 'red', mass: 2});
 	}
 
@@ -57,6 +58,7 @@
 		i++;
 	}
 	for (var j in relations_organisations) {
+		console.log("id = "+ i + " from = " + relations_organisations[j].personnage_id + " to = o_"+relations_organisations[j].organisation_id);
 		tmpEdges.push({id: i, from: relations_organisations[j].personnage_id, to: 'o_'+relations_organisations[j].organisation_id});
 		i++;
 	}
@@ -64,7 +66,9 @@
 		tmpEdges.push({id: i, from: 'o_'+relations_org_org[j].from_organisation_id, to: 'o_'+relations_org_org[j].to_organisation_id, arrows: 'from', label: relations_org_org[j].name})
 		i++;
 	}
+	console.log("avant datasetNOde");
 	var nodes = new vis.DataSet(tmpNodes);
+	console.log("avant datasetEdges");
 	var edges = new vis.DataSet(tmpEdges);
 	var container = document.getElementById('relations');
   var data = {
@@ -72,7 +76,9 @@
     edges: edges
   };
   var options = {};
+  console.log("avant network");
   var network = new vis.Network(container, data, options);
+  console.log("apres network");
 	network.on("click", function (params) {
 	  var nodeId = params["nodes"][0];
 	  if (nodeId && nodes.get(nodeId).value) {
