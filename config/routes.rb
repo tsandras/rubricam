@@ -19,6 +19,7 @@ Rubricam::Application.routes.draw do
   match '/fan_art', to: 'accueil#fan_art'
   match '/carte', to: 'accueil#carte'
   match '/navigation', to: 'accueil#navigation'
+  match '/cv_elyse_cordeau', to: 'accueil#cv_elyse_cordeau'
   get 'omni_search/search'
   get 'users/omni_search/search'
 
